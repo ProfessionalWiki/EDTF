@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  test:
+    name: "PHPUnit PHP ${{ matrix.php }}"
+
+    strategy:
+      matrix:
+        php: [ 7.4, nightly ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring
+          tools: composer, cs2pr
+
+      - uses: actions/checkout@v2
+
+      - name: Cache Composer cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-php${{ matrix.php }}
+
+      - name: Composer install
+        run: composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: PHPUnit
+        run: php vendor/bin/phpunit
+
+  static-analysis:
+    name: "Static Analysis"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: mbstring
+          tools: composer, cs2pr
+
+      - uses: actions/checkout@v2
+
+      - name: Cache Composer cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-php7.4
+
+      - name: Composer install
+        run: composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Psalm
+        run: php vendor/bin/psalm --threads=2 --output-format=github --shepherd --stats
+
+      - name: PHPStan
+        run: php vendor/bin/phpstan analyse --level=1 --error-format=checkstyle --no-progress src/ tests/ | cs2pr
