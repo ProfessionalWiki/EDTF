@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Such\NewProject;
+namespace EDTF;
 
 class ProductionClass {
 

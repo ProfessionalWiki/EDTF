@@ -1,6 +1,6 @@
 {
-	"name": "such/new-project",
-	"license": "BSD-3-Clause",
+	"name": "professional-wiki/edtf",
+	"license": "",
 	"description": "",
 	"require": {
 		"php": ">=7.4"
@@ -12,12 +12,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Such\\NewProject\\": "src/"
+			"EDTF\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Such\\NewProject\\Tests\\": "tests/"
+			"EDTF\\Tests\\": "tests/"
 		}
 	},
 	"extra": {

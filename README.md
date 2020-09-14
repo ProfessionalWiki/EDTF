@@ -1,7 +1,7 @@
 # PHP Library Template
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/JeroenDeDauw/new-php-library/CI)](https://github.com/JeroenDeDauw/new-php-library/actions?query=workflow%3ACI)
-[![Type Coverage](https://shepherd.dev/github/JeroenDeDauw/new-php-library/coverage.svg)](https://shepherd.dev/github/JeroenDeDauw/new-php-library)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ProfessionalWiki/EDTF/CI)](https://github.com/ProfessionalWiki/EDTF/actions?query=workflow%3ACI)
+[![Type Coverage](https://shepherd.dev/github/ProfessionalWiki/EDTF/coverage.svg)](https://shepherd.dev/github/ProfessionalWiki/EDTF)
 
 This is a template for starting new PHP libraries. Copy or fork to get started quickly.
 
@@ -11,14 +11,14 @@ TODO
 
 ## Installation
 
-To use the UPDATE_NAME library in your project, simply add a dependency on UPDATE/NAME
+To use the EDTF library in your project, simply add a dependency on professional-wiki/edtf
 to your project's `composer.json` file. Here is a minimal example of a `composer.json`
 file that just defines a dependency on UPDATE_NAME 1.x:
 
 ```json
 {
     "require": {
-        "UPDATE/NAME": "~1.0"
+        "professional-wiki/edtf": "~1.0"
     }
 }
 ```

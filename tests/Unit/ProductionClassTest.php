@@ -2,13 +2,13 @@
 
 declare( strict_types = 1 );
 
-namespace Such\NewProject\Tests\Unit;
+namespace EDTF\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Such\NewProject\ProductionClass;
+use EDTF\ProductionClass;
 
 /**
- * @covers \Such\NewProject\ProductionClass
+ * @covers \EDTF\ProductionClass
  */
 class ProductionClassTest extends TestCase {
 
