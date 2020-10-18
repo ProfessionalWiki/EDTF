@@ -61,7 +61,7 @@ jobs:
         run: composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Psalm
-        run: php vendor/bin/psalm --threads=2 --output-format=github --shepherd --stats
+        run: php vendor/bin/psalm --threads=2 --output-format=github --stats
 
       - name: PHPStan
         run: php vendor/bin/phpstan analyse --level=1 --error-format=checkstyle --no-progress src/ tests/ | cs2pr
