@@ -1,23 +1,19 @@
-<phpunit bootstrap="tests/bootstrap.php"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         cacheTokens="false"
-         colors="true"
-         forceCoversAnnotation="true">
-    <testsuites>
-        <testsuite name="unit">
-            <directory>tests/Unit</directory>
-        </testsuite>
-        <testsuite name="integration">
-            <directory>tests/Integration</directory>
-        </testsuite>
-        <testsuite name="system">
-            <directory>tests/System</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/bootstrap.php" backupGlobals="false" backupStaticAttributes="false" colors="true" forceCoversAnnotation="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage includeUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="unit">
+      <directory>tests/Unit</directory>
+    </testsuite>
+    <testsuite name="integration">
+      <directory>tests/Integration</directory>
+    </testsuite>
+    <testsuite name="system">
+      <directory>tests/System</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
