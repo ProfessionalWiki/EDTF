@@ -1,9 +1,10 @@
-# PHP Library Template
+# EDTF PHP Library
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ProfessionalWiki/EDTF/CI)](https://github.com/ProfessionalWiki/EDTF/actions?query=workflow%3ACI)
 [![Type Coverage](https://shepherd.dev/github/ProfessionalWiki/EDTF/coverage.svg)](https://shepherd.dev/github/ProfessionalWiki/EDTF)
 
-This is a template for starting new PHP libraries. Copy or fork to get started quickly.
+EDTF PHP is a small library for parsing, representing and working with the
+[Extended Date/Time Format](https://www.loc.gov/standards/datetime/) specification.
 
 ## Usage
 
