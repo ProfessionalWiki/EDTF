@@ -14,10 +14,7 @@
 	"autoload": {
 		"psr-4": {
 			"EDTF\\": "src/"
-		},
-		"files": [
-			"./src/function.php"
-		]
+		}
 	},
 	"autoload-dev": {
 		"psr-4": {

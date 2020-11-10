@@ -5,12 +5,11 @@ declare(strict_types = 1);
 namespace EDTF;
 
 
+use EDTF\Contracts\DateTimeInterface;
+
 class Parser
 {
-    /**
-     * @var string
-     */
-    private $regexPattern = "/(?x) # Turns on free spacing mode for easier readability
+    private string $regexPattern = "/(?x) # Turns on free spacing mode for easier readability
 
 					# Year start
 						(?<year>
@@ -58,64 +57,46 @@ class Parser
 					# Others end #
 					/";
 
-    /**
-     * @var string
-     */
-    private $data;
-
-    /**
-     * Parser constructor.
-     *
-     * @param string $data
-     */
-    public function __construct(string $data)
+    public function parse(string $data): DateTimeInterface
     {
-        $this->data = $data;
+        if (false !== strpos($data, '/')) {
+            return $this->createInterval($data);
+        }
+        return $this->createExtDateTime($data);
+    }
+
+    private function createInterval(string $data): DateTimeInterface
+    {
+        $pos = strrpos($data, '/');
+
+        if(false === $pos){
+            throw new \Exception("Can't create interval from ${data}");
+        }
+
+        $startDateStr = substr( $data, 0, $pos );
+        $endDateStr   = substr( $data, $pos + 1 );
+        $interval = new Interval();
+
+        $startDate = $this->createExtDateTime($startDateStr);
+        $endDate = $this->createExtDateTime($endDateStr);
+
+        $interval
+            ->setLower($startDate)
+            ->setUpper($endDate)
+        ;
+        return $interval;
     }
 
     /**
-     * @param string $data
-     * @return Parser
+     * @TODO: add a way to validate and handle invalid $data format
      */
-    public static function from(string $data)
+    private function createExtDateTime(string $data): ExtDateTime
     {
-        return new Parser($data);
-    }
-
-    /**
-     * @return DateTime
-     * @throws \Exception
-     */
-    public function parseDateTime()
-    {
-        $data = $this->data;
         $regexPattern = $this->regexPattern;
-        $dateTime = new DateTime();
+        $dateTime = new ExtDateTime();
 
-        $fields = [
-            'year', 'month', 'day','hour', 'minute','second',
-            'tzSign','tzHour','tzMinute'
-        ];
-
-        preg_match($regexPattern,$data, $matches);
-
-        foreach($fields as $field){
-            if(isset($matches[$field])){
-                $setter = 'set'.$field;
-                call_user_func_array([$dateTime,$setter],[$matches[$field]]);
-            }
-        }
-
-        if(isset($matches['tzUtc'])){
-            $tz = $matches['tzUtc'];
-            $timezone = $tz == 'Z' ? "UTC":$tz;
-            $dateTime->setTimezone($timezone);
-        }
-        if(isset($matches['tzSign'])){
-            $timezone = $matches['tzSign'].$matches['tzHour'].':'.$matches['tzMinute'];
-            $dateTime->setTimezone($timezone);
-        }
+        preg_match($regexPattern, $data, $matches);
+        $dateTime->fromRegexMatches($matches);
         return $dateTime;
     }
-
 }
