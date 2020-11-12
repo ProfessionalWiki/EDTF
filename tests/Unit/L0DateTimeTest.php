@@ -15,12 +15,13 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\ExtDateTime
  * @package EDTF\Tests\Unit
  */
-class L0DateAndTimeTest extends TestCase
+class L0DateTimeTest extends TestCase
 {
+    use FactoryTrait;
+
     public function testDefaultUTC()
     {
-        $testDate = "2001-02-03T09:30:01";
-        $date = EDTF::from($testDate);
+        $date = $this->createExtDateTime("2001-02-03T09:30:01");
 
         $this->assertSame(2001, $date->getYear());
         $this->assertSame(2, $date->getMonth());
@@ -33,8 +34,7 @@ class L0DateAndTimeTest extends TestCase
 
     public function testWithZSuffix()
     {
-        $testDate = "2004-01-01T10:10:10Z";
-        $date = EDTF::from($testDate);
+        $date = $this->createExtDateTime("2004-01-01T10:10:10Z");
 
         $this->assertSame(2004, $date->getYear());
         $this->assertSame(1, $date->getMonth());
@@ -47,8 +47,7 @@ class L0DateAndTimeTest extends TestCase
 
     public function testWithSpesificTimezone()
     {
-        $testDate = "2004-01-01T10:10:10+05:00";
-        $date = EDTF::from($testDate);
+        $date = $this->createExtDateTime('2004-01-01T10:10:10+05:00');
 
         $this->assertSame(2004, $date->getYear());
         $this->assertSame(1, $date->getMonth());

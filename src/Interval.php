@@ -8,28 +8,28 @@ use EDTF\Contracts\DateTimeInterface;
 
 class Interval implements DateTimeInterface
 {
-    private ?ExtDateTime $lower = null;
-    private ?ExtDateTime $upper = null;
+    private ?ExtDateTime $start = null;
+    private ?ExtDateTime $end = null;
 
-    public function getLower(): ?ExtDateTime
+    public function getStart(): ?ExtDateTime
     {
-        return $this->lower;
+        return $this->start;
     }
 
-    public function setLower(ExtDateTime $lower): Interval
+    public function setStart(ExtDateTime $start): Interval
     {
-        $this->lower = $lower;
+        $this->start = $start;
         return $this;
     }
 
-    public function getUpper(): ?ExtDateTime
+    public function getEnd(): ?ExtDateTime
     {
-        return $this->upper;
+        return $this->end;
     }
 
-    public function setUpper(ExtDateTime $upper): Interval
+    public function setEnd(ExtDateTime $end): Interval
     {
-        $this->upper = $upper;
+        $this->end = $end;
         return $this;
     }
 }
