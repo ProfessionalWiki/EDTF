@@ -16,7 +16,7 @@ TODO
 
 To use the EDTF library in your project, simply add a dependency on professional-wiki/edtf
 to your project's `composer.json` file. Here is a minimal example of a `composer.json`
-file that just defines a dependency on UPDATE_NAME 1.x:
+file that just defines a dependency on EDTF 1.x:
 
 ```json
 {
