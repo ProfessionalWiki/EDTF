@@ -52,26 +52,16 @@ class ExtDateTime implements DateTimeInterface
      */
     public const QUALIFICATION_BOTH = 3;
 
-    private int $qualification     = self::QUALIFICATION_UNSPECIFIED;
-
+    private int $qualification = self::QUALIFICATION_UNSPECIFIED;
     private ?int $year = null;
-
     private ?int $month = null;
-
     private ?int $day = null;
-
     private ?int $hour = null;
-
     private ?int $minute = null;
-
     private ?int $second = null;
-
     private ?int $tzSign = null;
-
     private ?int $tzMinute = null;
-
     private ?int $tzHour = null;
-
     private ?int $timezoneOffset = 0;
 
     public function isStatusTypeNormal(): bool
