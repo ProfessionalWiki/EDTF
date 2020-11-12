@@ -13,10 +13,11 @@ class Parser
 
 					# Year start
 						(?<year>
+						    (?<yearOpenFlags>[~?%]{0,2})
 							(?<yearNum>[+-]?(?:\d+e\d+|[0-9u][0-9ux]*))
 							(?>S # Literal S letter. It is for the significant digit indicator
 							(?<yearPrecision>\d+))?
-							(?<yearEnd>\)?[~?]{0,2})
+							(?<yearCloseFlag>\)?[~%?]{0,2})
 						)
 					# Year end
 
@@ -42,14 +43,14 @@ class Parser
 						(?<day>
 						(?<dayOpenParents>\(+)?
 						(?<dayNum>(?>[012u][0-9u]|3[01u])))
-						(?<dayEnd>[)~?]*)
+						(?<dayEnd>[)~%?]*)
 					# Day end
 
 					# Others start #
 						(?>T # Literal T
-						(?<hour>2[0-3]|[01][0-9]):
-						(?<minute>[0-5][0-9]):
-						(?<second>[0-5][0-9])
+						(?<hourNum>2[0-3]|[01][0-9]):
+						(?<minuteNum>[0-5][0-9]):
+						(?<secondNum>[0-5][0-9])
 						(?>(?<tzUtc>Z)|
 						(?<tzSign>[+-])
 						(?<tzHour>[01][0-9]):
@@ -65,7 +66,7 @@ class Parser
         return $this->createExtDateTime($data);
     }
 
-    private function createInterval(string $data): DateTimeInterface
+    public function createInterval(string $data): Interval
     {
         $pos = strrpos($data, '/');
 
@@ -77,26 +78,46 @@ class Parser
         $endDateStr   = substr( $data, $pos + 1 );
         $interval = new Interval();
 
-        $startDate = $this->createExtDateTime($startDateStr);
-        $endDate = $this->createExtDateTime($endDateStr);
+        $startDate = $this->createExtDateTime($startDateStr, true);
+        $endDate = $this->createExtDateTime($endDateStr, true);
 
         $interval
-            ->setLower($startDate)
-            ->setUpper($endDate)
+            ->setStart($startDate)
+            ->setEnd($endDate)
         ;
         return $interval;
     }
 
-    /**
-     * @TODO: add a way to validate and handle invalid $data format
-     */
-    private function createExtDateTime(string $data): ExtDateTime
+    public function createExtDateTime(string $data, bool $isInterval = false): ExtDateTime
     {
+        //@TODO: add a way to validate and handle invalid $data format
+
         $regexPattern = $this->regexPattern;
         $dateTime = new ExtDateTime();
 
-        preg_match($regexPattern, $data, $matches);
-        $dateTime->fromRegexMatches($matches);
+        if("" === $data){
+            $status = $isInterval ? ExtDateTime::STATUS_UNKNOWN : ExtDateTime::STATUS_UNUSED;
+            $dateTime->setStatus($status);
+        }elseif('..' === $data){
+            $dateTime->setStatus(ExtDateTime::STATUS_OPEN);
+        }else{
+            preg_match($regexPattern, $data, $matches);
+            $dateTime->fromRegexMatches($matches);
+            $dateTime->setStatus(ExtDateTime::STATUS_NORMAL);
+            $this->setDateQualification($data, $dateTime);
+        }
+
         return $dateTime;
+    }
+
+    private function setDateQualification(string $data, ExtDateTime $dateTime): void
+    {
+        if(false !== strpos($data, "~")){
+            $dateTime->setQualification(ExtDateTime::QUALIFICATION_APPROXIMATE);
+        }elseif(false !== strpos($data, "?")){
+            $dateTime->setQualification(ExtDateTime::QUALIFICATION_UNCERTAIN);
+        }elseif(false !== strpos($data, "%")){
+            $dateTime->setQualification(ExtDateTime::QUALIFICATION_BOTH);
+        }
     }
 }

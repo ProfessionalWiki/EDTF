@@ -8,6 +8,52 @@ use EDTF\Contracts\DateTimeInterface;
 
 class ExtDateTime implements DateTimeInterface
 {
+    /**
+     * Normal date value
+     */
+    public const STATUS_NORMAL      = 1;
+
+    /**
+     * There is a value, but we don't know anything about it
+     */
+    public const STATUS_UNKNOWN     = 2;
+
+    /**
+     * The specified edtf date use value ".."
+     */
+    public const STATUS_OPEN        = 3;
+
+    /**
+     * For EndDate when the value is a single date
+     */
+    public const STATUS_UNUSED      = 4;
+
+    private int $status            = self::STATUS_UNKNOWN;
+
+    /**
+     * EDTF date doesn't define the qualification.
+     */
+    public const QUALIFICATION_UNSPECIFIED  = 0;
+
+    /**
+     * EDTF date uncertain, determined by flag "?"
+     */
+    public const QUALIFICATION_UNCERTAIN    = 1;
+
+    /**
+     * EDTF date approximate,
+     * determined by flag "~"
+     */
+    public const QUALIFICATION_APPROXIMATE  = 2;
+
+    /**
+     * EDTF date both uncertain and approximate,
+     * determined by flag "%"
+     */
+    public const QUALIFICATION_BOTH = 3;
+
+    private int $qualification     = self::QUALIFICATION_UNSPECIFIED;
+
     private ?int $year = null;
 
     private ?int $month = null;
@@ -28,15 +74,65 @@ class ExtDateTime implements DateTimeInterface
 
     private ?int $timezoneOffset = 0;
 
+    public function isStatusTypeNormal(): bool
+    {
+        return $this->status === self::STATUS_NORMAL;
+    }
+
+    public function isStatusTypeOpen(): bool
+    {
+        return $this->status === self::STATUS_OPEN;
+    }
+
+    public function isStatusTypeUnknown(): bool
+    {
+        return $this->status === self::STATUS_UNKNOWN;
+    }
+
+    public function isQualificationUncertain(): bool
+    {
+        return $this->qualification === self::QUALIFICATION_UNCERTAIN;
+    }
+
+    public function isQualificationApproximate(): bool
+    {
+        return $this->qualification === self::QUALIFICATION_APPROXIMATE;
+    }
+
+    public function isQualificationBoth(): bool
+    {
+        return $this->qualification === self::QUALIFICATION_BOTH;
+    }
+
+    public function isQualificationUnspecified(): bool
+    {
+        return $this->qualification === self::QUALIFICATION_UNSPECIFIED;
+    }
+
+    public function setQualification(int $qualification): self
+    {
+        $this->qualification = $qualification;
+
+        return $this;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function fromRegexMatches(array $matches): void
     {
         $props = [
             'year', 'month', 'day', 'hour', 'minute', 'second'
         ];
         foreach ($props as $field) {
-            if (isset($matches[$field])) {
+            $fieldName = $field.'Num';
+            if (isset($matches[$fieldName])) {
                 $setter = 'set' . $field;
-                call_user_func_array([$this, $setter], [$matches[$field]]);
+                call_user_func_array([$this, $setter], [$matches[$fieldName]]);
             }
         }
 
