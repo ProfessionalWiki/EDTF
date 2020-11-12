@@ -8,30 +8,25 @@ use EDTF\Contracts\DateTimeInterface;
 
 class ExtDateTime implements DateTimeInterface
 {
-    protected ?int $year = null;
+    private ?int $year = null;
 
-    protected ?int $month = null;
+    private ?int $month = null;
 
-    protected ?int $day = null;
+    private ?int $day = null;
 
-    protected ?int $hour = null;
+    private ?int $hour = null;
 
-    protected ?int $minute = null;
+    private ?int $minute = null;
 
-    protected ?int $second = null;
+    private ?int $second = null;
 
-    protected ?int $tzSign = null;
+    private ?int $tzSign = null;
 
-    protected ?int $tzMinute = null;
+    private ?int $tzMinute = null;
 
-    protected ?int $tzHour = null;
+    private ?int $tzHour = null;
 
-    protected ?int $timezoneOffset = 0;
-
-    public function __toString(): string
-    {
-        return "";
-    }
+    private ?int $timezoneOffset = 0;
 
     public function fromRegexMatches(array $matches): void
     {

@@ -11,11 +11,6 @@ class Interval implements DateTimeInterface
     private ?ExtDateTime $lower = null;
     private ?ExtDateTime $upper = null;
 
-    public function __toString(): string
-    {
-        return "";
-    }
-
     public function getLower(): ?ExtDateTime
     {
         return $this->lower;

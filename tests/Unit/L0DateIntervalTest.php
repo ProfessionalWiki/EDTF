@@ -29,8 +29,8 @@ class L0DateIntervalTest extends TestCase
         $this->assertInstanceOf(ExtDateTime::class, $interval->getUpper());
         $this->assertInstanceOf(ExtDateTime::class, $interval->getLower());
 
-        $this->assertEquals(1964, $interval->getLower()->getYear());
-        $this->assertEquals(2008, $interval->getUpper()->getYear());
+        $this->assertSame(1964, $interval->getLower()->getYear());
+        $this->assertSame(2008, $interval->getUpper()->getYear());
     }
 
     public function testWithYearAndMonth()
@@ -44,12 +44,12 @@ class L0DateIntervalTest extends TestCase
         $this->assertInstanceOf(ExtDateTime::class, $interval->getLower());
 
         // lower tests
-        $this->assertEquals(2004, $interval->getLower()->getYear());
-        $this->assertEquals(6, $interval->getLower()->getMonth());
+        $this->assertSame(2004, $interval->getLower()->getYear());
+        $this->assertSame(6, $interval->getLower()->getMonth());
 
         // upper tests
-        $this->assertEquals(2006, $interval->getUpper()->getYear());
-        $this->assertEquals(8, $interval->getUpper()->getMonth());
+        $this->assertSame(2006, $interval->getUpper()->getYear());
+        $this->assertSame(8, $interval->getUpper()->getMonth());
     }
 
     public function testWithCompleteDate()
@@ -63,14 +63,14 @@ class L0DateIntervalTest extends TestCase
         $this->assertInstanceOf(ExtDateTime::class, $interval->getLower());
 
         // lower tests
-        $this->assertEquals(2004, $interval->getLower()->getYear());
-        $this->assertEquals(2, $interval->getLower()->getMonth());
-        $this->assertEquals(1, $interval->getLower()->getDay());
+        $this->assertSame(2004, $interval->getLower()->getYear());
+        $this->assertSame(2, $interval->getLower()->getMonth());
+        $this->assertSame(1, $interval->getLower()->getDay());
 
         // upper tests
-        $this->assertEquals(2005, $interval->getUpper()->getYear());
-        $this->assertEquals(2, $interval->getUpper()->getMonth());
-        $this->assertEquals(8, $interval->getUpper()->getDay());
+        $this->assertSame(2005, $interval->getUpper()->getYear());
+        $this->assertSame(2, $interval->getUpper()->getMonth());
+        $this->assertSame(8, $interval->getUpper()->getDay());
     }
 
     public function testCustom1()
@@ -84,13 +84,13 @@ class L0DateIntervalTest extends TestCase
         $this->assertInstanceOf(ExtDateTime::class, $interval->getLower());
 
         // lower tests
-        $this->assertEquals(2004, $interval->getLower()->getYear());
-        $this->assertEquals(2, $interval->getLower()->getMonth());
-        $this->assertEquals(1, $interval->getLower()->getDay());
+        $this->assertSame(2004, $interval->getLower()->getYear());
+        $this->assertSame(2, $interval->getLower()->getMonth());
+        $this->assertSame(1, $interval->getLower()->getDay());
 
         // upper tests
-        $this->assertEquals(2005, $interval->getUpper()->getYear());
-        $this->assertEquals(2, $interval->getUpper()->getMonth());
+        $this->assertSame(2005, $interval->getUpper()->getYear());
+        $this->assertSame(2, $interval->getUpper()->getMonth());
         $this->assertNull($interval->getUpper()->getDay());
     }
 
@@ -105,13 +105,13 @@ class L0DateIntervalTest extends TestCase
         $this->assertInstanceOf(ExtDateTime::class, $interval->getLower());
 
         // lower tests
-        $this->assertEquals(2005, $interval->getLower()->getYear());
+        $this->assertSame(2005, $interval->getLower()->getYear());
         $this->assertNull($interval->getLower()->getMonth());
         $this->assertNull($interval->getLower()->getDay());
 
         // upper tests
-        $this->assertEquals(2006, $interval->getUpper()->getYear());
-        $this->assertEquals(2, $interval->getUpper()->getMonth());
+        $this->assertSame(2006, $interval->getUpper()->getYear());
+        $this->assertSame(2, $interval->getUpper()->getMonth());
         $this->assertNull($interval->getUpper()->getDay());
     }
 }

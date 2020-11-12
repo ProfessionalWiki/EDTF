@@ -21,64 +21,58 @@ class L0DateTest extends TestCase
 {
     public function testCompleteDate()
     {
-        $testDate = '2001-02-03';
-        $date = EDTF::from($testDate);
+        $date = EDTF::from('2001-02-03');
 
         $this->assertInstanceOf(ExtDateTime::class, $date);
-        $this->assertEquals(2001, $date->getYear());
-        $this->assertEquals(2, $date->getMonth());
-        $this->assertEquals(3, $date->getDay());
+        $this->assertSame(2001, $date->getYear());
+        $this->assertSame(2, $date->getMonth());
+        $this->assertSame(3, $date->getDay());
     }
 
     public function testWithMonthAndYear()
     {
         /* @var \EDTF\ExtDateTime $date */
-        $testDate = '2008-12';
-        $date = EDTF::from($testDate);
+        $date = EDTF::from('2008-12');
 
         $this->assertInstanceOf(ExtDateTime::class, $date);
-        $this->assertEquals(2008, $date->getYear());
-        $this->assertEquals(12, $date->getMonth());
+        $this->assertSame(2008, $date->getYear());
+        $this->assertSame(12, $date->getMonth());
         $this->assertNull($date->getDay());
     }
 
     public function testWithYearOnly()
     {
-        $testDate = '2008';
-        $date = EDTF::from($testDate);
+        $date = EDTF::from('2008');
 
         $this->assertInstanceOf(ExtDateTime::class, $date);
-        $this->assertEquals(2008, $date->getYear());
+        $this->assertSame(2008, $date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
     }
 
     public function testNegativeYear()
     {
-        $testDate = '-0999';
-        $date = EDTF::from($testDate);
+        $date = EDTF::from('-0999');
 
         $this->assertInstanceOf(ExtDateTime::class, $date);
-        $this->assertEquals(-999, $date->getYear());
+        $this->assertSame(-999, $date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
     }
 
     public function testWithZeroYear()
     {
-        $testDate = '0000';
-        $date = EDTF::from($testDate);
+        $date = EDTF::from('0000');
 
         $this->assertInstanceOf(ExtDateTime::class, $date);
-        $this->assertEquals(0, $date->getYear());
+        $this->assertSame(0, $date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
     }
 
     public function testWithEmptyDate()
     {
-        $testDate = "";
-        $date = EDTF::from($testDate);
+        $date = EDTF::from("");
 
         $this->assertInstanceOf(ExtDateTime::class, $date);
         $this->assertNull($date->getYear());
