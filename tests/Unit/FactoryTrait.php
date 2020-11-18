@@ -5,19 +5,36 @@ declare(strict_types=1);
 namespace EDTF\Tests\Unit;
 
 
+use EDTF\EDTF;
+use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
 use EDTF\Parser;
 
 trait FactoryTrait
 {
+    public function createExtDate(string $data): ExtDate
+    {
+        $parser = $this->parse($data);
+        return new ExtDate($parser);
+    }
+
     public function createExtDateTime(string $data): ExtDateTime
     {
-        return (new Parser())->createExtDateTime($data);
+        $parser = $this->parse($data);
+        return new ExtDateTime($parser);
     }
 
     public function createInterval(string $data): Interval
     {
-        return (new Parser())->createInterval($data);
+        return EDTF::createInterval($data);
+    }
+
+    private function parse($data): Parser
+    {
+        $parser = new Parser();
+        $parser->parse($data);
+
+        return $parser;
     }
 }

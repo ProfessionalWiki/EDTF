@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Functional;
 
 
-use EDTF\ExtDateTime;
+use EDTF\ExtDate;
+use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \EDTF\Parser
  * @covers \EDTF\EDTF
- * @covers \EDTF\ExtDateTime
+ * @covers \EDTF\ExtDate
  * @package EDTF\Tests\Unit
  */
 class L0DateTest extends TestCase
@@ -22,9 +23,9 @@ class L0DateTest extends TestCase
 
     public function testCompleteDate()
     {
-        $date = $this->createExtDateTime('2001-02-03');
+        $date = $this->createExtDate('2001-02-03');
 
-        $this->assertInstanceOf(ExtDateTime::class, $date);
+        $this->assertInstanceOf(ExtDate::class, $date);
         $this->assertSame(2001, $date->getYear());
         $this->assertSame(2, $date->getMonth());
         $this->assertSame(3, $date->getDay());
@@ -32,9 +33,9 @@ class L0DateTest extends TestCase
 
     public function testWithMonthAndYear()
     {
-        $date = $this->createExtDateTime('2008-12');
+        $date = $this->createExtDate('2008-12');
 
-        $this->assertInstanceOf(ExtDateTime::class, $date);
+        $this->assertInstanceOf(ExtDate::class, $date);
         $this->assertSame(2008, $date->getYear());
         $this->assertSame(12, $date->getMonth());
         $this->assertNull($date->getDay());
@@ -42,9 +43,9 @@ class L0DateTest extends TestCase
 
     public function testWithYearOnly()
     {
-        $date = $this->createExtDateTime('2008');
+        $date = $this->createExtDate('2008');
 
-        $this->assertInstanceOf(ExtDateTime::class, $date);
+        $this->assertInstanceOf(ExtDate::class, $date);
         $this->assertSame(2008, $date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
@@ -52,9 +53,9 @@ class L0DateTest extends TestCase
 
     public function testNegativeYear()
     {
-        $date = $this->createExtDateTime('-0999');
+        $date = $this->createExtDate('-0999');
 
-        $this->assertInstanceOf(ExtDateTime::class, $date);
+        $this->assertInstanceOf(ExtDate::class, $date);
         $this->assertSame(-999, $date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
@@ -62,9 +63,9 @@ class L0DateTest extends TestCase
 
     public function testWithZeroYear()
     {
-        $date = $this->createExtDateTime('0000');
+        $date = $this->createExtDate('0000');
 
-        $this->assertInstanceOf(ExtDateTime::class, $date);
+        $this->assertInstanceOf(ExtDate::class, $date);
         $this->assertSame(0, $date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
@@ -72,9 +73,9 @@ class L0DateTest extends TestCase
 
     public function testWithEmptyDate()
     {
-        $date = $this->createExtDateTime("");
+        $date = $this->createExtDate("");
 
-        $this->assertInstanceOf(ExtDateTime::class, $date);
+        $this->assertInstanceOf(ExtDate::class, $date);
         $this->assertNull($date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());

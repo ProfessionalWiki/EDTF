@@ -5,8 +5,6 @@ declare(strict_types = 1);
 namespace EDTF;
 
 
-use EDTF\Contracts\DateTimeInterface;
-
 class Parser
 {
     private string $regexPattern = "/(?x) # Turns on free spacing mode for easier readability
@@ -48,9 +46,9 @@ class Parser
 
 					# Others start #
 						(?>T # Literal T
-						(?<hourNum>2[0-3]|[01][0-9]):
-						(?<minuteNum>[0-5][0-9]):
-						(?<secondNum>[0-5][0-9])
+						(?<hour>2[0-3]|[01][0-9]):
+						(?<minute>[0-5][0-9]):
+						(?<second>[0-5][0-9])
 						(?>(?<tzUtc>Z)|
 						(?<tzSign>[+-])
 						(?<tzHour>[01][0-9]):
@@ -58,66 +56,90 @@ class Parser
 					# Others end #
 					/";
 
-    public function parse(string $data): DateTimeInterface
+
+    private ?int $year = null;
+    private ?int $month = null;
+    private ?int $day = null;
+    private ?int $hour = null;
+    private ?int $minute = null;
+    private ?int $second = null;
+    private ?string $tzSign = null;
+    private ?int $tzMinute = null;
+    private ?int $tzHour = null;
+    private ?string $tzUtc = null;
+
+    public function parse(string $data): self
     {
-        if (false !== strpos($data, '/')) {
-            return $this->createInterval($data);
+        $stringTypes = ['tzUtc', 'tzSign'];
+
+        preg_match($this->regexPattern, $data, $matches);
+
+        if("" !== $data && count($matches) <= 1){
+            throw new \InvalidArgumentException(
+                sprintf("invalid data %s", $data)
+            );
         }
-        return $this->createExtDateTime($data);
+
+        foreach($matches as $name => $value){
+            if(is_int($name) || $value === ""){
+                continue;
+            }
+            if(!in_array($name, $stringTypes)){
+                $value = (int) $value;
+            }
+            $this->$name = $value;
+        }
+
+        return $this;
     }
 
-    public function createInterval(string $data): Interval
+    public function getTzUtc(): ?string
     {
-        $pos = strrpos($data, '/');
-
-        if(false === $pos){
-            throw new \Exception("Can't create interval from ${data}");
-        }
-
-        $startDateStr = substr( $data, 0, $pos );
-        $endDateStr   = substr( $data, $pos + 1 );
-        $interval = new Interval();
-
-        $startDate = $this->createExtDateTime($startDateStr, true);
-        $endDate = $this->createExtDateTime($endDateStr, true);
-
-        $interval
-            ->setStart($startDate)
-            ->setEnd($endDate)
-        ;
-        return $interval;
+        return $this->tzUtc;
     }
 
-    public function createExtDateTime(string $data, bool $isInterval = false): ExtDateTime
+    public function getYear(): ?int
     {
-        //@TODO: add a way to validate and handle invalid $data format
-
-        $regexPattern = $this->regexPattern;
-        $dateTime = new ExtDateTime();
-
-        if("" === $data){
-            $status = $isInterval ? ExtDateTime::STATUS_UNKNOWN : ExtDateTime::STATUS_UNUSED;
-            $dateTime->setStatus($status);
-        }elseif('..' === $data){
-            $dateTime->setStatus(ExtDateTime::STATUS_OPEN);
-        }else{
-            preg_match($regexPattern, $data, $matches);
-            $dateTime->fromRegexMatches($matches);
-            $dateTime->setStatus(ExtDateTime::STATUS_NORMAL);
-            $this->setDateQualification($data, $dateTime);
-        }
-
-        return $dateTime;
+        return $this->year;
     }
 
-    private function setDateQualification(string $data, ExtDateTime $dateTime): void
+    public function getMonth(): ?int
     {
-        if(false !== strpos($data, "~")){
-            $dateTime->setQualification(ExtDateTime::QUALIFICATION_APPROXIMATE);
-        }elseif(false !== strpos($data, "?")){
-            $dateTime->setQualification(ExtDateTime::QUALIFICATION_UNCERTAIN);
-        }elseif(false !== strpos($data, "%")){
-            $dateTime->setQualification(ExtDateTime::QUALIFICATION_BOTH);
-        }
+        return $this->month;
+    }
+
+    public function getDay(): ?int
+    {
+        return $this->day;
+    }
+
+    public function getHour(): ?int
+    {
+        return $this->hour;
+    }
+
+    public function getMinute(): ?int
+    {
+        return $this->minute;
+    }
+
+    public function getSecond(): ?int
+    {
+        return $this->second;
+    }
+
+    public function getTzSign(): ?string
+    {
+        return $this->tzSign;
+    }
+
+    public function getTzMinute(): ?int
+    {
+        return $this->tzMinute;
+    }
+
+    public function getTzHour(): ?int
+    {
+        return $this->tzHour;
     }
 }

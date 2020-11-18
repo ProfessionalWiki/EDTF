@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Functional;
 
 
 use EDTF\EDTF;
+use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
+use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,8 +28,8 @@ class L0IntervalTest extends TestCase
         $interval = $this->createInterval('1964/2008');
 
         $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getEnd());
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getStart());
+        $this->assertInstanceOf(ExtDate::class, $interval->getEnd());
+        $this->assertInstanceOf(ExtDate::class, $interval->getStart());
 
         $this->assertSame(1964, $interval->getStart()->getYear());
         $this->assertSame(2008, $interval->getEnd()->getYear());
@@ -38,8 +40,8 @@ class L0IntervalTest extends TestCase
         $interval = $this->createInterval("2004-06/2006-08");
 
         $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getEnd());
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getStart());
+        $this->assertInstanceOf(ExtDate::class, $interval->getEnd());
+        $this->assertInstanceOf(ExtDate::class, $interval->getStart());
 
         // lower tests
         $this->assertSame(2004, $interval->getStart()->getYear());
@@ -55,8 +57,8 @@ class L0IntervalTest extends TestCase
         $interval = $this->createInterval("2004-02-01/2005-02-08");
 
         $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getEnd());
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getStart());
+        $this->assertInstanceOf(ExtDate::class, $interval->getEnd());
+        $this->assertInstanceOf(ExtDate::class, $interval->getStart());
 
         // lower tests
         $this->assertSame(2004, $interval->getStart()->getYear());
@@ -74,8 +76,8 @@ class L0IntervalTest extends TestCase
         $interval = $this->createInterval("2004-02-01/2005-02");
 
         $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getEnd());
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getStart());
+        $this->assertInstanceOf(ExtDate::class, $interval->getEnd());
+        $this->assertInstanceOf(ExtDate::class, $interval->getStart());
 
         // lower tests
         $this->assertSame(2004, $interval->getStart()->getYear());
@@ -93,8 +95,8 @@ class L0IntervalTest extends TestCase
         $interval = $this->createInterval("2005/2006-02");
 
         $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getEnd());
-        $this->assertInstanceOf(ExtDateTime::class, $interval->getStart());
+        $this->assertInstanceOf(ExtDate::class, $interval->getEnd());
+        $this->assertInstanceOf(ExtDate::class, $interval->getStart());
 
         // lower tests
         $this->assertSame(2005, $interval->getStart()->getYear());
