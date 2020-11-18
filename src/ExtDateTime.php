@@ -48,7 +48,7 @@ class ExtDateTime extends ExtDate
         return $this->second;
     }
 
-    public function getTzSign(): ?int
+    public function getTzSign(): ?string
     {
         return $this->tzSign;
     }
