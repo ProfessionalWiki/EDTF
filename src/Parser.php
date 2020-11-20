@@ -63,12 +63,13 @@ class Parser
     private ?int $hour = null;
     private ?int $minute = null;
     private ?int $second = null;
+
     private ?string $tzSign = null;
     private ?int $tzMinute = null;
     private ?int $tzHour = null;
     private ?string $tzUtc = null;
 
-    public function parse(string $data): self
+    public function parse(string $data): object
     {
         $stringTypes = ['tzUtc', 'tzSign'];
 

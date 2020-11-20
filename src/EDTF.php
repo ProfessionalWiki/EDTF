@@ -19,9 +19,9 @@ class EDTF
         $parser->parse($data);
 
         if(!is_null($parser->getHour())){
-            return new ExtDateTime($parser);
+            return static::createExtDateTime($parser);
         }
-        return new ExtDate($parser);
+        return static::createExtDate($parser);
     }
 
     public static function createInterval(string $data): Interval
@@ -33,21 +33,38 @@ class EDTF
                 sprintf("Can't create interval from %s",$data)
             );
         }
-
-        $interval = new Interval();
         $startDateStr = substr( $data, 0, $pos );
         $endDateStr   = substr( $data, $pos + 1 );
-        $startParser = (new Parser())->parse($startDateStr);
-        $endParser = (new Parser())->parse($endDateStr);
 
-        $startDate = new ExtDate($startParser);
-        $endDate = new ExtDate($endParser);
-
-        $interval
-            ->setStart($startDate)
-            ->setEnd($endDate)
-        ;
-        return $interval;
+        $startDate = static::createIntervalPair($startDateStr);
+        $endDate = static::createIntervalPair($endDateStr);
+        return new Interval($startDate, $endDate);
     }
 
+    public static function createExtDateTime(Parser $parser): ExtDateTime
+    {
+        return new ExtDateTime(
+            $parser->getYear(),
+            $parser->getMonth(),
+            $parser->getDay(),
+            $parser->getHour(),
+            $parser->getMinute(),
+            $parser->getSecond(),
+            $parser->getTzSign(),
+            $parser->getTzHour(),
+            $parser->getTzMinute()
+        );
+    }
+
+    public static function createExtDate(Parser $parser): ExtDate
+    {
+        return new ExtDate($parser->getYear(), $parser->getMonth(), $parser->getDay());
+    }
+
+    private static function createIntervalPair($data): ExtDate
+    {
+        $parser = new Parser();
+        $parser->parse($data);
+        return static::createExtDate($parser);
+    }
 }

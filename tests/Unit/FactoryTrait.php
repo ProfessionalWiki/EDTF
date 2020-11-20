@@ -16,13 +16,13 @@ trait FactoryTrait
     public function createExtDate(string $data): ExtDate
     {
         $parser = $this->parse($data);
-        return new ExtDate($parser);
+        return EDTF::createExtDate($parser);
     }
 
     public function createExtDateTime(string $data): ExtDateTime
     {
         $parser = $this->parse($data);
-        return new ExtDateTime($parser);
+        return EDTF::createExtDateTime($parser);
     }
 
     public function createInterval(string $data): Interval

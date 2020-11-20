@@ -14,16 +14,26 @@ class ExtDateTime extends ExtDate
     private ?int $tzHour;
     private int $timezoneOffset = 0;
 
-    public function __construct(Parser $parser)
+    public function __construct(
+        ?int $year,
+        ?int $month,
+        ?int $day,
+        ?int $hour,
+        ?int $minute,
+        ?int $second,
+        ?string $tzSign,
+        ?int $tzHour,
+        ?int $tzMinute
+    )
     {
-        parent::__construct($parser);
+        parent::__construct($year, $month, $day);
 
-        $this->hour = $parser->getHour();
-        $this->minute = $parser->getMinute();
-        $this->second = $parser->getSecond();
-        $this->tzSign = $parser->getTzSign();
-        $this->tzMinute = $parser->getTzMinute();
-        $this->tzHour = $parser->getTzHour();
+        $this->hour = $hour;
+        $this->minute = $minute;
+        $this->second = $second;
+        $this->tzSign = $tzSign;
+        $this->tzMinute = $tzMinute;
+        $this->tzHour = $tzHour;
 
         if(!is_null($this->tzSign)){
             $sign = "+" === $this->tzSign ? 1:-1;

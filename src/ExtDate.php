@@ -11,14 +11,11 @@ class ExtDate
     protected ?int $month;
     protected ?int $day;
 
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __construct(?int $year, ?int $month, ?int $day)
     {
-        $this->parser = $parser;
-        $this->year = $parser->getYear();
-        $this->month = $parser->getMonth();
-        $this->day = $parser->getDay();
+        $this->year = $year;
+        $this->month = $month;
+        $this->day = $day;
     }
 
     public function getYear(): ?int
