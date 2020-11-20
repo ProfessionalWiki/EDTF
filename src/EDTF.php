@@ -63,7 +63,7 @@ class EDTF
         return new ExtDate($parser->getYear(), $parser->getMonth(), $parser->getDay());
     }
 
-    private static function createIntervalPair($data): ExtDate
+    private static function createIntervalPair(string $data): ExtDate
     {
         $parser = new Parser();
         $parser->parse($data);
