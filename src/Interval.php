@@ -8,21 +8,24 @@ use EDTF\Contracts\ExtDateInterface;
 
 class Interval implements ExtDateInterface
 {
-    private ?ExtDate $start = null;
-    private ?ExtDate $end = null;
+    private ExtDate $start;
+    private ExtDate $end;
 
-    public function __construct(ExtDate $start, ExtDate $end)
+    /**
+     * @psalm-suppress PropertyTypeCoercion
+     */
+    public function __construct(object $start, object $end)
     {
         $this->start = $start;
         $this->end = $end;
     }
 
-    public function getStart(): ?ExtDate
+    public function getStart(): ExtDate
     {
         return $this->start;
     }
 
-    public function getEnd(): ?ExtDate
+    public function getEnd(): ExtDate
     {
         return $this->end;
     }

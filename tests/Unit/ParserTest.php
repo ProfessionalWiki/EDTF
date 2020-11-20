@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace EDTF\Tests\Unit;
 
 
+use EDTF\ExtDate;
+use EDTF\Interval;
 use EDTF\Parser;
 use PHPUnit\Framework\TestCase;
 
@@ -16,6 +18,21 @@ use PHPUnit\Framework\TestCase;
  */
 class ParserTest extends TestCase
 {
+    use FactoryTrait;
+
+    public function testCreatingEdtfObjects()
+    {
+        $this->assertInstanceOf(ExtDate::class, $this->parse('2016-03-01'));
+        $this->assertInstanceOf(Interval::class, $this->parse('2016/2019'));
+    }
+
+    public function testThrowExceptionWhenCreatingEdtfFromEmptyString()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->parse("");
+    }
+
     public function testShouldParseCompleteDate()
     {
         $parser = new Parser();
@@ -66,13 +83,6 @@ class ParserTest extends TestCase
         $this->assertSame(10, $parser->getSecond());
         $this->assertSame(5, $parser->getTzHour());
         $this->assertSame(30, $parser->getTzMinute());
-    }
-
-    public function testShouldParseEmptyString()
-    {
-        $parser = new Parser();
-        $parser->parse('');
-        $this->assertNull($parser->getYear());
     }
 
     public function testThrowExceptionOnInvalidDataFormat()

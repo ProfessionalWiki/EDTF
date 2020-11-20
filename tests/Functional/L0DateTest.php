@@ -70,14 +70,4 @@ class L0DateTest extends TestCase
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
     }
-
-    public function testWithEmptyDate()
-    {
-        $date = $this->createExtDate("");
-
-        $this->assertInstanceOf(ExtDate::class, $date);
-        $this->assertNull($date->getYear());
-        $this->assertNull($date->getMonth());
-        $this->assertNull($date->getDay());
-    }
 }

@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace EDTF;
 
 
+use EDTF\Contracts\ExtDateInterface;
+
 class Parser
 {
     private string $regexPattern = "/(?x) # Turns on free spacing mode for easier readability
@@ -69,7 +71,25 @@ class Parser
     private ?int $tzHour = null;
     private ?string $tzUtc = null;
 
-    public function parse(string $data): object
+    private function createInterval(string $data): ExtDateInterface
+    {
+        $pos = strrpos($data, '/');
+
+        if(false === $pos){
+            throw new \InvalidArgumentException(
+                sprintf("Can't create interval from %s",$data)
+            );
+        }
+        $startDateStr = substr( $data, 0, $pos );
+        $endDateStr   = substr( $data, $pos + 1 );
+
+        $startDate = $this->createIntervalPair($startDateStr);
+        $endDate = $this->createIntervalPair($endDateStr);
+
+        return new Interval($startDate, $endDate);
+    }
+
+    private function doParse(string $data): object
     {
         $stringTypes = ['tzUtc', 'tzSign'];
 
@@ -92,6 +112,49 @@ class Parser
         }
 
         return $this;
+    }
+
+    private function createIntervalPair(string $data): object
+    {
+        $parser = new Parser();
+        return $parser->parse($data);
+    }
+
+    private function createExtDate(): ExtDate
+    {
+        return new ExtDate($this->getYear(), $this->getMonth(), $this->getDay());
+    }
+
+    public function parse(string $data): ExtDateInterface
+    {
+        if("" === $data){
+            throw new \InvalidArgumentException("Can't create EDTF from empty string.");
+        }
+        if (false !== strpos($data, '/')) {
+            return $this->createInterval($data);
+        }
+
+        $this->doParse($data);
+
+        if(!is_null($this->getHour())){
+            return $this->createExtDateTime();
+        }
+        return $this->createExtDate();
+    }
+
+    public function createExtDateTime(): ExtDateTime
+    {
+        return new ExtDateTime(
+            $this->year,
+            $this->month,
+            $this->day,
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->tzSign,
+            $this->tzHour,
+            $this->tzMinute
+        );
     }
 
     public function getTzUtc(): ?string

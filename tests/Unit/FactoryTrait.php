@@ -15,26 +15,22 @@ trait FactoryTrait
 {
     public function createExtDate(string $data): ExtDate
     {
-        $parser = $this->parse($data);
-        return EDTF::createExtDate($parser);
+        return $this->parse($data);
     }
 
     public function createExtDateTime(string $data): ExtDateTime
     {
-        $parser = $this->parse($data);
-        return EDTF::createExtDateTime($parser);
+        return $this->parse($data);
     }
 
     public function createInterval(string $data): Interval
     {
-        return EDTF::createInterval($data);
+        return $this->parse($data);
     }
 
-    private function parse($data): Parser
+    private function parse($data): object
     {
         $parser = new Parser();
-        $parser->parse($data);
-
-        return $parser;
+        return $parser->parse($data);
     }
 }
