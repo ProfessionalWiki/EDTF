@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-class Interval
+use EDTF\Contracts\ExtDateInterface;
+
+class Interval implements ExtDateInterface
 {
     private ?ExtDate $start = null;
     private ?ExtDate $end = null;

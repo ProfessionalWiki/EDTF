@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace EDTF;
 
 
-class ExtDate
+use EDTF\Contracts\ExtDateInterface;
+
+class ExtDate implements ExtDateInterface
 {
     protected ?int $year;
     protected ?int $month;

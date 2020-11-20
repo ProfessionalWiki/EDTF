@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace EDTF;
 
+use EDTF\Contracts\ExtDateInterface;
+
 class EDTF
 {
-    public static function from(string $data): object
+    public static function from(string $data): ExtDateInterface
     {
         if("" === $data){
             throw new \InvalidArgumentException("Can't create EDTF from empty string.");
