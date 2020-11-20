@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Functional;
 
 
 use EDTF\EDTF;
 use EDTF\ExtDateTime;
+use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**

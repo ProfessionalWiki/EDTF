@@ -4,32 +4,29 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-use EDTF\Contracts\DateTimeInterface;
+use EDTF\Contracts\ExtDateInterface;
 
-class Interval implements DateTimeInterface
+class Interval implements ExtDateInterface
 {
-    private ?ExtDateTime $start = null;
-    private ?ExtDateTime $end = null;
+    private ExtDate $start;
+    private ExtDate $end;
 
-    public function getStart(): ?ExtDateTime
+    /**
+     * @psalm-suppress PropertyTypeCoercion
+     */
+    public function __construct(object $start, object $end)
+    {
+        $this->start = $start;
+        $this->end = $end;
+    }
+
+    public function getStart(): ExtDate
     {
         return $this->start;
     }
 
-    public function setStart(ExtDateTime $start): Interval
-    {
-        $this->start = $start;
-        return $this;
-    }
-
-    public function getEnd(): ?ExtDateTime
+    public function getEnd(): ExtDate
     {
         return $this->end;
-    }
-
-    public function setEnd(ExtDateTime $end): Interval
-    {
-        $this->end = $end;
-        return $this;
     }
 }
