@@ -15,15 +15,15 @@ class ExtDateTime extends ExtDate
     private int $timezoneOffset = 0;
 
     public function __construct(
-        ?int $year,
-        ?int $month,
-        ?int $day,
-        ?int $hour,
-        ?int $minute,
-        ?int $second,
-        ?string $tzSign,
-        ?int $tzHour,
-        ?int $tzMinute
+        ?int $year = null,
+        ?int $month = null,
+        ?int $day = null,
+        ?int $hour = null,
+        ?int $minute = null,
+        ?int $second = null,
+        ?string $tzSign = null,
+        ?int $tzHour = null,
+        ?int $tzMinute  = null
     )
     {
         parent::__construct($year, $month, $day);
@@ -35,7 +35,7 @@ class ExtDateTime extends ExtDate
         $this->tzMinute = $tzMinute;
         $this->tzHour = $tzHour;
 
-        if(!is_null($this->tzSign)){
+        if(!is_null($this->tzSign) && $this->tzSign !== 'Z'){
             $sign = "+" === $this->tzSign ? 1:-1;
             $tzHour = !is_null($this->tzHour) ? $this->tzHour:0;
             $tzMinute = !is_null($this->tzMinute) ? $this->tzMinute:0;

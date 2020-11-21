@@ -1,24 +1,31 @@
 <?php
 
-declare(strict_types=1);
+namespace EDTF\Tests\Unit;
 
-namespace EDTF\Tests\Functional;
-
-
-use EDTF\EDTF;
 use EDTF\ExtDateTime;
-use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class L0DateAndTimeTest
- * @covers \EDTF\Parser
+ * Class ExtDateTimeTest
+ *
  * @covers \EDTF\ExtDateTime
  * @package EDTF\Tests\Unit
  */
-class L0DateTimeTest extends TestCase
+class ExtDateTimeTest extends TestCase
 {
     use FactoryTrait;
+
+    public function testCreate()
+    {
+        $dt = new ExtDateTime(2010,10,1,1,1,1);
+
+        $this->assertSame(2010, $dt->getYear());
+        $this->assertSame(10, $dt->getMonth());
+        $this->assertSame(1, $dt->getDay());
+        $this->assertSame(1, $dt->getHour());
+        $this->assertSame(1, $dt->getMinute());
+        $this->assertSame(1, $dt->getSecond());
+    }
 
     public function testDefaultUTC()
     {

@@ -8,16 +8,27 @@ use EDTF\Contracts\ExtDateInterface;
 
 class Interval implements ExtDateInterface
 {
+    const NORMAL    = 0;
+    const OPEN      = 1;
+    const UNKNOWN   = 2;
+
     private ExtDate $start;
     private ExtDate $end;
+    private ?int $significantDigit;
+    private ?int $estimated;
 
-    /**
-     * @psalm-suppress PropertyTypeCoercion
-     */
-    public function __construct(object $start, object $end)
+
+    public function __construct(
+        ExtDate $start,
+        ExtDate $end,
+        ?int $significantDigit = null,
+        ?int $estimated = null
+    )
     {
         $this->start = $start;
         $this->end = $end;
+        $this->significantDigit = $significantDigit;
+        $this->estimated = $estimated;
     }
 
     public function getStart(): ExtDate
@@ -28,5 +39,15 @@ class Interval implements ExtDateInterface
     public function getEnd(): ExtDate
     {
         return $this->end;
+    }
+
+    public function getSignificantDigit(): ?int
+    {
+        return $this->significantDigit;
+    }
+
+    public function getEstimated(): ?int
+    {
+        return $this->estimated;
     }
 }
