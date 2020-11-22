@@ -37,6 +37,9 @@ class Qualification
         $this->day = $day;
     }
 
+    /**
+     * @psalm-suppress PossiblyNullArrayOffset
+     */
     public static function from(Parser $parser): self
     {
         $year = self::UNDEFINED;

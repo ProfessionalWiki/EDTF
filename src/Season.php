@@ -8,9 +8,9 @@ use EDTF\Contracts\ExtDateInterface;
 
 class Season implements ExtDateInterface
 {
-    private ?int $year;
+    private int $year;
 
-    private ?int $season;
+    private int $season;
 
     public const MAP = [
         21 => 'Spring',
@@ -36,7 +36,7 @@ class Season implements ExtDateInterface
         41 => 'Semester 2',
     ];
 
-    public function __construct(?int $year = null, ?int $season = null)
+    public function __construct(int $year, int $season)
     {
         $this->year = $year;
         $this->season = $season;
@@ -52,7 +52,7 @@ class Season implements ExtDateInterface
         return $this->season;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return self::MAP[$this->season];
     }

@@ -12,15 +12,15 @@ class Interval implements ExtDateInterface
     const OPEN      = 1;
     const UNKNOWN   = 2;
 
-    private ExtDate $start;
-    private ExtDate $end;
+    private ExtDateInterface $start;
+    private ExtDateInterface $end;
     private ?int $significantDigit;
     private ?int $estimated;
 
 
     public function __construct(
-        ExtDate $start,
-        ExtDate $end,
+        ExtDateInterface $start,
+        ExtDateInterface $end,
         ?int $significantDigit = null,
         ?int $estimated = null
     )
@@ -68,12 +68,12 @@ class Interval implements ExtDateInterface
         return new self($start, $end, $significantDigit, $estimated);
     }
 
-    public function getStart(): ExtDate
+    public function getStart(): ExtDateInterface
     {
         return $this->start;
     }
 
-    public function getEnd(): ExtDate
+    public function getEnd(): ExtDateInterface
     {
         return $this->end;
     }

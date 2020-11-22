@@ -11,7 +11,7 @@ class Parser
 {
     private string $regexPattern;
 
-    private string $input;
+    private string $input = "";
 
     private ?int $yearNum = null;
     private ?int $monthNum = null;
@@ -80,6 +80,9 @@ class Parser
         }
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference
+     */
     private function doParse(string $input, bool $intervalMode = false): self
     {
         $input = strtoupper($input);
@@ -114,6 +117,7 @@ class Parser
                     $value = str_replace('X', '0', $value);
                 }
             }
+
             $r = new \ReflectionProperty(__CLASS__, $name);
             $type = $r->getType()->getName();
             if('int' === $type){
@@ -169,6 +173,9 @@ class Parser
             return Interval::createSignificantDigitInterval($this);
         }
         elseif($this->season > 0){
+            /**
+             * @psalm-suppress PossiblyNullArgument
+             */
             return new Season($this->yearNum, $this->season);
         }
         return ExtDate::from($this);
