@@ -43,6 +43,23 @@ class ExtDateTime extends ExtDate
         }
     }
 
+    public static function from(Parser $parser): self
+    {
+        $tzSign = "Z" == $parser->getTzUtc() ? "Z":$parser->getTzSign();
+
+        return new self(
+            $parser->getYearNum(),
+            $parser->getMonthNum(),
+            $parser->getDayNum(),
+            $parser->getHour(),
+            $parser->getMinute(),
+            $parser->getSecond(),
+            $tzSign,
+            $parser->getTzHour(),
+            $parser->getTzMinute()
+        );
+    }
+
     public function getHour(): ?int
     {
         return $this->hour;

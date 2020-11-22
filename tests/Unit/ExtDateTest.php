@@ -28,7 +28,7 @@ class ExtDateTest extends TestCase
         $this->assertSame(10, $d->getMonth());
         $this->assertSame(1, $d->getDay());
         $this->assertSame($q, $d->getQualification());
-        $this->assertSame($u, $d->getUnspecified());
+        $this->assertSame($u, $d->getUnspecifiedDigit());
     }
 
     public function testShouldProvideUncertainInfo()
@@ -80,7 +80,7 @@ class ExtDateTest extends TestCase
         $date = $this->createExtDate('0000');
 
         $this->assertInstanceOf(ExtDate::class, $date);
-        $this->assertSame(0, $date->getYear());
+        $this->assertNull($date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
     }

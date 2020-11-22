@@ -21,6 +21,15 @@ class UnspecifiedDigit
         $this->day = $day;
     }
 
+    public static function from(Parser $parser): self
+    {
+        return new self(
+            $parser->getYearUnspecified(),
+            $parser->getMonthUnspecified(),
+            $parser->getDayUnspecified()
+        );
+    }
+
     public function specified(?string $part = null): bool
     {
         return false === $this->unspecified($part);

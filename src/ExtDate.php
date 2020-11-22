@@ -15,7 +15,7 @@ class ExtDate implements ExtDateInterface
 
     // level 1 props
     private Qualification $qualification;
-    private UnspecifiedDigit $unspecified;
+    private UnspecifiedDigit $unspecifiedDigit;
     private int $intervalType;
 
     public function __construct(?int $year = null,
@@ -23,14 +23,28 @@ class ExtDate implements ExtDateInterface
                                 ?int $day = null,
                                 ?Qualification $qualification = null,
                                 ?UnspecifiedDigit  $unspecified = null,
-                                int $intervalType = 0)
-    {
+                                int $intervalType = 0
+    ){
         $this->year = $year;
         $this->month = $month;
         $this->day = $day;
         $this->qualification = is_null($qualification) ? new Qualification():$qualification;
-        $this->unspecified = is_null($unspecified) ? new UnspecifiedDigit():$unspecified;
+        $this->unspecifiedDigit = is_null($unspecified) ? new UnspecifiedDigit():$unspecified;
         $this->intervalType = $intervalType;
+    }
+
+    public static function from(Parser $parser): self
+    {
+        $q = Qualification::from($parser);
+        $u = UnspecifiedDigit::from($parser);
+        return new self(
+            $parser->getYearNum(),
+            $parser->getMonthNum(),
+            $parser->getDayNum(),
+            $q,
+            $u,
+            $parser->getIntervalType()
+        );
     }
 
     public function uncertain(?string $part = null): bool
@@ -51,7 +65,7 @@ class ExtDate implements ExtDateInterface
 
     public function unspecified(?string $part = null): bool
     {
-        return $this->unspecified->unspecified($part);
+        return $this->unspecifiedDigit->unspecified($part);
     }
 
     public function isNormalInterval(): bool
@@ -74,9 +88,9 @@ class ExtDate implements ExtDateInterface
         return $this->qualification;
     }
 
-    public function getUnspecified(): UnspecifiedDigit
+    public function getUnspecifiedDigit(): UnspecifiedDigit
     {
-        return $this->unspecified;
+        return $this->unspecifiedDigit;
     }
 
     public function getYear(): ?int

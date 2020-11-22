@@ -9,7 +9,7 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class L2UnspecifiedDigitTest
+ * Class UnspecifiedDigitTest
  *
  * @covers \EDTF\Parser
  * @covers \EDTF\ExtDate

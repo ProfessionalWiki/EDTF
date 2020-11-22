@@ -9,7 +9,6 @@ use EDTF\ExtDate;
 use EDTF\Interval;
 use EDTF\Parser;
 use EDTF\Qualification;
-use EDTF\Set;
 use EDTF\UnspecifiedDigit;
 use PHPUnit\Framework\TestCase;
 
@@ -39,6 +38,12 @@ class ParserTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->createParser("");
+    }
+
+    public function testShouldStoreInput()
+    {
+        $parser = $this->createParser('1984');
+        $this->assertSame('1984', $parser->getInput());
     }
 
     public function testShouldParseCompleteDate()
@@ -127,22 +132,22 @@ class ParserTest extends TestCase
     {
         $parser = $this->createParser('?1984');
         $this->assertSame(1984, $parser->getYearNum());
-        $this->assertSame(Qualification::UNCERTAIN, $parser->getYearQualification());
+        $this->assertSame("?", $parser->getYearOpenFlag());
 
         $parser = $this->createParser('1984?');
         $this->assertSame(1984, $parser->getYearNum());
-        $this->assertSame(Qualification::UNCERTAIN, $parser->getYearQualification());
+        $this->assertSame("?", $parser->getYearCloseFlag());
     }
 
     public function testShouldParseQualificationWithinMonth()
     {
         $parser = $this->createParser("1984-02%");
         $this->assertSame(2, $parser->getMonthNum());
-        $this->assertSame(Qualification::UNCERTAIN_AND_APPROXIMATE, $parser->getMonthQualification());
+        $this->assertSame("%", $parser->getMonthCloseFlag());
 
         $parser = $this->createParser("1984-02~");
         $this->assertSame(2, $parser->getMonthNum());
-        $this->assertSame(Qualification::APPROXIMATE, $parser->getMonthQualification());
+        $this->assertSame("~", $parser->getMonthCloseFlag());
     }
 
     public function testShouldParseQualificationWithinDay()
@@ -150,12 +155,20 @@ class ParserTest extends TestCase
         $parser = $this->createParser("1984-02-01~");
         $this->assertSame(2, $parser->getMonthNum());
         $this->assertSame(1, $parser->getDayNum());
-        $this->assertSame(Qualification::APPROXIMATE, $parser->getDayQualification());
+        $this->assertSame("~", $parser->getDayCloseFlag());
 
         $parser = $this->createParser("1984-02-01%");
         $this->assertSame(2, $parser->getMonthNum());
         $this->assertSame(1, $parser->getDayNum());
-        $this->assertSame(Qualification::UNCERTAIN_AND_APPROXIMATE, $parser->getDayQualification());
+        $this->assertSame("%", $parser->getDayCloseFlag());
+    }
+
+    public function testShouldParseQualificationInDatePart()
+    {
+        $parser = $this->createParser('~1984-%02-?01');
+        $this->assertSame("~", $parser->getYearOpenFlag());
+        $this->assertSame("%", $parser->getMonthOpenFlag());
+        $this->assertSame("?", $parser->getDayOpenFlag());
     }
 
     public function testParseUnspecifiedDigitWithYearPrecision()

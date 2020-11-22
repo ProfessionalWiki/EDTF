@@ -37,6 +37,61 @@ class Qualification
         $this->day = $day;
     }
 
+    public static function from(Parser $parser): self
+    {
+        $year = self::UNDEFINED;
+        $month = self::UNDEFINED;
+        $day = self::UNDEFINED;
+        $map = [
+            '%' => self::UNCERTAIN_AND_APPROXIMATE,
+            '?' => self::UNCERTAIN,
+            '~' => self::APPROXIMATE,
+        ];
+
+        if(!is_null($parser->getYearCloseFlag())
+            || !is_null($parser->getMonthCloseFlag())
+            || !is_null($parser->getDayCloseFlag())
+        ){
+            $includeYear = false;
+            $includeMonth = false;
+            $includeDay = false;
+            $q = Qualification::UNDEFINED;
+
+            if(!is_null($parser->getYearCloseFlag())){
+                // applied only to year
+                $includeYear = true;
+                $q = $map[$parser->getYearCloseFlag()];
+            }elseif(!is_null($parser->getMonthCloseFlag())){
+                // applied only to year, and month
+                $includeYear = true;
+                $includeMonth = true;
+                $q = $map[$parser->getMonthCloseFlag()];
+            }elseif(!is_null($parser->getDayCloseFlag())){
+                // applied to year, month, and day
+                $includeYear = true;
+                $includeMonth = true;
+                $includeDay = true;
+                $q = $map[$parser->getDayCloseFlag()];
+            }
+
+            $year = $includeYear ? $q:$year;
+            $month = $includeMonth ? $q:$month;
+            $day = $includeDay ? $q:$day;
+        }
+
+        // handle level 2 qualification
+        if(!is_null($parser->getYearOpenFlag())){
+            $year = $map[$parser->getYearOpenFlag()];
+        }
+        if(!is_null($parser->getMonthOpenFlag())){
+            $month = $map[$parser->getMonthOpenFlag()];
+        }
+        if(!is_null($parser->getDayOpenFlag())){
+            $day = $map[$parser->getDayOpenFlag()];
+        }
+        return new self($year, $month, $day);
+    }
+
     public function undefined(string $part): bool
     {
         $this->validatePartName($part);
