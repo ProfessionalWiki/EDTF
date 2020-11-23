@@ -9,152 +9,200 @@ use EDTF\Contracts\ExtDateInterface;
 
 class Parser
 {
-    private string $regexPattern = "/(?x) # Turns on free spacing mode for easier readability
+    private string $regexPattern;
 
-					# Year start
-						(?<year>
-						    (?<yearOpenFlags>[~?%]{0,2})
-							(?<yearNum>[+-]?(?:\d+e\d+|[0-9u][0-9ux]*))
-							(?>S # Literal S letter. It is for the significant digit indicator
-							(?<yearPrecision>\d+))?
-							(?<yearCloseFlag>\)?[~%?]{0,2})
-						)
-					# Year end
+    private string $input = "";
 
-					(?>- # Literal - (hyphen)
+    private ?string $year = null;
+    private ?string $month = null;
+    private ?string $day = null;
 
-					# Month start
-						(?<month>
-							(?<monthOpenParents>\(+)?
-							(?<monthNum>
-								(?>1[0-9u]|[0u][0-9u]|2[1-4])
-							)
-							(?>\^
-								(?<seasonQualifier>[\P{L}\P{N}\P{M}:.-]+)
-							)?
-						)
+    private ?int $yearNum = null;
+    private ?int $monthNum = null;
+    private ?int $dayNum = null;
 
-						(?<monthEnd>(?:\)?[~?]{0,2}){0,2})
-					# Month end
-
-					(?>- # Literal - (hyphen)
-
-					# Day start
-						(?<day>
-						(?<dayOpenParents>\(+)?
-						(?<dayNum>(?>[012u][0-9u]|3[01u])))
-						(?<dayEnd>[)~%?]*)
-					# Day end
-
-					# Others start #
-						(?>T # Literal T
-						(?<hour>2[0-3]|[01][0-9]):
-						(?<minute>[0-5][0-9]):
-						(?<second>[0-5][0-9])
-						(?>(?<tzUtc>Z)|
-						(?<tzSign>[+-])
-						(?<tzHour>[01][0-9]):
-						(?<tzMinute>[0-5][0-9]))?)?)?)?$
-					# Others end #
-					/";
-
-
-    private ?int $year = null;
-    private ?int $month = null;
-    private ?int $day = null;
     private ?int $hour = null;
     private ?int $minute = null;
     private ?int $second = null;
+    private int $season = 0;
 
     private ?string $tzSign = null;
     private ?int $tzMinute = null;
     private ?int $tzHour = null;
     private ?string $tzUtc = null;
 
-    private function createInterval(string $data): ExtDateInterface
+    // qualification level 1 and 2 qualification props
+    private ?string $yearOpenFlag = null;
+    private ?string $monthOpenFlag = null;
+    private ?string $dayOpenFlag = null;
+    private ?string $yearCloseFlag = null;
+    private ?string $monthCloseFlag = null;
+    private ?string $dayCloseFlag = null;
+
+    private int $intervalType = 0;
+
+    private ?int $yearSignificantDigit = null;
+
+    private array $matches = [];
+
+    public function __construct()
     {
-        $pos = strrpos($data, '/');
-
-        if(false === $pos){
-            throw new \InvalidArgumentException(
-                sprintf("Can't create interval from %s",$data)
-            );
-        }
-        $startDateStr = substr( $data, 0, $pos );
-        $endDateStr   = substr( $data, $pos + 1 );
-
-        $startDate = $this->createIntervalPair($startDateStr);
-        $endDate = $this->createIntervalPair($endDateStr);
-
-        return new Interval($startDate, $endDate);
+        $patterns = file_get_contents(__DIR__.'/../config/regex.txt');
+        $this->regexPattern = '/'.$patterns.'/';
     }
 
-    private function doParse(string $data): object
+    public function parse(string $input, bool $intervalMode = false): self
     {
-        $stringTypes = ['tzUtc', 'tzSign'];
-
-        preg_match($this->regexPattern, $data, $matches);
-
-        if("" !== $data && count($matches) <= 1){
-            throw new \InvalidArgumentException(
-                sprintf("invalid data %s", $data)
-            );
+        if(false === $intervalMode && "" === $input){
+            throw new \InvalidArgumentException("Can't create EDTF from empty string.");
         }
 
+        $input = strtoupper($input);
+        $this->input = $input;
+        if($intervalMode && "" === $input){
+            $this->intervalType = Interval::UNKNOWN;
+            return $this;
+        }
+
+        if($intervalMode && ".." === $input) {
+            $this->intervalType = Interval::OPEN;
+            return $this;
+        }
+        $unspecifiedParts = [
+            'yearNum', 'monthNum', 'dayNum'
+        ];
+
+        preg_match($this->regexPattern, $input, $matches);
+
         foreach($matches as $name => $value){
-            if(is_int($name) || $value === ""){
+            if(is_int($name) || "" == $value || !property_exists(__CLASS__, $name)){
                 continue;
             }
-            if(!in_array($name, $stringTypes)){
+
+            if(in_array($name, $unspecifiedParts)){
+                // convert unspecified digit into zero
+                if(false !== strpos($value, 'X')){
+                    $value = str_replace('X', '0', $value);
+                }
+            }
+
+            $r = new \ReflectionProperty(__CLASS__, $name);
+            $type = $r->getType();
+            if($type instanceof \ReflectionNamedType && 'int' === $type->getName()){
                 $value = (int) $value;
+                // convert zero value into null
+                if(0 === $value){
+                    $value = null;
+                }
             }
             $this->$name = $value;
         }
 
+        // convert month into season
+        if($this->monthNum > 12){
+            $this->monthNum = null;
+            $this->season = (int)$matches['monthNum'];
+        }
+
+        $this->matches = $matches;
+
+        $validator = new ParserValidator($this);
+        if(!$validator->isValid()){
+            throw new \InvalidArgumentException($validator->getMessages());
+        }
         return $this;
     }
 
-    private function createIntervalPair(string $data): object
+    public function createEdtf(string $input, bool $intervalMode=false): ExtDateInterface
     {
-        $parser = new Parser();
-        return $parser->parse($data);
-    }
-
-    private function createExtDate(): ExtDate
-    {
-        return new ExtDate($this->getYear(), $this->getMonth(), $this->getDay());
-    }
-
-    public function parse(string $data): ExtDateInterface
-    {
-        if("" === $data){
-            throw new \InvalidArgumentException("Can't create EDTF from empty string.");
-        }
-        if (false !== strpos($data, '/')) {
-            return $this->createInterval($data);
+        if (false !== strpos($input, '/')) {
+            return Interval::from($input);
+        }elseif(false !== strpos($input, '{') || false !== strpos($input, '[')){
+            return Set::from($input);
         }
 
-        $this->doParse($data);
+        $this->parse($input, $intervalMode);
 
         if(!is_null($this->getHour())){
-            return $this->createExtDateTime();
+            return ExtDateTime::from($this);
         }
-        return $this->createExtDate();
+        elseif(null !== $this->yearSignificantDigit){
+            return Interval::createSignificantDigitInterval($this);
+        }
+        elseif($this->season){
+            return Season::from($this);
+        }
+        return ExtDate::from($this);
     }
 
-    public function createExtDateTime(): ExtDateTime
+    public function getMatches(): array
     {
-        return new ExtDateTime(
-            $this->year,
-            $this->month,
-            $this->day,
-            $this->hour,
-            $this->minute,
-            $this->second,
-            $this->tzSign,
-            $this->tzHour,
-            $this->tzMinute
-        );
+        return $this->matches;
+    }
+
+    public function getInput(): string
+    {
+        return $this->input;
+    }
+
+    public function getYear(): ?string
+    {
+        return $this->year;
+    }
+
+    public function getMonth(): ?string
+    {
+        return $this->month;
+    }
+
+    public function getDay(): ?string
+    {
+        return $this->day;
+    }
+
+    public function getYearOpenFlag(): ?string
+    {
+        return $this->yearOpenFlag;
+    }
+
+    public function getMonthOpenFlag(): ?string
+    {
+        return $this->monthOpenFlag;
+    }
+
+    public function getDayOpenFlag(): ?string
+    {
+        return $this->dayOpenFlag;
+    }
+
+    public function getYearCloseFlag(): ?string
+    {
+        return $this->yearCloseFlag;
+    }
+
+    public function getMonthCloseFlag(): ?string
+    {
+        return $this->monthCloseFlag;
+    }
+
+    public function getDayCloseFlag(): ?string
+    {
+        return $this->dayCloseFlag;
+    }
+
+    public function getYearSignificantDigit(): ?int
+    {
+        return $this->yearSignificantDigit;
+    }
+
+    public function getIntervalType(): int
+    {
+        return $this->intervalType;
+    }
+
+    public function getSeason(): ?int
+    {
+        return $this->season;
     }
 
     public function getTzUtc(): ?string
@@ -162,19 +210,19 @@ class Parser
         return $this->tzUtc;
     }
 
-    public function getYear(): ?int
+    public function getYearNum(): ?int
     {
-        return $this->year;
+        return $this->yearNum;
     }
 
-    public function getMonth(): ?int
+    public function getMonthNum(): ?int
     {
-        return $this->month;
+        return $this->monthNum;
     }
 
-    public function getDay(): ?int
+    public function getDayNum(): ?int
     {
-        return $this->day;
+        return $this->dayNum;
     }
 
     public function getHour(): ?int

@@ -15,18 +15,19 @@ class ExtDateTime extends ExtDate
     private int $timezoneOffset = 0;
 
     public function __construct(
-        ?int $year,
-        ?int $month,
-        ?int $day,
-        ?int $hour,
-        ?int $minute,
-        ?int $second,
-        ?string $tzSign,
-        ?int $tzHour,
-        ?int $tzMinute
+        string $input = "",
+        ?int $year = null,
+        ?int $month = null,
+        ?int $day = null,
+        ?int $hour = null,
+        ?int $minute = null,
+        ?int $second = null,
+        ?string $tzSign = null,
+        ?int $tzHour = null,
+        ?int $tzMinute  = null
     )
     {
-        parent::__construct($year, $month, $day);
+        parent::__construct($input, $year, $month, $day);
 
         $this->hour = $hour;
         $this->minute = $minute;
@@ -35,12 +36,30 @@ class ExtDateTime extends ExtDate
         $this->tzMinute = $tzMinute;
         $this->tzHour = $tzHour;
 
-        if(!is_null($this->tzSign)){
+        if(!is_null($this->tzSign) && $this->tzSign !== 'Z'){
             $sign = "+" === $this->tzSign ? 1:-1;
             $tzHour = !is_null($this->tzHour) ? $this->tzHour:0;
             $tzMinute = !is_null($this->tzMinute) ? $this->tzMinute:0;
             $this->timezoneOffset = (int) ($sign * ($tzHour * 60) + $tzMinute);
         }
+    }
+
+    public static function from(Parser $parser): self
+    {
+        $tzSign = "Z" == $parser->getTzUtc() ? "Z":$parser->getTzSign();
+
+        return new self(
+            $parser->getInput(),
+            $parser->getYearNum(),
+            $parser->getMonthNum(),
+            $parser->getDayNum(),
+            $parser->getHour(),
+            $parser->getMinute(),
+            $parser->getSecond(),
+            $tzSign,
+            $parser->getTzHour(),
+            $parser->getTzMinute()
+        );
     }
 
     public function getHour(): ?int

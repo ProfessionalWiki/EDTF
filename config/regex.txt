@@ -1,0 +1,61 @@
+(?x) # Turns on free spacing mode for easier readability
+
+# Year start
+(?<year>
+    (?<yearOpenFlag>[~?%]{0,2})
+    (?<yearNum>
+        [+-]?               # optional sign
+        (?:
+            \d+E\d+         # exponential form, no 'X' allowed
+            |[0-9UX]*       # decimal form, 'X' allowed
+        )
+    )
+    (?>S                    # Literal S letter. It is for the significant digit indicator
+        (?<yearSignificantDigit>\d+)
+	)?
+    (?<yearCloseFlag>\)?[~%?]{0,2})
+)
+# Year end
+
+(?>- # Literal - (hyphen)
+
+    # Month start
+    (?<month>
+        (?<monthOpenFlag>[~?%]{0,2})
+        (?<monthOpenParents>\(+)?
+        (?<monthNum>(?>1[0-9UX]|[0UX][0-9UX]|[0-9][0-9]))
+        (?>\^(?<seasonQualifier>[\P{L}\P{N}\P{M}:.-]+))?
+        (?<monthCloseFlag>[~?%]{0,2})
+    )
+    # Month end
+
+    (?>- # Begin Day Literal - (hyphen)
+        # Day start
+        (?<day>
+            (?<dayOpenFlag>[~?%]{0,2})
+            (?<dayOpenParents>\(+)?
+                (?<dayNum>
+                    (?>[012UX][0-9UX]|3[01UX])
+                )
+            )
+            (?<dayCloseFlag>[~?%]{0,2})
+            (?<dayEnd>[)~%?]*)
+        # Day end
+
+        # Time Start #
+        (?>T # Literal T
+            (?<hour>2[0-3]|[01][0-9]):
+            (?<minute>[0-5][0-9]):
+            (?<second>[0-5][0-9])
+            (?>
+                (?<tzUtc>Z)|
+                (?<tzSign>[+-])
+                (?<tzHour>[01][0-9])
+                (?>: #optional minute
+                    (?<tzMinute>[0-5][0-9])
+                )? # end optional minute
+            )? # end optional timezone
+        )?
+        # end time
+    )?  # END Day literal hypen
+)?$ # Others end #
