@@ -4,31 +4,54 @@ declare(strict_types=1);
 
 namespace EDTF;
 
+use EDTF\Contracts\CoversTrait;
 use EDTF\Contracts\ExtDateInterface;
 
 class Interval implements ExtDateInterface
 {
+    use CoversTrait;
+
     const NORMAL    = 0;
     const OPEN      = 1;
     const UNKNOWN   = 2;
 
-    private ExtDateInterface $start;
-    private ExtDateInterface $end;
+    private string $input;
+    private ExtDate $start;
+    private ExtDate $end;
     private ?int $significantDigit;
     private ?int $estimated;
 
-
     public function __construct(
-        ExtDateInterface $start,
-        ExtDateInterface $end,
+        string $input,
+        ExtDate $start,
+        ExtDate $end,
         ?int $significantDigit = null,
         ?int $estimated = null
     )
     {
+        $this->input = $input;
         $this->start = $start;
         $this->end = $end;
         $this->significantDigit = $significantDigit;
         $this->estimated = $estimated;
+
+        $this->min = $start->getMin();
+        $this->max = $end->getMax();
+    }
+
+    public function getMin(): int
+    {
+        return $this->min;
+    }
+
+    public function getMax(): int
+    {
+        return $this->max;
+    }
+
+    public function getType(): string
+    {
+        return "interval";
     }
 
     public static function from(string $input): ExtDateInterface
@@ -43,37 +66,38 @@ class Interval implements ExtDateInterface
         $startDateStr = substr( $input, 0, $pos );
         $endDateStr   = substr( $input, $pos + 1 );
 
-        $startDate = (new Parser())->parse($startDateStr, true);
-        $endDate = (new Parser())->parse($endDateStr, true);
+        $startDate = ExtDate::from((new Parser())->parse($startDateStr, true));
+        $endDate = ExtDate::from((new Parser)->parse($endDateStr, true));
 
-        return new Interval($startDate, $endDate);
+        return new Interval($input, $startDate, $endDate);
     }
 
-        /**
-     * @psalm-suppress PossiblyNullArgument
-     * @psalm-suppress PossiblyNullOperand
-     */
     public static function createSignificantDigitInterval(Parser $parser): Interval
     {
         $estimated = $parser->getYearNum();
         $strEstimated = (string)$estimated;
         $significantDigit = $parser->getYearSignificantDigit();
-
+        assert(is_int($significantDigit));
         $year = substr($strEstimated,0, strlen($strEstimated) - $significantDigit);
         $startYear = $year.(str_repeat("0", $significantDigit));
         $endYear = $year.(str_repeat("9", $significantDigit));
 
-        $start = new ExtDate((int)$startYear);
-        $end = new ExtDate((int)$endYear);
-        return new self($start, $end, $significantDigit, $estimated);
+        $start = new ExtDate($parser->getInput(),(int)$startYear);
+        $end = new ExtDate($parser->getInput(), (int)$endYear);
+        return new self($parser->getInput(), $start, $end, $significantDigit, $estimated);
     }
 
-    public function getStart(): ExtDateInterface
+    public function getInput(): string
+    {
+        return $this->input;
+    }
+
+    public function getStart(): ExtDate
     {
         return $this->start;
     }
 
-    public function getEnd(): ExtDateInterface
+    public function getEnd(): ExtDate
     {
         return $this->end;
     }

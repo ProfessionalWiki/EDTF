@@ -13,6 +13,10 @@ class Parser
 
     private string $input = "";
 
+    private ?string $year = null;
+    private ?string $month = null;
+    private ?string $day = null;
+
     private ?int $yearNum = null;
     private ?int $monthNum = null;
     private ?int $dayNum = null;
@@ -20,7 +24,7 @@ class Parser
     private ?int $hour = null;
     private ?int $minute = null;
     private ?int $second = null;
-    private ?int $season = null;
+    private int $season = 0;
 
     private ?string $tzSign = null;
     private ?int $tzMinute = null;
@@ -35,15 +39,11 @@ class Parser
     private ?string $monthCloseFlag = null;
     private ?string $dayCloseFlag = null;
 
-    private int $yearUnspecified = 0;
-    private int $monthUnspecified = 0;
-    private int $dayUnspecified = 0;
-
     private int $intervalType = 0;
 
     private ?int $yearSignificantDigit = null;
 
-    private ?array $matches = null;
+    private array $matches = [];
 
     public function __construct()
     {
@@ -51,40 +51,12 @@ class Parser
         $this->regexPattern = '/'.$patterns.'/';
     }
 
-    /**
-     * @psalm-suppress MixedAssignment
-     */
-    private function validateInput(string $input, array $matches): void
+    public function parse(string $input, bool $intervalMode = false): self
     {
-        $hasValue = false;
-        foreach($matches as $k => $v){
-            if("" != $v){
-                $hasValue = true;
-            }
+        if(false === $intervalMode && "" === $input){
+            throw new \InvalidArgumentException("Can't create EDTF from empty string.");
         }
 
-        if(!$hasValue){
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid edtf format "%s".',$input
-            ));
-        }
-    }
-
-    private function validateSeason(): void
-    {
-        if(!(null === $this->season || ($this->season >= 21 && $this->season <= 41))){
-            throw new \InvalidArgumentException(sprintf(
-                'Season number "%s" out of range. Accepted season number is between 21-41',
-                $this->season
-            ));
-        }
-    }
-
-    /**
-     * @psalm-suppress PossiblyNullReference
-     */
-    private function doParse(string $input, bool $intervalMode = false): self
-    {
         $input = strtoupper($input);
         $this->input = $input;
         if($intervalMode && "" === $input){
@@ -102,8 +74,6 @@ class Parser
 
         preg_match($this->regexPattern, $input, $matches);
 
-        $this->validateInput($input, $matches);
-
         foreach($matches as $name => $value){
             if(is_int($name) || "" == $value || !property_exists(__CLASS__, $name)){
                 continue;
@@ -112,15 +82,13 @@ class Parser
             if(in_array($name, $unspecifiedParts)){
                 // convert unspecified digit into zero
                 if(false !== strpos($value, 'X')){
-                    $propName = str_replace('Num','Unspecified', $name);
-                    $this->$propName = UnspecifiedDigit::UNSPECIFIED;
                     $value = str_replace('X', '0', $value);
                 }
             }
 
             $r = new \ReflectionProperty(__CLASS__, $name);
-            $type = $r->getType()->getName();
-            if('int' === $type){
+            $type = $r->getType();
+            if($type instanceof \ReflectionNamedType && 'int' === $type->getName()){
                 $value = (int) $value;
                 // convert zero value into null
                 if(0 === $value){
@@ -136,35 +104,24 @@ class Parser
             $this->season = (int)$matches['monthNum'];
         }
 
-        $this->validateSeason();
-
         $this->matches = $matches;
 
+        $validator = new ParserValidator($this);
+        if(!$validator->isValid()){
+            throw new \InvalidArgumentException($validator->getMessages());
+        }
         return $this;
     }
 
-    public function parse(string $data, bool $intervalMode=false): ExtDateInterface
+    public function createEdtf(string $input, bool $intervalMode=false): ExtDateInterface
     {
-        if(false === $intervalMode && "" === $data){
-            throw new \InvalidArgumentException("Can't create EDTF from empty string.");
-        }
-        if (false !== strpos($data, '/')) {
-            return Interval::from($data);
-        }
-
-        $setRegexPattern = "/(?x)
-                             (?<openFlag>[\[|\{])
-                             (?<value>.*)
-                             (?<closeFlag>[\]|\}])
-                            /";
-
-        preg_match($setRegexPattern, $data, $matches);
-
-        if(count($matches) > 0){
-            return Set::from($matches);
+        if (false !== strpos($input, '/')) {
+            return Interval::from($input);
+        }elseif(false !== strpos($input, '{') || false !== strpos($input, '[')){
+            return Set::from($input);
         }
 
-        $this->doParse($data, $intervalMode);
+        $this->parse($input, $intervalMode);
 
         if(!is_null($this->getHour())){
             return ExtDateTime::from($this);
@@ -172,18 +129,35 @@ class Parser
         elseif(null !== $this->yearSignificantDigit){
             return Interval::createSignificantDigitInterval($this);
         }
-        elseif($this->season > 0){
-            /**
-             * @psalm-suppress PossiblyNullArgument
-             */
-            return new Season($this->yearNum, $this->season);
+        elseif($this->season){
+            return Season::from($this);
         }
         return ExtDate::from($this);
+    }
+
+    public function getMatches(): array
+    {
+        return $this->matches;
     }
 
     public function getInput(): string
     {
         return $this->input;
+    }
+
+    public function getYear(): ?string
+    {
+        return $this->year;
+    }
+
+    public function getMonth(): ?string
+    {
+        return $this->month;
+    }
+
+    public function getDay(): ?string
+    {
+        return $this->day;
     }
 
     public function getYearOpenFlag(): ?string
@@ -219,21 +193,6 @@ class Parser
     public function getYearSignificantDigit(): ?int
     {
         return $this->yearSignificantDigit;
-    }
-
-    public function getYearUnspecified(): int
-    {
-        return $this->yearUnspecified;
-    }
-
-    public function getMonthUnspecified(): int
-    {
-        return $this->monthUnspecified;
-    }
-
-    public function getDayUnspecified(): int
-    {
-        return $this->dayUnspecified;
     }
 
     public function getIntervalType(): int

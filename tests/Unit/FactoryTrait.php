@@ -44,6 +44,6 @@ trait FactoryTrait
     private function parse($data): object
     {
         $parser = new Parser();
-        return $parser->parse($data);
+        return $parser->createEdtf($data);
     }
 }

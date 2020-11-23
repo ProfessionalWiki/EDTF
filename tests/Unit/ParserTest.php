@@ -8,8 +8,6 @@ namespace EDTF\Tests\Unit;
 use EDTF\ExtDate;
 use EDTF\Interval;
 use EDTF\Parser;
-use EDTF\Qualification;
-use EDTF\UnspecifiedDigit;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,14 +28,22 @@ class ParserTest extends TestCase
     public function testCreatingEdtfObjects()
     {
         $parser = new Parser();
-        $this->assertInstanceOf(ExtDate::class, $parser->parse('2016-03-01'));
-        $this->assertInstanceOf(Interval::class, $parser->parse('2016/2019'));
+        $this->assertInstanceOf(ExtDate::class, $parser->createEdtf('2016-03-01'));
+        $this->assertInstanceOf(Interval::class, $parser->createEdtf('2016/2019'));
     }
 
     public function testThrowExceptionWhenCreatingEdtfFromEmptyString()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->createParser("");
+    }
+
+    public function testThrowExceptionOnInvalidDataFormat()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $parser = new Parser();
+        $parser->createEdtf('foo');
     }
 
     public function testShouldStoreInput()
@@ -49,7 +55,7 @@ class ParserTest extends TestCase
     public function testShouldParseCompleteDate()
     {
         $parser = new Parser();
-        $parser->parse('2004-01-02');
+        $parser->createEdtf('2004-01-02');
 
         $this->assertSame(2004, $parser->getYearNum());
         $this->assertSame(1, $parser->getMonthNum());
@@ -59,7 +65,7 @@ class ParserTest extends TestCase
     public function testShouldParseCompleteDateTime()
     {
         $parser = new Parser();
-        $parser->parse('2004-01-02T23:59:59Z');
+        $parser->createEdtf('2004-01-02T23:59:59Z');
 
         $this->assertSame(2004, $parser->getYearNum());
         $this->assertSame(1, $parser->getMonthNum());
@@ -72,7 +78,7 @@ class ParserTest extends TestCase
     public function testShouldParseUTCTimezone()
     {
         $parser = new Parser();
-        $parser->parse('2004-01-01T10:10:10Z');
+        $parser->createEdtf('2004-01-01T10:10:10Z');
 
         $this->assertSame(2004, $parser->getYearNum());
         $this->assertSame(1, $parser->getMonthNum());
@@ -86,7 +92,7 @@ class ParserTest extends TestCase
     public function testShouldParseTimezoneValue()
     {
         $parser = new Parser();
-        $parser->parse('2004-01-01T10:10:10+05:30');
+        $parser->createEdtf('2004-01-01T10:10:10+05:30');
 
         $this->assertSame(2004, $parser->getYearNum());
         $this->assertSame(1, $parser->getMonthNum());
@@ -96,14 +102,6 @@ class ParserTest extends TestCase
         $this->assertSame(10, $parser->getSecond());
         $this->assertSame(5, $parser->getTzHour());
         $this->assertSame(30, $parser->getTzMinute());
-    }
-
-    public function testThrowExceptionOnInvalidDataFormat()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $parser = new Parser();
-        $parser->parse('foo');
     }
 
     public function testShouldParseLetterPrefixedCalendarYear()
@@ -175,11 +173,11 @@ class ParserTest extends TestCase
     {
         $parser = $this->createParser('201X');
         $this->assertSame(2010, $parser->getYearNum());
-        $this->assertSame(UnspecifiedDigit::UNSPECIFIED, $parser->getYearUnspecified());
+        $this->assertSame("201X", $parser->getYear());
 
         $parser = $this->createParser('20XX');
         $this->assertSame(2000, $parser->getYearNum());
-        $this->assertSame(UnspecifiedDigit::UNSPECIFIED, $parser->getYearUnspecified());
+        $this->assertSame("20XX", $parser->getYear());
     }
 
     public function testParseUnspecifiedDigitWithMonthPrecision()
@@ -187,7 +185,6 @@ class ParserTest extends TestCase
         $parser = $this->createParser('2010-XX');
         $this->assertSame(2010, $parser->getYearNum());
         $this->assertNull($parser->getMonthNum());
-        $this->assertSame(UnspecifiedDigit::UNSPECIFIED, $parser->getMonthUnspecified());
     }
 
     public function testParseUnspecifiedDigitWithDayPrecision()
@@ -196,7 +193,6 @@ class ParserTest extends TestCase
         $this->assertSame(2010, $parser->getYearNum());
         $this->assertSame(12, $parser->getMonthNum());
         $this->assertNull($parser->getDayNum());
-        $this->assertSame(UnspecifiedDigit::UNSPECIFIED, $parser->getDayUnspecified());
     }
 
     public function testParseUnspecifiedDigitWithMixedPrecision()
@@ -205,9 +201,5 @@ class ParserTest extends TestCase
         $this->assertSame(2000, $parser->getYearNum());
         $this->assertNull($parser->getMonthNum());
         $this->assertNull($parser->getDayNum());
-
-        $this->assertSame(UnspecifiedDigit::UNSPECIFIED, $parser->getYearUnspecified());
-        $this->assertSame(UnspecifiedDigit::UNSPECIFIED, $parser->getMonthUnspecified());
-        $this->assertSame(UnspecifiedDigit::UNSPECIFIED, $parser->getDayUnspecified());
     }
 }

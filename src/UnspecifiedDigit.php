@@ -7,26 +7,39 @@ namespace EDTF;
 
 class UnspecifiedDigit
 {
-    const SPECIFIED = 0;
-    const UNSPECIFIED = 1;
-
     private int $year;
     private int $month;
     private int $day;
 
-    public function __construct(int $year=0, int $month=0, int $day=0)
+    public function __construct(?string $year = null, ?string $month = null, ?string $day = null)
     {
-        $this->year = $year;
-        $this->month = $month;
-        $this->day = $day;
+        $this->year = $this->sumUnspecifiedDigit($year);
+        $this->month = $this->sumUnspecifiedDigit($month);
+        $this->day = $this->sumUnspecifiedDigit($day);
+    }
+
+    private function sumUnspecifiedDigit(?string $data = null): int
+    {
+        $data = is_null($data) ? "":$data;
+        $count = 0;
+        $lists = count_chars($data,1);
+        if(is_array($lists)){
+            foreach($lists as $i => $v){
+                // 88 is X char
+                if("X" === chr($i)){
+                    $count = (int)$v;
+                }
+            }
+        }
+        return $count;
     }
 
     public static function from(Parser $parser): self
     {
         return new self(
-            $parser->getYearUnspecified(),
-            $parser->getMonthUnspecified(),
-            $parser->getDayUnspecified()
+            $parser->getYear(),
+            $parser->getMonth(),
+            $parser->getDay()
         );
     }
 
@@ -39,7 +52,7 @@ class UnspecifiedDigit
     {
         if(!is_null($part)){
             $this->validatePartName($part);
-            return self::UNSPECIFIED === $this->$part;
+            return $this->$part > 0;
         }
         return $this->unspecified('year') || $this->unspecified('month') || $this->unspecified('day');
     }
@@ -53,5 +66,20 @@ class UnspecifiedDigit
                 sprintf('Invalid date part value: "%s". Accepted value is year,month, or day', $part)
             );
         }
+    }
+
+    public function getYear(): int
+    {
+        return $this->year;
+    }
+
+    public function getMonth(): int
+    {
+        return $this->month;
+    }
+
+    public function getDay(): int
+    {
+        return $this->day;
     }
 }

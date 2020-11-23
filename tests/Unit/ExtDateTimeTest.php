@@ -17,7 +17,7 @@ class ExtDateTimeTest extends TestCase
 
     public function testCreate()
     {
-        $dt = new ExtDateTime(2010,10,1,1,1,1);
+        $dt = new ExtDateTime("2010-10-01", 2010,10,1,1,1,1);
 
         $this->assertSame(2010, $dt->getYear());
         $this->assertSame(10, $dt->getMonth());

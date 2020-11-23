@@ -30,6 +30,12 @@ class Qualification
     private int $month;
     private int $day;
 
+    private static array $map = [
+        '%' => self::UNCERTAIN_AND_APPROXIMATE,
+        '?' => self::UNCERTAIN,
+        '~' => self::APPROXIMATE,
+    ];
+
     public function __construct(int $year = 0, int $month = 0, int $day=0)
     {
         $this->year = $year;
@@ -37,19 +43,12 @@ class Qualification
         $this->day = $day;
     }
 
-    /**
-     * @psalm-suppress PossiblyNullArrayOffset
-     */
     public static function from(Parser $parser): self
     {
         $year = self::UNDEFINED;
         $month = self::UNDEFINED;
         $day = self::UNDEFINED;
-        $map = [
-            '%' => self::UNCERTAIN_AND_APPROXIMATE,
-            '?' => self::UNCERTAIN,
-            '~' => self::APPROXIMATE,
-        ];
+
 
         if(!is_null($parser->getYearCloseFlag())
             || !is_null($parser->getMonthCloseFlag())
@@ -63,18 +62,18 @@ class Qualification
             if(!is_null($parser->getYearCloseFlag())){
                 // applied only to year
                 $includeYear = true;
-                $q = $map[$parser->getYearCloseFlag()];
+                $q = self::genQualificationValue($parser->getYearCloseFlag());
             }elseif(!is_null($parser->getMonthCloseFlag())){
                 // applied only to year, and month
                 $includeYear = true;
                 $includeMonth = true;
-                $q = $map[$parser->getMonthCloseFlag()];
+                $q = self::genQualificationValue($parser->getMonthCloseFlag());
             }elseif(!is_null($parser->getDayCloseFlag())){
                 // applied to year, month, and day
                 $includeYear = true;
                 $includeMonth = true;
                 $includeDay = true;
-                $q = $map[$parser->getDayCloseFlag()];
+                $q = self::genQualificationValue($parser->getDayCloseFlag());
             }
 
             $year = $includeYear ? $q:$year;
@@ -84,15 +83,21 @@ class Qualification
 
         // handle level 2 qualification
         if(!is_null($parser->getYearOpenFlag())){
-            $year = $map[$parser->getYearOpenFlag()];
+            $year = self::genQualificationValue($parser->getYearOpenFlag());
         }
         if(!is_null($parser->getMonthOpenFlag())){
-            $month = $map[$parser->getMonthOpenFlag()];
+            $month = self::genQualificationValue($parser->getMonthOpenFlag());
         }
         if(!is_null($parser->getDayOpenFlag())){
-            $day = $map[$parser->getDayOpenFlag()];
+            $day = self::genQualificationValue($parser->getDayOpenFlag());;
         }
         return new self($year, $month, $day);
+    }
+
+    private static function genQualificationValue(?string $flag = null): int
+    {
+        assert(is_string($flag));
+        return (int)self::$map[$flag];
     }
 
     public function undefined(string $part): bool

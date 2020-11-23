@@ -23,43 +23,40 @@ class UnspecifiedDigitTest extends TestCase
 
     public function testSpecified()
     {
-        $u = new UnspecifiedDigit(UnspecifiedDigit::SPECIFIED);
+        $u = new UnspecifiedDigit("1980");
         $this->assertTrue($u->specified('year'));
-    }
-
-    public function testSpecifiedWithNullValue()
-    {
-        $u = new UnspecifiedDigit(UnspecifiedDigit::SPECIFIED);
-        $this->assertTrue($u->specified());
     }
 
     public function testSpecifiedThrowExceptionWithInvalidPart()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $u = new UnspecifiedDigit(UnspecifiedDigit::SPECIFIED);
+        $u = new UnspecifiedDigit();
         $u->specified('invalid');
     }
 
     public function testUnspecified()
     {
-        $u = new UnspecifiedDigit(UnspecifiedDigit::UNSPECIFIED);
+        $u = new UnspecifiedDigit("19XX");
         $this->assertTrue($u->unspecified('year'));
+        $this->assertSame(2, $u->getYear());
     }
 
     public function testUnspecifiedWithNullValue()
     {
-        $u = new UnspecifiedDigit(0,UnspecifiedDigit::UNSPECIFIED, 0);
+        $u = new UnspecifiedDigit("","XX", "");
         $this->assertTrue($u->unspecified());
         $this->assertFalse($u->unspecified('year'));
         $this->assertTrue($u->unspecified('month'));
         $this->assertFalse($u->unspecified('day'));
+
+        $this->assertSame(2, $u->getMonth());
     }
 
     public function testUnspecifiedThrowExceptionWithInvalidPart()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $u = new UnspecifiedDigit(UnspecifiedDigit::UNSPECIFIED);
+        $u = new UnspecifiedDigit();
         $u->unspecified('invalid');
     }
 }

@@ -22,7 +22,7 @@ class ExtDateTest extends TestCase
         $q = $this->createMock(Qualification::class);
         $u = $this->createMock(UnspecifiedDigit::class);
 
-        $d = new ExtDate(2010, 10,1, $q, $u);
+        $d = new ExtDate('2010-10-01', 2010,10,1, $q, $u);
 
         $this->assertSame(2010, $d->getYear());
         $this->assertSame(10, $d->getMonth());
@@ -34,7 +34,7 @@ class ExtDateTest extends TestCase
     public function testShouldProvideUncertainInfo()
     {
         $q = new Qualification(Qualification::UNCERTAIN);
-        $d = new ExtDate(null,null,null, $q);
+        $d = new ExtDate("", null,null,null, $q);
 
         $this->assertTrue($d->uncertain());
         $this->assertTrue($d->uncertain('year'));
@@ -45,7 +45,7 @@ class ExtDateTest extends TestCase
     public function testShouldProvideApproximateInfo()
     {
         $q = new Qualification(Qualification::UNDEFINED, Qualification::APPROXIMATE);
-        $d = new ExtDate(null,null,null, $q);
+        $d = new ExtDate("", null,null,null, $q);
 
         $this->assertTrue($d->approximate());
         $this->assertFalse($d->approximate('year'));
@@ -56,7 +56,7 @@ class ExtDateTest extends TestCase
     public function testShouldProvideUncertainAndApproximateInfo()
     {
         $q = new Qualification(Qualification::UNDEFINED, Qualification::UNDEFINED, Qualification::UNCERTAIN_AND_APPROXIMATE);
-        $d = new ExtDate(null,null,null, $q);
+        $d = new ExtDate("", null,null,null, $q);
 
         $this->assertTrue($d->uncertain() && $d->approximate());
         $this->assertFalse($d->uncertain('year'));
