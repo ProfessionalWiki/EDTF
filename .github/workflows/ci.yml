@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [ 7.4, nightly ]
+        php: [ 7.4, rc ]
         include:
           - php: '7.4'
             coverage: true
@@ -26,14 +26,6 @@ jobs:
           extensions: mbstring
           tools: composer, cs2pr
           coverage: pcov
-
-      - name: Setup PHP
-        if: !matrix.coverage
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: mbstring
-          tools: composer, cs2pr
 
       - uses: actions/checkout@v2
 
