@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class UnspecifiedDigitTest
  *
- * @covers \EDTF\EDTF
  * @covers \EDTF\ExtDate
  * @covers \EDTF\UnspecifiedDigit
  *

@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
  * Class L0DateTest
  *
  * @covers \EDTF\Parser
- * @covers \EDTF\EDTF
  * @covers \EDTF\ExtDate
  * @package EDTF\Tests\Unit
  */

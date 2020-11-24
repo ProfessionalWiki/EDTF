@@ -19,12 +19,21 @@ jobs:
 
     steps:
       - name: Setup PHP
+        if: matrix.coverage
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring
           tools: composer, cs2pr
           coverage: pcov
+
+      - name: Setup PHP
+        if: !matrix.coverage
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring
+          tools: composer, cs2pr
 
       - uses: actions/checkout@v2
 
