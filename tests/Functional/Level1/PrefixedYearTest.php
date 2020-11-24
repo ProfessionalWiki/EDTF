@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\Parser
  * @package EDTF\Tests\Unit
  */
-class L1PrefixedYearTest extends TestCase
+class PrefixedYearTest extends TestCase
 {
     use FactoryTrait;
 

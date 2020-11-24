@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Functional;
+namespace EDTF\Tests\Functional\Level1;
 
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @package EDTF\Tests\Unit
  */
-class L1QualificationTest extends TestCase
+class QualificationTest extends TestCase
 {
     use FactoryTrait;
 
