@@ -24,26 +24,9 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mbstring
           tools: composer, cs2pr
+          coverage: pcov
 
       - uses: actions/checkout@v2
-
-      - name: Install pcov PHP extension
-        if: matrix.coverage
-        env:
-          BUILD_DIR: /var/tmp/build/ext-pcov-${{ env.EXT_PCOV_VERSION }}
-          SRC_DIR: /usr/src/php/ext/pcov
-        run: |
-          apk add \
-            $PHPIZE_DEPS
-          mkdir -p "$SRC_DIR" "$BUILD_DIR"
-          cd "$SRC_DIR"
-          curl -fsSL "https://pecl.php.net/get/pcov-$EXT_PCOV_VERSION.tgz" | tar -zx --strip-components 1
-          phpize
-          cd "$BUILD_DIR"
-          "$SRC_DIR"/configure --config-cache
-          make -j"$(nproc)"
-          make -j"$(nproc)" install
-          docker-php-ext-enable pcov
 
       - name: Cache Composer cache
         uses: actions/cache@v2
