@@ -7,13 +7,13 @@ namespace EDTF\Tests\Unit;
 
 use EDTF\ExtDate;
 use EDTF\Interval;
-use EDTF\Parser;
+use EDTF\PackagePrivate\Parser;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class ParserTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Unit
  */
 class ParserTest extends TestCase

@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class L1DateTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\Interval
  * @covers \EDTF\ExtDateTime
  *

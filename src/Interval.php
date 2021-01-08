@@ -6,6 +6,7 @@ namespace EDTF;
 
 use EDTF\Contracts\CoversTrait;
 use EDTF\Contracts\ExtDateInterface;
+use EDTF\PackagePrivate\Parser;
 
 class Interval implements ExtDateInterface
 {

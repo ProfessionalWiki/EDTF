@@ -10,7 +10,7 @@ namespace EDTF\Tests\Unit;
 use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
-use EDTF\Parser;
+use EDTF\PackagePrivate\Parser;
 use EDTF\Season;
 use EDTF\Set;
 

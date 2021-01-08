@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class IntervalTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\Interval
  * @package EDTF\Tests\Unit
  */

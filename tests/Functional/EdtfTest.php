@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Functional;
 
-use EDTF\Parser;
+use EDTF\PackagePrivate\Parser;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class EdtfTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional
  */
 class EdtfTest extends TestCase

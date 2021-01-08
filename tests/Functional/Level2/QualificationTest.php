@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class QualificationTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\ExtDate
  * @package EDTF\Tests\Functional
  */

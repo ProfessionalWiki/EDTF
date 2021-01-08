@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace EDTF;
 
 
+use EDTF\PackagePrivate\Parser;
+
 class UnspecifiedDigit
 {
     private int $year;

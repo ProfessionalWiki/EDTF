@@ -2,15 +2,15 @@
 
 namespace EDTF\Tests\Unit;
 
-use EDTF\Parser;
-use EDTF\ParserValidator;
+use EDTF\PackagePrivate\Parser;
+use EDTF\PackagePrivate\ParserValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class ParserValidatorTest
  *
- * @covers \EDTF\ParserValidator
+ * @covers \EDTF\PackagePrivate\ParserValidator
  * @package EDTF\Tests\Unit
  */
 class ParserValidatorTest extends TestCase

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace EDTF;
 
+use EDTF\PackagePrivate\Parser;
+
 class ExtDateTime extends ExtDate
 {
     private ?int $hour;

@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  * Class L1PrefixedYearTest
  *
  * @covers \EDTF\ExtDateTime
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Unit
  */
 class PrefixedYearTest extends TestCase

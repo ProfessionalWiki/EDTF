@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class SetRepresentationTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\Set
  * @package EDTF\Tests\Functional
  */

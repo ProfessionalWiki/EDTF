@@ -2,10 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace EDTF;
+namespace EDTF\PackagePrivate;
 
 
 use EDTF\Contracts\ExtDateInterface;
+use EDTF\ExtDate;
+use EDTF\ExtDateTime;
+use EDTF\Interval;
+use EDTF\Season;
+use EDTF\Set;
 
 class Parser
 {
@@ -47,7 +52,7 @@ class Parser
 
     public function __construct()
     {
-        $patterns = file_get_contents(__DIR__.'/../config/regex.txt');
+        $patterns = file_get_contents(__DIR__.'/../../config/regex.txt');
         $this->regexPattern = '/'.$patterns.'/';
     }
 

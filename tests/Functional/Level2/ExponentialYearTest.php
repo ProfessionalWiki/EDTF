@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class L2ExponentialYearTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional
  */
 class ExponentialYearTest extends TestCase

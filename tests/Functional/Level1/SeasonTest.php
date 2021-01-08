@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\Season
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  */
 class SeasonTest extends TestCase
 {

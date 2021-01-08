@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * Class IntervalTest
  *
  * @covers \EDTF\Interval
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional
  */
 class IntervalTest extends TestCase

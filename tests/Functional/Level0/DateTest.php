@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class L0DateTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\ExtDate
  * @package EDTF\Tests\Unit
  */

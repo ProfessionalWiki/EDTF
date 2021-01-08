@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class SignificantDigitsTest
  *
- * @covers \EDTF\Parser
+ * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional
  */
 class SignificantDigitsTest extends TestCase
