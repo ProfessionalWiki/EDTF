@@ -45,9 +45,12 @@ class EdtfValidatorTest extends TestCase {
 		yield 'stuff before valid date' => [ 'wtf1985' ];
 		yield 'stuff inside valid date' => [ '19wtf85' ];
 
+		yield 'day too high' => [ '2021-01-32' ];
+		yield 'month too high' => [ '2021-13-01' ];
 
 		foreach ( ValidEdtfStrings::all() as $key => $value ) {
 			yield [ 'invalid ' . $value ];
+			yield [ $value . 'invalid' ];
 		}
 	}
 
