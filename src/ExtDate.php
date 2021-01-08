@@ -94,8 +94,8 @@ class ExtDate implements ExtDateInterface
         }
 
         // handle unspecified digit type
-        $maxYear = $this->generateMaxUnspecifiedDigit('year', (int)$year);
-        $maxMonth = $this->generateMaxUnspecifiedDigit('month', (int)$maxMonth);
+        $maxYear = $this->generateMaxUnspecifiedDigit('year', $year);
+        $maxMonth = $this->generateMaxUnspecifiedDigit('month', $maxMonth);
         $maxDay = $this->generateMaxUnspecifiedDigit('day', (int)$maxDay);
         $c = Carbon::create($maxYear, $maxMonth, $maxDay);
         if(false !== $c){

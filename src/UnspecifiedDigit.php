@@ -27,7 +27,7 @@ class UnspecifiedDigit
             foreach($lists as $i => $v){
                 // 88 is X char
                 if("X" === chr($i)){
-                    $count = (int)$v;
+                    $count = $v;
                 }
             }
         }

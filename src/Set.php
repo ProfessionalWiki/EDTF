@@ -68,8 +68,8 @@ class Set implements ExtDateInterface
             ));
         }
 
-        $openFlag = (string)$matches['openFlag'];
-        $values = explode(",",(string)$matches['value']);
+        $openFlag = $matches['openFlag'];
+        $values = explode(",",$matches['value']);
         $allMembers = '[' === $openFlag ? false:true;
         $earlier = false;
         $later = false;

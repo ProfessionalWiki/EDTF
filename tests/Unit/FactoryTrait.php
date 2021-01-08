@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpIncompatibleReturnTypeInspection */
+/** @psalm-suppress all */
+
 declare(strict_types=1);
 
 namespace EDTF\Tests\Unit;

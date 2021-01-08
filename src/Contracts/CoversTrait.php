@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace EDTF\Contracts;
-
 
 use Carbon\Carbon;
 
