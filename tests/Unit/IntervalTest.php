@@ -7,8 +7,6 @@ use EDTF\Interval;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IntervalTest
- *
  * @covers \EDTF\Interval
  * @package EDTF\Tests\Unit
  */

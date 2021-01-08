@@ -9,8 +9,6 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IntervalTest
- *
  * @covers \EDTF\Interval
  * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional

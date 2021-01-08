@@ -6,8 +6,6 @@ use EDTF\ExtDateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ExtDateTimeTest
- *
  * @covers \EDTF\ExtDateTime
  * @package EDTF\Tests\Unit
  */

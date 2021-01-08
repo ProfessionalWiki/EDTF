@@ -6,8 +6,6 @@ use EDTF\UnspecifiedDigit;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class UnspecifiedTest
- *
  * @covers \EDTF\UnspecifiedDigit
  * @package EDTF\Tests\Unit
  */

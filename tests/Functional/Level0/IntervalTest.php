@@ -11,8 +11,6 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class L0DateIntervalTest
- *
  * @covers \EDTF\Interval
  * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Unit

@@ -9,8 +9,6 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class SetRepresentationTest
- *
  * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\Set
  * @package EDTF\Tests\Functional

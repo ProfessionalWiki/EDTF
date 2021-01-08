@@ -8,8 +8,6 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class UnspecifiedDigitTest
- *
  * @covers \EDTF\ExtDate
  * @covers \EDTF\UnspecifiedDigit
  *

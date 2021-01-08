@@ -8,8 +8,6 @@ use EDTF\UnspecifiedDigit;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ExtDateTest
- *
  * @covers \EDTF\ExtDate
  * @package EDTF\Tests\Unit
  */

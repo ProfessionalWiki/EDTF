@@ -8,8 +8,6 @@ use EDTF\PackagePrivate\Parser;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class EdtfTest
- *
  * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional
  */

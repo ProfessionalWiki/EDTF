@@ -6,8 +6,6 @@ use EDTF\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class SeasonTest
- *
  * @covers \EDTF\Season
  * @package EDTF\Tests\Unit
  */

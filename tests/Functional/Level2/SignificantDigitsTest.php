@@ -8,8 +8,6 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class SignificantDigitsTest
- *
  * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional
  */

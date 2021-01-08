@@ -8,8 +8,6 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class L2ExponentialYearTest
- *
  * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Functional
  */

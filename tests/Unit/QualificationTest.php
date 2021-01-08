@@ -8,8 +8,6 @@ use EDTF\Qualification;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class QualificationTest
- *
  * @covers \EDTF\Qualification
  * @package EDTF\Tests\Unit
  */
