@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-
 use Carbon\Carbon;
 use EDTF\Contracts\CoversTrait;
-use EDTF\Contracts\ExtDateInterface;
 use EDTF\PackagePrivate\Parser;
 
 class ExtDate implements ExtDateInterface

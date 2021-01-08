@@ -1,6 +1,6 @@
 <?php
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\PackagePrivate;
 
 use EDTF\PackagePrivate\Parser;
 use EDTF\PackagePrivate\ParserValidator;
@@ -8,8 +8,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ParserValidatorTest
- *
  * @covers \EDTF\PackagePrivate\ParserValidator
  * @package EDTF\Tests\Unit
  */

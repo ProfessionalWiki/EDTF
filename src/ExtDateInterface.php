@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace EDTF\Contracts;
+namespace EDTF;
 
 interface ExtDateInterface
 {

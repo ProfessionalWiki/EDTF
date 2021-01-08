@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Unit;
-
+namespace EDTF\Tests\Unit\PackagePrivate;
 
 use EDTF\ExtDate;
 use EDTF\Interval;
@@ -11,8 +10,6 @@ use EDTF\PackagePrivate\Parser;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ParserTest
- *
  * @covers \EDTF\PackagePrivate\Parser
  * @package EDTF\Tests\Unit
  */

@@ -6,7 +6,6 @@ namespace EDTF;
 
 
 use Carbon\Carbon;
-use EDTF\Contracts\ExtDateInterface;
 use EDTF\PackagePrivate\Parser;
 
 class Set implements ExtDateInterface

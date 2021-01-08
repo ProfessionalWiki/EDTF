@@ -4,14 +4,16 @@ declare(strict_types = 1);
 
 namespace EDTF\PackagePrivate;
 
-
-use EDTF\Contracts\ExtDateInterface;
 use EDTF\ExtDate;
+use EDTF\ExtDateInterface;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
 use EDTF\Season;
 use EDTF\Set;
 
+/**
+ * @internal
+ */
 class Parser
 {
     private string $regexPattern;
@@ -118,6 +120,13 @@ class Parser
         return $this;
     }
 
+	/**
+	 * @param string $input
+	 * @param bool $intervalMode
+	 *
+	 * @return ExtDateInterface
+	 * @throws \InvalidArgumentException
+	 */
     public function createEdtf(string $input, bool $intervalMode=false): ExtDateInterface
     {
         if (false !== strpos($input, '/')) {
