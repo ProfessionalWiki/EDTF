@@ -42,13 +42,12 @@ class EdtfValidatorTest extends TestCase {
 		yield 'random stuff' => [ '~=[,,_,,]:3' ];
 
 		yield 'stuff after valid date' => [ '1985wtf' ];
-//	TODO	yield 'stuff before valid date' => [ 'wtf1985' ];
-//	TODO	yield 'stuff inside valid date' => [ '19wtf85' ];
+		yield 'stuff before valid date' => [ 'wtf1985' ];
+		yield 'stuff inside valid date' => [ '19wtf85' ];
 
 
 		foreach ( ValidEdtfStrings::all() as $key => $value ) {
-			// TODO
-			// yield [ 'invalid ' . $value ];
+			yield [ 'invalid ' . $value ];
 		}
 	}
 

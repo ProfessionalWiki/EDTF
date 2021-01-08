@@ -17,10 +17,10 @@ class SeasonTest extends TestCase
 
     public function testCreatingSeason()
     {
-        $season = $this->createSeason('2001-21');
+        $season = $this->createSeason('2001-33');
 
         $this->assertSame(2001, $season->getYear());
-        $this->assertSame(21, $season->getSeason());
-        $this->assertSame('Spring', $season->getName());
+        $this->assertSame(33, $season->getSeason());
+        $this->assertSame('Quarter 1', $season->getName());
     }
 }

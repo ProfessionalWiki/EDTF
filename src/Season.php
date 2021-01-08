@@ -69,6 +69,9 @@ class Season implements ExtDateInterface
         $endMonth = 0;
 
         switch($season){
+			// FIXME: cases 21 to 32 are not handled! (spec: https://www.loc.gov/standards/datetime/)
+			// (possible inspiration: https://github.com/inukshuk/edtf.js/blob/master/src/season.js)
+
             // quarter - 3 month duration
             case 33:
                 $startMonth = "01";

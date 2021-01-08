@@ -1,8 +1,9 @@
 (?x) # Turns on free spacing mode for easier readability
 
 # Year start
-(?<year>
+^(?<year>
     (?<yearOpenFlag>[~?%]{0,2})
+    Y?
     (?<yearNum>
         [+-]?               # optional sign
         (?:
