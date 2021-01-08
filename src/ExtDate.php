@@ -8,7 +8,6 @@ namespace EDTF;
 use Carbon\Carbon;
 use EDTF\Contracts\CoversTrait;
 use EDTF\Contracts\ExtDateInterface;
-use function PHPUnit\Framework\isNull;
 
 class ExtDate implements ExtDateInterface
 {
