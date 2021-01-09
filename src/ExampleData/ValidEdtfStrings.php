@@ -42,8 +42,7 @@ class ValidEdtfStrings {
 		yield 'Y170000002';
 		yield 'Y-170000002';
 
-		// FIXME
-		//yield '2001-21';
+		yield '2001-21';
 
 		yield '1984?';
 		yield '2004-06~';

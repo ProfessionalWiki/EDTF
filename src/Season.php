@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF;
 
+use Carbon\Carbon;
 use EDTF\Contracts\CoversTrait;
 use EDTF\PackagePrivate\Parser;
 
@@ -40,6 +41,7 @@ class Season implements ExtDateInterface
         40 => 'Semester 1',
         41 => 'Semester 2',
     ];
+
     private string $input;
 
     public function __construct(string $input, int $year, int $season)
@@ -63,55 +65,56 @@ class Season implements ExtDateInterface
 
     private function configure(): void
     {
-        $season = $this->season;
         $year = (string)$this->year;
-        $startMonth = 0;
-        $endMonth = 0;
+        $startMonth = $this->generateStartMonth();
+        $endMonth = $this->generateEndMonth();
 
+        /*
         switch($season){
 			// FIXME: cases 21 to 32 are not handled! (spec: https://www.loc.gov/standards/datetime/)
 			// (possible inspiration: https://github.com/inukshuk/edtf.js/blob/master/src/season.js)
 
             // quarter - 3 month duration
             case 33:
-                $startMonth = "01";
+                //$startMonth = "01";
                 $endMonth = "03";
                 break;
             case 34:
-                $startMonth = "04";
+                //$startMonth = "04";
                 $endMonth = "06";
                 break;
             case 35:
-                $startMonth = "07";
+                //$startMonth = "07";
                 $endMonth = "09";
                 break;
             case 36:
-                $startMonth = "10";
+                //$startMonth = "10";
                 $endMonth = "12";
                 break;
             // quadrimester - 4 month duration
             case 37:
-                $startMonth = "01";
+                //$startMonth = "01";
                 $endMonth = "04";
                 break;
             case 38:
-                $startMonth = "05";
+                //$startMonth = "05";
                 $endMonth = "08";
                 break;
             case 39:
-                $startMonth = "09";
+                //$startMonth = "09";
                 $endMonth = "12";
                 break;
             // semestral - 6 month duration
             case 40:
-                $startMonth = "01";
+                //$startMonth = "01";
                 $endMonth = "06";
                 break;
             case 41:
-                $startMonth = "07";
+                //$startMonth = "07";
                 $endMonth = "12";
                 break;
         }
+        */
 
         $start = (new Parser())->createEdtf($year.'-'.$startMonth);
         $end = (new Parser())->createEdtf($year.'-'.$endMonth);
@@ -121,6 +124,71 @@ class Season implements ExtDateInterface
         $this->start = $start;
         $this->max = $end->getMax();
         $this->end = $end;
+    }
+
+    private function generateStartMonth(): string
+    {
+        switch($this->season){
+            case 22:
+            case 26:
+            case 31:
+            case 34:
+                return '04';
+            case 23:
+            case 27:
+            case 30:
+            case 35:
+            case 41:
+                return '07';
+            case 24:
+            case 28:
+            case 29:
+            case 36:
+                return '10';
+            case 38:
+                return '05';
+            case 39:
+                return '09';
+            default:
+                return '01';
+        }
+    }
+
+    private function generateEndMonth(): string
+    {
+        switch($this->season){
+            case 21:
+            case 25:
+            case 32:
+            case 33:
+                return '03';
+            case 22:
+            case 26:
+            case 31:
+            case 34:
+            case 40:
+                return '06';
+            case 23:
+            case 27:
+            case 30:
+            case 35:
+                return '09';
+            case 37:
+                return '04';
+            case 38:
+                return '08';
+            /*
+            case 24:
+            case 28:
+            case 29:
+            case 36:
+            case 41:
+            case 39:
+                return '12';
+            */
+            default:
+                return '12';
+        }
     }
 
     public function getInput(): string
