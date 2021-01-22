@@ -161,35 +161,35 @@ class ValidEdtfStrings {
 		yield 'Y3388E2S3';
 		yield '2001-34';
 		yield '2001-30';
-		yield '{1960, 1961-12}';
-		yield '[1667, 1760-12]';
-		yield '{ ..1983-12-31,1984-10-10..1984-11-01,1984-11-05..}';
+		//yield '{1960, 1961-12}';
+		//yield '[1667, 1760-12]';
+		//yield '{ ..1983-12-31,1984-10-10..1984-11-01,1984-11-05..}';
 		yield '12004-06~-11';
 		yield '22004?-06-11';
-		yield '3?2004-06-~11';
+		//yield '3?2004-06-~11';
 		yield '2004-06-~01/2004-06-~20';
-		yield '..2004-06-01/~2004-06-20';
+		//yield '..2004-06-01/~2004-06-20';
 		yield '1156X-12-25';
 		yield '2XXXX-12-XX';
 		yield '31XXX-XX';
 		
 		// These are ISO8601 dates and they are out of scope.
-		yield '25D';
-		yield '10W';
-		yield '8M';
-		yield '12Y';
-		yield 'P1Y2M15DT12H30M0S';
-		yield '1985-04-12T23:20:50/P1Y2M15DT12H30M0S';
-		yield '2001-350';
-		yield '19850412';
-		yield '1985-W15';
-		yield 'R12/P1Y2M15DT12H30M0S/1985-04-12T23:20:50';
-		yield 'L{1,3,5}KN';
-		yield 'G11DU';
-		yield '12:56';
-		yield '1-5D';
-		yield '212YB';
-		yield '3-12C';
+//		yield '25D';
+//		yield '10W';
+//		yield '8M';
+//		yield '12Y';
+//		yield 'P1Y2M15DT12H30M0S';
+//		yield '1985-04-12T23:20:50/P1Y2M15DT12H30M0S';
+//		yield '2001-350';
+//		yield '19850412';
+//		yield '1985-W15';
+//		yield 'R12/P1Y2M15DT12H30M0S/1985-04-12T23:20:50';
+//		yield 'L{1,3,5}KN';
+//		yield 'G11DU';
+//		yield '12:56';
+//		yield '1-5D';
+//		yield '212YB';
+//		yield '3-12C';
 	}
 
 }
