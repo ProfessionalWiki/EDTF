@@ -173,7 +173,7 @@ class ValidEdtfStrings {
 		yield '2XXXX-12-XX';
 		yield '31XXX-XX';
 		
-		// These are mentioned in the represenation spreadsheet as ISO8601 
+		// These are ISO8601 dates and they are out of scope.
 		yield '25D';
 		yield '10W';
 		yield '8M';
