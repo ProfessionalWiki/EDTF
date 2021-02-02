@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\ParserValidator
- * @package EDTF\Tests\Unit
+ * @package EDTF\Tests\Unit\PackagePrivate
  */
 class ParserValidatorTest extends TestCase
 {
@@ -32,31 +32,72 @@ class ParserValidatorTest extends TestCase
         $this->validator = new ParserValidator($this->parser);
     }
 
-    public function testValidateInput()
+    public function testSuccessValidation()
     {
-        $parser = $this->parser;
-        $validator = $this->validator;
-
-        $parser->expects($this->once())
+        $this->parser->expects($this->once())
             ->method('getMatches')
-            ->willReturn(['yearNum' => "", 'monthNum' => ""]);
+            ->willReturn(['yearNum' => '1987', 'monthNum' => '12']);
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessageMatches('/input/');
-        $validator->validateInput();
+        $this->parser->expects($this->once())
+            ->method('getSeason')
+            ->willReturn(24);
+
+        $this->validator->isValid();
+
+        $this->assertEquals("", $this->validator->getMessages());
     }
 
-    public function testValidateSeason()
+    /**
+     * @dataProvider invalidDataTypeProvider
+     * @param mixed $yearNum
+     * @param mixed $monthNum
+     * @param string $wrongKeyNames
+     */
+    public function testDataTypeFailsInputValidation($yearNum, $monthNum, string $wrongKeyNames)
     {
-        $parser = $this->parser;
-        $validator = $this->validator;
+        $this->parser->expects($this->once())
+            ->method('getMatches')
+            ->willReturn(['yearNum' => $yearNum, 'monthNum' => $monthNum]);
 
-        $parser->expects($this->once())
+        $this->validator->isValid();
+        $this->assertStringContainsString("Invalid data format: $wrongKeyNames must be a string", $this->validator->getMessages());
+    }
+
+    public function testEmptyStringsFailInputValidation()
+    {
+        $this->parser->expects($this->once())
+            ->method('getMatches')
+            ->willReturn(['yearNum' => '', 'monthNum' => '']);
+
+        $this->validator->isValid();
+        $this->assertEquals("Invalid edtf format input", $this->validator->getMessages());
+    }
+
+    public function testInvalidSeasonValueFailsSeasonValidation()
+    {
+        $this->parser->expects($this->once())
+            ->method('getMatches')
+            ->willReturn(['yearNum' => '1987', 'monthNum' => '10']);
+
+        $this->parser->expects($this->once())
             ->method('getSeason')
             ->willReturn(19);
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid season number "19" in "input" is out of range. Accepted season number is between 21-41');
-        $validator->validateSeason();
+        $this->validator->isValid();
+        $this->assertEquals(
+            "Invalid season number 19 in input is out of range. Accepted season number is between 21-41",
+            $this->validator->getMessages()
+        );
+    }
+
+    public function invalidDataTypeProvider()
+    {
+        return [
+            [1987, '10', 'yearNum'],
+            ['1987', 10, 'monthNum'],
+            [10.0, 12, 'yearNum'],
+            [null, '10', 'yearNum'],
+            [false, null, 'yearNum']
+        ];
     }
 }
