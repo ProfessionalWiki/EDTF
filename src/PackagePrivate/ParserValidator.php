@@ -36,7 +36,9 @@ class ParserValidator
         $matches = $parser->getMatches();
 
         $hasValue = false;
-        /** @var iterable<mixed, mixed> $matches */
+        /** @var mixed $v
+         * Need this to satisfy Psalm check
+         */
         foreach($matches as $k => $v){
             if(!is_string($v)) {
                 $this->messages[] = "Invalid data format: $k must be a string";
