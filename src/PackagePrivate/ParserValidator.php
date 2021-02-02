@@ -9,6 +9,9 @@ namespace EDTF\PackagePrivate;
  */
 class ParserValidator
 {
+    const VALID_SEASON_MIN = 21;
+    const VALID_SEASON_MAX = 41;
+
     private Parser $parser;
 
     private array $messages = [];
@@ -20,24 +23,13 @@ class ParserValidator
 
     public function isValid(): bool
     {
-        $methods = get_class_methods(__CLASS__);
-        $messages = [];
+        $this->validateInput();
+        $this->validateSeason();
 
-        foreach($methods as $method){
-            if(false !== strpos($method, 'validate') && 'validate' !== $method){
-                try{
-                    call_user_func([$this, $method]);
-                }catch (\Exception $e){
-                    $messages[] = $e->getMessage();
-                }
-            }
-        }
-
-        $this->messages = $messages;
-        return 0 === count($messages);
+        return 0 === count($this->messages);
     }
 
-    public function validateInput(): void
+    private function validateInput(): void
     {
         $parser = $this->parser;
         $input = $parser->getInput();
@@ -45,31 +37,35 @@ class ParserValidator
 
         $hasValue = false;
         foreach($matches as $k => $v){
-            assert(is_string($v));
+            if(!is_string($v)) {
+                $this->messages[] = "Invalid data format: $k must be a string";
+            }
             if("" != $v){
                 $hasValue = true;
             }
         }
 
         if(!$hasValue){
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid edtf format "%s".',$input
-            ));
+            $this->messages[] = "Invalid edtf format $input";
         }
     }
 
-    public function validateSeason(): void
+    private function validateSeason(): void
     {
         $season = $this->parser->getSeason();
-        if($season > 0){
-            if(false === ($season >= 21 && $season <= 41)){
-                throw new \InvalidArgumentException(sprintf(
-                    'Invalid season number "%s" in "%s" is out of range. Accepted season number is between 21-41',
-                    $season,
-                    $this->parser->getInput()
-                ));
-            }
+
+        if($season > 0 && $this->isOutsideValidRange($season)){
+            $this->messages[] = "Invalid season number $season in {$this->parser->getInput()} is out of range. Accepted season number is between 21-41";
         }
+    }
+
+    /**
+     * @param $season
+     * @return bool
+     */
+    private function isOutsideValidRange($season): bool
+    {
+        return $season < self::VALID_SEASON_MIN || $season > self::VALID_SEASON_MAX;
     }
 
     public function getMessages(): string
