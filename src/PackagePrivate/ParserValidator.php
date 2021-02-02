@@ -63,7 +63,7 @@ class ParserValidator
      * @param $season
      * @return bool
      */
-    private function isOutsideValidRange($season): bool
+    private function isOutsideValidRange(int $season): bool
     {
         return $season < self::VALID_SEASON_MIN || $season > self::VALID_SEASON_MAX;
     }
