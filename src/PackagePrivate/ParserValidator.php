@@ -9,8 +9,8 @@ namespace EDTF\PackagePrivate;
  */
 class ParserValidator
 {
-    const VALID_SEASON_MIN = 21;
-    const VALID_SEASON_MAX = 41;
+    private const VALID_SEASON_MIN = 21;
+    private const VALID_SEASON_MAX = 41;
 
     private Parser $parser;
 
@@ -63,10 +63,6 @@ class ParserValidator
         }
     }
 
-    /**
-     * @param int $season
-     * @return bool
-     */
     private function isOutsideValidRange(int $season): bool
     {
         return $season < self::VALID_SEASON_MIN || $season > self::VALID_SEASON_MAX;
