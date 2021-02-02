@@ -36,12 +36,13 @@ class ParserValidator
         $matches = $parser->getMatches();
 
         $hasValue = false;
+        /** @var mixed $v */
         foreach($matches as $k => $v){
             if(!is_string($v)) {
                 $this->messages[] = "Invalid data format: $k must be a string";
                 break;
             }
-            if("" !== $v){
+            if("" != $v){
                 $hasValue = true;
             }
         }
