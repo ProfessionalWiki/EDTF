@@ -49,20 +49,18 @@ class ParserValidatorTest extends TestCase
 
     /**
      * @dataProvider invalidDataTypeProvider
-     * @param $yearNum
-     * @param $monthNum
-     * @param array $wrongKeyNames
+     * @param mixed $yearNum
+     * @param mixed $monthNum
+     * @param string $wrongKeyNames
      */
-    public function testDataTypeFailsInputValidation($yearNum, $monthNum, $wrongKeyNames = [])
+    public function testDataTypeFailsInputValidation($yearNum, $monthNum, string $wrongKeyNames)
     {
         $this->parser->expects($this->once())
             ->method('getMatches')
             ->willReturn(['yearNum' => $yearNum, 'monthNum' => $monthNum]);
 
         $this->validator->isValid();
-        foreach ($wrongKeyNames as $keyName) {
-            $this->assertStringContainsString("Invalid data format: $keyName must be a string", $this->validator->getMessages());
-        }
+        $this->assertStringContainsString("Invalid data format: $wrongKeyNames must be a string", $this->validator->getMessages());
     }
 
     public function testEmptyStringsFailInputValidation()
@@ -95,11 +93,11 @@ class ParserValidatorTest extends TestCase
     public function invalidDataTypeProvider()
     {
         return [
-            [1987, '10', ['yearNum']],
-            ['1987', 10, ['monthNum']],
-            [10.0, 12, ['yearNum', 'monthNum']],
-            [null, '10', ['yearNum']],
-            [false, null, ['yearNum', 'monthNum']]
+            [1987, '10', 'yearNum'],
+            ['1987', 10, 'monthNum'],
+            [10.0, 12, 'yearNum'],
+            [null, '10', 'yearNum'],
+            [false, null, 'yearNum']
         ];
     }
 }

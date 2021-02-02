@@ -39,6 +39,7 @@ class ParserValidator
         foreach($matches as $k => $v){
             if(!is_string($v)) {
                 $this->messages[] = "Invalid data format: $k must be a string";
+                break;
             }
             if("" != $v){
                 $hasValue = true;
@@ -60,7 +61,7 @@ class ParserValidator
     }
 
     /**
-     * @param $season
+     * @param int $season
      * @return bool
      */
     private function isOutsideValidRange(int $season): bool
