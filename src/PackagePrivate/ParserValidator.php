@@ -41,7 +41,7 @@ class ParserValidator
                 $this->messages[] = "Invalid data format: $k must be a string";
                 break;
             }
-            if("" != $v){
+            if("" !== $v){
                 $hasValue = true;
             }
         }
