@@ -16,5 +16,5 @@ interface DatetimeFactoryInterface
      *
      * @throws DatetimeFactoryException
      */
-    public function create($year, $month, $day, $hour, $minute, $second, $tz);
+    public function create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0, $tz = null);
 }
