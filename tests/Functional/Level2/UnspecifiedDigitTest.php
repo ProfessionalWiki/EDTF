@@ -29,10 +29,10 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertSame(1560, $d->getYear());
 
         $expectedMin = Carbon::create(1560, 12, 25)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(1569, 12, 25, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     public function testWithTwoDigitYear()
@@ -47,10 +47,10 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertSame(1500, $d->getYear());
 
         $expectedMin = Carbon::create(1500, 12, 25)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(1599, 12, 25, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     public function testWithUnspecifiedYearAndDay()
@@ -63,8 +63,8 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertTrue($d->unspecified('day'));
 
         $this->assertNull($d->getYear());
-        $this->assertEquals(0, $d->getMin());
-        $this->assertEquals(0, $d->getMax());
+        $this->assertSame(0, $d->getMin());
+        $this->assertSame(0, $d->getMax());
     }
 
     public function testWithThreeDigitYearAndTwoDigitMonth()
@@ -80,10 +80,10 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertNull($d->getMonth());
 
         $expectedMin = Carbon::create(1000)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(1999, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     public function testWithThreeDigitYearOnly()
@@ -99,10 +99,10 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertSame(12, $d->getMonth());
 
         $expectedMin = Carbon::create(1000, 12)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(1999, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     public function testWithOneDigitMonth()
@@ -118,10 +118,10 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertSame(10, $d->getMonth());
 
         $expectedMin = Carbon::create(1984, 10)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(1984, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     public function testWithThreeDigitYearAndOneDigitMonthLessThan10()
@@ -138,10 +138,10 @@ class UnspecifiedDigitTest extends TestCase
         // $this->assertSame(1, $d->getMonth());
 
         $expectedMin = Carbon::create(1000)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(1999, 9, 30, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
 }

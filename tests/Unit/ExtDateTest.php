@@ -31,8 +31,8 @@ class ExtDateTest extends TestCase
         $this->assertSame(1, $d->getDay());
         $this->assertSame($q, $d->getQualification());
         $this->assertSame($u, $d->getUnspecifiedDigit());
-        $this->assertEquals('2010-10-01', $d->getInput());
-        $this->assertEquals('ExtDate', $d->getType());
+        $this->assertSame('2010-10-01', $d->getInput());
+        $this->assertSame('ExtDate', $d->getType());
 
         $this->assertTrue($d->isNormalInterval());
         $this->assertFalse($d->isOpenInterval());
@@ -47,7 +47,7 @@ class ExtDateTest extends TestCase
      */
     public function testGetMin(ExtDate $extDate, int $expectedMin)
     {
-        $this->assertEquals($expectedMin, $extDate->getMin());
+        $this->assertSame($expectedMin, $extDate->getMin());
     }
 
     /**
@@ -57,7 +57,7 @@ class ExtDateTest extends TestCase
      */
     public function testGetMax(ExtDate $extDate, int $expectedMax)
     {
-        $this->assertEquals($expectedMax, $extDate->getMax());
+        $this->assertSame($expectedMax, $extDate->getMax());
     }
 
     public function testGetMinThrowsException()

@@ -14,17 +14,9 @@ use Carbon\Exceptions\InvalidFormatException;
 class CarbonFactory implements DatetimeFactoryInterface
 {
     /**
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $hour
-     * @param int $minute
-     * @param int $second
-     * @param null $tz
-     * @return Carbon|false
      * @throws DatetimeFactoryException
      */
-    public function create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0, $tz = null)
+    public function create(int $year = 0, int $month = 1, int $day = 1, int $hour = 0, int $minute = 0, int $second = 0, $tz = null)
     {
         try {
             $c = Carbon::create($year, $month, $day, $hour, $minute, $second, $tz);

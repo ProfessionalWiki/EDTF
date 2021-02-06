@@ -79,7 +79,6 @@ class ExtDate implements ExtDateInterface
     }
 
     /**
-     * @return int
      * @throws ExtDateException
      */
     public function getMin(): int
@@ -92,7 +91,6 @@ class ExtDate implements ExtDateInterface
     }
 
     /**
-     * @return int
      * @throws ExtDateException
      */
     public function getMax(): int
@@ -105,10 +103,9 @@ class ExtDate implements ExtDateInterface
     }
 
     /**
-     * @return int
      * @throws ExtDateException
      */
-    private function calculateMin()
+    private function calculateMin(): int
     {
         if (null === $this->year) {
             return 0;
@@ -126,10 +123,9 @@ class ExtDate implements ExtDateInterface
     }
 
     /**
-     * @return int
      * @throws ExtDateException
      */
-    private function calculateMax()
+    private function calculateMax(): int
     {
         if (null === $this->year) {
             return 0;
@@ -147,7 +143,8 @@ class ExtDate implements ExtDateInterface
         }
     }
 
-    private function resolveMaxYear() {
+    private function resolveMaxYear(): int
+    {
         if ($this->unspecifiedDigit->unspecified('year')) {
             $uLen = $this->unspecifiedDigit->getYear();
             $vLen = strlen((string) $this->year);
@@ -161,7 +158,8 @@ class ExtDate implements ExtDateInterface
         return $this->year;
     }
 
-    private function resolveMaxMonth() {
+    private function resolveMaxMonth(): int
+    {
         if ($this->unspecifiedDigit->unspecified('month')) {
             $uLen = $this->unspecifiedDigit->getMonth();
 
@@ -176,12 +174,10 @@ class ExtDate implements ExtDateInterface
     }
 
     /**
-     * @param $year
-     * @param $month
-     * @return int|null
      * @throws DatetimeFactoryException
      */
-    private function resolveMaxDay($year, $month) {
+    private function resolveMaxDay($year, $month): int
+    {
 
         $lastDayOfMonth = $this->maxDaysInMonth($year, $month);
 
@@ -273,19 +269,12 @@ class ExtDate implements ExtDateInterface
         return $uLen == 2;
     }
 
-    /**
-     * @param int $month
-     * @return bool
-     */
     private function isFebruary(int $month): bool
     {
         return $month == 2;
     }
 
     /**
-     * @param int $year
-     * @param int $month
-     * @return int
      * @throws DatetimeFactoryException
      */
     private function maxDaysInMonth(int $year, int $month): int
@@ -350,7 +339,7 @@ class ExtDate implements ExtDateInterface
         return $this->day;
     }
 
-    public function setDatetimeFactory(DatetimeFactoryInterface $factory)
+    public function setDatetimeFactory(DatetimeFactoryInterface $factory): void
     {
         $this->datetimeFactory = $factory;
     }

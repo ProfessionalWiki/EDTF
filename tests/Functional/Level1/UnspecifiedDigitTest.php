@@ -20,10 +20,6 @@ class UnspecifiedDigitTest extends TestCase
 
     /**
      * @dataProvider unspecifiedYear
-     * @param string $input
-     * @param int $expectedYear
-     * @param int $expectedMin
-     * @param int $expectedMax
      * @throws \EDTF\Exceptions\ExtDateException
      */
     public function testWithUnspecifiedYear(string $input, int $expectedYear, int $expectedMin, int $expectedMax)
@@ -35,8 +31,8 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertFalse($d->unspecified('day'));
         $this->assertSame($expectedYear, $d->getYear());
 
-        $this->assertEquals($expectedMin, $d->getMin());
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMin, $d->getMin());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     public function testWithUnspecifiedMonth()
@@ -50,20 +46,14 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertNull($d->getMonth());
 
         $expectedMin = Carbon::create(2004)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(2004, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     /**
      * @dataProvider unspecifiedDay
-     * @param string $input
-     * @param int $expectedYear
-     * @param int $expectedMonth
-     * @param $expectedDay
-     * @param int $expectedMin
-     * @param int $expectedMax
      * @throws \EDTF\Exceptions\ExtDateException
      */
     public function testWithUnspecifiedDay(string $input, int $expectedYear, int $expectedMonth, $expectedDay, int $expectedMin, int $expectedMax)
@@ -78,8 +68,8 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertSame($expectedMonth, $d->getMonth());
         $this->assertSame($expectedDay, $d->getDay());
 
-        $this->assertEquals($expectedMin, $d->getMin());
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMin, $d->getMin());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     public function testWithUnspecifiedMonthAndDay()
@@ -96,10 +86,10 @@ class UnspecifiedDigitTest extends TestCase
         $this->assertNull($d->getDay());
 
         $expectedMin = Carbon::create(1985)->getTimestamp();
-        $this->assertEquals($expectedMin, $d->getMin());
+        $this->assertSame($expectedMin, $d->getMin());
 
         $expectedMax = Carbon::create(1985, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertEquals($expectedMax, $d->getMax());
+        $this->assertSame($expectedMax, $d->getMax());
     }
 
     // TODO: check more cases
