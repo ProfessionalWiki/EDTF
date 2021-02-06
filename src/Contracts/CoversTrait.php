@@ -9,13 +9,13 @@ use EDTF\ExtDateInterface;
 
 trait CoversTrait
 {
-    protected int $min = 0;
-    protected int $max = 0;
+    protected ?int $min = null;
+    protected ?int $max = null;
 
     public function covers(ExtDateInterface $edtf): bool
     {
-        $min = Carbon::createFromTimestamp($this->min);
-        $max = Carbon::createFromTimestamp($this->max);
+        $min = Carbon::createFromTimestamp($this->getMin());
+        $max = Carbon::createFromTimestamp($this->getMax());
 
         $edtfMin = Carbon::createFromTimestamp($edtf->getMin());
         $edtfMax = Carbon::createFromTimestamp($edtf->getMax());

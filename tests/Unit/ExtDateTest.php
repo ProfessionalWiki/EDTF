@@ -2,9 +2,13 @@
 
 namespace EDTF\Tests\Unit;
 
+use Carbon\Carbon;
+use EDTF\Exceptions\ExtDateException;
 use EDTF\ExtDate;
 use EDTF\Qualification;
 use EDTF\UnspecifiedDigit;
+use EDTF\Utils\DatetimeFactory\CarbonFactory;
+use EDTF\Utils\DatetimeFactory\DatetimeFactoryException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,6 +31,73 @@ class ExtDateTest extends TestCase
         $this->assertSame(1, $d->getDay());
         $this->assertSame($q, $d->getQualification());
         $this->assertSame($u, $d->getUnspecifiedDigit());
+        $this->assertEquals('2010-10-01', $d->getInput());
+        $this->assertEquals('ExtDate', $d->getType());
+
+        $this->assertTrue($d->isNormalInterval());
+        $this->assertFalse($d->isOpenInterval());
+        $this->assertFalse($d->isUnknownInterval());
+    }
+
+    /**
+     * @param ExtDate $extDate
+     * @param int $expectedMin
+     * @throws \EDTF\Exceptions\ExtDateException
+     * @dataProvider minDataProvider
+     */
+    public function testGetMin(ExtDate $extDate, int $expectedMin)
+    {
+        $this->assertEquals($expectedMin, $extDate->getMin());
+    }
+
+    /**
+     * @param ExtDate $extDate
+     * @param int $expectedMax
+     * @dataProvider maxDataProvider
+     */
+    public function testGetMax(ExtDate $extDate, int $expectedMax)
+    {
+        $this->assertEquals($expectedMax, $extDate->getMax());
+    }
+
+    public function testGetMinThrowsException()
+    {
+        $year = 1987;
+        $month = 12;
+        $day = 100;
+
+        $date = new ExtDate("1987-12-100", $year, $month, $day);
+
+        $dateTimeFactoryMock = $this->createMock(CarbonFactory::class);
+        $dateTimeFactoryMock->method('create')
+            ->with($year, $month, $day)
+            ->willThrowException(new DatetimeFactoryException);
+
+        $this->expectException(ExtDateException::class);
+        $this->expectExceptionMessage("Can't generate minimum date.");
+
+        $date->setDatetimeFactory($dateTimeFactoryMock);
+        $date->getMin();
+    }
+
+    public function testGetMaxThrowsException()
+    {
+        $year = 1987;
+        $month = 100;
+
+        $date = new ExtDate("1987-100-XX", $year, $month);
+
+        $dateTimeFactoryMock = $this->createMock(CarbonFactory::class);
+        $dateTimeFactoryMock->expects($this->once())
+            ->method('create')
+            ->with($year, $month)
+            ->willThrowException(new DatetimeFactoryException);
+
+        $this->expectException(ExtDateException::class);
+        $this->expectExceptionMessage("Can't generate max value from '1987-100-XX'");
+
+        $date->setDatetimeFactory($dateTimeFactoryMock);
+        $date->getMax();
     }
 
     public function testShouldProvideUncertainInfo()
@@ -62,7 +133,6 @@ class ExtDateTest extends TestCase
         $this->assertTrue($d->uncertain('day') && $d->approximate('day'));
     }
 
-
     public function testNegativeYear()
     {
         $date = $this->createExtDate('-0999');
@@ -81,5 +151,41 @@ class ExtDateTest extends TestCase
         $this->assertNull($date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
+    }
+
+    public function minDataProvider()
+    {
+        return [
+            [
+                new ExtDate('1987-10-01', 1987, 10, 1),
+                Carbon::create(1987, 10)->timestamp
+            ],
+            [
+                new ExtDate('1987', 1987),
+                Carbon::create(1987)->timestamp
+            ],
+            [
+                new ExtDate('1987-12', 1987, 12),
+                Carbon::create(1987, 12)->timestamp
+            ]
+        ];
+    }
+
+    public function maxDataProvider()
+    {
+        return [
+            [
+                new ExtDate('1987-10-01', 1987, 10, 1),
+                Carbon::create(1987, 10, 1, 23, 59, 59)->timestamp
+            ],
+            [
+                new ExtDate('1988', 1988),
+                Carbon::create(1988, 12, 31, 23, 59, 59)->timestamp
+            ],
+            [
+                new ExtDate('1987-02', 1987, 2),
+                $daysInMonth = Carbon::create(1987, 2)->lastOfMonth()->endOfDay()->timestamp
+            ]
+        ];
     }
 }
