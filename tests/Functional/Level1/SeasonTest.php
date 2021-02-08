@@ -21,6 +21,5 @@ class SeasonTest extends TestCase
 
         $this->assertSame(2001, $season->getYear());
         $this->assertSame(33, $season->getSeason());
-        $this->assertSame('Quarter 1', $season->getName());
     }
 }

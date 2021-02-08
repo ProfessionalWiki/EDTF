@@ -19,10 +19,14 @@ class FrenchHumanizer implements Humanizer {
 
 	public function humanize( EdtfValue $edtf ): string {
 		if ( $edtf instanceof Season ) {
-			return self::SEASON_MAP[$edtf->getSeason()] . ' ' . $edtf->getYear();
+			return $this->humanizeSeason( $edtf );
 		}
 
 		return 'TODO';
+	}
+
+	private function humanizeSeason( Season $season ): string {
+		return self::SEASON_MAP[$season->getSeason()] . ' ' . $season->getYear();
 	}
 
 }
