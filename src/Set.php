@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-
 use Carbon\Carbon;
-use EDTF\PackagePrivate\Parser;
 
 class Set implements EdtfValue
 {
@@ -52,49 +50,6 @@ class Set implements EdtfValue
         $this->later = $later;
 
         $this->configure();
-    }
-
-    public static function from(string $input): self
-    {
-        preg_match(Set::REGEX, $input, $matches);
-        if(0 === count($matches)){
-            throw new \InvalidArgumentException(sprintf(
-                "Can't create EDTF::Set from '%s' input", $input
-            ));
-        }
-
-        $openFlag = $matches['openFlag'];
-        $values = explode(",",$matches['value']);
-        $allMembers = '[' === $openFlag ? false:true;
-        $earlier = false;
-        $later = false;
-
-        $sets = [];
-        foreach($values as $value){
-            if(false === strpos($value, '..')){
-                $sets[] = (new Parser())->createEdtf($value);
-            }
-            elseif(false != preg_match('/^\.\.(.+)/', $value, $matches)){
-                // earlier date like ..1760-12-03
-                $earlier = true;
-                $sets[] = (new Parser())->createEdtf($matches[1]);
-            }
-            elseif(false != preg_match('/(.+)\.\.$/', $value, $matches)){
-                // later date like 1760-12..
-                $later = true;
-                $sets[] = (new Parser())->createEdtf($matches[1]);
-            }
-            elseif(false != preg_match('/(.+)\.\.(.+)/', $value, $matches)){
-                $start = (int)$matches[1];
-                $end = (int)$matches[2];
-                for($i=$start;$i<=$end;$i++){
-                    $sets[] = (new Parser())->createEdtf((string)$i);
-                }
-            }
-            continue;
-        }
-
-        return new Set($sets, $allMembers, $earlier, $later);
     }
 
     private function configure(): void

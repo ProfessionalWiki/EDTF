@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EDTF;
 
 use EDTF\Contracts\CoversTrait;
-use EDTF\PackagePrivate\Parser;
 
 class Interval implements EdtfValue
 {
@@ -49,42 +48,6 @@ class Interval implements EdtfValue
     public function getType(): string
     {
         return "interval";
-    }
-
-    public static function from(string $input): EdtfValue
-    {
-        $pos = strrpos($input, '/');
-
-        if(false === $pos){
-            throw new \InvalidArgumentException(
-                sprintf("Can't create interval from %s",$input)
-            );
-        }
-        $startDateStr = substr( $input, 0, $pos );
-        $endDateStr   = substr( $input, $pos + 1 );
-
-        $startDate = ExtDate::from((new Parser())->parse($startDateStr, true));
-        $endDate = ExtDate::from((new Parser)->parse($endDateStr, true));
-
-        return new Interval($startDate, $endDate);
-    }
-
-    public static function createSignificantDigitInterval(Parser $parser): Interval
-    {
-        $estimated = $parser->getYearNum();
-        $strEstimated = (string)$estimated;
-        $significantDigit = $parser->getYearSignificantDigit();
-        assert(is_int($significantDigit));
-        $year = substr($strEstimated,0, strlen($strEstimated) - $significantDigit);
-        $startYear = $year.(str_repeat("0", $significantDigit));
-        $endYear = $year.(str_repeat("9", $significantDigit));
-
-        return new self(
-			new ExtDate((int)$startYear),
-			new ExtDate((int)$endYear),
-			$significantDigit,
-			$estimated
-		);
     }
 
     public function getStart(): ExtDate
