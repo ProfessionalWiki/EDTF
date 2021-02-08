@@ -19,19 +19,18 @@ class ExtDateTest extends TestCase
 {
     use FactoryTrait;
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $q = $this->createMock(Qualification::class);
         $u = $this->createMock(UnspecifiedDigit::class);
 
-        $d = new ExtDate('2010-10-01', 2010,10,1, $q, $u);
+        $d = new ExtDate(2010,10,1, $q, $u);
 
         $this->assertSame(2010, $d->getYear());
         $this->assertSame(10, $d->getMonth());
         $this->assertSame(1, $d->getDay());
         $this->assertSame($q, $d->getQualification());
         $this->assertSame($u, $d->getUnspecifiedDigit());
-        $this->assertSame('2010-10-01', $d->getInput());
         $this->assertSame('ExtDate', $d->getType());
 
         $this->assertTrue($d->isNormalInterval());
@@ -60,13 +59,13 @@ class ExtDateTest extends TestCase
         $this->assertSame($expectedMax, $extDate->getMax());
     }
 
-    public function testGetMinThrowsException()
+    public function testGetMinThrowsException(): void
     {
         $year = 1987;
         $month = 12;
         $day = 100;
 
-        $date = new ExtDate("1987-12-100", $year, $month, $day);
+        $date = new ExtDate($year, $month, $day);
 
         $dateTimeFactoryMock = $this->createMock(CarbonFactory::class);
         $dateTimeFactoryMock->method('create')
@@ -80,12 +79,12 @@ class ExtDateTest extends TestCase
         $date->getMin();
     }
 
-    public function testGetMaxThrowsException()
+    public function testGetMaxThrowsException(): void
     {
         $year = 1987;
         $month = 100;
 
-        $date = new ExtDate("1987-100-XX", $year, $month);
+        $date = new ExtDate($year, $month);
 
         $dateTimeFactoryMock = $this->createMock(CarbonFactory::class);
         $dateTimeFactoryMock->expects($this->once())
@@ -93,17 +92,17 @@ class ExtDateTest extends TestCase
             ->with($year, $month)
             ->willThrowException(new DatetimeFactoryException);
 
-        $this->expectException(ExtDateException::class);
-        $this->expectExceptionMessage("Can't generate max value from '1987-100-XX'");
-
         $date->setDatetimeFactory($dateTimeFactoryMock);
+
+		$this->expectException(ExtDateException::class);
+		$this->expectExceptionMessage("Can't generate max value");
         $date->getMax();
     }
 
-    public function testShouldProvideUncertainInfo()
+    public function testShouldProvideUncertainInfo(): void
     {
         $q = new Qualification(Qualification::UNCERTAIN);
-        $d = new ExtDate("", null,null,null, $q);
+        $d = new ExtDate(null,null,null, $q);
 
         $this->assertTrue($d->uncertain());
         $this->assertTrue($d->uncertain('year'));
@@ -111,10 +110,10 @@ class ExtDateTest extends TestCase
         $this->assertFalse($d->uncertain('day'));
     }
 
-    public function testShouldProvideApproximateInfo()
+    public function testShouldProvideApproximateInfo(): void
     {
         $q = new Qualification(Qualification::UNDEFINED, Qualification::APPROXIMATE);
-        $d = new ExtDate("", null,null,null, $q);
+        $d = new ExtDate(null,null,null, $q);
 
         $this->assertTrue($d->approximate());
         $this->assertFalse($d->approximate('year'));
@@ -122,10 +121,10 @@ class ExtDateTest extends TestCase
         $this->assertFalse($d->approximate('day'));
     }
 
-    public function testShouldProvideUncertainAndApproximateInfo()
+    public function testShouldProvideUncertainAndApproximateInfo(): void
     {
         $q = new Qualification(Qualification::UNDEFINED, Qualification::UNDEFINED, Qualification::UNCERTAIN_AND_APPROXIMATE);
-        $d = new ExtDate("", null,null,null, $q);
+        $d = new ExtDate(null,null,null, $q);
 
         $this->assertTrue($d->uncertain() && $d->approximate());
         $this->assertFalse($d->uncertain('year'));
@@ -133,7 +132,7 @@ class ExtDateTest extends TestCase
         $this->assertTrue($d->uncertain('day') && $d->approximate('day'));
     }
 
-    public function testNegativeYear()
+    public function testNegativeYear(): void
     {
         $date = $this->createExtDate('-0999');
 
@@ -143,7 +142,7 @@ class ExtDateTest extends TestCase
         $this->assertNull($date->getDay());
     }
 
-    public function testWithZeroYear()
+    public function testWithZeroYear(): void
     {
         $date = $this->createExtDate('0000');
 
@@ -153,37 +152,37 @@ class ExtDateTest extends TestCase
         $this->assertNull($date->getDay());
     }
 
-    public function minDataProvider()
+    public function minDataProvider(): array
     {
         return [
             [
-                new ExtDate('1987-10-01', 1987, 10, 1),
+                new ExtDate(1987, 10, 1),
                 Carbon::create(1987, 10)->timestamp
             ],
             [
-                new ExtDate('1987', 1987),
+                new ExtDate(1987),
                 Carbon::create(1987)->timestamp
             ],
             [
-                new ExtDate('1987-12', 1987, 12),
+                new ExtDate(1987, 12),
                 Carbon::create(1987, 12)->timestamp
             ]
         ];
     }
 
-    public function maxDataProvider()
+    public function maxDataProvider(): array
     {
         return [
             [
-                new ExtDate('1987-10-01', 1987, 10, 1),
+                new ExtDate(1987, 10, 1),
                 Carbon::create(1987, 10, 1, 23, 59, 59)->timestamp
             ],
             [
-                new ExtDate('1988', 1988),
+                new ExtDate(1988),
                 Carbon::create(1988, 12, 31, 23, 59, 59)->timestamp
             ],
             [
-                new ExtDate('1987-02', 1987, 2),
+                new ExtDate(1987, 2),
                 $daysInMonth = Carbon::create(1987, 2)->lastOfMonth()->endOfDay()->timestamp
             ]
         ];

@@ -26,19 +26,15 @@ class ExtDate implements ExtDateInterface
     private UnspecifiedDigit $unspecifiedDigit;
     private int $intervalType;
 
-    private string $input;
-
     private DatetimeFactoryInterface $datetimeFactory;
 
-    public function __construct(string $input,
-                                ?int $year = null,
+    public function __construct(?int $year = null,
                                 ?int $month = null,
                                 ?int $day = null,
                                 ?Qualification $qualification = null,
                                 ?UnspecifiedDigit  $unspecified = null,
                                 int $intervalType = 0
     ){
-        $this->input = $input;
         $this->year = $year;
         $this->month = $month;
         $this->day = $day;
@@ -51,26 +47,14 @@ class ExtDate implements ExtDateInterface
 
     public static function from(Parser $parser): self
     {
-        $q = Qualification::from($parser);
-        $u = UnspecifiedDigit::from($parser);
-        return new self(
-            $parser->getInput(),
+		return new self(
             $parser->getYearNum(),
             $parser->getMonthNum(),
             $parser->getDayNum(),
-            $q,
-            $u,
+			Qualification::from($parser),
+			UnspecifiedDigit::from($parser),
             $parser->getIntervalType()
         );
-    }
-
-    /**
-     * TODO: check later, do we really need $this->input field?
-     * Sometimes, it doesn't match with year, month and day also passed to object constructor
-     */
-    public function getInput(): string
-    {
-        return $this->input;
     }
 
     public function getType(): string
@@ -139,7 +123,7 @@ class ExtDate implements ExtDateInterface
             $c = $this->datetimeFactory->create($maxYear, $maxMonth, $maxDay);
             return $c->endOfDay()->getTimestamp();
         } catch (DatetimeFactoryException $e) {
-            throw new ExtDateException("Can't generate max value from '{$this->input}'");
+            throw new ExtDateException("Can't generate max value");
         }
     }
 

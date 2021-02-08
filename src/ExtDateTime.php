@@ -17,7 +17,6 @@ class ExtDateTime extends ExtDate
     private int $timezoneOffset = 0;
 
     public function __construct(
-        string $input = "",
         ?int $year = null,
         ?int $month = null,
         ?int $day = null,
@@ -29,7 +28,7 @@ class ExtDateTime extends ExtDate
         ?int $tzMinute  = null
     )
     {
-        parent::__construct($input, $year, $month, $day);
+        parent::__construct($year, $month, $day);
 
         $this->hour = $hour;
         $this->minute = $minute;
@@ -51,7 +50,6 @@ class ExtDateTime extends ExtDate
         $tzSign = "Z" == $parser->getTzUtc() ? "Z":$parser->getTzSign();
 
         return new self(
-            $parser->getInput(),
             $parser->getYearNum(),
             $parser->getMonthNum(),
             $parser->getDayNum(),

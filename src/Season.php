@@ -42,11 +42,8 @@ class Season implements ExtDateInterface
         41 => 'Semester 2',
     ];
 
-    private string $input;
-
-    public function __construct(string $input, int $year, int $season)
+    public function __construct(int $year, int $season)
     {
-        $this->input = $input;
         $this->year = $year;
         $this->season = $season;
 
@@ -60,7 +57,7 @@ class Season implements ExtDateInterface
 
         assert(!is_null($year));
         assert(!is_null($season));
-        return new Season($parser->getInput(), $year, $season);
+        return new Season($year, $season);
     }
 
     private function configure(): void
@@ -189,11 +186,6 @@ class Season implements ExtDateInterface
             default:
                 return '12';
         }
-    }
-
-    public function getInput(): string
-    {
-        return $this->input;
     }
 
     public function getMax(): int

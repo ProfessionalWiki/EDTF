@@ -23,6 +23,4 @@ interface ExtDateInterface
      */
     public function getType(): string;
 
-    //TODO: what is the purpose of this method?
-    public function getInput(): string;
 }
