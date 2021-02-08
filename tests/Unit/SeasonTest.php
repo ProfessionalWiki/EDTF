@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace EDTF\Tests\Unit;
 
 use Carbon\Carbon;
@@ -15,7 +17,7 @@ class SeasonTest extends TestCase
 {
     public function testCreate()
     {
-        $season = new Season("2010-33", 2010, 33);
+        $season = new Season(2010, 33);
         $this->assertSame(2010, $season->getYear());
         $this->assertSame(33, $season->getSeason());
     }

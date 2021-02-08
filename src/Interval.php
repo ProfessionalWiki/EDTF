@@ -15,21 +15,18 @@ class Interval implements ExtDateInterface
     const OPEN      = 1;
     const UNKNOWN   = 2;
 
-    private string $input;
     private ExtDate $start;
     private ExtDate $end;
     private ?int $significantDigit;
     private ?int $estimated;
 
     public function __construct(
-        string $input,
         ExtDate $start,
         ExtDate $end,
         ?int $significantDigit = null,
         ?int $estimated = null
     )
     {
-        $this->input = $input;
         $this->start = $start;
         $this->end = $end;
         $this->significantDigit = $significantDigit;
@@ -69,7 +66,7 @@ class Interval implements ExtDateInterface
         $startDate = ExtDate::from((new Parser())->parse($startDateStr, true));
         $endDate = ExtDate::from((new Parser)->parse($endDateStr, true));
 
-        return new Interval($input, $startDate, $endDate);
+        return new Interval($startDate, $endDate);
     }
 
     public static function createSignificantDigitInterval(Parser $parser): Interval
@@ -82,14 +79,12 @@ class Interval implements ExtDateInterface
         $startYear = $year.(str_repeat("0", $significantDigit));
         $endYear = $year.(str_repeat("9", $significantDigit));
 
-        $start = new ExtDate($parser->getInput(),(int)$startYear);
-        $end = new ExtDate($parser->getInput(), (int)$endYear);
-        return new self($parser->getInput(), $start, $end, $significantDigit, $estimated);
-    }
-
-    public function getInput(): string
-    {
-        return $this->input;
+        return new self(
+			new ExtDate((int)$startYear),
+			new ExtDate((int)$endYear),
+			$significantDigit,
+			$estimated
+		);
     }
 
     public function getStart(): ExtDate

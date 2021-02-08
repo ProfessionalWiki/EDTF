@@ -32,25 +32,20 @@ class Set implements ExtDateInterface
     private int $min;
 
     private int $max;
-    private string $input;
 
     /**
-     * Set constructor.
-     * @param string $input
      * @param ExtDateInterface[] $lists
      * @param bool $allMembers
      * @param bool $earlier
      * @param bool $later
      */
     public function __construct(
-        string $input,
         array $lists,
         bool $allMembers = false,
         bool $earlier = false,
         bool $later = false
     )
     {
-        $this->input = $input;
         $this->lists = $lists;
         $this->allMembers = $allMembers;
         $this->earlier = $earlier;
@@ -99,7 +94,7 @@ class Set implements ExtDateInterface
             continue;
         }
 
-        return new Set($input, $sets, $allMembers, $earlier, $later);
+        return new Set($sets, $allMembers, $earlier, $later);
     }
 
     private function configure(): void
@@ -157,11 +152,6 @@ class Set implements ExtDateInterface
     public function getType(): string
     {
         return 'Set';
-    }
-
-    public function getInput(): string
-    {
-        return $this->input;
     }
 
     public function isAllMembers(): bool

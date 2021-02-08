@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Functional;
 
+use EDTF\ExtDateInterface;
 use EDTF\PackagePrivate\Parser;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EdtfTest extends TestCase
 {
-    private function edtf($input)
+    private function edtf(string $input): ExtDateInterface
     {
         return (new Parser())->createEdtf($input);
     }
