@@ -13,11 +13,21 @@ use PHPUnit\Framework\TestCase;
  */
 class EdtfHumanizerTest extends TestCase {
 
-	public function testFoo(): void {
+	/**
+	 * @dataProvider seasonProvider
+	 */
+	public function testSeason( string $expected, Season $season ): void {
 		$this->assertSame(
-			'Summer 2001',
-			( new EdtfHumanizer() )->humanize( new Season( 2001, 21 ) )
+			$expected,
+			( new EdtfHumanizer() )->humanize( $season )
 		);
+	}
+
+	public function seasonProvider(): \Generator {
+		yield [ 'Spring 2001', new Season( 2001, 21 ) ];
+		yield [ 'Summer 1234', new Season( 1234, 22 ) ];
+		yield [ 'Autumn 10000', new Season( 10000, 23 ) ];
+		yield [ 'Winter 42', new Season( 42, 24 ) ];
 	}
 
 }
