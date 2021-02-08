@@ -8,7 +8,7 @@ namespace EDTF;
 use Carbon\Carbon;
 use EDTF\PackagePrivate\Parser;
 
-class Set implements ExtDateInterface
+class Set implements EdtfValue
 {
     public const REGEX = "/(?x)
                              (?<openFlag>[\[|\{])
@@ -20,7 +20,7 @@ class Set implements ExtDateInterface
     private bool $earlier;
 
     /**
-     * @var ExtDateInterface[]
+     * @var EdtfValue[]
      */
     private array $lists;
 
@@ -34,7 +34,7 @@ class Set implements ExtDateInterface
     private int $max;
 
     /**
-     * @param ExtDateInterface[] $lists
+     * @param EdtfValue[] $lists
      * @param bool $allMembers
      * @param bool $earlier
      * @param bool $later
@@ -120,7 +120,7 @@ class Set implements ExtDateInterface
     /**
      * @TODO: add a way to covers with earlier or later
      */
-    public function covers(ExtDateInterface $edtf): bool
+    public function covers(EdtfValue $edtf): bool
     {
         $lists = $this->lists;
         $edtfMin = Carbon::createFromTimestamp($edtf->getMin());
