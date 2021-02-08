@@ -8,15 +8,15 @@ use Carbon\Carbon;
 use EDTF\Contracts\CoversTrait;
 use EDTF\PackagePrivate\Parser;
 
-class Season implements ExtDateInterface
+class Season implements EdtfValue
 {
     use CoversTrait;
 
     private int $year;
     private int $season;
 
-    private ExtDateInterface $start;
-    private ExtDateInterface $end;
+    private EdtfValue $start;
+    private EdtfValue $end;
 
     public const MAP = [
         21 => 'Spring',

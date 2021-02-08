@@ -11,7 +11,7 @@ use EDTF\Utils\DatetimeFactory\CarbonFactory;
 use EDTF\Utils\DatetimeFactory\DatetimeFactoryException;
 use EDTF\Utils\DatetimeFactory\DatetimeFactoryInterface;
 
-class ExtDate implements ExtDateInterface
+class ExtDate implements EdtfValue
 {
     private const MAX_POSSIBLE_MONTH = 12;
 

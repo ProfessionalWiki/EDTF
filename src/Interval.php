@@ -7,7 +7,7 @@ namespace EDTF;
 use EDTF\Contracts\CoversTrait;
 use EDTF\PackagePrivate\Parser;
 
-class Interval implements ExtDateInterface
+class Interval implements EdtfValue
 {
     use CoversTrait;
 
@@ -51,7 +51,7 @@ class Interval implements ExtDateInterface
         return "interval";
     }
 
-    public static function from(string $input): ExtDateInterface
+    public static function from(string $input): EdtfValue
     {
         $pos = strrpos($input, '/');
 

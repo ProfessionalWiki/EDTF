@@ -6,6 +6,9 @@ namespace EDTF;
 
 use EDTF\PackagePrivate\Parser;
 
+/**
+ * TODO: inheritance likely should be replaced with composition
+ */
 class ExtDateTime extends ExtDate
 {
     private ?int $hour;

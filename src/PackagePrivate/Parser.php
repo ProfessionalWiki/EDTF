@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace EDTF\PackagePrivate;
 
 use EDTF\ExtDate;
-use EDTF\ExtDateInterface;
+use EDTF\EdtfValue;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
 use EDTF\Season;
@@ -124,10 +124,10 @@ class Parser
 	 * @param string $input
 	 * @param bool $intervalMode
 	 *
-	 * @return ExtDateInterface
+	 * @return EdtfValue
 	 * @throws \InvalidArgumentException
 	 */
-    public function createEdtf(string $input, bool $intervalMode=false): ExtDateInterface
+    public function createEdtf(string $input, bool $intervalMode=false): EdtfValue
     {
         if (false !== strpos($input, '/')) {
             return Interval::from($input);
