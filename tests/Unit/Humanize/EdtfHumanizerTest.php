@@ -51,6 +51,7 @@ class EdtfHumanizerTest extends TestCase {
 		yield [ 'Été 2021', new Season( 2021, 22 ) ];
 		yield [ 'Automne 2021', new Season( 2021, 23 ) ];
 		yield [ 'Hiver 2021', new Season( 2021, 24 ) ];
+		yield [ 'Printemps (Hémisphère nord) 2021', new Season( 2021, 25 ) ];
 	}
 
 }
