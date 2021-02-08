@@ -47,68 +47,10 @@ class Season implements EdtfValue
         $this->season = $season;
 
         // FIXME: do not do work in the constructor
-        $this->configure();
-    }
+		$year = (string)$this->year;
 
-    private function configure(): void
-    {
-        $year = (string)$this->year;
-        $startMonth = $this->generateStartMonth();
-        $endMonth = $this->generateEndMonth();
-
-        /*
-        switch($season){
-			// FIXME: cases 21 to 32 are not handled! (spec: https://www.loc.gov/standards/datetime/)
-			// (possible inspiration: https://github.com/inukshuk/edtf.js/blob/master/src/season.js)
-
-            // quarter - 3 month duration
-            case 33:
-                //$startMonth = "01";
-                $endMonth = "03";
-                break;
-            case 34:
-                //$startMonth = "04";
-                $endMonth = "06";
-                break;
-            case 35:
-                //$startMonth = "07";
-                $endMonth = "09";
-                break;
-            case 36:
-                //$startMonth = "10";
-                $endMonth = "12";
-                break;
-            // quadrimester - 4 month duration
-            case 37:
-                //$startMonth = "01";
-                $endMonth = "04";
-                break;
-            case 38:
-                //$startMonth = "05";
-                $endMonth = "08";
-                break;
-            case 39:
-                //$startMonth = "09";
-                $endMonth = "12";
-                break;
-            // semestral - 6 month duration
-            case 40:
-                //$startMonth = "01";
-                $endMonth = "06";
-                break;
-            case 41:
-                //$startMonth = "07";
-                $endMonth = "12";
-                break;
-        }
-        */
-
-        $start = (new Parser())->createEdtf($year.'-'.$startMonth);
-        $end = (new Parser())->createEdtf($year.'-'.$endMonth);
-
-
-        $this->start = $start;
-        $this->end = $end;
+		$this->start = (new Parser())->createEdtf($year.'-'.$this->generateStartMonth());
+		$this->end = (new Parser())->createEdtf($year.'-'.$this->generateEndMonth());
     }
 
     private function generateStartMonth(): string
