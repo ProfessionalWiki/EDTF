@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace EDTF\Tests\Unit;
 
 use EDTF\ExtDateTime;
@@ -13,9 +15,9 @@ class ExtDateTimeTest extends TestCase
 {
     use FactoryTrait;
 
-    public function testCreate()
+    public function testCreate(): void
     {
-        $dt = new ExtDateTime("2010-10-01", 2010,10,1,1,1,1);
+        $dt = new ExtDateTime(2010,10,1,1,1,1);
 
         $this->assertSame(2010, $dt->getYear());
         $this->assertSame(10, $dt->getMonth());
@@ -25,7 +27,7 @@ class ExtDateTimeTest extends TestCase
         $this->assertSame(1, $dt->getSecond());
     }
 
-    public function testDefaultUTC()
+    public function testDefaultUTC(): void
     {
         $date = $this->createExtDateTime("2001-02-03T09:30:01");
 
@@ -38,7 +40,7 @@ class ExtDateTimeTest extends TestCase
         $this->assertSame(0, $date->getTimezoneOffset());
     }
 
-    public function testWithZSuffix()
+    public function testWithZSuffix(): void
     {
         $date = $this->createExtDateTime("2004-01-01T10:10:10Z");
 
@@ -51,7 +53,7 @@ class ExtDateTimeTest extends TestCase
         $this->assertSame(0, $date->getTimezoneOffset());
     }
 
-    public function testWithSpesificTimezone()
+    public function testWithSpesificTimezone(): void
     {
         $date = $this->createExtDateTime('2004-01-01T10:10:10+05:00');
 

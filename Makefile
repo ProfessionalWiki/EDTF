@@ -1,6 +1,6 @@
 .PHONY: ci cs test phpunit psalm phpstan
 
-ci: phpstan phpunit psalm
+ci: phpstan phpunit
 cs: phpstan psalm
 test: phpunit
 

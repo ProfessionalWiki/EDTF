@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-
-use EDTF\PackagePrivate\Parser;
-
 class UnspecifiedDigit
 {
     private int $year;
@@ -15,6 +12,7 @@ class UnspecifiedDigit
 
     public function __construct(?string $year = null, ?string $month = null, ?string $day = null)
     {
+		// TODO: this looks like parsing code - probably constructor params should be required and parsing code outside of the instance
         $this->year = $this->sumUnspecifiedDigit($year);
         $this->month = $this->sumUnspecifiedDigit($month);
         $this->day = $this->sumUnspecifiedDigit($day);
@@ -34,15 +32,6 @@ class UnspecifiedDigit
             }
         }
         return $count;
-    }
-
-    public static function from(Parser $parser): self
-    {
-        return new self(
-            $parser->getYear(),
-            $parser->getMonth(),
-            $parser->getDay()
-        );
     }
 
     public function specified(?string $part = null): bool

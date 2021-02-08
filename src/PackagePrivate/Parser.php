@@ -4,14 +4,19 @@ declare(strict_types = 1);
 
 namespace EDTF\PackagePrivate;
 
+use EDTF\EdtfValue;
 use EDTF\ExtDate;
-use EDTF\ExtDateInterface;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
+use EDTF\Qualification;
 use EDTF\Season;
 use EDTF\Set;
+use EDTF\UnspecifiedDigit;
 
 /**
+ * TODO: there might be cohesive sets of code to extract, for instance QualificationParser
+ * TODO: remove public getters if they are not needed (likely most are not)
+ * TODO: make builder methods private where possible
  * @internal
  */
 class Parser
@@ -54,6 +59,7 @@ class Parser
 
     public function __construct()
     {
+    	// TODO: avoid file read every time an instance is created
         $patterns = file_get_contents(__DIR__.'/../../config/regex.txt');
         $this->regexPattern = '/'.$patterns.'/';
     }
@@ -126,30 +132,233 @@ class Parser
 	 * @param string $input
 	 * @param bool $intervalMode
 	 *
-	 * @return ExtDateInterface
+	 * @return EdtfValue
 	 * @throws \InvalidArgumentException
 	 */
-    public function createEdtf(string $input, bool $intervalMode=false): ExtDateInterface
+    public function createEdtf(string $input, bool $intervalMode=false): EdtfValue
     {
         if (false !== strpos($input, '/')) {
-            return Interval::from($input);
+            return $this->buildInterval($input);
         }elseif(false !== strpos($input, '{') || false !== strpos($input, '[')){
-            return Set::from($input);
+            return $this->buildSet($input);
         }
 
         $this->parse($input, $intervalMode);
 
-        if(!is_null($this->getHour())){
-            return ExtDateTime::from($this);
+        if($this->hour !== null){
+            return $this->buildDateTime();
         }
-        elseif(null !== $this->yearSignificantDigit){
-            return Interval::createSignificantDigitInterval($this);
+        elseif($this->yearSignificantDigit !== null){
+            return $this->createSignificantDigitInterval();
         }
-        elseif($this->season){
-            return Season::from($this);
+        elseif($this->season !== 0){
+            return $this->buildSeason();
         }
-        return ExtDate::from($this);
+        return $this->buildDate();
     }
+
+	public function buildDate(): ExtDate
+	{
+		return new ExtDate(
+			$this->yearNum,
+			$this->monthNum,
+			$this->dayNum,
+			$this->buildQualification(),
+			$this->buildUnspecifiedDigit(),
+			$this->intervalType
+		);
+	}
+
+	public function buildUnspecifiedDigit(): UnspecifiedDigit
+	{
+		return new UnspecifiedDigit(
+			$this->year,
+			$this->month,
+			$this->day
+		);
+	}
+
+	public function buildDateTime(): ExtDateTime
+	{
+		$tzSign = "Z" == $this->tzUtc ? "Z" : $this->tzSign;
+
+		return new ExtDateTime(
+			$this->yearNum,
+			$this->monthNum,
+			$this->dayNum,
+			$this->hour,
+			$this->minute,
+			$this->second,
+			$tzSign,
+			$this->tzHour,
+			$this->tzMinute
+		);
+	}
+
+	private function buildSeason(): Season
+	{
+		return new Season($this->yearNum, $this->season);
+	}
+
+	public function buildQualification(): Qualification
+	{
+		// TODO: use fields directly
+
+		$year = Qualification::UNDEFINED;
+		$month = Qualification::UNDEFINED;
+		$day = Qualification::UNDEFINED;
+
+		if(!is_null($this->getYearCloseFlag())
+			|| !is_null($this->getMonthCloseFlag())
+			|| !is_null($this->getDayCloseFlag())
+		){
+			$includeYear = false;
+			$includeMonth = false;
+			$includeDay = false;
+			$q = Qualification::UNDEFINED;
+
+			if(!is_null($this->getYearCloseFlag())){
+				// applied only to year
+				$includeYear = true;
+				$q = self::genQualificationValue($this->getYearCloseFlag());
+			}elseif(!is_null($this->getMonthCloseFlag())){
+				// applied only to year, and month
+				$includeYear = true;
+				$includeMonth = true;
+				$q = self::genQualificationValue($this->getMonthCloseFlag());
+			}elseif(!is_null($this->getDayCloseFlag())){
+				// applied to year, month, and day
+				$includeYear = true;
+				$includeMonth = true;
+				$includeDay = true;
+				$q = self::genQualificationValue($this->getDayCloseFlag());
+			}
+
+			$year = $includeYear ? $q:$year;
+			$month = $includeMonth ? $q:$month;
+			$day = $includeDay ? $q:$day;
+		}
+
+		// handle level 2 qualification
+		if(!is_null($this->getYearOpenFlag())){
+			$year = self::genQualificationValue($this->getYearOpenFlag());
+		}
+		if(!is_null($this->getMonthOpenFlag())){
+			$month = self::genQualificationValue($this->getMonthOpenFlag());
+		}
+		if(!is_null($this->getDayOpenFlag())){
+			$day = self::genQualificationValue($this->getDayOpenFlag());
+		}
+		return new Qualification($year, $month, $day);
+	}
+
+	// TODO
+	private static array $map = [
+		'%' => Qualification::UNCERTAIN_AND_APPROXIMATE,
+		'?' => Qualification::UNCERTAIN,
+		'~' => Qualification::APPROXIMATE,
+	];
+
+	// TODO
+	private static function genQualificationValue(?string $flag = null): int
+	{
+		assert(is_string($flag));
+		return (int)self::$map[$flag];
+	}
+
+	public function buildSet(string $input): Set
+	{
+		preg_match(
+			"/(?x)
+					 (?<openFlag>[\[|\{])
+					 (?<value>.*)
+					 (?<closeFlag>[\]|\}])
+					/",
+			$input,
+			$matches
+		);
+		if(0 === count($matches)){
+			throw new \InvalidArgumentException(sprintf(
+				"Can't create EDTF::Set from '%s' input", $input
+			));
+		}
+
+		$openFlag = $matches['openFlag'];
+		$values = explode(",",$matches['value']);
+		$allMembers = '[' === $openFlag ? false:true;
+		$earlier = false;
+		$later = false;
+
+		$sets = [];
+		foreach($values as $value){
+			if(false === strpos($value, '..')){
+				$sets[] = (new Parser())->createEdtf($value);
+			}
+			elseif(false != preg_match('/^\.\.(.+)/', $value, $matches)){
+				// earlier date like ..1760-12-03
+				$earlier = true;
+				$sets[] = (new Parser())->createEdtf($matches[1]);
+			}
+			elseif(false != preg_match('/(.+)\.\.$/', $value, $matches)){
+				// later date like 1760-12..
+				$later = true;
+				$sets[] = (new Parser())->createEdtf($matches[1]);
+			}
+			elseif(false != preg_match('/(.+)\.\.(.+)/', $value, $matches)){
+				$start = (int)$matches[1];
+				$end = (int)$matches[2];
+				for($i=$start;$i<=$end;$i++){
+					$sets[] = (new Parser())->createEdtf((string)$i);
+				}
+			}
+			continue;
+		}
+
+		return new Set($sets, $allMembers, $earlier, $later);
+	}
+
+	public function buildInterval(string $input): Interval
+	{
+		$pos = strrpos($input, '/');
+
+		if(false === $pos){
+			throw new \InvalidArgumentException(
+				sprintf("Can't create interval from %s",$input)
+			);
+		}
+		$startDateStr = substr( $input, 0, $pos );
+		$endDateStr   = substr( $input, $pos + 1 );
+
+		return new Interval(
+			$this->buildDateUsingIntervalMode($startDateStr),
+			$this->buildDateUsingIntervalMode($endDateStr)
+		);
+	}
+
+	private function buildDateUsingIntervalMode( string $dateString ): ExtDate {
+		$parser = new Parser();
+		$parser->parse($dateString, true);
+		return $parser->buildDate();
+	}
+
+	public function createSignificantDigitInterval(): Interval
+	{
+		$strEstimated = (string)$this->yearNum;
+		$significantDigit = $this->yearSignificantDigit;
+		assert(is_int($significantDigit));
+		$year = substr($strEstimated,0, strlen($strEstimated) - $significantDigit);
+		$startYear = $year.(str_repeat("0", $significantDigit));
+		$endYear = $year.(str_repeat("9", $significantDigit));
+
+		return new Interval(
+			new ExtDate((int)$startYear),
+			new ExtDate((int)$endYear),
+			$significantDigit,
+			$this->yearNum
+		);
+	}
+
+
 
     public function getMatches(): array
     {

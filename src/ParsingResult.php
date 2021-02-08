@@ -7,7 +7,7 @@ namespace EDTF;
 class ParsingResult {
 
 	private string $inputValue;
-	private ?ExtDateInterface $edtf = null;
+	private ?EdtfValue $edtf = null;
 
 	private function __construct( string $inputValue ) {
 		$this->inputValue = $inputValue;
@@ -17,7 +17,7 @@ class ParsingResult {
 		return new self( $inputValue );
 	}
 
-	public static function newValid( string $inputValue, ExtDateInterface $edtf ): self {
+	public static function newValid( string $inputValue, EdtfValue $edtf ): self {
 		$instance = new self( $inputValue );
 		$instance->edtf = $edtf;
 		return $instance;
@@ -30,7 +30,7 @@ class ParsingResult {
 	/**
 	 * @psalm-suppress InvalidNullableReturnType
 	 */
-	public function getDateTime(): ExtDateInterface {
+	public function getDateTime(): EdtfValue {
 		/**
 		 * @psalm-suppress NullableReturnStatement
 		 */

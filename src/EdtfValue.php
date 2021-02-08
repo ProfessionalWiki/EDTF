@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace EDTF;
 
-interface ExtDateInterface
+interface EdtfValue
 {
     /**
      * @return int unix timestamp
@@ -16,13 +16,11 @@ interface ExtDateInterface
      */
     public function getMin(): int;
 
-    public function covers(ExtDateInterface $edtf): bool;
+    public function covers(EdtfValue $edtf): bool;
 
     /**
      * @return string object type
      */
     public function getType(): string;
 
-    //TODO: what is the purpose of this method?
-    public function getInput(): string;
 }

@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-
 use Carbon\Carbon;
-use EDTF\PackagePrivate\Parser;
 
-class Set implements ExtDateInterface
+class Set implements EdtfValue
 {
-    public const REGEX = "/(?x)
-                             ^(?<openFlag>[\[|\{])
-                             (?<value>.*)
-                             (?<closeFlag>[\]|\}])$
-                            /";
     private bool $allMembers;
 
     private bool $earlier;
 
     /**
-     * @var ExtDateInterface[]
+     * @var EdtfValue[]
      */
     private array $lists;
 
@@ -32,74 +25,27 @@ class Set implements ExtDateInterface
     private int $min;
 
     private int $max;
-    private string $input;
 
     /**
-     * Set constructor.
-     * @param string $input
-     * @param ExtDateInterface[] $lists
+     * @param EdtfValue[] $lists
      * @param bool $allMembers
      * @param bool $earlier
      * @param bool $later
      */
     public function __construct(
-        string $input,
         array $lists,
         bool $allMembers = false,
         bool $earlier = false,
         bool $later = false
     )
     {
-        $this->input = $input;
         $this->lists = $lists;
         $this->allMembers = $allMembers;
         $this->earlier = $earlier;
         $this->later = $later;
 
+		// FIXME: do not do work in the constructor
         $this->configure();
-    }
-
-    public static function from(string $input): self
-    {
-        preg_match(Set::REGEX, $input, $matches);
-        if(0 === count($matches)){
-            throw new \InvalidArgumentException(sprintf(
-                "Can't create EDTF::Set from '%s' input", $input
-            ));
-        }
-
-        $openFlag = $matches['openFlag'];
-        $values = explode(",",$matches['value']);
-        $allMembers = '[' === $openFlag ? false:true;
-        $earlier = false;
-        $later = false;
-
-        $sets = [];
-        foreach($values as $value){
-            if(false === strpos($value, '..')){
-                $sets[] = (new Parser())->createEdtf($value);
-            }
-            elseif(false != preg_match('/^\.\.(.+)/', $value, $matches)){
-                // earlier date like ..1760-12-03
-                $earlier = true;
-                $sets[] = (new Parser())->createEdtf($matches[1]);
-            }
-            elseif(false != preg_match('/(.+)\.\.$/', $value, $matches)){
-                // later date like 1760-12..
-                $later = true;
-                $sets[] = (new Parser())->createEdtf($matches[1]);
-            }
-            elseif(false != preg_match('/(.+)\.\.(.+)/', $value, $matches)){
-                $start = (int)$matches[1];
-                $end = (int)$matches[2];
-                for($i=$start;$i<=$end;$i++){
-                    $sets[] = (new Parser())->createEdtf((string)$i);
-                }
-            }
-            continue;
-        }
-
-        return new Set($input, $sets, $allMembers, $earlier, $later);
     }
 
     private function configure(): void
@@ -125,7 +71,7 @@ class Set implements ExtDateInterface
     /**
      * @TODO: add a way to covers with earlier or later
      */
-    public function covers(ExtDateInterface $edtf): bool
+    public function covers(EdtfValue $edtf): bool
     {
         $lists = $this->lists;
         $edtfMin = Carbon::createFromTimestamp($edtf->getMin());
@@ -157,11 +103,6 @@ class Set implements ExtDateInterface
     public function getType(): string
     {
         return 'Set';
-    }
-
-    public function getInput(): string
-    {
-        return $this->input;
     }
 
     public function isAllMembers(): bool

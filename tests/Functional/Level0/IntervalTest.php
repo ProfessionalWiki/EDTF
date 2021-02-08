@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Functional\Level0;
 
-
 use EDTF\ExtDate;
 use EDTF\Interval;
 use EDTF\Tests\Unit\FactoryTrait;
@@ -19,7 +18,7 @@ class IntervalTest extends TestCase
 {
     use FactoryTrait;
 
-    public function testWithYearPrecision()
+    public function testWithYearPrecision(): void
     {
         $interval = $this->createInterval('1964/2008');
 
@@ -31,7 +30,7 @@ class IntervalTest extends TestCase
         $this->assertSame(2008, $interval->getEnd()->getYear());
     }
 
-    public function testWithMonthPrecision()
+    public function testWithMonthPrecision(): void
     {
         $interval = $this->createInterval("2004-06/2006-08");
 
@@ -48,7 +47,7 @@ class IntervalTest extends TestCase
         $this->assertSame(8, $interval->getEnd()->getMonth());
     }
 
-    public function testWithDayPrecision()
+    public function testWithDayPrecision(): void
     {
         $interval = $this->createInterval("2004-02-01/2005-02-08");
 
@@ -67,7 +66,7 @@ class IntervalTest extends TestCase
         $this->assertSame(8, $interval->getEnd()->getDay());
     }
 
-    public function testStartWithDayPrecisionAndEndWithMonthPrecision()
+    public function testStartWithDayPrecisionAndEndWithMonthPrecision(): void
     {
         $interval = $this->createInterval("2004-02-01/2005-02");
 
@@ -86,7 +85,7 @@ class IntervalTest extends TestCase
         $this->assertNull($interval->getEnd()->getDay());
     }
 
-    public function testStartWithDayPrecisionAndEndWithYearPrecision()
+    public function testStartWithDayPrecisionAndEndWithYearPrecision(): void
     {
         $interval = $this->createInterval("2004-02-01/2005");
 
@@ -105,7 +104,7 @@ class IntervalTest extends TestCase
         $this->assertNull($interval->getEnd()->getDay());
     }
 
-    public function testStartWithYearPrecisionEndWithMonthPrecision()
+    public function testStartWithYearPrecisionEndWithMonthPrecision(): void
     {
         $interval = $this->createInterval("2005/2006-02");
 

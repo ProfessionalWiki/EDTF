@@ -4,8 +4,9 @@ declare(strict_types = 1);
 
 namespace EDTF;
 
-use EDTF\PackagePrivate\Parser;
-
+/**
+ * TODO: inheritance likely should be replaced with composition
+ */
 class ExtDateTime extends ExtDate
 {
     private ?int $hour;
@@ -17,7 +18,6 @@ class ExtDateTime extends ExtDate
     private int $timezoneOffset = 0;
 
     public function __construct(
-        string $input = "",
         ?int $year = null,
         ?int $month = null,
         ?int $day = null,
@@ -29,7 +29,7 @@ class ExtDateTime extends ExtDate
         ?int $tzMinute  = null
     )
     {
-        parent::__construct($input, $year, $month, $day);
+        parent::__construct($year, $month, $day);
 
         $this->hour = $hour;
         $this->minute = $minute;
@@ -44,24 +44,6 @@ class ExtDateTime extends ExtDate
             $tzMinute = !is_null($this->tzMinute) ? $this->tzMinute:0;
             $this->timezoneOffset = (int) ($sign * ($tzHour * 60) + $tzMinute);
         }
-    }
-
-    public static function from(Parser $parser): self
-    {
-        $tzSign = "Z" == $parser->getTzUtc() ? "Z":$parser->getTzSign();
-
-        return new self(
-            $parser->getInput(),
-            $parser->getYearNum(),
-            $parser->getMonthNum(),
-            $parser->getDayNum(),
-            $parser->getHour(),
-            $parser->getMinute(),
-            $parser->getSecond(),
-            $tzSign,
-            $parser->getTzHour(),
-            $parser->getTzMinute()
-        );
     }
 
     public function getHour(): ?int
