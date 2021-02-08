@@ -27,6 +27,9 @@ class ExtDate implements EdtfValue
 
     private DatetimeFactoryInterface $datetimeFactory;
 
+	protected ?int $min = null;
+	protected ?int $max = null;
+
     public function __construct(?int $year = null,
                                 ?int $month = null,
                                 ?int $day = null,

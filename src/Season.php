@@ -17,7 +17,7 @@ class Season implements EdtfValue
     private EdtfValue $start;
     private EdtfValue $end;
 
-    public const MAP = [
+    private const MAP = [
         21 => 'Spring',
         22 => 'Summer',
         23 => 'Autumn',
@@ -107,9 +107,7 @@ class Season implements EdtfValue
         $end = (new Parser())->createEdtf($year.'-'.$endMonth);
 
 
-        $this->min = $start->getMin();
         $this->start = $start;
-        $this->max = $end->getMax();
         $this->end = $end;
     }
 
@@ -180,12 +178,12 @@ class Season implements EdtfValue
 
     public function getMax(): int
     {
-        return $this->max;
+        return $this->end->getMax();
     }
 
     public function getMin(): int
     {
-        return $this->min;
+        return $this->start->getMin();
     }
 
     public function getType(): string

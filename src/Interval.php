@@ -10,9 +10,9 @@ class Interval implements EdtfValue
 {
     use CoversTrait;
 
-    const NORMAL    = 0;
-    const OPEN      = 1;
-    const UNKNOWN   = 2;
+    public const NORMAL    = 0;
+    public const OPEN      = 1;
+    public const UNKNOWN   = 2;
 
     private ExtDate $start;
     private ExtDate $end;
@@ -30,19 +30,16 @@ class Interval implements EdtfValue
         $this->end = $end;
         $this->significantDigit = $significantDigit;
         $this->estimated = $estimated;
-
-        $this->min = $start->getMin();
-        $this->max = $end->getMax();
     }
 
     public function getMin(): int
     {
-        return $this->min;
+        return $this->start->getMin();
     }
 
     public function getMax(): int
     {
-        return $this->max;
+        return $this->end->getMax();
     }
 
     public function getType(): string

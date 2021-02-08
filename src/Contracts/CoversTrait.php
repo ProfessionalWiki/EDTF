@@ -12,9 +12,6 @@ use EDTF\EdtfValue;
  */
 trait CoversTrait
 {
-    protected ?int $min = null;
-    protected ?int $max = null;
-
     public function covers(EdtfValue $edtf): bool
     {
         $min = Carbon::createFromTimestamp($this->getMin());
