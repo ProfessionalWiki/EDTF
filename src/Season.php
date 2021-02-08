@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-use Carbon\Carbon;
 use EDTF\Contracts\CoversTrait;
 use EDTF\PackagePrivate\Parser;
 
@@ -48,16 +47,6 @@ class Season implements EdtfValue
         $this->season = $season;
 
         $this->configure();
-    }
-
-    public static function from(Parser $parser): Season
-    {
-        $year = $parser->getYearNum();
-        $season = $parser->getSeason();
-
-        assert(!is_null($year));
-        assert(!is_null($season));
-        return new Season($year, $season);
     }
 
     private function configure(): void

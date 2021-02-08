@@ -6,7 +6,6 @@ namespace EDTF;
 
 use EDTF\Contracts\CoversTrait;
 use EDTF\Exceptions\ExtDateException;
-use EDTF\PackagePrivate\Parser;
 use EDTF\Utils\DatetimeFactory\CarbonFactory;
 use EDTF\Utils\DatetimeFactory\DatetimeFactoryException;
 use EDTF\Utils\DatetimeFactory\DatetimeFactoryInterface;
@@ -43,18 +42,6 @@ class ExtDate implements EdtfValue
         $this->intervalType = $intervalType;
 
         $this->datetimeFactory = new CarbonFactory();
-    }
-
-    public static function from(Parser $parser): self
-    {
-		return new self(
-            $parser->getYearNum(),
-            $parser->getMonthNum(),
-            $parser->getDayNum(),
-			Qualification::from($parser),
-			UnspecifiedDigit::from($parser),
-            $parser->getIntervalType()
-        );
     }
 
     public function getType(): string
