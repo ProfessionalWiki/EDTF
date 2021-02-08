@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace EDTF\Humanize\Languages;
 
 use EDTF\EdtfValue;
+use EDTF\ExtDate;
 use EDTF\Humanize\Humanizer;
 use EDTF\Season;
 
@@ -34,9 +35,28 @@ class EnglishHumanizer implements Humanizer {
 		41 => 'Semester 2',
 	];
 
+	private const MONTH_MAP = [
+		1 => 'January',
+		2 => 'February',
+		3 => 'March',
+		4 => 'April',
+		5 => 'May',
+		6 => 'June',
+		7 => 'July',
+		8 => 'August',
+		9 => 'September',
+		10 => 'October',
+		11 => 'November',
+		12 => 'December',
+	];
+
 	public function humanize( EdtfValue $edtf ): string {
 		if ( $edtf instanceof Season ) {
 			return $this->humanizeSeason( $edtf );
+		}
+
+		if ( $edtf instanceof ExtDate ) {
+			return $this->humanizeDate( $edtf );
 		}
 
 		return 'TODO';
@@ -44,6 +64,22 @@ class EnglishHumanizer implements Humanizer {
 
 	private function humanizeSeason( Season $season ): string {
 		return self::SEASON_MAP[$season->getSeason()] . ' ' . $season->getYear();
+	}
+
+	private function humanizeDate( ExtDate $date ): string {
+		$month = $date->getMonth();
+
+		if ( $month === null ) {
+			return (string)$date->getYear();
+		}
+
+		$day = $date->getDay();
+
+		if ( $day === null ) {
+			return self::MONTH_MAP[$month] . ' ' . $date->getYear();
+		}
+
+		return self::MONTH_MAP[$month] . ' ' . $day . ', ' . $date->getYear();
 	}
 
 }

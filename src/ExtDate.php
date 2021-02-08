@@ -31,6 +31,7 @@ class ExtDate implements EdtfValue
 	protected ?int $max = null;
 
 	// TODO: why are these fields optional?
+	// TODO: this is especially weird since ExtDateTime contains an ExtDate, but AFAIK only the first 3 fields make sense there
     public function __construct(?int $year = null,
                                 ?int $month = null,
                                 ?int $day = null,
