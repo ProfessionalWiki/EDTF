@@ -46,6 +46,7 @@ class Season implements EdtfValue
         $this->year = $year;
         $this->season = $season;
 
+        // FIXME: do not do work in the constructor
         $this->configure();
     }
 

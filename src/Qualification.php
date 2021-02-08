@@ -32,6 +32,7 @@ class Qualification
 
     public function __construct(int $year = 0, int $month = 0, int $day=0)
     {
+    	// TODO: Does it make sense these constructor params are optional?
         $this->year = $year;
         $this->month = $month;
         $this->day = $day;

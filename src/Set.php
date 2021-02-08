@@ -8,11 +8,6 @@ use Carbon\Carbon;
 
 class Set implements EdtfValue
 {
-    public const REGEX = "/(?x)
-                             (?<openFlag>[\[|\{])
-                             (?<value>.*)
-                             (?<closeFlag>[\]|\}])
-                            /";
     private bool $allMembers;
 
     private bool $earlier;
@@ -49,6 +44,7 @@ class Set implements EdtfValue
         $this->earlier = $earlier;
         $this->later = $later;
 
+		// FIXME: do not do work in the constructor
         $this->configure();
     }
 

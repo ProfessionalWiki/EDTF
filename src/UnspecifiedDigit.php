@@ -12,6 +12,7 @@ class UnspecifiedDigit
 
     public function __construct(?string $year = null, ?string $month = null, ?string $day = null)
     {
+		// TODO: this looks like parsing code - probably constructor params should be required and parsing code outside of the instance
         $this->year = $this->sumUnspecifiedDigit($year);
         $this->month = $this->sumUnspecifiedDigit($month);
         $this->day = $this->sumUnspecifiedDigit($day);
