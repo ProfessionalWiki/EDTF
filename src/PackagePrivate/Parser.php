@@ -60,6 +60,8 @@ class Parser
 
     public function parse(string $input, bool $intervalMode = false): self
     {
+        $input = $this->removeExtraSpaces($input);
+
         if(false === $intervalMode && "" === $input){
             throw new \InvalidArgumentException("Can't create EDTF from empty string.");
         }
@@ -267,5 +269,10 @@ class Parser
     public function getTzHour(): ?int
     {
         return $this->tzHour;
+    }
+
+    private function removeExtraSpaces(string $input): string
+    {
+        return str_replace(" ", "", $input);
     }
 }

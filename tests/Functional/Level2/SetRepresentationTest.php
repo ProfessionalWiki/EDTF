@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Functional\Level2;
 
-
+use Carbon\Carbon;
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -27,6 +27,12 @@ class SetRepresentationTest extends TestCase
         $this->assertSame(1667, $lists[0]->getYear());
         $this->assertSame(1668, $lists[1]->getYear());
         $this->assertSame(1672, $lists[4]->getYear());
+
+        $expectedMin = Carbon::create(1667)->getTimestamp();
+        $this->assertSame($expectedMin, $set->getMin());
+
+        $expectedMax = Carbon::create(1672, 12, 31, 23, 59, 59)->getTimestamp();
+        $this->assertSame($expectedMax, $set->getMax());
     }
 
     public function testOneOfWithEarlierDate()

@@ -11,9 +11,9 @@ use EDTF\PackagePrivate\Parser;
 class Set implements ExtDateInterface
 {
     public const REGEX = "/(?x)
-                             (?<openFlag>[\[|\{])
+                             ^(?<openFlag>[\[|\{])
                              (?<value>.*)
-                             (?<closeFlag>[\]|\}])
+                             (?<closeFlag>[\]|\}])$
                             /";
     private bool $allMembers;
 
