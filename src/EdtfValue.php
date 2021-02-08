@@ -18,9 +18,4 @@ interface EdtfValue
 
     public function covers(EdtfValue $edtf): bool;
 
-    /**
-     * @return string object type
-     */
-    public function getType(): string;
-
 }

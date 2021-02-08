@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace EDTF\Tests\Unit;
 
+use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +18,7 @@ class ExtDateTimeTest extends TestCase
 
     public function testCreate(): void
     {
-        $dt = new ExtDateTime(2010,10,1,1,1,1);
+        $dt = new ExtDateTime(new ExtDate( 2010,10,1 ),1,1,1);
 
         $this->assertSame(2010, $dt->getYear());
         $this->assertSame(10, $dt->getMonth());

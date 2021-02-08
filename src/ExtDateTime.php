@@ -4,33 +4,33 @@ declare(strict_types = 1);
 
 namespace EDTF;
 
-/**
- * TODO: inheritance likely should be replaced with composition
- */
-class ExtDateTime extends ExtDate
-{
-    private ?int $hour;
-    private ?int $minute;
-    private ?int $second;
-    private ?string $tzSign;
-    private ?int $tzMinute;
-    private ?int $tzHour;
-    private int $timezoneOffset = 0;
+use EDTF\Contracts\CoversTrait;
 
-    public function __construct(
-        ?int $year = null,
-        ?int $month = null,
-        ?int $day = null,
-        ?int $hour = null,
-        ?int $minute = null,
-        ?int $second = null,
+class ExtDateTime implements EdtfValue
+{
+	use CoversTrait;
+
+	private ExtDate $date;
+	private int $hour;
+	private int $minute;
+	private int $second;
+	private ?string $tzSign;
+	private ?int $tzMinute;
+	private ?int $tzHour;
+	private int $timezoneOffset = 0;
+
+	// TODO: do these fields need to be optional?
+	public function __construct(
+        ExtDate $date,
+        int $hour,
+        int $minute,
+        int $second,
         ?string $tzSign = null,
         ?int $tzHour = null,
         ?int $tzMinute  = null
     )
     {
-        parent::__construct($year, $month, $day);
-
+		$this->date = $date;
         $this->hour = $hour;
         $this->minute = $minute;
         $this->second = $second;
@@ -44,19 +44,19 @@ class ExtDateTime extends ExtDate
             $tzMinute = !is_null($this->tzMinute) ? $this->tzMinute:0;
             $this->timezoneOffset = (int) ($sign * ($tzHour * 60) + $tzMinute);
         }
-    }
+	}
 
-    public function getHour(): ?int
+    public function getHour(): int
     {
         return $this->hour;
     }
 
-    public function getMinute(): ?int
+    public function getMinute(): int
     {
         return $this->minute;
     }
 
-    public function getSecond(): ?int
+    public function getSecond(): int
     {
         return $this->second;
     }
@@ -80,4 +80,27 @@ class ExtDateTime extends ExtDate
     {
         return $this->timezoneOffset;
     }
+
+	public function getMax(): int {
+		// FIXME: this is not correct
+		return $this->date->getMax();
+	}
+
+	public function getMin(): int {
+		// FIXME: this is not correct
+		return $this->date->getMin();
+	}
+
+	public function getYear(): int {
+		return $this->date->getYear();
+	}
+
+	public function getMonth(): int {
+		return $this->date->getMonth();
+	}
+
+	public function getDay(): int {
+		return $this->date->getDay();
+	}
+
 }

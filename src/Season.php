@@ -128,11 +128,6 @@ class Season implements EdtfValue
         return $this->start->getMin();
     }
 
-    public function getType(): string
-    {
-        return 'Season';
-    }
-
     public function getYear(): int
     {
         return $this->year;

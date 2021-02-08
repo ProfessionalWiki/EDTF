@@ -100,11 +100,6 @@ class Set implements EdtfValue
         return $this->min;
     }
 
-    public function getType(): string
-    {
-        return 'Set';
-    }
-
     public function isAllMembers(): bool
     {
         return true === $this->allMembers;

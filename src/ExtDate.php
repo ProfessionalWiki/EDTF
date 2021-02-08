@@ -30,6 +30,7 @@ class ExtDate implements EdtfValue
 	protected ?int $min = null;
 	protected ?int $max = null;
 
+	// TODO: why are these fields optional?
     public function __construct(?int $year = null,
                                 ?int $month = null,
                                 ?int $day = null,
@@ -45,11 +46,6 @@ class ExtDate implements EdtfValue
         $this->intervalType = $intervalType;
 
         $this->datetimeFactory = new CarbonFactory();
-    }
-
-    public function getType(): string
-    {
-        return 'ExtDate';
     }
 
     /**

@@ -42,11 +42,6 @@ class Interval implements EdtfValue
         return $this->end->getMax();
     }
 
-    public function getType(): string
-    {
-        return "interval";
-    }
-
     public function getStart(): ExtDate
     {
         return $this->start;

@@ -181,9 +181,11 @@ class Parser
 		$tzSign = "Z" == $this->tzUtc ? "Z" : $this->tzSign;
 
 		return new ExtDateTime(
-			$this->yearNum,
-			$this->monthNum,
-			$this->dayNum,
+			new ExtDate(
+				$this->yearNum,
+				$this->monthNum,
+				$this->dayNum
+			),
 			$this->hour,
 			$this->minute,
 			$this->second,
