@@ -4,22 +4,22 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Unit\Humanize;
 
-use EDTF\Humanize\EdtfHumanizer;
+use EDTF\Humanize\HumanizerFactory;
 use EDTF\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Humanize\EdtfHumanizer
+ * @covers \EDTF\Humanize\HumanizerFactory
  */
 class EdtfHumanizerTest extends TestCase {
 
 	/**
 	 * @dataProvider seasonProvider
 	 */
-	public function testSeason( string $expected, Season $season ): void {
+	public function testEnglishSeasons( string $expected, Season $season ): void {
 		$this->assertSame(
 			$expected,
-			( new EdtfHumanizer() )->humanize( $season )
+			HumanizerFactory::newForLanguage( 'en' )->humanize( $season )
 		);
 	}
 
@@ -34,6 +34,23 @@ class EdtfHumanizerTest extends TestCase {
 		yield [ 'Quadrimester 2 2001', new Season( 2001, 38 ) ];
 		yield [ 'Semester 2 2001', new Season( 2001, 41 ) ];
 		yield [ 'Autumn (Southern Hemisphere) 2001', new Season( 2001, 31 ) ];
+	}
+
+	/**
+	 * @dataProvider frenchSeasonProvider
+	 */
+	public function testFrenchSeasons( string $expected, Season $season ): void {
+		$this->assertSame(
+			$expected,
+			HumanizerFactory::newForLanguage( 'fr' )->humanize( $season )
+		);
+	}
+
+	public function frenchSeasonProvider(): \Generator {
+		yield [ 'Printemps 2021', new Season( 2021, 21 ) ];
+		yield [ 'Été 2021', new Season( 2021, 22 ) ];
+		yield [ 'Automne 2021', new Season( 2021, 23 ) ];
+		yield [ 'Hiver 2021', new Season( 2021, 24 ) ];
 	}
 
 }
