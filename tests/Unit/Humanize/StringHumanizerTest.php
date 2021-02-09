@@ -58,6 +58,8 @@ class StringHumanizerTest extends TestCase {
 		yield 'Year and day' => [ '2020-XX-11', '11th of unknown month, 2020' ];
 
 		yield 'Interval with year to year' => [ '2019/2021', '2019 to 2021' ];
+		yield 'Interval year and month' => [ '2019-01/2021-02', 'January 2019 to February 2021' ];
+		yield 'Interval different date formats' => [ '2019/2021-02-09', '2019 to February 9th, 2021' ];
 	}
 
 }

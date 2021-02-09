@@ -110,6 +110,7 @@ class EnglishHumanizer implements Humanizer {
 	}
 
 	private function humanizeInterval( Interval $interval ): string {
+		// TODO
 //		if ( !$interval->isNormalInterval() ) {
 //			return '';
 //		}
