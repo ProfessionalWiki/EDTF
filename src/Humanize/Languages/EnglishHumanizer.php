@@ -7,6 +7,7 @@ namespace EDTF\Humanize\Languages;
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
 use EDTF\Humanize\Humanizer;
+use EDTF\Interval;
 use EDTF\Season;
 
 class EnglishHumanizer implements Humanizer {
@@ -51,12 +52,16 @@ class EnglishHumanizer implements Humanizer {
 	];
 
 	public function humanize( EdtfValue $edtf ): string {
+		if ( $edtf instanceof ExtDate ) {
+			return $this->humanizeDate( $edtf );
+		}
+
 		if ( $edtf instanceof Season ) {
 			return $this->humanizeSeason( $edtf );
 		}
 
-		if ( $edtf instanceof ExtDate ) {
-			return $this->humanizeDate( $edtf );
+		if ( $edtf instanceof Interval ) {
+			return $this->humanizeInterval( $edtf );
 		}
 
 		return '';
@@ -102,6 +107,14 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		return $number . [ 'th','st','nd','rd','th','th','th','th','th','th' ][$number % 10];
+	}
+
+	private function humanizeInterval( Interval $interval ): string {
+//		if ( !$interval->isNormalInterval() ) {
+//			return '';
+//		}
+
+		return $this->humanize( $interval->getStart() ) . ' to ' . $this->humanize( $interval->getEnd() );
 	}
 
 }
