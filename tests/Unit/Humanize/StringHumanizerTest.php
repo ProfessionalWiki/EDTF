@@ -28,13 +28,9 @@ class StringHumanizerTest extends TestCase {
 		);
 
 		$this->assertSame(
-			'0043',
-			$stringHumanizer->humanize( '0043' )
+			'0042',
+			$stringHumanizer->humanize( '0042' )
 		);
-	}
-
-	private function humanize( string $edtf ): string {
-		return HumanizerFactory::newStringHumanizerForLanguage( 'en' )->humanize( $edtf );
 	}
 
 	/**
@@ -43,7 +39,7 @@ class StringHumanizerTest extends TestCase {
 	public function testUnspecifiedDigits( string $edtf, string $humanized ): void {
 		$this->assertSame(
 			$humanized,
-			$this->humanize( $edtf )
+			HumanizerFactory::newStringHumanizerForLanguage( 'en' )->humanize( $edtf )
 		);
 	}
 
