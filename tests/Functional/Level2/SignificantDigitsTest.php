@@ -19,8 +19,8 @@ class SignificantDigitsTest extends TestCase
     {
         $i = $this->createInterval('1950S2');
 
-        $this->assertSame(1900, $i->getStart()->getYear());
-        $this->assertSame(1999, $i->getEnd()->getYear());
+        $this->assertSame(1900, $i->getStartDate()->getYear());
+        $this->assertSame(1999, $i->getEndDate()->getYear());
         $this->assertSame(2, $i->getSignificantDigit());
         $this->assertSame(1950, $i->getEstimated());
     }
@@ -31,8 +31,8 @@ class SignificantDigitsTest extends TestCase
 
         $this->assertSame(3, $i->getSignificantDigit());
         $this->assertSame(171010000, $i->getEstimated());
-        $this->assertSame(171010000, $i->getStart()->getYear());
-        $this->assertSame(171010999, $i->getEnd()->getYear());
+        $this->assertSame(171010000, $i->getStartDate()->getYear());
+        $this->assertSame(171010999, $i->getEndDate()->getYear());
     }
 
     public function testWithExponentialYear()
@@ -41,7 +41,7 @@ class SignificantDigitsTest extends TestCase
 
         $this->assertSame(3, $i->getSignificantDigit());
         $this->assertSame(338800, $i->getEstimated());
-        $this->assertSame(338000, $i->getStart()->getYear());
-        $this->assertSame(338999, $i->getEnd()->getYear());
+        $this->assertSame(338000, $i->getStartDate()->getYear());
+        $this->assertSame(338999, $i->getEndDate()->getYear());
     }
 }

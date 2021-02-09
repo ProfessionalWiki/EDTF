@@ -7,6 +7,7 @@ namespace EDTF\Humanize\Languages;
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
 use EDTF\Humanize\Humanizer;
+use EDTF\Interval;
 use EDTF\Season;
 
 class EnglishHumanizer implements Humanizer {
@@ -51,15 +52,19 @@ class EnglishHumanizer implements Humanizer {
 	];
 
 	public function humanize( EdtfValue $edtf ): string {
-		if ( $edtf instanceof Season ) {
-			return $this->humanizeSeason( $edtf );
-		}
-
 		if ( $edtf instanceof ExtDate ) {
 			return $this->humanizeDate( $edtf );
 		}
 
-		return 'TODO';
+		if ( $edtf instanceof Season ) {
+			return $this->humanizeSeason( $edtf );
+		}
+
+		if ( $edtf instanceof Interval ) {
+			return $this->humanizeInterval( $edtf );
+		}
+
+		return '';
 	}
 
 	private function humanizeSeason( Season $season ): string {
@@ -102,6 +107,30 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		return $number . [ 'th','st','nd','rd','th','th','th','th','th','th' ][$number % 10];
+	}
+
+	private function humanizeInterval( Interval $interval ): string {
+		if ( $interval->isNormalInterval() ) {
+			return $this->humanize( $interval->getStartDate() ) . ' to ' . $this->humanize( $interval->getEndDate() );
+		}
+
+		if ( $interval->hasOpenEnd() ) {
+			return $this->humanize( $interval->getStartDate() ) . ' or later';
+		}
+
+		if ( $interval->hasOpenStart() ) {
+			return $this->humanize( $interval->getEndDate() ) . ' or earlier';
+		}
+
+		if ( $interval->hasUnknownEnd() ) {
+			return 'From ' . $this->humanize( $interval->getStartDate() ) . ' to unknown';
+		}
+
+		if ( $interval->hasUnknownStart() ) {
+			return 'From unknown to ' . $this->humanize( $interval->getEndDate() );
+		}
+
+		return '';
 	}
 
 }

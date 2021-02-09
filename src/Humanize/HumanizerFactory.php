@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace EDTF\Humanize;
 
+use EDTF\EdtfParser;
 use EDTF\Humanize\Languages\EnglishHumanizer;
 use EDTF\Humanize\Languages\FrenchHumanizer;
 
@@ -15,6 +16,13 @@ class HumanizerFactory {
 		}
 
 		return new EnglishHumanizer();
+	}
+
+	public static function newStringHumanizerForLanguage( string $languageCode ): StringHumanizer {
+		return new StringHumanizer(
+			self::newForLanguage( $languageCode ),
+			new EdtfParser()
+		);
 	}
 
 }
