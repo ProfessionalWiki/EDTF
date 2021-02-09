@@ -50,7 +50,9 @@ class StringHumanizerTest extends TestCase {
 
 		yield 'Leading zeroes' => [ '0042', '42' ];
 
-		yield 'Seasons' => [ '1975-22', 'Summer 1975' ];
+		yield 'Seasons: 22' => [ '1975-22', 'Summer 1975' ];
+		yield 'Seasons: 32' => [ '1975-32', 'Winter (Southern Hemisphere) 1975' ];
+		yield 'Seasons: 41' => [ '1975-41', 'Second semester 1975' ];
 
 		yield 'Month only' => [ 'XXXX-12-XX', 'December' ];
 		yield 'Day only' => [ 'XXXX-XX-12', '12th' ];
@@ -74,6 +76,7 @@ class StringHumanizerTest extends TestCase {
 		yield 'Month uncertain' => [ '2019-04?', 'Maybe April 2019' ];
 		yield 'Day approximate' => [ '2019-04-01~', 'Circa April 1st, 2019' ];
 		yield 'Day uncertain' => [ '2019-04-01?', 'Maybe April 1st, 2019' ];
+
 	}
 
 }
