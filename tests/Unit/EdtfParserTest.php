@@ -55,14 +55,14 @@ class EdtfParserTest extends TestCase {
 
 	public function testGetDateTimeCausesErrorForInvalidEdtf(): void {
 		$this->expectException( \TypeError::class );
-		$this->newParser()->parse( 'not edtf' )->getDateTime();
+		$this->newParser()->parse( 'not edtf' )->getEdtfValue();
 	}
 
 	/**
 	 * @dataProvider validValueProvider
 	 */
 	public function testGetDateTimeReturnsObjectForValidEdtf( string $validEdtf ): void {
-		$this->newParser()->parse( $validEdtf )->getDateTime();
+		$this->newParser()->parse( $validEdtf )->getEdtfValue();
 		$this->assertTrue( true );
 	}
 

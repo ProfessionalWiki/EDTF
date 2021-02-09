@@ -45,7 +45,7 @@ class SeasonTest extends TestCase
 
     private function assertSeasonValues(string $input, string $expectedStart, string $expectedEnd)
     {
-        $season = (new EdtfParser())->parse($input)->getDateTime();
+        $season = (new EdtfParser())->parse($input)->getEdtfValue();
         $expectedStart = Carbon::parse($expectedStart);
         $expectedEnd = Carbon::parse($expectedEnd);
 

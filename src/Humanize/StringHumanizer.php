@@ -19,7 +19,7 @@ class StringHumanizer {
 	public function humanize( string $edtf ): string {
 		$parsingResult = $this->parser->parse( $edtf );
 
-		$humanizedEdtf = $this->humanizer->humanize( $parsingResult->getDateTime() );
+		$humanizedEdtf = $this->humanizer->humanize( $parsingResult->getEdtfValue() );
 
 		return $humanizedEdtf === '' ? $parsingResult->getInput() : $humanizedEdtf;
 	}
