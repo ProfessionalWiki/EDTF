@@ -23,7 +23,6 @@ class SetTest extends TestCase
 
         $set = new Set([$date1, $date2, $date3, $date4]);
 
-        $this->assertSame('Set', $set->getType());
         $this->assertFalse($set->isAllMembers());
         $this->assertFalse($set->isLater());
         $this->assertFalse($set->isEarlier());
