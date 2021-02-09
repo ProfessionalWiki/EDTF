@@ -72,7 +72,7 @@ class EnglishHumanizer implements Humanizer {
 		$day = $date->getDay();
 
 		if ( $year !== null && $month !== null && $day !== null ) {
-			return self::MONTH_MAP[$month] . ' ' . $day . ', ' . $year;
+			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $year;
 		}
 
 		$parts = [];
@@ -82,7 +82,7 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		if ( $day !== null ) {
-			$parts[] = (string)$day;
+			$parts[] = $this->inflectNumber( $day );
 		}
 
 		if ( $year !== null ) {
@@ -90,6 +90,14 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		return implode( ' ', $parts );
+	}
+
+	private function inflectNumber(int $number): string {
+		if ( $number % 100 >= 11 && $number % 100 <= 13 ) {
+			return $number. 'th';
+		}
+
+		return $number . [ 'th','st','nd','rd','th','th','th','th','th','th' ][$number % 10];
 	}
 
 }

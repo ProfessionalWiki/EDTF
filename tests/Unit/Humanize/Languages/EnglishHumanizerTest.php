@@ -50,18 +50,18 @@ class EnglishHumanizerTest extends TestCase {
 	}
 
 	public function simpleDateProvider(): \Generator {
-		yield [ 'January 1, 2021', new ExtDate( 2021, 1, 1 ) ];
-		yield [ 'February 9, 2021', new ExtDate( 2021, 2, 9 ) ];
-		yield [ 'March 13, 2021', new ExtDate( 2021, 3, 13 ) ];
-		yield [ 'April 14, 2021', new ExtDate( 2021, 4, 14 ) ];
-		yield [ 'May 15, 2021', new ExtDate( 2021, 5, 15 ) ];
-		yield [ 'June 16, 2021', new ExtDate( 2021, 6, 16 ) ];
-		yield [ 'July 17, 2021', new ExtDate( 2021, 7, 17 ) ];
-		yield [ 'August 18, 2021', new ExtDate( 2021, 8, 18 ) ];
-		yield [ 'September 19, 2021', new ExtDate( 2021, 9, 19 ) ];
-		yield [ 'October 20, 2021', new ExtDate( 2021, 10, 20 ) ];
-		yield [ 'November 21, 2021', new ExtDate( 2021, 11, 21 ) ];
-		yield [ 'December 30, 2021', new ExtDate( 2021, 12, 30 ) ];
+		yield [ 'January 1st, 2021', new ExtDate( 2021, 1, 1 ) ];
+		yield [ 'February 9th, 2021', new ExtDate( 2021, 2, 9 ) ];
+		yield [ 'March 13th, 2021', new ExtDate( 2021, 3, 13 ) ];
+		yield [ 'April 14th, 2021', new ExtDate( 2021, 4, 14 ) ];
+		yield [ 'May 15th, 2021', new ExtDate( 2021, 5, 15 ) ];
+		yield [ 'June 16th, 2021', new ExtDate( 2021, 6, 16 ) ];
+		yield [ 'July 17th, 2021', new ExtDate( 2021, 7, 17 ) ];
+		yield [ 'August 18th, 2021', new ExtDate( 2021, 8, 18 ) ];
+		yield [ 'September 19th, 2021', new ExtDate( 2021, 9, 19 ) ];
+		yield [ 'October 20th, 2021', new ExtDate( 2021, 10, 20 ) ];
+		yield [ 'November 21st, 2021', new ExtDate( 2021, 11, 21 ) ];
+		yield [ 'December 30th, 2021', new ExtDate( 2021, 12, 30 ) ];
 
 		yield [ 'January 2021', new ExtDate( 2021, 1 ) ];
 		yield [ 'February 2021', new ExtDate( 2021, 2 ) ];
@@ -73,8 +73,8 @@ class EnglishHumanizerTest extends TestCase {
 		yield [ 'August', new ExtDate( null, 8 ) ];
 		yield [ 'January', new ExtDate( null, 1 ) ];
 
-		yield [ 'August 10', new ExtDate( null, 8, 10 ) ];
-		yield [ 'January 5', new ExtDate( null, 1, 5 ) ];
+		yield [ 'August 22nd', new ExtDate( null, 8, 22 ) ];
+		yield [ 'January 3rd', new ExtDate( null, 1, 3 ) ];
 	}
 
 }
