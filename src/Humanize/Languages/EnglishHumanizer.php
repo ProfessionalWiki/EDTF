@@ -59,7 +59,7 @@ class EnglishHumanizer implements Humanizer {
 			return $this->humanizeDate( $edtf );
 		}
 
-		return 'TODO';
+		return '';
 	}
 
 	private function humanizeSeason( Season $season ): string {

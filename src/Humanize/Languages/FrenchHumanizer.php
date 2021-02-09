@@ -39,7 +39,7 @@ class FrenchHumanizer implements Humanizer {
 			return $this->humanizeSeason( $edtf );
 		}
 
-		return 'TODO';
+		return '';
 	}
 
 	private function humanizeSeason( Season $season ): string {
