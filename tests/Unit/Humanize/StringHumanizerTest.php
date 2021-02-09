@@ -65,6 +65,15 @@ class StringHumanizerTest extends TestCase {
 		yield 'Interval with open start' => [ '../2021', '2021 or earlier' ];
 		yield 'Interval with unknown end' => [ '2019/', 'From 2019 to unknown' ];
 		yield 'Interval with unknown start' => [ '/2021', 'From unknown to 2021' ];
+
+		yield 'Year approximate' => [ '2019~', 'Circa 2019' ];
+		yield 'Year uncertain' => [ '2019?', 'Maybe 2019' ];
+		yield 'Year uncertain approximation' => [ '2019%', 'Maybe circa 2019' ];
+
+		yield 'Month approximate' => [ '2019-04~', 'Circa April 2019' ];
+		yield 'Month uncertain' => [ '2019-04?', 'Maybe April 2019' ];
+		yield 'Day approximate' => [ '2019-04-01~', 'Circa April 1st, 2019' ];
+		yield 'Day uncertain' => [ '2019-04-01?', 'Maybe April 1st, 2019' ];
 	}
 
 }

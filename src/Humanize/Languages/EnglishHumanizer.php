@@ -72,10 +72,24 @@ class EnglishHumanizer implements Humanizer {
 	}
 
 	private function humanizeDate( ExtDate $date ): string {
-		$year = $date->getYear();
-		$month = $date->getMonth();
-		$day = $date->getDay();
+		$humanizedDate = $this->humanizeYearMonthDay( $date->getYear(), $date->getMonth(), $date->getDay() );
 
+		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain() ) {
+			return 'Maybe circa ' . $humanizedDate;
+		}
+
+		if ( $date->getQualification()->isApproximate() ) {
+			return 'Circa ' . $humanizedDate;
+		}
+
+		if ( $date->getQualification()->uncertain() ) {
+			return 'Maybe ' . $humanizedDate;
+		}
+
+		return $humanizedDate;
+	}
+
+	private function humanizeYearMonthDay( ?int $year, ?int $month, ?int $day ): string {
 		if ( $year !== null && $month !== null && $day !== null ) {
 			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $year;
 		}
