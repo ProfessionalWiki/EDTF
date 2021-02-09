@@ -20,8 +20,8 @@ class IntervalTest extends TestCase
     public function testApproximatelyInStartAndEnd()
     {
         $i = $this->createInterval('2004-06-~01/2004-06-~20');
-        $start = $i->getStart();
-        $end = $i->getEnd();
+        $start = $i->getStartDate();
+        $end = $i->getEndDate();
 
         $this->assertTrue($start->approximate());
         $this->assertTrue($end->approximate());
@@ -32,8 +32,8 @@ class IntervalTest extends TestCase
     public function testUsingUnspecifiedPart()
     {
         $i = $this->createInterval('2004-06-XX/2004-07-03');
-        $start = $i->getStart();
-        $end = $i->getEnd();
+        $start = $i->getStartDate();
+        $end = $i->getEndDate();
 
         $this->assertTrue($start->unspecified());
         $this->assertFalse($end->unspecified());

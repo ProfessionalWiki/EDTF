@@ -30,7 +30,7 @@ class ParsingResult {
 	/**
 	 * @psalm-suppress InvalidNullableReturnType
 	 */
-	public function getDateTime(): EdtfValue {
+	public function getEdtfValue(): EdtfValue {
 		/**
 		 * @psalm-suppress NullableReturnStatement
 		 */

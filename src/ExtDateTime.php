@@ -4,33 +4,33 @@ declare(strict_types = 1);
 
 namespace EDTF;
 
-/**
- * TODO: inheritance likely should be replaced with composition
- */
-class ExtDateTime extends ExtDate
-{
-    private ?int $hour;
-    private ?int $minute;
-    private ?int $second;
-    private ?string $tzSign;
-    private ?int $tzMinute;
-    private ?int $tzHour;
-    private int $timezoneOffset = 0;
+use EDTF\Contracts\CoversTrait;
 
-    public function __construct(
-        ?int $year = null,
-        ?int $month = null,
-        ?int $day = null,
-        ?int $hour = null,
-        ?int $minute = null,
-        ?int $second = null,
+class ExtDateTime implements EdtfValue
+{
+	use CoversTrait;
+
+	private ExtDate $date;
+	private int $hour;
+	private int $minute;
+	private int $second;
+	private ?string $tzSign;
+	private ?int $tzMinute;
+	private ?int $tzHour;
+	private ?int $timezoneOffset = null;
+
+	// TODO: replace 3 time zone fields with 1 required one: int offset or null for local time
+	public function __construct(
+        ExtDate $date,
+        int $hour,
+        int $minute,
+        int $second,
         ?string $tzSign = null,
         ?int $tzHour = null,
-        ?int $tzMinute  = null
+        ?int $tzMinute = null
     )
     {
-        parent::__construct($year, $month, $day);
-
+		$this->date = $date;
         $this->hour = $hour;
         $this->minute = $minute;
         $this->second = $second;
@@ -38,25 +38,35 @@ class ExtDateTime extends ExtDate
         $this->tzMinute = $tzMinute;
         $this->tzHour = $tzHour;
 
-        if(!is_null($this->tzSign) && $this->tzSign !== 'Z'){
-            $sign = "+" === $this->tzSign ? 1:-1;
-            $tzHour = !is_null($this->tzHour) ? $this->tzHour:0;
-            $tzMinute = !is_null($this->tzMinute) ? $this->tzMinute:0;
-            $this->timezoneOffset = (int) ($sign * ($tzHour * 60) + $tzMinute);
-        }
-    }
+		$this->timezoneOffset = $this->calculateTimeZoneOffset( $tzSign, $tzHour, $tzMinute );
+	}
 
-    public function getHour(): ?int
+	private function calculateTimeZoneOffset( ?string $tzSign, ?int $tzHour, ?int $tzMinute ): ?int {
+		if ($tzSign === null) {
+			return null;
+		}
+
+		if($tzSign === 'Z'){
+			return 0;
+		}
+
+		$offset = (($tzHour ?? 0) * 60) + ($tzMinute ?? 0);
+		$sign = "+" === $tzSign ? 1 : -1;
+
+		return $offset * $sign;
+	}
+
+    public function getHour(): int
     {
         return $this->hour;
     }
 
-    public function getMinute(): ?int
+    public function getMinute(): int
     {
         return $this->minute;
     }
 
-    public function getSecond(): ?int
+    public function getSecond(): int
     {
         return $this->second;
     }
@@ -76,8 +86,41 @@ class ExtDateTime extends ExtDate
         return $this->tzHour;
     }
 
+	/**
+	 * Returns time timezone offset in minutes.
+	 * 0 for UTC
+	 * -60 for UTC-1
+	 * null for local time
+	 */
     public function getTimezoneOffset(): ?int
     {
         return $this->timezoneOffset;
     }
+
+	public function getMax(): int {
+		// FIXME: this is not correct
+		return $this->date->getMax();
+	}
+
+	public function getMin(): int {
+		// FIXME: this is not correct
+		return $this->date->getMin();
+	}
+
+	public function getYear(): int {
+		return $this->date->getYear();
+	}
+
+	public function getMonth(): int {
+		return $this->date->getMonth();
+	}
+
+	public function getDay(): int {
+		return $this->date->getDay();
+	}
+
+	public function getDate(): ExtDate {
+		return $this->date;
+	}
+
 }

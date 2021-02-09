@@ -11,18 +11,36 @@ EDTF PHP is a small library for parsing, representing and working with the
 
 ## Usage
 
+### Parsing
+
 ```php
 $parser = new EDTF\EdtfParser();
 $parsingResult = $parser->parse('1985-04-12T23:20:30');
 $parsingResult->isValid(); // true
-$parsingResult->getDateTime(); // \EDTF\ExtDateInterface
+$parsingResult->getEdtfValue(); // \EDTF\EdtfValue
 $parsingResult->getInput(); // '1985-04-12T23:20:30'
 ```
+
+### Validating
+
+```php
+$validator = EDTF\EdtfValidator::newInstance();
+$validator->isValidEdtf('1985-04-12T23:20:30'); // true
+````
+
+### Humanizing
+
+```php
+$humanizer = EDTF\Humanize\HumanizerFactory::newStringHumanizerForLanguage( 'en' );
+$humanizer->humanize('1985-12/2004~'); // 'December 1985 to circa 2004'
+````
+
+### Object model
 
 ```php
 $edtf->getMax(); // int
 $edtf->getMin(); // int
-$edtf->covers(\EDTF\ExtDateInterface $edtf); // bool
+$edtf->covers(\EDTF\EdtfValue $edtf); // bool
 ```
 
 ```php
@@ -30,11 +48,6 @@ $edtfDate->getYear(); // int
 $edtfDate->isOpenInterval(); // bool
 $edtfDate->getQualification(); // \EDTF\Qualification
 ```
-
-```php
-$validator = EDTF\EdtfValidator::newInstance();
-$validator->isValidEdtf('1985-04-12T23:20:30'); // true
-````
 
 ## Installation
 

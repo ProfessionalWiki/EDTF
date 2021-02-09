@@ -63,6 +63,12 @@ class Qualification
         return $this->approximate('year') || $this->approximate('month') || $this->approximate('day');
     }
 
+	public function isApproximate(): bool {
+		return in_array( $this->year, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] )
+			|| in_array( $this->month, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] )
+			|| in_array( $this->day, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] );
+    }
+
     private function validatePartName(string $part): void
     {
         $validParts = ['year','month','day'];
