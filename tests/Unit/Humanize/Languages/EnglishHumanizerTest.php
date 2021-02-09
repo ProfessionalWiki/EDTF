@@ -75,6 +75,9 @@ class EnglishHumanizerTest extends TestCase {
 
 		yield [ 'August 22nd', new ExtDate( null, 8, 22 ) ];
 		yield [ 'January 3rd', new ExtDate( null, 1, 3 ) ];
+
+		yield [ '3rd of unknown month, 2021', new ExtDate( 2021, null, 3 ) ];
+		yield [ '22nd of unknown month, 2021', new ExtDate( 2021, null, 22 ) ];
 	}
 
 }

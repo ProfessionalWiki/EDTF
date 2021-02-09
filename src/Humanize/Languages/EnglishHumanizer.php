@@ -75,6 +75,10 @@ class EnglishHumanizer implements Humanizer {
 			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $year;
 		}
 
+		if ( $year !== null && $month === null && $day !== null ) {
+			return $this->inflectNumber( $day ) . ' of unknown month, ' . $year;
+		}
+
 		$parts = [];
 
 		if ( $month !== null ) {
