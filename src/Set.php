@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-use Carbon\Carbon;
-
 class Set implements EdtfValue
 {
     private bool $allMembers;
@@ -22,9 +20,9 @@ class Set implements EdtfValue
      */
     private bool $later;
 
-    private int $min;
+    private ?int $min = null;
 
-    private int $max;
+    private ?int $max = null;
 
     /**
      * @param EdtfValue[] $lists
@@ -43,29 +41,6 @@ class Set implements EdtfValue
         $this->allMembers = $allMembers;
         $this->earlier = $earlier;
         $this->later = $later;
-
-		// FIXME: do not do work in the constructor
-        $this->configure();
-    }
-
-    private function configure(): void
-    {
-        $lists = $this->lists;
-        $start = $lists[0];
-        $len = count($lists);
-        $end = 1 === $len ? $start:$lists[$len-1];
-
-        if($this->earlier){
-            $this->min = 0;
-        }else{
-            $this->min = $start->getMin();
-        }
-
-        if($this->later){
-            $this->max = 0;
-        }else{
-            $this->max = $end->getMax();
-        }
     }
 
     /**
@@ -73,30 +48,34 @@ class Set implements EdtfValue
      */
     public function covers(EdtfValue $edtf): bool
     {
-        $lists = $this->lists;
-        $edtfMin = Carbon::createFromTimestamp($edtf->getMin());
-        $edtfMax = Carbon::createFromTimestamp($edtf->getMax());
-
-        foreach($lists as $list){
-            $min = Carbon::createFromTimestamp($list->getMin());
-            $max = Carbon::createFromTimestamp($list->getMax());
-            if($edtfMin->isBetween($min,$max, true)){
-                return true;
-            }
-            if($edtfMax->isBetween($min, $max, true)){
+        foreach($this->lists as $list){
+            if ($list->covers($edtf)) {
                 return true;
             }
         }
+
         return false;
     }
 
     public function getMax(): int
     {
+        if (null == $this->max) {
+            if ($this->isLater()) {
+                $this->max = 0;
+            } else {
+                $this->max = $this->endElementInSet()->getMax();
+            }
+        }
+
         return $this->max;
     }
 
     public function getMin(): int
     {
+        if (null === $this->min) {
+            $this->min = $this->isEarlier() ? 0 : $this->startElementInSet()->getMin();
+        }
+
         return $this->min;
     }
 
@@ -118,5 +97,16 @@ class Set implements EdtfValue
     public function getLists(): array
     {
         return $this->lists;
+    }
+
+    private function startElementInSet(): EdtfValue
+    {
+        return $this->lists[0];
+    }
+
+    private function endElementInSet(): EdtfValue
+    {
+        $listsCount = count($this->lists);
+        return $listsCount === 1 ? $this->lists[0] : $this->lists[$listsCount - 1];
     }
 }

@@ -67,6 +67,8 @@ class Parser
 
     public function parse(string $input): self
     {
+        $input = $this->removeExtraSpaces($input);
+
         if("" === $input){
             throw new \InvalidArgumentException("Can't create EDTF from empty string.");
         }
@@ -261,9 +263,9 @@ class Parser
 	{
 		preg_match(
 			"/(?x)
-					 (?<openFlag>[\[|\{])
+					 ^(?<openFlag>[\[|\{])
 					 (?<value>.*)
-					 (?<closeFlag>[\]|\}])
+					 (?<closeFlag>[\]|\}])$
 					/",
 			$input,
 			$matches
@@ -472,5 +474,10 @@ class Parser
     public function getTzHour(): ?int
     {
         return $this->tzHour;
+    }
+
+    private function removeExtraSpaces(string $input): string
+    {
+        return str_replace(" ", "", $input);
     }
 }
