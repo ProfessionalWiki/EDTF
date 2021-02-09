@@ -12,26 +12,26 @@ class Set implements EdtfValue
 	 */
     private array $dates;
 	private bool $allMembers;
-	private bool $earlier;
-	private bool $later;
+	private bool $hasOpenStart;
+	private bool $hasOpenEnd;
 
     /**
      * @param array<int, EdtfValue> $lists
      * @param bool $allMembers
-     * @param bool $earlier
-     * @param bool $later
+     * @param bool $hasOpenStart
+     * @param bool $hasOpenEnd
      */
     public function __construct(
         array $lists,
         bool $allMembers = false,
-        bool $earlier = false,
-        bool $later = false
+        bool $hasOpenStart = false,
+        bool $hasOpenEnd = false
     )
     {
         $this->dates = $lists;
         $this->allMembers = $allMembers;
-        $this->earlier = $earlier;
-        $this->later = $later;
+        $this->hasOpenStart = $hasOpenStart;
+        $this->hasOpenEnd = $hasOpenEnd;
     }
 
     /**
@@ -65,12 +65,12 @@ class Set implements EdtfValue
 
     public function hasOpenStart(): bool
     {
-        return $this->earlier;
+        return $this->hasOpenStart;
     }
 
     public function hasOpenEnd(): bool
     {
-        return $this->later;
+        return $this->hasOpenEnd;
     }
 
     public function getDates(): array
