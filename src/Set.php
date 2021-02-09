@@ -23,9 +23,9 @@ class Set implements EdtfValue
      */
     public function __construct(
         array $lists,
-        bool $allMembers = false,
-        bool $hasOpenStart = false,
-        bool $hasOpenEnd = false
+        bool $allMembers,
+        bool $hasOpenStart,
+        bool $hasOpenEnd
     )
     {
         $this->dates = $lists;

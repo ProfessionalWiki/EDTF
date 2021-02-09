@@ -21,7 +21,7 @@ class SetTest extends TestCase
         $date3 = new ExtDate(1963, 6);
         $date4 = new ExtDate(1965, 4);
 
-        $set = new Set([$date1, $date2, $date3, $date4]);
+        $set = new Set([$date1, $date2, $date3, $date4], false, false, false);
 
         $this->assertFalse($set->isAllMembers());
         $this->assertFalse($set->hasOpenEnd());
