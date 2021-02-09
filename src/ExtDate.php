@@ -23,7 +23,6 @@ class ExtDate implements EdtfValue
     // level 1 props
     private Qualification $qualification;
     private UnspecifiedDigit $unspecifiedDigit;
-    private int $intervalType;
 
     private DatetimeFactoryInterface $datetimeFactory;
 
@@ -36,15 +35,13 @@ class ExtDate implements EdtfValue
                                 ?int $month = null,
                                 ?int $day = null,
                                 ?Qualification $qualification = null,
-                                ?UnspecifiedDigit  $unspecified = null,
-                                int $intervalType = 0
+                                ?UnspecifiedDigit  $unspecified = null
     ){
         $this->year = $year;
         $this->month = $month;
         $this->day = $day;
         $this->qualification = is_null($qualification) ? new Qualification():$qualification;
         $this->unspecifiedDigit = is_null($unspecified) ? new UnspecifiedDigit():$unspecified;
-        $this->intervalType = $intervalType;
 
         $this->datetimeFactory = new CarbonFactory();
     }
@@ -78,9 +75,9 @@ class ExtDate implements EdtfValue
      */
     private function calculateMin(): int
     {
-        if (null === $this->year) {
-            return 0;
-        }
+		if (null === $this->year) {
+			return 0; // FIXME: this is not correct
+		}
 
         $minMonth = $this->month ?? 1;
         $minDay = $this->day ?? 1;
@@ -98,9 +95,9 @@ class ExtDate implements EdtfValue
      */
     private function calculateMax(): int
     {
-        if (null === $this->year) {
-            return 0;
-        }
+		if (null === $this->year) {
+			return 0; // FIXME: this is not correct
+		}
 
         try {
             $maxYear = $this->resolveMaxYear();
@@ -268,21 +265,6 @@ class ExtDate implements EdtfValue
     public function unspecified(?string $part = null): bool
     {
         return $this->unspecifiedDigit->unspecified($part);
-    }
-
-    public function isNormalInterval(): bool
-    {
-        return Interval::NORMAL === $this->intervalType;
-    }
-
-    public function isOpenInterval(): bool
-    {
-        return Interval::OPEN === $this->intervalType;
-    }
-
-    public function isUnknownInterval(): bool
-    {
-        return Interval::UNKNOWN === $this->intervalType;
     }
 
     public function getQualification(): Qualification

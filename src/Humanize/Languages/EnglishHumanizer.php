@@ -67,19 +67,29 @@ class EnglishHumanizer implements Humanizer {
 	}
 
 	private function humanizeDate( ExtDate $date ): string {
+		$year = $date->getYear();
 		$month = $date->getMonth();
-
-		if ( $month === null ) {
-			return (string)$date->getYear();
-		}
-
 		$day = $date->getDay();
 
-		if ( $day === null ) {
-			return self::MONTH_MAP[$month] . ' ' . $date->getYear();
+		if ( $year !== null && $month !== null && $day !== null ) {
+			return self::MONTH_MAP[$month] . ' ' . $day . ', ' . $year;
 		}
 
-		return self::MONTH_MAP[$month] . ' ' . $day . ', ' . $date->getYear();
+		$parts = [];
+
+		if ( $month !== null ) {
+			$parts[] = self::MONTH_MAP[$month];
+		}
+
+		if ( $day !== null ) {
+			$parts[] = (string)$day;
+		}
+
+		if ( $year !== null ) {
+			$parts[] = (string)$year;
+		}
+
+		return implode( ' ', $parts );
 	}
 
 }

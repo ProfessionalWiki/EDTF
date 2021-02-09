@@ -31,10 +31,6 @@ class ExtDateTest extends TestCase
         $this->assertSame(1, $d->getDay());
         $this->assertSame($q, $d->getQualification());
         $this->assertSame($u, $d->getUnspecifiedDigit());
-
-        $this->assertTrue($d->isNormalInterval());
-        $this->assertFalse($d->isOpenInterval());
-        $this->assertFalse($d->isUnknownInterval());
     }
 
     /**
