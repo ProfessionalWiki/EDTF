@@ -8,6 +8,7 @@ use EDTF\EdtfValue;
 use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
+use EDTF\IntervalSide;
 use EDTF\Qualification;
 use EDTF\Season;
 use EDTF\Set;
@@ -64,23 +65,14 @@ class Parser
         $this->regexPattern = '/'.$patterns.'/';
     }
 
-    public function parse(string $input, bool $intervalMode = false): self
+    public function parse(string $input): self
     {
-        if(false === $intervalMode && "" === $input){
+        if("" === $input){
             throw new \InvalidArgumentException("Can't create EDTF from empty string.");
         }
 
         $input = strtoupper($input);
         $this->input = $input;
-        if($intervalMode && "" === $input){
-            $this->intervalType = Interval::UNKNOWN;
-            return $this;
-        }
-
-        if($intervalMode && ".." === $input) {
-            $this->intervalType = Interval::OPEN;
-            return $this;
-        }
         $unspecifiedParts = [
             'yearNum', 'monthNum', 'dayNum'
         ];
@@ -127,13 +119,9 @@ class Parser
     }
 
 	/**
-	 * @param string $input
-	 * @param bool $intervalMode
-	 *
-	 * @return EdtfValue
 	 * @throws \InvalidArgumentException
 	 */
-    public function createEdtf(string $input, bool $intervalMode=false): EdtfValue
+    public function createEdtf(string $input): EdtfValue
     {
         if (false !== strpos($input, '/')) {
             return $this->buildInterval($input);
@@ -141,7 +129,7 @@ class Parser
             return $this->buildSet($input);
         }
 
-        $this->parse($input, $intervalMode);
+        $this->parse($input);
 
         if($this->hour !== null){
             return $this->buildDateTime();
@@ -162,8 +150,7 @@ class Parser
 			$this->monthNum,
 			$this->dayNum,
 			$this->buildQualification(),
-			$this->buildUnspecifiedDigit(),
-			$this->intervalType
+			$this->buildUnspecifiedDigit()
 		);
 	}
 
@@ -335,10 +322,18 @@ class Parser
 		);
 	}
 
-	private function buildDateUsingIntervalMode( string $dateString ): ExtDate {
+	private function buildDateUsingIntervalMode( string $dateString ): IntervalSide {
+		if ( $dateString === '..' ) {
+			return IntervalSide::newOpenInterval();
+		}
+
+		if ( $dateString === '' ) {
+			return IntervalSide::newUnknownInterval();
+		}
+
 		$parser = new Parser();
-		$parser->parse($dateString, true);
-		return $parser->buildDate();
+		$parser->parse($dateString);
+		return IntervalSide::newFromDate( $parser->buildDate() );
 	}
 
 	public function createSignificantDigitInterval(): Interval
@@ -351,8 +346,8 @@ class Parser
 		$endYear = $year.(str_repeat("9", $significantDigit));
 
 		return new Interval(
-			new ExtDate((int)$startYear),
-			new ExtDate((int)$endYear),
+			IntervalSide::newFromDate( new ExtDate((int)$startYear) ),
+			IntervalSide::newFromDate( new ExtDate((int)$endYear) ),
 			$significantDigit,
 			$this->yearNum
 		);
@@ -418,11 +413,6 @@ class Parser
     public function getYearSignificantDigit(): ?int
     {
         return $this->yearSignificantDigit;
-    }
-
-    public function getIntervalType(): int
-    {
-        return $this->intervalType;
     }
 
     public function getSeason(): ?int
