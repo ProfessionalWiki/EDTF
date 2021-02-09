@@ -20,9 +20,9 @@ class ExtendedIntervalTest extends TestCase
     {
         $interval = $this->createInterval("1985-04-12/..");
 
-        $this->assertSame(1985, $interval->getStart()->getYear());
-        $this->assertSame(4, $interval->getStart()->getMonth());
-        $this->assertSame(12, $interval->getStart()->getDay());
+        $this->assertSame(1985, $interval->getStartDate()->getYear());
+        $this->assertSame(4, $interval->getStartDate()->getMonth());
+        $this->assertSame(12, $interval->getStartDate()->getDay());
 
         $this->assertTrue($interval->isOpenInterval());
     }
@@ -31,9 +31,9 @@ class ExtendedIntervalTest extends TestCase
     {
         $interval = $this->createInterval("1985-04/..");
 
-        $this->assertSame(1985, $interval->getStart()->getYear());
-        $this->assertSame(4, $interval->getStart()->getMonth());
-        $this->assertNull($interval->getStart()->getDay());
+        $this->assertSame(1985, $interval->getStartDate()->getYear());
+        $this->assertSame(4, $interval->getStartDate()->getMonth());
+        $this->assertNull($interval->getStartDate()->getDay());
 
         $this->assertTrue($interval->isOpenInterval());
     }
@@ -42,9 +42,9 @@ class ExtendedIntervalTest extends TestCase
     {
         $interval = $this->createInterval("1985/..");
 
-        $this->assertSame(1985, $interval->getStart()->getYear());
-        $this->assertNull($interval->getStart()->getMonth());
-        $this->assertNull($interval->getStart()->getDay());
+        $this->assertSame(1985, $interval->getStartDate()->getYear());
+        $this->assertNull($interval->getStartDate()->getMonth());
+        $this->assertNull($interval->getStartDate()->getDay());
 
         $this->assertTrue($interval->isOpenInterval());
     }
@@ -55,27 +55,27 @@ class ExtendedIntervalTest extends TestCase
 
         $this->assertTrue($interval->isOpenInterval());
 
-        $this->assertSame(1985, $interval->getEnd()->getYear());
-        $this->assertSame(4, $interval->getEnd()->getMonth());
-        $this->assertSame(12, $interval->getEnd()->getDay());
+        $this->assertSame(1985, $interval->getEndDate()->getYear());
+        $this->assertSame(4, $interval->getEndDate()->getMonth());
+        $this->assertSame(12, $interval->getEndDate()->getDay());
     }
 
     public function testOpenStartTimeMonthPrecision(): void
     {
         $interval = $this->createInterval("../1985-04");
 
-        $this->assertSame(1985, $interval->getEnd()->getYear());
-        $this->assertSame(4, $interval->getEnd()->getMonth());
-        $this->assertNull($interval->getEnd()->getDay());
+        $this->assertSame(1985, $interval->getEndDate()->getYear());
+        $this->assertSame(4, $interval->getEndDate()->getMonth());
+        $this->assertNull($interval->getEndDate()->getDay());
     }
 
     public function testOpenStartTimeYearPrecision(): void
     {
         $interval = $this->createInterval("../1985");
 
-        $this->assertSame(1985, $interval->getEnd()->getYear());
-        $this->assertNull($interval->getEnd()->getMonth());
-        $this->assertNull($interval->getEnd()->getDay());
+        $this->assertSame(1985, $interval->getEndDate()->getYear());
+        $this->assertNull($interval->getEndDate()->getMonth());
+        $this->assertNull($interval->getEndDate()->getDay());
     }
 
     public function testStartWithDayPrecisionAndEndWithUnknown(): void

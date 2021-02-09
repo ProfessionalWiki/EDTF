@@ -36,7 +36,7 @@ class StringHumanizerTest extends TestCase {
 	/**
 	 * @dataProvider humanizationProvider
 	 */
-	public function testUnspecifiedDigits( string $edtf, string $humanized ): void {
+	public function testHumanization( string $edtf, string $humanized ): void {
 		$this->assertSame(
 			$humanized,
 			HumanizerFactory::newStringHumanizerForLanguage( 'en' )->humanize( $edtf )
@@ -60,6 +60,11 @@ class StringHumanizerTest extends TestCase {
 		yield 'Interval with year to year' => [ '2019/2021', '2019 to 2021' ];
 		yield 'Interval year and month' => [ '2019-01/2021-02', 'January 2019 to February 2021' ];
 		yield 'Interval different date formats' => [ '2019/2021-02-09', '2019 to February 9th, 2021' ];
+
+		yield 'Interval with open end' => [ '2019/..', '2019 or later' ];
+		yield 'Interval with open start' => [ '../2021', '2021 or earlier' ];
+		yield 'Interval with unknown end' => [ '2019/', 'From 2019 to unknown' ];
+		yield 'Interval with unknown start' => [ '/2021', 'From unknown to 2021' ];
 	}
 
 }

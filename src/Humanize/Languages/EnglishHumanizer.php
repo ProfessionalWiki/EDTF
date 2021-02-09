@@ -110,12 +110,27 @@ class EnglishHumanizer implements Humanizer {
 	}
 
 	private function humanizeInterval( Interval $interval ): string {
-		// TODO
-//		if ( !$interval->isNormalInterval() ) {
-//			return '';
-//		}
+		if ( $interval->isNormalInterval() ) {
+			return $this->humanize( $interval->getStartDate() ) . ' to ' . $this->humanize( $interval->getEndDate() );
+		}
 
-		return $this->humanize( $interval->getStart() ) . ' to ' . $this->humanize( $interval->getEnd() );
+		if ( $interval->hasOpenEnd() ) {
+			return $this->humanize( $interval->getStartDate() ) . ' or later';
+		}
+
+		if ( $interval->hasOpenStart() ) {
+			return $this->humanize( $interval->getEndDate() ) . ' or earlier';
+		}
+
+		if ( $interval->hasUnknownEnd() ) {
+			return 'From ' . $this->humanize( $interval->getStartDate() ) . ' to unknown';
+		}
+
+		if ( $interval->hasUnknownStart() ) {
+			return 'From unknown to ' . $this->humanize( $interval->getEndDate() );
+		}
+
+		return '';
 	}
 
 }
