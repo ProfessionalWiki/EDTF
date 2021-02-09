@@ -80,6 +80,16 @@ class StringHumanizerTest extends TestCase {
 		yield 'Day approximate' => [ '2019-04-01~', 'Circa April 1st, 2019' ];
 		yield 'Day uncertain' => [ '2019-04-01?', 'Maybe April 1st, 2019' ];
 
+		yield 'Time with UTC' => [ '1985-04-12T23:20:30Z', '23:20:30 UTC April 12th, 1985' ];
+		yield 'Time with local time' => [ '1985-04-12T23:20:30', '23:20:30 (local time) April 12th, 1985' ];
+		yield 'Time with positive UTC' => [ '1985-04-12T23:20:30+04', '23:20:30 UTC+4 April 12th, 1985' ];
+		yield 'Time with negative UTC' => [ '1985-04-12T23:20:30-04', '23:20:30 UTC-4 April 12th, 1985' ];
+		yield 'Time with UTC+4:30' => [ '1985-04-12T23:20:30+04:30', '23:20:30 UTC+4:30 April 12th, 1985' ];
+		yield 'Time with UTC-11:45' => [ '1985-04-12T23:20:30-11:45', '23:20:30 UTC-11:45 April 12th, 1985' ];
+		yield 'Time with UTC+00:05' => [ '1985-04-12T23:20:30+00:05', '23:20:30 UTC+0:05 April 12th, 1985' ];
+
+		yield 'Time with leading zeroes' => [ '1985-04-12T01:02:03Z', '01:02:03 UTC April 12th, 1985' ];
+//		yield 'Time with all zeroes' => [ '1985-04-12T00:00:00Z', '00:00:00 UTC April 12th, 1985' ];
 	}
 
 }

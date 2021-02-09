@@ -6,6 +6,7 @@ namespace EDTF\Humanize\Languages;
 
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
+use EDTF\ExtDateTime;
 use EDTF\Humanize\Humanizer;
 use EDTF\Interval;
 use EDTF\Season;
@@ -54,6 +55,10 @@ class EnglishHumanizer implements Humanizer {
 	public function humanize( EdtfValue $edtf ): string {
 		if ( $edtf instanceof ExtDate ) {
 			return $this->humanizeDate( $edtf );
+		}
+
+		if ( $edtf instanceof ExtDateTime ) {
+			return $this->humanizeDateTime( $edtf );
 		}
 
 		if ( $edtf instanceof Season ) {
@@ -149,6 +154,27 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		return '';
+	}
+
+	private function humanizeDateTime( ExtDateTime $dateTime ): string {
+		return sprintf("%02d:%02d:%02d", $dateTime->getHour(), $dateTime->getMinute(), $dateTime->getSecond() )
+			. ' ' . $this->humanizeTimeZoneOffset( $dateTime->getTimezoneOffset() )
+			. ' ' . $this->humanizeDate( $dateTime->getDate() );
+	}
+
+	private function humanizeTimeZoneOffset( ?int $offsetInMinutes ): string {
+		if ( $offsetInMinutes === null ) {
+			return '(local time)';
+		}
+
+		if ( $offsetInMinutes === 0 ) {
+			return 'UTC';
+		}
+
+		return 'UTC'
+			. ( $offsetInMinutes < 0 ? '-' : '+' )
+			. (string)floor( abs( $offsetInMinutes ) / 60 )
+			. ( $offsetInMinutes % 60 === 0 ? '' : sprintf(":%02d", abs( $offsetInMinutes ) % 60 ) );
 	}
 
 }

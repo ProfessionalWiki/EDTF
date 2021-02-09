@@ -91,15 +91,19 @@ class Parser
                 }
             }
 
+			// FIXME: "poor" design
             $r = new \ReflectionProperty(__CLASS__, $name);
             $type = $r->getType();
             if($type instanceof \ReflectionNamedType && 'int' === $type->getName()){
                 $value = (int) $value;
                 // convert zero value into null
+				// FIXME: specifying time 00:00:00 is not the same as not specifying it
                 if(0 === $value){
                     $value = null;
                 }
             }
+
+			// FIXME: "poor" design
             $this->$name = $value;
         }
 
