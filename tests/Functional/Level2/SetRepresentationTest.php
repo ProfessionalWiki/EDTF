@@ -47,6 +47,11 @@ class SetRepresentationTest extends TestCase
         $this->assertSame(1760, $lists[0]->getYear());
         $this->assertSame(12, $lists[0]->getMonth());
         $this->assertSame(3, $lists[0]->getDay());
+
+        $this->assertSame(0, $set->getMin());
+
+        $expectedMax = Carbon::create(1760, 12, 3, 23, 59, 59)->getTimestamp();
+        $this->assertSame($expectedMax, $set->getMax());
     }
 
     public function testOneOfWithLaterMonth()
@@ -61,6 +66,11 @@ class SetRepresentationTest extends TestCase
         $this->assertSame(1760, $lists[0]->getYear());
         $this->assertSame(12, $lists[0]->getMonth());
         $this->assertNull($lists[0]->getDay());
+
+        $expectedMin = Carbon::create(1760, 12, 1)->getTimestamp();
+        $this->assertSame($expectedMin, $set->getMin());
+
+        $this->assertSame(0, $set->getMax());
     }
 
     public function testOneOfWithLaterMonthAndPrecision()
@@ -76,6 +86,11 @@ class SetRepresentationTest extends TestCase
         $this->assertSame(1, $lists[0]->getMonth());
         $this->assertSame(2, $lists[1]->getMonth());
         $this->assertSame(12, $lists[2]->getMonth());
+
+        $expectedMin = Carbon::create(1760)->getTimestamp();
+        $this->assertSame($expectedMin, $set->getMin());
+
+        $this->assertSame(0, $set->getMax());
     }
 
     public function testOneOfWithYearPrecisionOrYearMonthPrecision()
@@ -91,6 +106,12 @@ class SetRepresentationTest extends TestCase
         $this->assertSame(1667, $lists[0]->getYear());
         $this->assertSame(1760, $lists[1]->getYear());
         $this->assertSame(12, $lists[1]->getMonth());
+
+        $expectedMin = Carbon::create(1667)->getTimestamp();
+        $this->assertSame($expectedMin, $set->getMin());
+
+        $expectedMax = Carbon::create(1760, 12, 31, 23, 59, 59)->getTimestamp();
+        $this->assertSame($expectedMax, $set->getMax());
     }
 
     public function testOneOfWithYearOnlyPrecisionAndEarlier()
@@ -104,6 +125,11 @@ class SetRepresentationTest extends TestCase
 
         $this->assertCount(1, $lists);
         $this->assertSame(1984, $lists[0]->getYear());
+
+        $this->assertSame(0, $set->getMin());
+
+        $expectedMax = Carbon::create(1984, 12, 31, 23, 59, 59)->getTimestamp();
+        $this->assertSame($expectedMax, $set->getMax());
     }
 
     public function testAllMembersWithAllOfTheYears()
@@ -116,6 +142,12 @@ class SetRepresentationTest extends TestCase
         $this->assertFalse($set->isLater());
 
         $this->assertCount(5, $lists);
+
+        $expectedMin = Carbon::create(1667)->getTimestamp();
+        $this->assertSame($expectedMin, $set->getMin());
+
+        $expectedMax = Carbon::create(1672, 12, 31, 23, 59, 59)->getTimestamp();
+        $this->assertSame($expectedMax, $set->getMax());
     }
 
     public function testAllMembersWithYearAndYearMonthPrecision()
@@ -128,6 +160,12 @@ class SetRepresentationTest extends TestCase
         $this->assertFalse($set->isLater());
 
         $this->assertCount(2, $lists);
+
+        $expectedMin = Carbon::create(1960)->getTimestamp();
+        $this->assertSame($expectedMin, $set->getMin());
+
+        $expectedMax = Carbon::create(1961, 12, 31, 23, 59, 59)->getTimestamp();
+        $this->assertSame($expectedMax, $set->getMax());
     }
 
     public function testAllMembersWithYearOnlyPrecisionAndEarlier()
@@ -140,5 +178,10 @@ class SetRepresentationTest extends TestCase
         $this->assertFalse($set->isLater());
 
         $this->assertCount(1, $lists);
+
+        $this->assertSame(0, $set->getMin());
+
+        $expectedMax = Carbon::create(1984, 12, 31, 23, 59, 59)->getTimestamp();
+        $this->assertSame($expectedMax, $set->getMax());
     }
 }

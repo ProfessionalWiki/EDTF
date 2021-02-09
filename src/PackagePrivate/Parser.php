@@ -270,9 +270,9 @@ class Parser
 	{
 		preg_match(
 			"/(?x)
-					 (?<openFlag>[\[|\{])
+					 ^(?<openFlag>[\[|\{])
 					 (?<value>.*)
-					 (?<closeFlag>[\]|\}])
+					 (?<closeFlag>[\]|\}])$
 					/",
 			$input,
 			$matches
