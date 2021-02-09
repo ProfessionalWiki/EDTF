@@ -6,6 +6,7 @@ namespace EDTF\Humanize\Languages;
 
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
+use EDTF\ExtDateTime;
 use EDTF\Humanize\Humanizer;
 use EDTF\Interval;
 use EDTF\Season;
@@ -25,15 +26,15 @@ class EnglishHumanizer implements Humanizer {
 		30 => 'Summer (Southern Hemisphere)',
 		31 => 'Autumn (Southern Hemisphere)',
 		32 => 'Winter (Southern Hemisphere)',
-		33 => 'Quarter 1',
-		34 => 'Quarter 2',
-		35 => 'Quarter 3',
-		36 => 'Quarter 4',
-		37 => 'Quadrimester 1',
-		38 => 'Quadrimester 2',
-		39 => 'Quadrimester 3',
-		40 => 'Semester 1',
-		41 => 'Semester 2',
+		33 => 'First quarter',
+		34 => 'Second quarter',
+		35 => 'Third quarter',
+		36 => 'Fourth quarter',
+		37 => 'First quadrimester',
+		38 => 'Second quadrimester',
+		39 => 'Third quadrimester',
+		40 => 'First semester',
+		41 => 'Second semester',
 	];
 
 	private const MONTH_MAP = [
@@ -54,6 +55,10 @@ class EnglishHumanizer implements Humanizer {
 	public function humanize( EdtfValue $edtf ): string {
 		if ( $edtf instanceof ExtDate ) {
 			return $this->humanizeDate( $edtf );
+		}
+
+		if ( $edtf instanceof ExtDateTime ) {
+			return $this->humanizeDateTime( $edtf );
 		}
 
 		if ( $edtf instanceof Season ) {
@@ -91,11 +96,11 @@ class EnglishHumanizer implements Humanizer {
 
 	private function humanizeYearMonthDay( ?int $year, ?int $month, ?int $day ): string {
 		if ( $year !== null && $month !== null && $day !== null ) {
-			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $year;
+			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $this->humanizeYear( $year );
 		}
 
 		if ( $year !== null && $month === null && $day !== null ) {
-			return $this->inflectNumber( $day ) . ' of unknown month, ' . $year;
+			return $this->inflectNumber( $day ) . ' of unknown month, ' . $this->humanizeYear( $year );
 		}
 
 		$parts = [];
@@ -109,10 +114,14 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		if ( $year !== null ) {
-			$parts[] = (string)$year;
+			$parts[] = $this->humanizeYear( $year );
 		}
 
 		return implode( ' ', $parts );
+	}
+
+	private function humanizeYear( int $year ): string {
+		return $year >= 0 ? (string)$year : (string)(-$year) . ' BC';
 	}
 
 	private function inflectNumber(int $number): string {
@@ -145,6 +154,27 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		return '';
+	}
+
+	private function humanizeDateTime( ExtDateTime $dateTime ): string {
+		return sprintf("%02d:%02d:%02d", $dateTime->getHour(), $dateTime->getMinute(), $dateTime->getSecond() )
+			. ' ' . $this->humanizeTimeZoneOffset( $dateTime->getTimezoneOffset() )
+			. ' ' . $this->humanizeDate( $dateTime->getDate() );
+	}
+
+	private function humanizeTimeZoneOffset( ?int $offsetInMinutes ): string {
+		if ( $offsetInMinutes === null ) {
+			return '(local time)';
+		}
+
+		if ( $offsetInMinutes === 0 ) {
+			return 'UTC';
+		}
+
+		return 'UTC'
+			. ( $offsetInMinutes < 0 ? '-' : '+' )
+			. (string)floor( abs( $offsetInMinutes ) / 60 )
+			. ( $offsetInMinutes % 60 === 0 ? '' : sprintf(":%02d", abs( $offsetInMinutes ) % 60 ) );
 	}
 
 }

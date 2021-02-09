@@ -17,9 +17,9 @@ class ExtDateTime implements EdtfValue
 	private ?string $tzSign;
 	private ?int $tzMinute;
 	private ?int $tzHour;
-	private int $timezoneOffset = 0;
+	private ?int $timezoneOffset = null;
 
-	// TODO: do these fields need to be optional?
+	// TODO: replace 3 time zone fields with 1 required one: int offset or null for local time
 	public function __construct(
         ExtDate $date,
         int $hour,
@@ -27,7 +27,7 @@ class ExtDateTime implements EdtfValue
         int $second,
         ?string $tzSign = null,
         ?int $tzHour = null,
-        ?int $tzMinute  = null
+        ?int $tzMinute = null
     )
     {
 		$this->date = $date;
@@ -38,12 +38,22 @@ class ExtDateTime implements EdtfValue
         $this->tzMinute = $tzMinute;
         $this->tzHour = $tzHour;
 
-        if(!is_null($this->tzSign) && $this->tzSign !== 'Z'){
-            $sign = "+" === $this->tzSign ? 1:-1;
-            $tzHour = !is_null($this->tzHour) ? $this->tzHour:0;
-            $tzMinute = !is_null($this->tzMinute) ? $this->tzMinute:0;
-            $this->timezoneOffset = (int) ($sign * ($tzHour * 60) + $tzMinute);
-        }
+		$this->timezoneOffset = $this->calculateTimeZoneOffset( $tzSign, $tzHour, $tzMinute );
+	}
+
+	private function calculateTimeZoneOffset( ?string $tzSign, ?int $tzHour, ?int $tzMinute ): ?int {
+		if ($tzSign === null) {
+			return null;
+		}
+
+		if($tzSign === 'Z'){
+			return 0;
+		}
+
+		$offset = (($tzHour ?? 0) * 60) + ($tzMinute ?? 0);
+		$sign = "+" === $tzSign ? 1 : -1;
+
+		return $offset * $sign;
 	}
 
     public function getHour(): int
@@ -76,6 +86,12 @@ class ExtDateTime implements EdtfValue
         return $this->tzHour;
     }
 
+	/**
+	 * Returns time timezone offset in minutes.
+	 * 0 for UTC
+	 * -60 for UTC-1
+	 * null for local time
+	 */
     public function getTimezoneOffset(): ?int
     {
         return $this->timezoneOffset;
@@ -101,6 +117,10 @@ class ExtDateTime implements EdtfValue
 
 	public function getDay(): int {
 		return $this->date->getDay();
+	}
+
+	public function getDate(): ExtDate {
+		return $this->date;
 	}
 
 }

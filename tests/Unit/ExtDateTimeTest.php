@@ -28,7 +28,7 @@ class ExtDateTimeTest extends TestCase
         $this->assertSame(1, $dt->getSecond());
     }
 
-    public function testDefaultUTC(): void
+    public function testNoTimeZoneResultsInNullOffset(): void
     {
         $date = $this->createExtDateTime("2001-02-03T09:30:01");
 
@@ -38,10 +38,10 @@ class ExtDateTimeTest extends TestCase
         $this->assertSame(9, $date->getHour());
         $this->assertSame(30, $date->getMinute());
         $this->assertSame(1, $date->getSecond());
-        $this->assertSame(0, $date->getTimezoneOffset());
+        $this->assertNull($date->getTimezoneOffset());
     }
 
-    public function testWithZSuffix(): void
+    public function testWithZSuffixResultsInUTC(): void
     {
         $date = $this->createExtDateTime("2004-01-01T10:10:10Z");
 

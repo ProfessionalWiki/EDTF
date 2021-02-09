@@ -36,9 +36,9 @@ class EnglishHumanizerTest extends TestCase {
 		yield [ 'Winter 42', new Season( 42, 24 ) ];
 		yield [ 'Winter 0', new Season( 0, 24 ) ];
 		yield [ 'Winter -1', new Season( -1, 24 ) ];
-		yield [ 'Quarter 1 2001', new Season( 2001, 33 ) ];
-		yield [ 'Quadrimester 2 2001', new Season( 2001, 38 ) ];
-		yield [ 'Semester 2 2001', new Season( 2001, 41 ) ];
+		yield [ 'First quarter 2001', new Season( 2001, 33 ) ];
+		yield [ 'Second quadrimester 2001', new Season( 2001, 38 ) ];
+		yield [ 'Second semester 2001', new Season( 2001, 41 ) ];
 		yield [ 'Autumn (Southern Hemisphere) 2001', new Season( 2001, 31 ) ];
 	}
 
@@ -68,7 +68,7 @@ class EnglishHumanizerTest extends TestCase {
 
 		yield [ '2021', new ExtDate( 2021 ) ];
 		yield [ '0', new ExtDate( 0 ) ];
-		yield [ '-1', new ExtDate( -1 ) ];
+		yield [ '1 BC', new ExtDate( -1 ) ];
 
 		yield [ 'August', new ExtDate( null, 8 ) ];
 		yield [ 'January', new ExtDate( null, 1 ) ];
