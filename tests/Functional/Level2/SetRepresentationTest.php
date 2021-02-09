@@ -17,7 +17,7 @@ class SetRepresentationTest extends TestCase
 {
     use FactoryTrait;
 
-    public function testOneOfTheYears()
+    public function testOneOfTheYears(): void
     {
         $set = $this->createSet('[1667,1668,1670..1672]');
 
@@ -26,6 +26,8 @@ class SetRepresentationTest extends TestCase
         $this->assertFalse($set->isAllMembers());
         $this->assertSame(1667, $lists[0]->getYear());
         $this->assertSame(1668, $lists[1]->getYear());
+        $this->assertSame(1670, $lists[2]->getYear());
+        $this->assertSame(1671, $lists[3]->getYear());
         $this->assertSame(1672, $lists[4]->getYear());
 
         $expectedMin = Carbon::create(1667)->getTimestamp();
@@ -35,7 +37,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame($expectedMax, $set->getMax());
     }
 
-    public function testOneOfWithEarlierDate()
+    public function testOneOfWithEarlierDate(): void
     {
         $set = $this->createSet('[..1760-12-03]');
         $lists = $set->getLists();
@@ -54,7 +56,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame($expectedMax, $set->getMax());
     }
 
-    public function testOneOfWithLaterMonth()
+    public function testOneOfWithLaterMonth(): void
     {
         $set = $this->createSet('[1760-12..]');
         $lists = $set->getLists();
@@ -73,7 +75,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame(0, $set->getMax());
     }
 
-    public function testOneOfWithLaterMonthAndPrecision()
+    public function testOneOfWithLaterMonthAndPrecision(): void
     {
         $set = $this->createSet('[1760-01,1760-02,1760-12..]');
         $lists = $set->getLists();
@@ -93,7 +95,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame(0, $set->getMax());
     }
 
-    public function testOneOfWithYearPrecisionOrYearMonthPrecision()
+    public function testOneOfWithYearPrecisionOrYearMonthPrecision(): void
     {
         $set = $this->createSet('[1667,1760-12]');
         $lists = $set->getLists();
@@ -114,7 +116,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame($expectedMax, $set->getMax());
     }
 
-    public function testOneOfWithYearOnlyPrecisionAndEarlier()
+    public function testOneOfWithYearOnlyPrecisionAndEarlier(): void
     {
         $set = $this->createSet('[..1984]');
         $lists = $set->getLists();
@@ -132,7 +134,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame($expectedMax, $set->getMax());
     }
 
-    public function testAllMembersWithAllOfTheYears()
+    public function testAllMembersWithAllOfTheYears(): void
     {
         $set = $this->createSet('{1667,1668,1670..1672}');
         $lists = $set->getLists();
@@ -150,7 +152,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame($expectedMax, $set->getMax());
     }
 
-    public function testAllMembersWithYearAndYearMonthPrecision()
+    public function testAllMembersWithYearAndYearMonthPrecision(): void
     {
         $set = $this->createSet('{1960,1961-12}');
         $lists = $set->getLists();
@@ -168,7 +170,7 @@ class SetRepresentationTest extends TestCase
         $this->assertSame($expectedMax, $set->getMax());
     }
 
-    public function testAllMembersWithYearOnlyPrecisionAndEarlier()
+    public function testAllMembersWithYearOnlyPrecisionAndEarlier(): void
     {
         $set = $this->createSet('{..1984}');
         $lists = $set->getLists();
