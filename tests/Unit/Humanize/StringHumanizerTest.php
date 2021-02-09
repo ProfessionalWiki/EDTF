@@ -17,32 +17,6 @@ use PHPUnit\Framework\TestCase;
  */
 class StringHumanizerTest extends TestCase {
 
-	public function testReturnsUnsupportedEdtfAsIs(): void {
-		$stringHumanizer = new StringHumanizer(
-			new class implements Humanizer {
-				public function humanize( EdtfValue $edtf ): string {
-					return '';
-				}
-			},
-			new EdtfParser()
-		);
-
-		$this->assertSame(
-			'0042',
-			$stringHumanizer->humanize( '0042' )
-		);
-	}
-
-	/**
-	 * @dataProvider humanizationProvider
-	 */
-	public function testHumanization( string $edtf, string $humanized ): void {
-		$this->assertSame(
-			$humanized,
-			HumanizerFactory::newStringHumanizerForLanguage( 'en' )->humanize( $edtf )
-		);
-	}
-
 	public function humanizationProvider(): \Generator {
 		yield 'Full date' => [ '1975-07-01', 'July 1st, 1975' ];
 		yield 'Year and month' => [ '1975-07', 'July 1975' ];
@@ -90,6 +64,48 @@ class StringHumanizerTest extends TestCase {
 
 		yield 'Time with leading zeroes' => [ '1985-04-12T01:02:03Z', '01:02:03 UTC April 12th, 1985' ];
 //		yield 'Time with all zeroes' => [ '1985-04-12T00:00:00Z', '00:00:00 UTC April 12th, 1985' ];
+	}
+
+	/**
+	 * @dataProvider humanizationProvider
+	 */
+	public function testHumanization( string $edtf, string $humanized ): void {
+		$this->assertSame(
+			$humanized,
+			HumanizerFactory::newStringHumanizerForLanguage( 'en' )->humanize( $edtf )
+		);
+	}
+
+	public function testReturnsUnsupportedEdtfAsIs(): void {
+		$stringHumanizer = new StringHumanizer(
+			$this->newNullHumanizer(),
+			new EdtfParser()
+		);
+
+		$this->assertSame(
+			'0042',
+			$stringHumanizer->humanize( '0042' )
+		);
+	}
+
+	private function newNullHumanizer(): Humanizer {
+		return new class implements Humanizer {
+			public function humanize( EdtfValue $edtf ): string {
+				return '';
+			}
+		};
+	}
+
+	public function testHandlesError(): void {
+		$stringHumanizer = new StringHumanizer(
+			$this->newNullHumanizer(),
+			new EdtfParser()
+		);
+
+		$this->assertSame(
+			'this cannot be parsed',
+			$stringHumanizer->humanize( 'this cannot be parsed' )
+		);
 	}
 
 }

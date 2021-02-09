@@ -19,6 +19,10 @@ class StringHumanizer {
 	public function humanize( string $edtf ): string {
 		$parsingResult = $this->parser->parse( $edtf );
 
+		if ( !$parsingResult->isValid() ) {
+			return $edtf;
+		}
+
 		$humanizedEdtf = $this->humanizer->humanize( $parsingResult->getEdtfValue() );
 
 		return $humanizedEdtf === '' ? $parsingResult->getInput() : $humanizedEdtf;
