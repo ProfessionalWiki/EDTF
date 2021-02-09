@@ -91,11 +91,11 @@ class EnglishHumanizer implements Humanizer {
 
 	private function humanizeYearMonthDay( ?int $year, ?int $month, ?int $day ): string {
 		if ( $year !== null && $month !== null && $day !== null ) {
-			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $year;
+			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $this->humanizeYear( $year );
 		}
 
 		if ( $year !== null && $month === null && $day !== null ) {
-			return $this->inflectNumber( $day ) . ' of unknown month, ' . $year;
+			return $this->inflectNumber( $day ) . ' of unknown month, ' . $this->humanizeYear( $year );
 		}
 
 		$parts = [];
@@ -109,10 +109,14 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		if ( $year !== null ) {
-			$parts[] = (string)$year;
+			$parts[] = $this->humanizeYear( $year );
 		}
 
 		return implode( ' ', $parts );
+	}
+
+	private function humanizeYear( int $year ): string {
+		return $year >= 0 ? (string)$year : (string)(-$year) . ' BC';
 	}
 
 	private function inflectNumber(int $number): string {

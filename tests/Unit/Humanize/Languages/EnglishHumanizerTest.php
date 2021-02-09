@@ -68,7 +68,7 @@ class EnglishHumanizerTest extends TestCase {
 
 		yield [ '2021', new ExtDate( 2021 ) ];
 		yield [ '0', new ExtDate( 0 ) ];
-		yield [ '-1', new ExtDate( -1 ) ];
+		yield [ '1 BC', new ExtDate( -1 ) ];
 
 		yield [ 'August', new ExtDate( null, 8 ) ];
 		yield [ 'January', new ExtDate( null, 1 ) ];
