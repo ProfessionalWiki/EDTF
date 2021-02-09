@@ -24,9 +24,9 @@ class SetTest extends TestCase
         $set = new Set([$date1, $date2, $date3, $date4]);
 
         $this->assertFalse($set->isAllMembers());
-        $this->assertFalse($set->isLater());
-        $this->assertFalse($set->isEarlier());
-        $this->assertCount(4, $set->getLists());
+        $this->assertFalse($set->hasOpenEnd());
+        $this->assertFalse($set->hasOpenStart());
+        $this->assertCount(4, $set->getDates());
 
         $expectedMin = Carbon::create(1960)->getTimestamp();
         $this->assertSame($expectedMin, $set->getMin());

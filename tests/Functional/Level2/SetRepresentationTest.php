@@ -21,7 +21,7 @@ class SetRepresentationTest extends TestCase
     {
         $set = $this->createSet('[1667,1668,1670..1672]');
 
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
         $this->assertSame(1667, $lists[0]->getYear());
@@ -40,11 +40,11 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithEarlierDate(): void
     {
         $set = $this->createSet('[..1760-12-03]');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
-        $this->assertTrue($set->isEarlier());
-        $this->assertFalse($set->isLater());
+        $this->assertTrue($set->hasOpenStart());
+        $this->assertFalse($set->hasOpenEnd());
 
         $this->assertSame(1760, $lists[0]->getYear());
         $this->assertSame(12, $lists[0]->getMonth());
@@ -59,11 +59,11 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithLaterMonth(): void
     {
         $set = $this->createSet('[1760-12..]');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
-        $this->assertFalse($set->isEarlier());
-        $this->assertTrue($set->isLater());
+        $this->assertFalse($set->hasOpenStart());
+        $this->assertTrue($set->hasOpenEnd());
 
         $this->assertSame(1760, $lists[0]->getYear());
         $this->assertSame(12, $lists[0]->getMonth());
@@ -78,11 +78,11 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithLaterMonthAndPrecision(): void
     {
         $set = $this->createSet('[1760-01,1760-02,1760-12..]');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
-        $this->assertFalse($set->isEarlier());
-        $this->assertTrue($set->isLater());
+        $this->assertFalse($set->hasOpenStart());
+        $this->assertTrue($set->hasOpenEnd());
 
         $this->assertCount(3, $lists);
         $this->assertSame(1, $lists[0]->getMonth());
@@ -98,11 +98,11 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithYearPrecisionOrYearMonthPrecision(): void
     {
         $set = $this->createSet('[1667,1760-12]');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
-        $this->assertFalse($set->isEarlier());
-        $this->assertFalse($set->isLater());
+        $this->assertFalse($set->hasOpenStart());
+        $this->assertFalse($set->hasOpenEnd());
 
         $this->assertCount(2, $lists);
         $this->assertSame(1667, $lists[0]->getYear());
@@ -119,11 +119,11 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithYearOnlyPrecisionAndEarlier(): void
     {
         $set = $this->createSet('[..1984]');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
-        $this->assertTrue($set->isEarlier());
-        $this->assertFalse($set->isLater());
+        $this->assertTrue($set->hasOpenStart());
+        $this->assertFalse($set->hasOpenEnd());
 
         $this->assertCount(1, $lists);
         $this->assertSame(1984, $lists[0]->getYear());
@@ -137,11 +137,11 @@ class SetRepresentationTest extends TestCase
     public function testAllMembersWithAllOfTheYears(): void
     {
         $set = $this->createSet('{1667,1668,1670..1672}');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertTrue($set->isAllMembers());
-        $this->assertFalse($set->isEarlier());
-        $this->assertFalse($set->isLater());
+        $this->assertFalse($set->hasOpenStart());
+        $this->assertFalse($set->hasOpenEnd());
 
         $this->assertCount(5, $lists);
 
@@ -155,11 +155,11 @@ class SetRepresentationTest extends TestCase
     public function testAllMembersWithYearAndYearMonthPrecision(): void
     {
         $set = $this->createSet('{1960,1961-12}');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertTrue($set->isAllMembers());
-        $this->assertFalse($set->isEarlier());
-        $this->assertFalse($set->isLater());
+        $this->assertFalse($set->hasOpenStart());
+        $this->assertFalse($set->hasOpenEnd());
 
         $this->assertCount(2, $lists);
 
@@ -173,11 +173,11 @@ class SetRepresentationTest extends TestCase
     public function testAllMembersWithYearOnlyPrecisionAndEarlier(): void
     {
         $set = $this->createSet('{..1984}');
-        $lists = $set->getLists();
+        $lists = $set->getDates();
 
         $this->assertTrue($set->isAllMembers());
-        $this->assertTrue($set->isEarlier());
-        $this->assertFalse($set->isLater());
+        $this->assertTrue($set->hasOpenStart());
+        $this->assertFalse($set->hasOpenEnd());
 
         $this->assertCount(1, $lists);
 
