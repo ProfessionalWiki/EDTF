@@ -6,23 +6,10 @@ namespace EDTF;
 
 class Set implements EdtfValue
 {
-    private bool $allMembers;
-
-    private bool $earlier;
-
-    /**
-     * @var EdtfValue[]
-     */
     private array $lists;
-
-    /**
-     * @var bool
-     */
-    private bool $later;
-
-    private ?int $min = null;
-
-    private ?int $max = null;
+	private bool $allMembers;
+	private bool $earlier;
+	private bool $later;
 
     /**
      * @param EdtfValue[] $lists
@@ -59,34 +46,22 @@ class Set implements EdtfValue
 
     public function getMax(): int
     {
-        if (null == $this->max) {
-            if ($this->isLater()) {
-                $this->max = 0;
-            } else {
-                $this->max = $this->endElementInSet()->getMax();
-            }
-        }
-
-        return $this->max;
+        return $this->isLater() ? 0 : $this->endElementInSet()->getMax();
     }
 
     public function getMin(): int
     {
-        if (null === $this->min) {
-            $this->min = $this->isEarlier() ? 0 : $this->startElementInSet()->getMin();
-        }
-
-        return $this->min;
+        return $this->isEarlier() ? 0 : $this->startElementInSet()->getMin();
     }
 
     public function isAllMembers(): bool
     {
-        return true === $this->allMembers;
+        return $this->allMembers;
     }
 
     public function isEarlier(): bool
     {
-        return true === $this->earlier;
+        return $this->earlier;
     }
 
     public function isLater(): bool
