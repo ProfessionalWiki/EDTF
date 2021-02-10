@@ -10,8 +10,16 @@ class UnspecifiedDigit
     private int $month;
     private int $day;
 
+    private ?string $rawYear;
+    private ?string $rawMonth;
+    private ?string $rawDay;
+
     public function __construct(?string $year = null, ?string $month = null, ?string $day = null)
     {
+        $this->rawYear = $year;
+        $this->rawMonth = $month;
+        $this->rawDay = $day;
+
 		// TODO: this looks like parsing code - probably constructor params should be required and parsing code outside of the instance
         $this->year = $this->sumUnspecifiedDigit($year);
         $this->month = $this->sumUnspecifiedDigit($month);
@@ -72,5 +80,23 @@ class UnspecifiedDigit
     public function getDay(): int
     {
         return $this->day;
+    }
+
+    public function century(): bool
+    {
+        if ($this->year == 2 && substr($this->rawYear, -2) == "XX") {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function decade(): bool
+    {
+        if ($this->year == 1 && substr($this->rawYear, -1) == "X") {
+            return true;
+        }
+
+        return false;
     }
 }
