@@ -10,6 +10,7 @@ use EDTF\ExtDateTime;
 use EDTF\Humanize\Humanizer;
 use EDTF\Interval;
 use EDTF\Season;
+use EDTF\UnspecifiedDigit;
 
 class EnglishHumanizer implements Humanizer {
 
@@ -76,8 +77,20 @@ class EnglishHumanizer implements Humanizer {
 		return self::SEASON_MAP[$season->getSeason()] . ' ' . $season->getYear();
 	}
 
+    /**
+     * @psalm-suppress MixedArgument
+     */
 	private function humanizeDate( ExtDate $date ): string {
-		$humanizedDate = $this->humanizeYearMonthDay( $date->getYear(), $date->getMonth(), $date->getDay() );
+	    if ($date->unspecified()) {
+	        $unspecified = $date->getUnspecifiedDigit();
+        }
+
+		$humanizedDate = $this->humanizeYearMonthDay(
+		    $date->getYear(),
+            $date->getMonth(),
+            $date->getDay(),
+            $unspecified ?? null
+        );
 
 		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain() ) {
 			return 'Maybe circa ' . $humanizedDate;
@@ -94,13 +107,13 @@ class EnglishHumanizer implements Humanizer {
 		return $humanizedDate;
 	}
 
-	private function humanizeYearMonthDay( ?int $year, ?int $month, ?int $day ): string {
-		if ( $year !== null && $month !== null && $day !== null ) {
-			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $this->humanizeYear( $year );
+	private function humanizeYearMonthDay( ?int $year, ?int $month, ?int $day, ?UnspecifiedDigit $unspecifiedDigit = null ): string {
+	    if ( $year !== null && $month !== null && $day !== null ) {
+			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $this->humanizeYear( $year, $unspecifiedDigit );
 		}
 
 		if ( $year !== null && $month === null && $day !== null ) {
-			return $this->inflectNumber( $day ) . ' of unknown month, ' . $this->humanizeYear( $year );
+			return $this->inflectNumber( $day ) . ' of unknown month, ' . $this->humanizeYear( $year, $unspecifiedDigit );
 		}
 
 		$parts = [];
@@ -114,15 +127,27 @@ class EnglishHumanizer implements Humanizer {
 		}
 
 		if ( $year !== null ) {
-			$parts[] = $this->humanizeYear( $year );
+			$parts[] = $this->humanizeYear( $year, $unspecifiedDigit );
 		}
 
 		return implode( ' ', $parts );
 	}
 
-	private function humanizeYear( int $year ): string {
-		return $year >= 0 ? (string)$year : (string)(-$year) . ' BC';
+	private function humanizeYear( int $year, ?UnspecifiedDigit $unspecifiedDigit = null ): string
+    {
+	    $endingChar = $unspecifiedDigit && $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
+
+		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . ' BC';
 	}
+
+    /**
+     * Check, do we need to add 's' char to humanized year representation
+     * This can be applicable to unspecified years i.e. 197X or 19XX
+     */
+	private function needsYearEndingChar(UnspecifiedDigit $unspecifiedDigit): bool
+    {
+        return $unspecifiedDigit->century() || $unspecifiedDigit->decade();
+    }
 
 	private function inflectNumber(int $number): string {
 		if ( $number % 100 >= 11 && $number % 100 <= 13 ) {
