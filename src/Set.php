@@ -6,49 +6,40 @@ namespace EDTF;
 
 class Set implements EdtfValue
 {
-    private bool $allMembers;
 
-    private bool $earlier;
-
-    /**
-     * @var EdtfValue[]
-     */
-    private array $lists;
-
-    /**
-     * @var bool
-     */
-    private bool $later;
-
-    private ?int $min = null;
-
-    private ?int $max = null;
+	/**
+	 * @var array<int, EdtfValue>
+	 */
+    private array $dates;
+	private bool $allMembers;
+	private bool $hasOpenStart;
+	private bool $hasOpenEnd;
 
     /**
-     * @param EdtfValue[] $lists
+     * @param array<int, EdtfValue> $lists
      * @param bool $allMembers
-     * @param bool $earlier
-     * @param bool $later
+     * @param bool $hasOpenStart
+     * @param bool $hasOpenEnd
      */
     public function __construct(
         array $lists,
-        bool $allMembers = false,
-        bool $earlier = false,
-        bool $later = false
+        bool $allMembers,
+        bool $hasOpenStart,
+        bool $hasOpenEnd
     )
     {
-        $this->lists = $lists;
+        $this->dates = $lists;
         $this->allMembers = $allMembers;
-        $this->earlier = $earlier;
-        $this->later = $later;
+        $this->hasOpenStart = $hasOpenStart;
+        $this->hasOpenEnd = $hasOpenEnd;
     }
 
     /**
-     * @TODO: add a way to covers with earlier or later
+     * @TODO: (low priority) add a way to covers with earlier or later
      */
     public function covers(EdtfValue $edtf): bool
     {
-        foreach($this->lists as $list){
+        foreach( $this->dates as $list){
             if ($list->covers($edtf)) {
                 return true;
             }
@@ -59,54 +50,42 @@ class Set implements EdtfValue
 
     public function getMax(): int
     {
-        if (null == $this->max) {
-            if ($this->isLater()) {
-                $this->max = 0;
-            } else {
-                $this->max = $this->endElementInSet()->getMax();
-            }
-        }
-
-        return $this->max;
+        return $this->hasOpenEnd() ? 0 : $this->endElementInSet()->getMax();
     }
 
     public function getMin(): int
     {
-        if (null === $this->min) {
-            $this->min = $this->isEarlier() ? 0 : $this->startElementInSet()->getMin();
-        }
-
-        return $this->min;
+        return $this->hasOpenStart() ? 0 : $this->startElementInSet()->getMin();
     }
 
     public function isAllMembers(): bool
     {
-        return true === $this->allMembers;
+        return $this->allMembers;
     }
 
-    public function isEarlier(): bool
+    public function hasOpenStart(): bool
     {
-        return true === $this->earlier;
+        return $this->hasOpenStart;
     }
 
-    public function isLater(): bool
+    public function hasOpenEnd(): bool
     {
-        return $this->later;
+        return $this->hasOpenEnd;
     }
 
-    public function getLists(): array
+    public function getDates(): array
     {
-        return $this->lists;
+        return $this->dates;
     }
 
     private function startElementInSet(): EdtfValue
     {
-        return $this->lists[0];
+        return $this->dates[0];
     }
 
     private function endElementInSet(): EdtfValue
     {
-        $listsCount = count($this->lists);
-        return $listsCount === 1 ? $this->lists[0] : $this->lists[$listsCount - 1];
+        $listsCount = count($this->dates);
+        return $listsCount === 1 ? $this->dates[0] : $this->dates[$listsCount - 1];
     }
 }
