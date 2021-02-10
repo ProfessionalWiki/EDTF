@@ -77,10 +77,11 @@ class EnglishHumanizer implements Humanizer {
 		return self::SEASON_MAP[$season->getSeason()] . ' ' . $season->getYear();
 	}
 
+    /**
+     * @psalm-suppress MixedArgument
+     */
 	private function humanizeDate( ExtDate $date ): string {
-
-	    $hasUnspecified = $date->unspecified();
-	    if ($hasUnspecified) {
+	    if ($date->unspecified()) {
 	        $unspecified = $date->getUnspecifiedDigit();
         }
 
