@@ -77,20 +77,8 @@ class EnglishHumanizer implements Humanizer {
 		return self::SEASON_MAP[$season->getSeason()] . ' ' . $season->getYear();
 	}
 
-    /**
-     * @psalm-suppress MixedArgument
-     */
 	private function humanizeDate( ExtDate $date ): string {
-	    if ($date->unspecified()) {
-	        $unspecified = $date->getUnspecifiedDigit();
-        }
-
-		$humanizedDate = $this->humanizeYearMonthDay(
-		    $date->getYear(),
-            $date->getMonth(),
-            $date->getDay(),
-            $unspecified ?? null
-        );
+		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
 
 		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain() ) {
 			return 'Maybe circa ' . $humanizedDate;
@@ -107,35 +95,48 @@ class EnglishHumanizer implements Humanizer {
 		return $humanizedDate;
 	}
 
-	private function humanizeYearMonthDay( ?int $year, ?int $month, ?int $day, ?UnspecifiedDigit $unspecifiedDigit = null ): string {
-	    if ( $year !== null && $month !== null && $day !== null ) {
-			return self::MONTH_MAP[$month] . ' ' . $this->inflectNumber( $day ) . ', ' . $this->humanizeYear( $year, $unspecifiedDigit );
-		}
 
-		if ( $year !== null && $month === null && $day !== null ) {
-			return $this->inflectNumber( $day ) . ' of unknown month, ' . $this->humanizeYear( $year, $unspecifiedDigit );
-		}
+	private function humanizeDateWithoutUncertainty( ExtDate $date ): string {
+		$year = $date->getYear();
+		$month = $date->getMonth();
+		$day = $date->getDay();
 
-		$parts = [];
+		if ( $year !== null ) {
+			$year = $this->humanizeYear(
+				$year,
+				$date->getUnspecifiedDigit()
+			);
+		}
 
 		if ( $month !== null ) {
-			$parts[] = self::MONTH_MAP[$month];
+			$month = self::MONTH_MAP[$month];
 		}
 
 		if ( $day !== null ) {
-			$parts[] = $this->inflectNumber( $day );
+			$day = $this->inflectNumber( $day );
 		}
 
-		if ( $year !== null ) {
-			$parts[] = $this->humanizeYear( $year, $unspecifiedDigit );
-		}
-
-		return implode( ' ', $parts );
+		return $this->humanizeYearMonthDay( $year, $month, $day );
 	}
 
-	private function humanizeYear( int $year, ?UnspecifiedDigit $unspecifiedDigit = null ): string
+	private function humanizeYearMonthDay( ?string $year, ?string $month, ?string $day ): string {
+	    if ( $year !== null && $month !== null && $day !== null ) {
+			return $month . ' ' . $day . ', ' . $year;
+		}
+
+		if ( $year !== null && $month === null && $day !== null ) {
+			return $day . ' of unknown month, ' . $year;
+		}
+
+		return implode(
+			' ',
+			array_filter( [ $month, $day, $year ], 'is_string' )
+		);
+	}
+
+	private function humanizeYear( int $year, UnspecifiedDigit $unspecifiedDigit ): string
     {
-	    $endingChar = $unspecifiedDigit && $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
+	    $endingChar = $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
 
 		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . ' BC';
 	}
