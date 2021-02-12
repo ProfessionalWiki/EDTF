@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Functional;
 
 use EDTF\EdtfParser;
 use EDTF\ExampleData\ValidEdtfStrings;
@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\EdtfParser
+ * @covers \EDTF\PackagePrivate\Parser
+ * @covers \EDTF\PackagePrivate\ParserValidator
  */
 class EdtfParserTest extends TestCase {
 

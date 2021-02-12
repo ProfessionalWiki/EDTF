@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Tests\Unit\Humanize;
+namespace EDTF\Tests\Functional;
 
 use EDTF\EdtfParser;
 use EDTF\EdtfValue;
@@ -14,6 +14,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \EDTF\Humanize\StringHumanizer
  * @covers \EDTF\Humanize\HumanizerFactory
+ * @covers \EDTF\Humanize\Languages\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\Parser
  */
 class StringHumanizerTest extends TestCase {
 
