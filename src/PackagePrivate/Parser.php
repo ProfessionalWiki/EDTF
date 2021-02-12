@@ -52,8 +52,6 @@ class Parser
     private ?string $monthCloseFlag = null;
     private ?string $dayCloseFlag = null;
 
-    private int $intervalType = 0;
-
     private ?int $yearSignificantDigit = null;
 
     private array $matches = [];
@@ -75,45 +73,10 @@ class Parser
 
         $input = strtoupper($input);
         $this->input = $input;
-        $unspecifiedParts = [
-            'yearNum', 'monthNum', 'dayNum'
-        ];
 
         preg_match($this->regexPattern, $input, $matches);
 
-        foreach($matches as $name => $value){
-            if(is_int($name) || "" == $value || !property_exists(__CLASS__, $name)){
-                continue;
-            }
-
-            if(in_array($name, $unspecifiedParts)){
-                // convert unspecified digit into zero
-                if(false !== strpos($value, 'X')){
-                    $value = str_replace('X', '0', $value);
-                }
-            }
-
-			// FIXME: "poor" design
-            $r = new \ReflectionProperty(__CLASS__, $name);
-            $type = $r->getType();
-            if($type instanceof \ReflectionNamedType && 'int' === $type->getName()){
-                $value = (int) $value;
-                // convert zero value into null
-				// FIXME: specifying time 00:00:00 is not the same as not specifying it
-                if(0 === $value){
-                    $value = null;
-                }
-            }
-
-			// FIXME: "poor" design
-            $this->$name = $value;
-        }
-
-        // convert month into season
-        if($this->monthNum > 12){
-            $this->monthNum = null;
-            $this->season = (int)$matches['monthNum'];
-        }
+        $this->mapMatchesToProperties($matches);
 
         $this->matches = $matches;
 
@@ -122,6 +85,112 @@ class Parser
             throw new \InvalidArgumentException($validator->getMessages());
         }
         return $this;
+    }
+
+    // TODO: Just a first step to simplify "poor design" and remove "magic" of Reflection usage
+    // Still needs some refactoring and removing code duplication
+    private function mapMatchesToProperties(array $matches): void
+    {
+        $regrouped = $this->regroupMatches($matches);
+
+        if (isset($regrouped['date'])) {
+            $this->mapDateValues($regrouped['date']);
+        }
+
+        if (isset($regrouped['time'])) {
+            $this->mapTimeValues($regrouped['time']);
+        }
+
+        if (isset($regrouped['tz'])) {
+            $this->mapTimezoneValues($regrouped['tz']);
+        }
+
+        if (isset($regrouped['qualification'])) {
+            $this->mapQualificationValues($regrouped['qualification']);
+        }
+    }
+
+    private function regroupMatches($matches): array
+    {
+        $regrouped = [];
+
+        foreach ($matches as $name => $value) {
+            foreach ($this->matchesGroupMap() as $group => $keyList) {
+                if (in_array($name, $keyList)) {
+                    $regrouped[$group][$name] = $value;
+                    break;
+                }
+            }
+        }
+
+        return $regrouped;
+    }
+
+    private function matchesGroupMap(): array
+    {
+        return [
+            'date' => ['yearNum', 'monthNum', 'dayNum', 'year', 'month', 'day', 'yearSignificantDigit'],
+            'time' => ['hour', 'minute', 'second'],
+            'unspecified' => ['year', 'month', 'day'],
+            'tz' => ['tzSign', 'tzHour', 'tzMinute', 'tzUtc'],
+            'qualification' => ['yearOpenFlag', 'monthOpenFlag', 'dayOpenFlag', 'yearCloseFlag', 'monthCloseFlag', 'dayCloseFlag'],
+        ];
+    }
+
+    private function mapDateValues(array $rawDateMatches): void
+    {
+        $dateValues = $this->normalizeUnspecified($rawDateMatches);
+
+        $this->yearNum = $dateValues['yearNum'] ?? null;
+        $this->monthNum = $dateValues['monthNum'] ?? null;
+        $this->dayNum = $dateValues['dayNum'] ?? null;
+        $this->yearSignificantDigit = $dateValues['yearSignificantDigit'] ?? null;
+
+        $this->year = $rawDateMatches['year'] ?? null;
+        $this->month = $rawDateMatches['month'] ?? null;
+        $this->day = $rawDateMatches['day'] ?? null;
+
+        // convert month into season
+        if ($this->monthNum > 12) {
+            $this->season = $dateValues['monthNum'];
+            $this->monthNum = null;
+        }
+    }
+
+    private function mapTimeValues(array $rawTimeMatches): void
+    {
+        $this->hour = (int) $rawTimeMatches['hour'];
+        $this->minute = (int) $rawTimeMatches['minute'];
+        $this->second = (int) $rawTimeMatches['second'];
+    }
+
+    private function mapTimezoneValues(array $rawTimezoneMatches): void
+    {
+        $this->tzSign = $rawTimezoneMatches['tzSign'] ?? null;
+        $this->tzHour = isset($rawTimezoneMatches['tzHour']) ? (int) $rawTimezoneMatches['tzHour'] : null;
+        $this->tzMinute = isset($rawTimezoneMatches['tzMinute']) ? (int) $rawTimezoneMatches['tzMinute'] : null;
+        $this->tzUtc = $rawTimezoneMatches['tzUtc'] ?? null;
+    }
+
+    private function normalizeUnspecified(array $values): array
+    {
+        $normalized = [];
+        foreach ($values as $key => $unspecified) {
+            $value = (int) str_replace('X', '0', $unspecified);
+            $normalized[$key] = $value !== 0 ? $value : null;
+        }
+
+        return $normalized;
+    }
+
+    private function mapQualificationValues(array $rawQualificationMatches): void
+    {
+        $this->yearOpenFlag = !empty($rawQualificationMatches['yearOpenFlag']) ? $rawQualificationMatches['yearOpenFlag'] : null;
+        $this->monthOpenFlag = !empty($rawQualificationMatches['monthOpenFlag']) ? $rawQualificationMatches['monthOpenFlag'] : null;
+        $this->dayOpenFlag = !empty($rawQualificationMatches['dayOpenFlag']) ? $rawQualificationMatches['dayOpenFlag'] : null;
+        $this->yearCloseFlag = !empty($rawQualificationMatches['yearCloseFlag']) ? $rawQualificationMatches['yearCloseFlag'] : null;
+        $this->monthCloseFlag = !empty($rawQualificationMatches['monthCloseFlag']) ? $rawQualificationMatches['monthCloseFlag'] : null;
+        $this->dayCloseFlag = !empty($rawQualificationMatches['dayCloseFlag']) ? $rawQualificationMatches['dayCloseFlag'] : null;
     }
 
 	/**

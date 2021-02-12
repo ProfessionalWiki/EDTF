@@ -99,6 +99,49 @@ class ParserTest extends TestCase
         $this->assertSame(10, $parser->getSecond());
         $this->assertSame(5, $parser->getTzHour());
         $this->assertSame(30, $parser->getTzMinute());
+        $this->assertSame('+', $parser->getTzSign());
+    }
+
+    public function testShouldParseDateTimeWithZeroTime()
+    {
+        $parser = new Parser();
+        $parser->createEdtf('2004-01-01T00:00:00Z');
+
+        $this->assertSame(2004, $parser->getYearNum());
+        $this->assertSame(1, $parser->getMonthNum());
+        $this->assertSame(1, $parser->getDayNum());
+        $this->assertSame(0, $parser->getHour());
+        $this->assertSame(0, $parser->getMinute());
+        $this->assertSame(0, $parser->getSecond());
+        $this->assertSame('Z', $parser->getTzUtc());
+    }
+
+    public function testShouldParseDateTimeWithZeroMinutes()
+    {
+        $parser = new Parser();
+        $parser->createEdtf('2004-01-01T01:00:20Z');
+
+        $this->assertSame(2004, $parser->getYearNum());
+        $this->assertSame(1, $parser->getMonthNum());
+        $this->assertSame(1, $parser->getDayNum());
+        $this->assertSame(1, $parser->getHour());
+        $this->assertSame(0, $parser->getMinute());
+        $this->assertSame(20, $parser->getSecond());
+        $this->assertSame('Z', $parser->getTzUtc());
+    }
+
+    public function testShouldParseDateTimeWithZeroSeconds()
+    {
+        $parser = new Parser();
+        $parser->createEdtf('2004-01-01T01:21:00Z');
+
+        $this->assertSame(2004, $parser->getYearNum());
+        $this->assertSame(1, $parser->getMonthNum());
+        $this->assertSame(1, $parser->getDayNum());
+        $this->assertSame(1, $parser->getHour());
+        $this->assertSame(21, $parser->getMinute());
+        $this->assertSame(0, $parser->getSecond());
+        $this->assertSame('Z', $parser->getTzUtc());
     }
 
     public function testShouldParseLetterPrefixedCalendarYear()
