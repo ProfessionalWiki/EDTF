@@ -49,6 +49,20 @@ $edtfDate->isOpenInterval(); // bool
 $edtfDate->getQualification(); // \EDTF\Qualification
 ```
 
+## EDTF support / limits
+
+All level 0, 1 and 2 EDTF formats can be parsed and represented, except for:
+
+* Open ranges with a date (Level 2: Qualification): `..2004-06-01/2004-06-20` (This is supported: `../2004-06-20`)
+
+Humanization has more limits:
+
+* Sets (you can still humanize each date and put them in something like a HTML list with appropriate header)
+* Significant digits (EDTF level 2): `1950S2` (some year between 1900 and 1999, estimated to be 1950)
+* Group Qualification (EDTF level 2): `2004-06~-11` (year and month approximate)
+* Qualification of Individual Component (EDTF level 2): `?2004-06-~11` (year uncertain; month known; day approximate)
+* Level 2 Unspecified Digit: `1XXX-1X` (October, November, or December during the 1000s)
+
 ## Installation
 
 To use the EDTF library in your project, simply add a dependency on professional-wiki/edtf
