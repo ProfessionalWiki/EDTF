@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\EdtfParser
+ * @covers \EDTF\ParsingResult
+ * @covers \EDTF\ExampleData\ValidEdtfStrings
  * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\PackagePrivate\ParserValidator
  */
