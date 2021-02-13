@@ -4,17 +4,17 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional;
 
-use EDTF\EdtfParser;
+use EDTF\PackagePrivate\SaneParser;
 use EDTF\EdtfValue;
-use EDTF\Humanize\Humanizer;
-use EDTF\Humanize\HumanizerFactory;
-use EDTF\Humanize\StringHumanizer;
+use EDTF\Humanizer;
+use EDTF\PackagePrivate\Humanize\HumanizerFactory;
+use EDTF\PackagePrivate\Humanize\PrivateStringHumanizer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Humanize\StringHumanizer
- * @covers \EDTF\Humanize\HumanizerFactory
- * @covers \EDTF\Humanize\Languages\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\Humanize\PrivateStringHumanizer
+ * @covers \EDTF\PackagePrivate\Humanize\HumanizerFactory
+ * @covers \EDTF\PackagePrivate\Humanize\EnglishHumanizer
  * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\Interval
  * @covers \EDTF\IntervalSide
@@ -83,9 +83,9 @@ class StringHumanizerTest extends TestCase {
 	}
 
 	public function testReturnsUnsupportedEdtfAsIs(): void {
-		$stringHumanizer = new StringHumanizer(
+		$stringHumanizer = new PrivateStringHumanizer(
 			$this->newNullHumanizer(),
-			new EdtfParser()
+			new SaneParser()
 		);
 
 		$this->assertSame(
@@ -103,9 +103,9 @@ class StringHumanizerTest extends TestCase {
 	}
 
 	public function testHandlesError(): void {
-		$stringHumanizer = new StringHumanizer(
+		$stringHumanizer = new PrivateStringHumanizer(
 			$this->newNullHumanizer(),
-			new EdtfParser()
+			new SaneParser()
 		);
 
 		$this->assertSame(

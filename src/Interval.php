@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-use EDTF\Contracts\CoversTrait;
+use EDTF\PackagePrivate\CoversTrait;
 
 class Interval implements EdtfValue
 {

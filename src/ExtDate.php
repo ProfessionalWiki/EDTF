@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-use EDTF\Contracts\CoversTrait;
+use EDTF\PackagePrivate\CoversTrait;
 use EDTF\Exceptions\ExtDateException;
 use EDTF\Utils\DatetimeFactory\CarbonFactory;
 use EDTF\Utils\DatetimeFactory\DatetimeFactoryException;

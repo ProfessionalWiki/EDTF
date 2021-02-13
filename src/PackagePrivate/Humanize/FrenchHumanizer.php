@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Humanize\Languages;
+namespace EDTF\PackagePrivate\Humanize;
 
 use EDTF\EdtfValue;
-use EDTF\Humanize\Humanizer;
+use EDTF\Humanizer;
 use EDTF\Season;
 
 class FrenchHumanizer implements Humanizer {

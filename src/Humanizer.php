@@ -2,9 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Humanize;
-
-use EDTF\EdtfValue;
+namespace EDTF;
 
 interface Humanizer {
 

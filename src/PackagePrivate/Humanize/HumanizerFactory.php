@@ -2,11 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Humanize;
+namespace EDTF\PackagePrivate\Humanize;
 
-use EDTF\EdtfParser;
-use EDTF\Humanize\Languages\EnglishHumanizer;
-use EDTF\Humanize\Languages\FrenchHumanizer;
+use EDTF\Humanizer;
+use EDTF\PackagePrivate\SaneParser;
 
 class HumanizerFactory {
 
@@ -18,10 +17,10 @@ class HumanizerFactory {
 		return new EnglishHumanizer();
 	}
 
-	public static function newStringHumanizerForLanguage( string $languageCode ): StringHumanizer {
-		return new StringHumanizer(
+	public static function newStringHumanizerForLanguage( string $languageCode ): PrivateStringHumanizer {
+		return new PrivateStringHumanizer(
 			self::newForLanguage( $languageCode ),
-			new EdtfParser()
+			new SaneParser()
 		);
 	}
 

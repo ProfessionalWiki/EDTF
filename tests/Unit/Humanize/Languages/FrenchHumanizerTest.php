@@ -4,12 +4,12 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Unit\Humanize\Languages;
 
-use EDTF\Humanize\Languages\FrenchHumanizer;
+use EDTF\PackagePrivate\Humanize\FrenchHumanizer;
 use EDTF\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Humanize\Languages\FrenchHumanizer
+ * @covers \EDTF\PackagePrivate\Humanize\FrenchHumanizer
  */
 class FrenchHumanizerTest extends TestCase {
 

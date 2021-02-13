@@ -2,12 +2,12 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Humanize\Languages;
+namespace EDTF\PackagePrivate\Humanize;
 
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
 use EDTF\ExtDateTime;
-use EDTF\Humanize\Humanizer;
+use EDTF\Humanizer;
 use EDTF\Interval;
 use EDTF\Season;
 use EDTF\UnspecifiedDigit;

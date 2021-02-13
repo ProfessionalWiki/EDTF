@@ -6,12 +6,12 @@ namespace EDTF\Tests\Unit\Humanize\Languages;
 
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
-use EDTF\Humanize\Languages\EnglishHumanizer;
+use EDTF\PackagePrivate\Humanize\EnglishHumanizer;
 use EDTF\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Humanize\Languages\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\Humanize\EnglishHumanizer
  */
 class EnglishHumanizerTest extends TestCase {
 
