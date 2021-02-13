@@ -14,7 +14,7 @@ EDTF PHP is a small library for parsing, representing and working with the
 ### Parsing
 
 ```php
-$parser = new EDTF\EdtfParser();
+$parser = \EDTF\EdtfFactory::newParser();
 $parsingResult = $parser->parse('1985-04-12T23:20:30');
 $parsingResult->isValid(); // true
 $parsingResult->getEdtfValue(); // \EDTF\EdtfValue
@@ -24,7 +24,7 @@ $parsingResult->getInput(); // '1985-04-12T23:20:30'
 ### Validating
 
 ```php
-$validator = EDTF\EdtfValidator::newInstance();
+$validator = \EDTF\EdtfFactory::newValidator();
 $validator->isValidEdtf('1985-04-12T23:20:30'); // true
 ````
 

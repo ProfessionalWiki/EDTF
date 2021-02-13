@@ -4,12 +4,12 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional;
 
-use EDTF\EdtfValidator;
+use EDTF\PackagePrivate\Validator;
 use EDTF\ExampleData\ValidEdtfStrings;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\EdtfValidator
+ * @covers \EDTF\PackagePrivate\Validator
  * @covers \EDTF\ExampleData\ValidEdtfStrings
  * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\PackagePrivate\ParserValidator
@@ -21,7 +21,7 @@ class EdtfValidatorTest extends TestCase {
 	 */
 	public function testValidEdtf( string $validEdtf ) {
 		$this->assertTrue(
-			EdtfValidator::newInstance()->isValidEdtf( $validEdtf )
+			Validator::newInstance()->isValidEdtf( $validEdtf )
 		);
 	}
 
@@ -36,7 +36,7 @@ class EdtfValidatorTest extends TestCase {
 	 */
 	public function testInvalidEdtf( string $invalidEdtf ) {
 		$this->assertFalse(
-			EdtfValidator::newInstance()->isValidEdtf( $invalidEdtf )
+			Validator::newInstance()->isValidEdtf( $invalidEdtf )
 		);
 	}
 

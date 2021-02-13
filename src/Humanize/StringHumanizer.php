@@ -4,14 +4,14 @@ declare( strict_types = 1 );
 
 namespace EDTF\Humanize;
 
-use EDTF\EdtfParser;
+use EDTF\PackagePrivate\SaneParser;
 
 class StringHumanizer {
 
 	private Humanizer $humanizer;
-	private EdtfParser $parser;
+	private SaneParser $parser;
 
-	public function __construct( Humanizer $humanizer, EdtfParser $parser ) {
+	public function __construct( Humanizer $humanizer, SaneParser $parser ) {
 		$this->humanizer = $humanizer;
 		$this->parser = $parser;
 	}

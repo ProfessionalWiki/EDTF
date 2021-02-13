@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EDTF\Tests\Unit;
 
 use Carbon\Carbon;
-use EDTF\EdtfParser;
+use EDTF\PackagePrivate\SaneParser;
 use EDTF\Season;
 use PHPUnit\Framework\TestCase;
 
@@ -45,7 +45,7 @@ class SeasonTest extends TestCase
 
     private function assertSeasonValues(string $input, string $expectedStart, string $expectedEnd)
     {
-        $season = (new EdtfParser())->parse($input)->getEdtfValue();
+        $season = (new SaneParser())->parse($input)->getEdtfValue();
         $expectedStart = Carbon::parse($expectedStart);
         $expectedEnd = Carbon::parse($expectedEnd);
 

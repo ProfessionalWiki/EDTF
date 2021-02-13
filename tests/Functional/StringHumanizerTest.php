@@ -4,7 +4,7 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional;
 
-use EDTF\EdtfParser;
+use EDTF\PackagePrivate\SaneParser;
 use EDTF\EdtfValue;
 use EDTF\Humanize\Humanizer;
 use EDTF\Humanize\HumanizerFactory;
@@ -85,7 +85,7 @@ class StringHumanizerTest extends TestCase {
 	public function testReturnsUnsupportedEdtfAsIs(): void {
 		$stringHumanizer = new StringHumanizer(
 			$this->newNullHumanizer(),
-			new EdtfParser()
+			new SaneParser()
 		);
 
 		$this->assertSame(
@@ -105,7 +105,7 @@ class StringHumanizerTest extends TestCase {
 	public function testHandlesError(): void {
 		$stringHumanizer = new StringHumanizer(
 			$this->newNullHumanizer(),
-			new EdtfParser()
+			new SaneParser()
 		);
 
 		$this->assertSame(
