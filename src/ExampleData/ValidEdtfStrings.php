@@ -22,6 +22,7 @@ class ValidEdtfStrings {
 
 	public static function level0(): \Generator {
 		yield '1985-04-12';
+		yield '1904-02-29';
 		yield '1985-04';
 		yield '1985';
 
