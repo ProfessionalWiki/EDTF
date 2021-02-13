@@ -31,16 +31,21 @@ $validator->isValidEdtf('1985-04-12T23:20:30'); // true
 ### Humanizing
 
 ```php
-$humanizer = EDTF\Humanize\HumanizerFactory::newStringHumanizerForLanguage( 'en' );
+$humanizer = \EDTF\EdtfFactory::newStringHumanizerForLanguage( 'en' );
 $humanizer->humanize('1985-12/2004~'); // 'December 1985 to circa 2004'
+````
+
+```php
+$humanizer = \EDTF\EdtfFactory::newHumanizerForLanguage( 'en' );
+$humanizer->humanize($edtfValue); // string
 ````
 
 ### Object model
 
 ```php
-$edtf->getMax(); // int
-$edtf->getMin(); // int
-$edtf->covers(\EDTF\EdtfValue $edtf); // bool
+$edtfValue->getMax(); // int
+$edtfValue->getMin(); // int
+$edtfValue->covers(\EDTF\EdtfValue $anotherValue); // bool
 ```
 
 ```php

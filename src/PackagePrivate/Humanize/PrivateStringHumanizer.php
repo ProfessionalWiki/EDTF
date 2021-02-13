@@ -2,11 +2,13 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Humanize;
+namespace EDTF\PackagePrivate\Humanize;
 
+use EDTF\Humanizer;
 use EDTF\PackagePrivate\SaneParser;
+use EDTF\StringHumanizer;
 
-class StringHumanizer {
+class PrivateStringHumanizer implements StringHumanizer {
 
 	private Humanizer $humanizer;
 	private SaneParser $parser;

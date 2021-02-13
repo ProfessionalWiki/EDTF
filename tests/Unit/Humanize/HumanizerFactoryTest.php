@@ -4,12 +4,12 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Unit\Humanize;
 
-use EDTF\Humanize\HumanizerFactory;
+use EDTF\PackagePrivate\Humanize\HumanizerFactory;
 use EDTF\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Humanize\HumanizerFactory
+ * @covers \EDTF\PackagePrivate\Humanize\HumanizerFactory
  */
 class HumanizerFactoryTest extends TestCase {
 
