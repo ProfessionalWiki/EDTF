@@ -4,6 +4,11 @@ namespace EDTF\Tests\Unit\PackagePrivate;
 
 use EDTF\PackagePrivate\Parser;
 use EDTF\PackagePrivate\ParserValidator;
+use EDTF\PackagePrivate\ValueObjects\Composites\Date;
+use EDTF\PackagePrivate\ValueObjects\Composites\Qualification;
+use EDTF\PackagePrivate\ValueObjects\Composites\Time;
+use EDTF\PackagePrivate\ValueObjects\Composites\Timezone;
+use EDTF\PackagePrivate\ValueObjects\ParsedData;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -38,9 +43,21 @@ class ParserValidatorTest extends TestCase
             ->method('getMatches')
             ->willReturn(['yearNum' => '1987', 'monthNum' => '12']);
 
-        $this->parser->expects($this->once())
+        $date = $this->createMock(Date::class);
+        $date->expects($this->once())
             ->method('getSeason')
             ->willReturn(24);
+
+        $parsedData = new ParsedData(
+            $date,
+            $this->createEmptyTime(),
+            $this->createEmptyQualification(),
+            $this->createEmptyTimeZone()
+        );
+
+        $this->parser->expects($this->once())
+            ->method('getParsedData')
+            ->willReturn($parsedData);
 
         $this->validator->isValid();
 
@@ -79,9 +96,21 @@ class ParserValidatorTest extends TestCase
             ->method('getMatches')
             ->willReturn(['yearNum' => '1987', 'monthNum' => '10']);
 
-        $this->parser->expects($this->once())
+        $date = $this->createMock(Date::class);
+        $date->expects($this->once())
             ->method('getSeason')
             ->willReturn(19);
+
+        $parsedData = new ParsedData(
+            $date,
+            $this->createEmptyTime(),
+            $this->createEmptyQualification(),
+            $this->createEmptyTimeZone()
+        );
+
+        $this->parser->expects($this->once())
+            ->method('getParsedData')
+            ->willReturn($parsedData);
 
         $this->validator->isValid();
         $this->assertEquals(
@@ -99,5 +128,27 @@ class ParserValidatorTest extends TestCase
             [null, '10', 'yearNum'],
             [false, null, 'yearNum']
         ];
+    }
+
+    private function createEmptyQualification(): Qualification
+    {
+        return new Qualification(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    private function createEmptyTime(): Time
+    {
+        return new Time(null, null, null);
+    }
+
+    private function createEmptyTimeZone(): Timezone
+    {
+        return new Timezone(null, null, null, null);
     }
 }
