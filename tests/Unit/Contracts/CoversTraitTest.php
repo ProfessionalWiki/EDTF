@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @package EDTF\Tests\Unit\Contracts
- * @covers \EDTF\Contracts\CoversTrait
+ * @covers \EDTF\PackagePrivate\CoversTrait
  */
 class CoversTraitTest extends TestCase
 {
