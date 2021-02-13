@@ -47,4 +47,20 @@ class DateTest extends TestCase
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
     }
+
+    public function testErrorForNonLeapYear()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->createExtDate('1900-02-29');
+    }
+
+    public function testCorrectDateForLeapYear()
+    {
+        $date = $this->createExtDate('1904-02-29');
+
+        $this->assertInstanceOf(ExtDate::class, $date);
+        $this->assertSame(1904, $date->getYear());
+        $this->assertSame(2, $date->getMonth());
+        $this->assertSame(29, $date->getDay());
+    }
 }

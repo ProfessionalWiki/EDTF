@@ -2,6 +2,9 @@
 
 namespace EDTF\PackagePrivate\ValueObjects\Composites;
 
+use Carbon\Carbon;
+use \InvalidArgumentException;
+
 class Date
 {
     private ?int $yearNum;
@@ -34,6 +37,8 @@ class Date
         $this->dayNum = $dayNum;
 
         $this->yearSignificantDigit = $yearSignificantDigit;
+
+        $this->validateLeapYearCase();
 
         if ($this->monthNum > 12) {
             $this->season = (int) $this->monthNum;
@@ -79,5 +84,20 @@ class Date
     public function getYearSignificantDigit(): ?int
     {
         return $this->yearSignificantDigit;
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function validateLeapYearCase(): void
+    {
+        if ($this->monthNum == 2 && $this->dayNum > 28) {
+            $c = Carbon::create($this->yearNum);
+            if (!$c->isLeapYear()) {
+                throw new InvalidArgumentException(
+                    "$this->yearNum is not a leap year. Maximum 28 days is possible in February"
+                );
+            }
+        }
     }
 }
