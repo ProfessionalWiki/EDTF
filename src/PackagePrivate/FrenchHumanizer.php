@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\PackagePrivate\Humanize;
+namespace EDTF\PackagePrivate;
 
 use EDTF\EdtfValue;
 use EDTF\Humanizer;

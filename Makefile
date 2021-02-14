@@ -15,3 +15,6 @@ psalm:
 
 phpstan:
 	./vendor/bin/phpstan analyse -c phpstan.neon --no-progress
+
+stan-baseline:
+	./vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline
