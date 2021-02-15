@@ -6,9 +6,9 @@ namespace EDTF;
 
 use EDTF\PackagePrivate\CoversTrait;
 use EDTF\Exceptions\ExtDateException;
-use EDTF\Utils\DatetimeFactory\CarbonFactory;
-use EDTF\Utils\DatetimeFactory\DatetimeFactoryException;
-use EDTF\Utils\DatetimeFactory\DatetimeFactoryInterface;
+use EDTF\PackagePrivate\Carbon\CarbonFactory;
+use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
+use EDTF\PackagePrivate\Carbon\DatetimeFactoryInterface;
 
 class ExtDate implements EdtfValue
 {

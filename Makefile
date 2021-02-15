@@ -13,6 +13,9 @@ coverage-html:
 psalm:
 	./vendor/bin/psalm
 
+psalm-baseline:
+	./vendor/bin/psalm --set-baseline=psalm-baseline.xml
+
 phpstan:
 	./vendor/bin/phpstan analyse -c phpstan.neon --no-progress
 

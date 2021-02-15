@@ -7,8 +7,8 @@ use EDTF\Exceptions\ExtDateException;
 use EDTF\ExtDate;
 use EDTF\Qualification;
 use EDTF\UnspecifiedDigit;
-use EDTF\Utils\DatetimeFactory\CarbonFactory;
-use EDTF\Utils\DatetimeFactory\DatetimeFactoryException;
+use EDTF\PackagePrivate\Carbon\CarbonFactory;
+use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
 use PHPUnit\Framework\TestCase;
 
 /**

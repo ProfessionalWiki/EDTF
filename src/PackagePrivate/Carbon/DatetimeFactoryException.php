@@ -1,6 +1,6 @@
 <?php
 
-namespace EDTF\Utils\DatetimeFactory;
+namespace EDTF\PackagePrivate\Carbon;
 
 use Exception;
 

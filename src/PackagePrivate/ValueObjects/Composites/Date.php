@@ -41,7 +41,7 @@ class Date
         $this->validateLeapYearCase();
 
         if ($this->monthNum > 12) {
-            $this->season = (int) $this->monthNum;
+            $this->season = $this->monthNum;
             $this->monthNum = null;
         }
     }
@@ -93,7 +93,7 @@ class Date
     {
         if ($this->monthNum == 2 && $this->dayNum > 28) {
             $c = Carbon::create($this->yearNum);
-            if (!$c->isLeapYear()) {
+            if ($c === false || !$c->isLeapYear()) {
                 throw new InvalidArgumentException(
                     "$this->yearNum is not a leap year. Maximum 28 days is possible in February"
                 );

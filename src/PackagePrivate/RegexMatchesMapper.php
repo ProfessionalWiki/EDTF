@@ -82,7 +82,7 @@ class RegexMatchesMapper
         );
     }
 
-    private function regroupMatches($matches): array
+    private function regroupMatches(array $matches): array
     {
         $regrouped = ['date' => [], 'time' => [], 'tz' => [], 'qualification' => []];
 
