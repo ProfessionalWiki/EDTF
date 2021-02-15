@@ -62,6 +62,10 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 	}
 
 	private function humanizeSetDatesToSingleMessage( HumanizedSetDates $humanizedDates, bool $isAllMembers ): string {
+		if ( count( $humanizedDates->humanizedDates ) === 1 ) {
+			return $humanizedDates->humanizedDates[0];
+		}
+
 		if ( count( $humanizedDates->humanizedDates ) === 2 ) {
 			if ( $isAllMembers ) {
 				return $humanizedDates->humanizedDates[0] . ' and ' . $humanizedDates->humanizedDates[1]; // TODO i18n

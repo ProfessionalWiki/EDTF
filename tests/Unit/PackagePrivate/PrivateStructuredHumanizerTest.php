@@ -191,4 +191,20 @@ class PrivateStructuredHumanizerTest extends TestCase {
 		);
 	}
 
+	public function testSetWithSingleDate(): void {
+		$set = new Set(
+			[
+				new Season( 2021, 21 ),
+			],
+			false,
+			false,
+			false
+		);
+
+		$this->assertHumanizedToSingleMessage(
+			'Spring 2021',
+			$this->humanize( $set )
+		);
+	}
+
 }
