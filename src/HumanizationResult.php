@@ -19,22 +19,21 @@ class HumanizationResult {
 	/**
 	 * @param string[] $humanization
 	 */
-	public static function newStructuredHumanization( array $humanization ): self {
-		return new self( true, $humanization );
+	public static function newStructuredHumanization( array $humanization, string $contextMessage ): self {
+		$instance = new self( true );
+		$instance->structuredHumanization = $humanization;
+		$instance->contextMessage = $contextMessage;
+		return $instance;
 	}
 
 	private bool $wasHumanized;
 	private ?string $simpleHumanization = null;
 	private ?string $contextMessage = null;
 	/** @var string[] */
-	private array $structuredHumanization;
+	private array $structuredHumanization = [];
 
-	/**
-	 * @param string[] $structuredHumanization
-	 */
-	private function __construct( bool $wasHumanized, array $structuredHumanization = [] ) {
+	private function __construct( bool $wasHumanized ) {
 		$this->wasHumanized = $wasHumanized;
-		$this->structuredHumanization = $structuredHumanization;
 	}
 
 	public function wasHumanized(): bool {

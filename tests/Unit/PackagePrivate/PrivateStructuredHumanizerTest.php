@@ -120,7 +120,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 
 		$this->assertTrue( $result->wasHumanized() );
 		$this->assertFalse( $result->isOneMessage() );
-		$this->assertSame( '', $result->getContextMessage() ); // TODO
+		$this->assertSame( 'All of these:', $result->getContextMessage() );
 
 		$this->assertSame(
 			[
@@ -146,7 +146,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 
 		$this->assertTrue( $result->wasHumanized() );
 		$this->assertFalse( $result->isOneMessage() );
-		$this->assertSame( '', $result->getContextMessage() ); // TODO
+		$this->assertSame( 'One of these:', $result->getContextMessage() );
 
 		$this->assertSame(
 			[

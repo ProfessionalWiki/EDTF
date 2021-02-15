@@ -40,8 +40,10 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 		$humanizedDates = $this->getHumanizedDatesFromSet( $edtf );
 
 		if ( $humanizedDates->shouldUseList() ) {
-			// TODO
-			return HumanizationResult::newStructuredHumanization( $humanizedDates->humanizedDates );
+			return HumanizationResult::newStructuredHumanization(
+				$humanizedDates->humanizedDates,
+				$edtf->isAllMembers() ? 'All of these:' : 'One of these:'
+			);
 		}
 
 		if ( $edtf->isAllMembers() ) {
