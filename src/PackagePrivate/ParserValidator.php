@@ -56,7 +56,7 @@ class ParserValidator
 
     private function validateSeason(): void
     {
-        $season = $this->parser->getSeason();
+        $season = $this->parser->getParsedData()->getDate()->getSeason();
 
         if($season > 0 && $this->isOutsideValidRange($season)){
             $this->messages[] = "Invalid season number $season in {$this->parser->getInput()} is out of range. Accepted season number is between 21-41";

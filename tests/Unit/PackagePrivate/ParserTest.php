@@ -54,9 +54,10 @@ class ParserTest extends TestCase
         $parser = new Parser();
         $parser->createEdtf('2004-01-02');
 
-        $this->assertSame(2004, $parser->getYearNum());
-        $this->assertSame(1, $parser->getMonthNum());
-        $this->assertSame(2, $parser->getDayNum());
+        $data = $parser->getParsedData();
+        $this->assertSame(2004, $data->getDate()->getYearNum());
+        $this->assertSame(1, $data->getDate()->getMonthNum());
+        $this->assertSame(2, $data->getDate()->getDayNum());
     }
 
     public function testShouldParseCompleteDateTime()
@@ -64,12 +65,13 @@ class ParserTest extends TestCase
         $parser = new Parser();
         $parser->createEdtf('2004-01-02T23:59:59Z');
 
-        $this->assertSame(2004, $parser->getYearNum());
-        $this->assertSame(1, $parser->getMonthNum());
-        $this->assertSame(2, $parser->getDayNum());
-        $this->assertSame(23, $parser->getHour());
-        $this->assertSame(59, $parser->getMinute());
-        $this->assertSame(59, $parser->getSecond());
+        $data = $parser->getParsedData();
+        $this->assertSame(2004, $data->getDate()->getYearNum());
+        $this->assertSame(1, $data->getDate()->getMonthNum());
+        $this->assertSame(2, $data->getDate()->getDayNum());
+        $this->assertSame(23, $data->getTime()->getHour());
+        $this->assertSame(59, $data->getTime()->getMinute());
+        $this->assertSame(59, $data->getTime()->getSecond());
     }
 
     public function testShouldParseUTCTimezone()
@@ -77,13 +79,14 @@ class ParserTest extends TestCase
         $parser = new Parser();
         $parser->createEdtf('2004-01-01T10:10:10Z');
 
-        $this->assertSame(2004, $parser->getYearNum());
-        $this->assertSame(1, $parser->getMonthNum());
-        $this->assertSame(1, $parser->getDayNum());
-        $this->assertSame(10, $parser->getHour());
-        $this->assertSame(10, $parser->getMinute());
-        $this->assertSame(10, $parser->getSecond());
-        $this->assertSame("Z", $parser->getTzUtc());
+        $data = $parser->getParsedData();
+        $this->assertSame(2004, $data->getDate()->getYearNum());
+        $this->assertSame(1, $data->getDate()->getMonthNum());
+        $this->assertSame(1, $data->getDate()->getDayNum());
+        $this->assertSame(10, $data->getTime()->getHour());
+        $this->assertSame(10, $data->getTime()->getMinute());
+        $this->assertSame(10, $data->getTime()->getSecond());
+        $this->assertSame("Z", $data->getTimezone()->getTzUtc());
     }
 
     public function testShouldParseTimezoneValue()
@@ -91,30 +94,83 @@ class ParserTest extends TestCase
         $parser = new Parser();
         $parser->createEdtf('2004-01-01T10:10:10+05:30');
 
-        $this->assertSame(2004, $parser->getYearNum());
-        $this->assertSame(1, $parser->getMonthNum());
-        $this->assertSame(1, $parser->getDayNum());
-        $this->assertSame(10, $parser->getHour());
-        $this->assertSame(10, $parser->getMinute());
-        $this->assertSame(10, $parser->getSecond());
-        $this->assertSame(5, $parser->getTzHour());
-        $this->assertSame(30, $parser->getTzMinute());
+        $data = $parser->getParsedData();
+        $this->assertSame(2004, $data->getDate()->getYearNum());
+        $this->assertSame(1, $data->getDate()->getMonthNum());
+        $this->assertSame(1, $data->getDate()->getDayNum());
+        $this->assertSame(10, $data->getTime()->getHour());
+        $this->assertSame(10, $data->getTime()->getMinute());
+        $this->assertSame(10, $data->getTime()->getSecond());
+        $this->assertSame(5, $data->getTimezone()->getTzHour());
+        $this->assertSame(30, $data->getTimezone()->getTzMinute());
+        $this->assertSame('+', $data->getTimezone()->getTzSign());
+    }
+
+    public function testShouldParseDateTimeWithZeroTime()
+    {
+        $parser = new Parser();
+        $parser->createEdtf('2004-01-01T00:00:00Z');
+
+        $data = $parser->getParsedData();
+
+        $this->assertSame(2004, $data->getDate()->getYearNum());
+        $this->assertSame(1, $data->getDate()->getMonthNum());
+        $this->assertSame(1, $data->getDate()->getDayNum());
+        $this->assertSame(0, $data->getTime()->getHour());
+        $this->assertSame(0, $data->getTime()->getMinute());
+        $this->assertSame(0, $data->getTime()->getSecond());
+        $this->assertSame('Z', $data->getTimezone()->getTzUtc());
+    }
+
+    public function testShouldParseDateTimeWithZeroMinutes()
+    {
+        $parser = new Parser();
+        $parser->createEdtf('2004-01-01T01:00:20Z');
+
+        $data = $parser->getParsedData();
+
+        $this->assertSame(2004, $data->getDate()->getYearNum());
+        $this->assertSame(1, $data->getDate()->getMonthNum());
+        $this->assertSame(1, $data->getDate()->getDayNum());
+        $this->assertSame(1, $data->getTime()->getHour());
+        $this->assertSame(0, $data->getTime()->getMinute());
+        $this->assertSame(20, $data->getTime()->getSecond());
+        $this->assertSame('Z', $data->getTimezone()->getTzUtc());
+    }
+
+    public function testShouldParseDateTimeWithZeroSeconds()
+    {
+        $parser = new Parser();
+        $parser->createEdtf('2004-01-01T01:21:00Z');
+
+        $data = $parser->getParsedData();
+
+        $this->assertSame(2004, $data->getDate()->getYearNum());
+        $this->assertSame(1, $data->getDate()->getMonthNum());
+        $this->assertSame(1, $data->getDate()->getDayNum());
+        $this->assertSame(1, $data->getTime()->getHour());
+        $this->assertSame(21, $data->getTime()->getMinute());
+        $this->assertSame(0, $data->getTime()->getSecond());
+        $this->assertSame('Z', $data->getTimezone()->getTzUtc());
     }
 
     public function testShouldParseLetterPrefixedCalendarYear()
     {
         $parser = $this->createParser('Y170000002');
-        $this->assertSame(170000002, $parser->getYearNum());
+        $data = $parser->getParsedData();
+        $this->assertSame(170000002, $data->getDate()->getYearNum());
 
         $parser = $this->createParser('Y-170000002');
-        $this->assertSame(-170000002, $parser->getYearNum());
+        $data = $parser->getParsedData();
+        $this->assertSame(-170000002, $data->getDate()->getYearNum());
     }
 
     public function testShouldParseSeason()
     {
         $parser = $this->createParser('2001-21');
-        $this->assertNull($parser->getMonthNum());
-        $this->assertSame(21, $parser->getSeason());
+        $data = $parser->getParsedData();
+        $this->assertNull($data->getDate()->getMonthNum());
+        $this->assertSame(21, $data->getDate()->getSeason());
     }
 
     public function testThrowExceptionOnInvalidSeasonNumber()
@@ -126,77 +182,89 @@ class ParserTest extends TestCase
     public function testShouldParseQualificationWithinYear()
     {
         $parser = $this->createParser('?1984');
-        $this->assertSame(1984, $parser->getYearNum());
-        $this->assertSame("?", $parser->getYearOpenFlag());
+        $data = $parser->getParsedData();
+        $this->assertSame(1984, $data->getDate()->getYearNum());
+        $this->assertSame("?", $data->getQualification()->getYearOpenFlag());
 
         $parser = $this->createParser('1984?');
-        $this->assertSame(1984, $parser->getYearNum());
-        $this->assertSame("?", $parser->getYearCloseFlag());
+        $data = $parser->getParsedData();
+        $this->assertSame(1984, $data->getDate()->getYearNum());
+        $this->assertSame("?", $data->getQualification()->getYearCloseFlag());
     }
 
     public function testShouldParseQualificationWithinMonth()
     {
         $parser = $this->createParser("1984-02%");
-        $this->assertSame(2, $parser->getMonthNum());
-        $this->assertSame("%", $parser->getMonthCloseFlag());
+        $data = $parser->getParsedData();
+        $this->assertSame(2, $data->getDate()->getMonthNum());
+        $this->assertSame("%", $data->getQualification()->getMonthCloseFlag());
 
         $parser = $this->createParser("1984-02~");
-        $this->assertSame(2, $parser->getMonthNum());
-        $this->assertSame("~", $parser->getMonthCloseFlag());
+        $data = $parser->getParsedData();
+        $this->assertSame(2, $data->getDate()->getMonthNum());
+        $this->assertSame("~", $data->getQualification()->getMonthCloseFlag());
     }
 
     public function testShouldParseQualificationWithinDay()
     {
         $parser = $this->createParser("1984-02-01~");
-        $this->assertSame(2, $parser->getMonthNum());
-        $this->assertSame(1, $parser->getDayNum());
-        $this->assertSame("~", $parser->getDayCloseFlag());
+        $data = $parser->getParsedData();
+        $this->assertSame(2, $data->getDate()->getMonthNum());
+        $this->assertSame(1, $data->getDate()->getDayNum());
+        $this->assertSame("~", $data->getQualification()->getDayCloseFlag());
 
         $parser = $this->createParser("1984-02-01%");
-        $this->assertSame(2, $parser->getMonthNum());
-        $this->assertSame(1, $parser->getDayNum());
-        $this->assertSame("%", $parser->getDayCloseFlag());
+        $data = $parser->getParsedData();
+        $this->assertSame(2, $data->getDate()->getMonthNum());
+        $this->assertSame(1, $data->getDate()->getDayNum());
+        $this->assertSame("%", $data->getQualification()->getDayCloseFlag());
     }
 
     public function testShouldParseQualificationInDatePart()
     {
         $parser = $this->createParser('~1984-%02-?01');
-        $this->assertSame("~", $parser->getYearOpenFlag());
-        $this->assertSame("%", $parser->getMonthOpenFlag());
-        $this->assertSame("?", $parser->getDayOpenFlag());
+        $data = $parser->getParsedData();
+        $this->assertSame("~", $data->getQualification()->getYearOpenFlag());
+        $this->assertSame("%", $data->getQualification()->getMonthOpenFlag());
+        $this->assertSame("?", $data->getQualification()->getDayOpenFlag());
     }
 
     public function testParseUnspecifiedDigitWithYearPrecision()
     {
         $parser = $this->createParser('201X');
-        $this->assertSame(2010, $parser->getYearNum());
-        $this->assertSame("201X", $parser->getYear());
+        $data = $parser->getParsedData();
+        $this->assertSame(2010, $data->getDate()->getYearNum());
+        $this->assertSame("201X", $data->getDate()->getRawYear());
 
         $parser = $this->createParser('20XX');
-        $this->assertSame(2000, $parser->getYearNum());
-        $this->assertSame("20XX", $parser->getYear());
+        $data = $parser->getParsedData();
+        $this->assertSame(2000, $data->getDate()->getYearNum());
+        $this->assertSame("20XX", $data->getDate()->getRawYear());
     }
 
     public function testParseUnspecifiedDigitWithMonthPrecision()
     {
         $parser = $this->createParser('2010-XX');
-        $this->assertSame(2010, $parser->getYearNum());
-        $this->assertNull($parser->getMonthNum());
+        $data = $parser->getParsedData();
+        $this->assertSame(2010, $data->getDate()->getYearNum());
+        $this->assertNull($data->getDate()->getMonthNum());
     }
 
     public function testParseUnspecifiedDigitWithDayPrecision()
     {
         $parser = $this->createParser('2010-12-XX');
-        $this->assertSame(2010, $parser->getYearNum());
-        $this->assertSame(12, $parser->getMonthNum());
-        $this->assertNull($parser->getDayNum());
+        $data = $parser->getParsedData();
+        $this->assertSame(2010, $data->getDate()->getYearNum());
+        $this->assertSame(12, $data->getDate()->getMonthNum());
+        $this->assertNull($data->getDate()->getDayNum());
     }
 
     public function testParseUnspecifiedDigitWithMixedPrecision()
     {
         $parser = $this->createParser("20XX-XX-XX");
-        $this->assertSame(2000, $parser->getYearNum());
-        $this->assertNull($parser->getMonthNum());
-        $this->assertNull($parser->getDayNum());
+        $data = $parser->getParsedData();
+        $this->assertSame(2000, $data->getDate()->getYearNum());
+        $this->assertNull($data->getDate()->getMonthNum());
+        $this->assertNull($data->getDate()->getDayNum());
     }
 }

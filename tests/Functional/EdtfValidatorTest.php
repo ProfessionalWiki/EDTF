@@ -50,6 +50,7 @@ class EdtfValidatorTest extends TestCase {
 
 		yield 'day too high' => [ '2021-01-32' ];
 		yield 'month too high' => [ '2021-13-01' ];
+		yield 'too many days for non-leap year' => [ '1900-02-29' ];
 
 		foreach ( ValidEdtfStrings::all() as $key => $value ) {
 			yield [ 'invalid ' . $value ];

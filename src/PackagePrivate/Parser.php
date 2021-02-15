@@ -9,6 +9,7 @@ use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
 use EDTF\IntervalSide;
+use EDTF\PackagePrivate\ValueObjects\ParsedData;
 use EDTF\Qualification;
 use EDTF\Season;
 use EDTF\Set;
@@ -26,43 +27,19 @@ class Parser
 
     private string $input = "";
 
-    private ?string $year = null;
-    private ?string $month = null;
-    private ?string $day = null;
-
-    private ?int $yearNum = null;
-    private ?int $monthNum = null;
-    private ?int $dayNum = null;
-
-    private ?int $hour = null;
-    private ?int $minute = null;
-    private ?int $second = null;
-    private int $season = 0;
-
-    private ?string $tzSign = null;
-    private ?int $tzMinute = null;
-    private ?int $tzHour = null;
-    private ?string $tzUtc = null;
-
-    // qualification level 1 and 2 qualification props
-    private ?string $yearOpenFlag = null;
-    private ?string $monthOpenFlag = null;
-    private ?string $dayOpenFlag = null;
-    private ?string $yearCloseFlag = null;
-    private ?string $monthCloseFlag = null;
-    private ?string $dayCloseFlag = null;
-
-    private int $intervalType = 0;
-
-    private ?int $yearSignificantDigit = null;
-
     private array $matches = [];
+
+    private RegexMatchesMapper $mapper;
+
+    private ParsedData $parsedData;
 
     public function __construct()
     {
     	// TODO: avoid file read every time an instance is created
         $patterns = file_get_contents(__DIR__.'/../../config/regex.txt');
         $this->regexPattern = '/'.$patterns.'/';
+
+        $this->mapper = new RegexMatchesMapper();
     }
 
     public function parse(string $input): self
@@ -75,45 +52,10 @@ class Parser
 
         $input = strtoupper($input);
         $this->input = $input;
-        $unspecifiedParts = [
-            'yearNum', 'monthNum', 'dayNum'
-        ];
 
         preg_match($this->regexPattern, $input, $matches);
 
-        foreach($matches as $name => $value){
-            if(is_int($name) || "" == $value || !property_exists(__CLASS__, $name)){
-                continue;
-            }
-
-            if(in_array($name, $unspecifiedParts)){
-                // convert unspecified digit into zero
-                if(false !== strpos($value, 'X')){
-                    $value = str_replace('X', '0', $value);
-                }
-            }
-
-			// FIXME: "poor" design
-            $r = new \ReflectionProperty(__CLASS__, $name);
-            $type = $r->getType();
-            if($type instanceof \ReflectionNamedType && 'int' === $type->getName()){
-                $value = (int) $value;
-                // convert zero value into null
-				// FIXME: specifying time 00:00:00 is not the same as not specifying it
-                if(0 === $value){
-                    $value = null;
-                }
-            }
-
-			// FIXME: "poor" design
-            $this->$name = $value;
-        }
-
-        // convert month into season
-        if($this->monthNum > 12){
-            $this->monthNum = null;
-            $this->season = (int)$matches['monthNum'];
-        }
+        $this->parsedData = $this->mapper->mapMatchesToObject($matches);
 
         $this->matches = $matches;
 
@@ -122,6 +64,11 @@ class Parser
             throw new \InvalidArgumentException($validator->getMessages());
         }
         return $this;
+    }
+
+    public function getParsedData(): ParsedData
+    {
+        return $this->parsedData;
     }
 
 	/**
@@ -137,13 +84,16 @@ class Parser
 
         $this->parse($input);
 
-        if($this->hour !== null){
+        $date = $this->parsedData->getDate();
+        $time = $this->parsedData->getTime();
+
+        if($time->getHour() !== null){
             return $this->buildDateTime();
         }
-        elseif($this->yearSignificantDigit !== null){
+        elseif($date->getYearSignificantDigit() !== null){
             return $this->createSignificantDigitInterval();
         }
-        elseif($this->season !== 0){
+        elseif($date->getSeason() !== 0){
             return $this->buildSeason();
         }
         return $this->buildDate();
@@ -151,10 +101,12 @@ class Parser
 
 	public function buildDate(): ExtDate
 	{
+	    $date = $this->parsedData->getDate();
+
 		return new ExtDate(
-			$this->yearNum,
-			$this->monthNum,
-			$this->dayNum,
+			$date->getYearNum(),
+			$date->getMonthNum(),
+			$date->getDayNum(),
 			$this->buildQualification(),
 			$this->buildUnspecifiedDigit()
 		);
@@ -162,69 +114,78 @@ class Parser
 
 	public function buildUnspecifiedDigit(): UnspecifiedDigit
 	{
+	    $date = $this->parsedData->getDate();
+
 		return new UnspecifiedDigit(
-			$this->year,
-			$this->month,
-			$this->day
+			$date->getRawYear(),
+			$date->getRawMonth(),
+			$date->getRawDay()
 		);
 	}
 
 	public function buildDateTime(): ExtDateTime
 	{
-		$tzSign = "Z" == $this->tzUtc ? "Z" : $this->tzSign;
+	    $timezone = $this->parsedData->getTimezone();
+	    $date = $this->parsedData->getDate();
+	    $time = $this->parsedData->getTime();
+
+		$tzSign = "Z" == $timezone->getTzUtc() ? "Z" : $timezone->getTzSign();
 
 		return new ExtDateTime(
 			new ExtDate(
-				$this->yearNum,
-				$this->monthNum,
-				$this->dayNum
+				$date->getYearNum(),
+				$date->getMonthNum(),
+				$date->getDayNum()
 			),
-			$this->hour,
-			$this->minute,
-			$this->second,
+			$time->getHour(),
+			$time->getMinute(),
+			$time->getSecond(),
 			$tzSign,
-			$this->tzHour,
-			$this->tzMinute
+			$timezone->getTzHour(),
+			$timezone->getTzMinute()
 		);
 	}
 
 	private function buildSeason(): Season
 	{
-		return new Season($this->yearNum, $this->season);
+	    $date = $this->parsedData->getDate();
+		return new Season($date->getYearNum(), $date->getSeason());
 	}
 
 	public function buildQualification(): Qualification
 	{
 		// TODO: use fields directly
 
+        $qualification = $this->parsedData->getQualification();
+
 		$year = Qualification::UNDEFINED;
 		$month = Qualification::UNDEFINED;
 		$day = Qualification::UNDEFINED;
 
-		if(!is_null($this->getYearCloseFlag())
-			|| !is_null($this->getMonthCloseFlag())
-			|| !is_null($this->getDayCloseFlag())
+		if(!is_null($qualification->getYearCloseFlag())
+			|| !is_null($qualification->getMonthCloseFlag())
+			|| !is_null($qualification->getDayCloseFlag())
 		){
 			$includeYear = false;
 			$includeMonth = false;
 			$includeDay = false;
 			$q = Qualification::UNDEFINED;
 
-			if(!is_null($this->getYearCloseFlag())){
+			if(!is_null($qualification->getYearCloseFlag())){
 				// applied only to year
 				$includeYear = true;
-				$q = self::genQualificationValue($this->getYearCloseFlag());
-			}elseif(!is_null($this->getMonthCloseFlag())){
+				$q = self::genQualificationValue($qualification->getYearCloseFlag());
+			}elseif(!is_null($qualification->getMonthCloseFlag())){
 				// applied only to year, and month
 				$includeYear = true;
 				$includeMonth = true;
-				$q = self::genQualificationValue($this->getMonthCloseFlag());
-			}elseif(!is_null($this->getDayCloseFlag())){
+				$q = self::genQualificationValue($qualification->getMonthCloseFlag());
+			}elseif(!is_null($qualification->getDayCloseFlag())){
 				// applied to year, month, and day
 				$includeYear = true;
 				$includeMonth = true;
 				$includeDay = true;
-				$q = self::genQualificationValue($this->getDayCloseFlag());
+				$q = self::genQualificationValue($qualification->getDayCloseFlag());
 			}
 
 			$year = $includeYear ? $q:$year;
@@ -233,14 +194,14 @@ class Parser
 		}
 
 		// handle level 2 qualification
-		if(!is_null($this->getYearOpenFlag())){
-			$year = self::genQualificationValue($this->getYearOpenFlag());
+		if(!is_null($qualification->getYearOpenFlag())){
+			$year = self::genQualificationValue($qualification->getYearOpenFlag());
 		}
-		if(!is_null($this->getMonthOpenFlag())){
-			$month = self::genQualificationValue($this->getMonthOpenFlag());
+		if(!is_null($qualification->getMonthOpenFlag())){
+			$month = self::genQualificationValue($qualification->getMonthOpenFlag());
 		}
-		if(!is_null($this->getDayOpenFlag())){
-			$day = self::genQualificationValue($this->getDayOpenFlag());
+		if(!is_null($qualification->getDayOpenFlag())){
+			$day = self::genQualificationValue($qualification->getDayOpenFlag());
 		}
 		return new Qualification($year, $month, $day);
 	}
@@ -310,7 +271,7 @@ class Parser
 		return new Set($sets, $allMembers, $earlier, $later);
 	}
 
-	public function buildInterval(string $input): Interval
+	private function buildInterval(string $input): Interval
 	{
 		$pos = strrpos($input, '/');
 
@@ -344,8 +305,9 @@ class Parser
 
 	public function createSignificantDigitInterval(): Interval
 	{
-		$strEstimated = (string)$this->yearNum;
-		$significantDigit = $this->yearSignificantDigit;
+	    $date = $this->parsedData->getDate();
+		$strEstimated = (string)$date->getYearNum();
+		$significantDigit = $date->getYearSignificantDigit();
 		assert(is_int($significantDigit));
 		$year = substr($strEstimated,0, strlen($strEstimated) - $significantDigit);
 		$startYear = $year.(str_repeat("0", $significantDigit));
@@ -355,11 +317,9 @@ class Parser
 			IntervalSide::newFromDate( new ExtDate((int)$startYear) ),
 			IntervalSide::newFromDate( new ExtDate((int)$endYear) ),
 			$significantDigit,
-			$this->yearNum
+			$date->getYearNum()
 		);
 	}
-
-
 
     public function getMatches(): array
     {
@@ -369,111 +329,6 @@ class Parser
     public function getInput(): string
     {
         return $this->input;
-    }
-
-    public function getYear(): ?string
-    {
-        return $this->year;
-    }
-
-    public function getMonth(): ?string
-    {
-        return $this->month;
-    }
-
-    public function getDay(): ?string
-    {
-        return $this->day;
-    }
-
-    public function getYearOpenFlag(): ?string
-    {
-        return $this->yearOpenFlag;
-    }
-
-    public function getMonthOpenFlag(): ?string
-    {
-        return $this->monthOpenFlag;
-    }
-
-    public function getDayOpenFlag(): ?string
-    {
-        return $this->dayOpenFlag;
-    }
-
-    public function getYearCloseFlag(): ?string
-    {
-        return $this->yearCloseFlag;
-    }
-
-    public function getMonthCloseFlag(): ?string
-    {
-        return $this->monthCloseFlag;
-    }
-
-    public function getDayCloseFlag(): ?string
-    {
-        return $this->dayCloseFlag;
-    }
-
-    public function getYearSignificantDigit(): ?int
-    {
-        return $this->yearSignificantDigit;
-    }
-
-    public function getSeason(): ?int
-    {
-        return $this->season;
-    }
-
-    public function getTzUtc(): ?string
-    {
-        return $this->tzUtc;
-    }
-
-    public function getYearNum(): ?int
-    {
-        return $this->yearNum;
-    }
-
-    public function getMonthNum(): ?int
-    {
-        return $this->monthNum;
-    }
-
-    public function getDayNum(): ?int
-    {
-        return $this->dayNum;
-    }
-
-    public function getHour(): ?int
-    {
-        return $this->hour;
-    }
-
-    public function getMinute(): ?int
-    {
-        return $this->minute;
-    }
-
-    public function getSecond(): ?int
-    {
-        return $this->second;
-    }
-
-    public function getTzSign(): ?string
-    {
-        return $this->tzSign;
-    }
-
-    public function getTzMinute(): ?int
-    {
-        return $this->tzMinute;
-    }
-
-    public function getTzHour(): ?int
-    {
-        return $this->tzHour;
     }
 
     private function removeExtraSpaces(string $input): string
