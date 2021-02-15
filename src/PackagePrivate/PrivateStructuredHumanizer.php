@@ -64,11 +64,15 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 	}
 
 	private function humanizeAllMemberSet( HumanizedSetDates $humanizedDates ): HumanizationResult {
-		return HumanizationResult::newSimpleHumanization( 'All of these: ' ); // TODO
+		return HumanizationResult::newSimpleHumanization(
+			'All of these: ' . implode( ', ', $humanizedDates->humanizedDates )
+		);
 	}
 
 	private function humanizeOneMemberSet( HumanizedSetDates $humanizedDates ): HumanizationResult {
-		return HumanizationResult::newSimpleHumanization( 'One of these: ' ); // TODO
+		return HumanizationResult::newSimpleHumanization(
+			'One of these: ' . implode( ', ', $humanizedDates->humanizedDates )
+		);
 	}
 
 }

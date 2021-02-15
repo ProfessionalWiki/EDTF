@@ -82,7 +82,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 		);
 
 		$this->assertHumanizedToSingleMessage(
-			'All of these: ', // TODO
+			'All of these: Spring 2021, Autumn 2021, Spring 2022',
 			$this->humanize( $set )
 		);
 	}
@@ -100,7 +100,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 		);
 
 		$this->assertHumanizedToSingleMessage(
-			'One of these: ', // TODO
+			'One of these: Spring 2021, Autumn 2021, Spring 2022',
 			$this->humanize( $set )
 		);
 	}
