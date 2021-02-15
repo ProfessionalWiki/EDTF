@@ -20,18 +20,21 @@ class HumanizationResult {
 	 * @param string[] $humanization
 	 */
 	public static function newStructuredHumanization( array $humanization ): self {
-		$instance = new self( true );
-		$instance->structuredHumanization = $humanization;
-		return $instance;
+		return new self( true, $humanization );
 	}
 
 	private bool $wasHumanized;
 	private ?string $simpleHumanization = null;
 	private ?string $contextMessage = null;
-	private array $structuredHumanization = [];
+	/** @var string[] */
+	private array $structuredHumanization;
 
-	private function __construct( bool $wasHumanized ) {
+	/**
+	 * @param string[] $structuredHumanization
+	 */
+	private function __construct( bool $wasHumanized, array $structuredHumanization = [] ) {
 		$this->wasHumanized = $wasHumanized;
+		$this->structuredHumanization = $structuredHumanization;
 	}
 
 	public function wasHumanized(): bool {
@@ -39,7 +42,7 @@ class HumanizationResult {
 	}
 
 	public function isOneMessage(): bool {
-		return $this->contextMessage === null;
+		return $this->structuredHumanization === [];
 	}
 
 	public function getContextMessage(): string {
