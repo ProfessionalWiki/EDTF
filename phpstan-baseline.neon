@@ -1,0 +1,17 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method EDTF\\\\EdtfValue\\:\\:getYear\\(\\)\\.$#"
+			count: 10
+			path: tests/Functional/Level2/SetRepresentationTest.php
+
+		-
+			message: "#^Call to an undefined method EDTF\\\\EdtfValue\\:\\:getMonth\\(\\)\\.$#"
+			count: 6
+			path: tests/Functional/Level2/SetRepresentationTest.php
+
+		-
+			message: "#^Call to an undefined method EDTF\\\\EdtfValue\\:\\:getDay\\(\\)\\.$#"
+			count: 2
+			path: tests/Functional/Level2/SetRepresentationTest.php
+

@@ -4,7 +4,9 @@ declare( strict_types = 1 );
 
 namespace EDTF;
 
-use EDTF\PackagePrivate\Humanize\HumanizerFactory;
+use EDTF\PackagePrivate\EnglishHumanizer;
+use EDTF\PackagePrivate\FrenchHumanizer;
+use EDTF\PackagePrivate\PrivateStructuredHumanizer;
 use EDTF\PackagePrivate\SaneParser;
 use EDTF\PackagePrivate\Validator;
 
@@ -19,11 +21,17 @@ class EdtfFactory {
 	}
 
 	public static function newHumanizerForLanguage( string $languageCode ): Humanizer {
-		return HumanizerFactory::newForLanguage( $languageCode );
+		if ( $languageCode === 'fr' ) {
+			return new FrenchHumanizer();
+		}
+
+		return new EnglishHumanizer();
 	}
 
-	public static function newStringHumanizerForLanguage( string $languageCode ): StringHumanizer {
-		return HumanizerFactory::newStringHumanizerForLanguage( $languageCode );
+	public static function newStructuredHumanizerForLanguage( string $languageCode ): StructuredHumanizer {
+		return new PrivateStructuredHumanizer(
+			self::newHumanizerForLanguage( $languageCode )
+		);
 	}
 
 }

@@ -7,11 +7,14 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="src/PackagePrivate/Humanize" />
+        <directory name="src/PackagePrivate" />
         <directory name="tests/Unit/Humanize" />
 
         <ignoreFiles>
+            <file name="src/PackagePrivate/Parser.php" />
+
             <directory name="vendor" />
+
             <file name="tests/Unit/FactoryTrait.php" />
         </ignoreFiles>
     </projectFiles>

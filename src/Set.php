@@ -73,6 +73,9 @@ class Set implements EdtfValue
         return $this->hasOpenEnd;
     }
 
+	/**
+	 * @return array<int, EdtfValue>
+	 */
     public function getDates(): array
     {
         return $this->dates;

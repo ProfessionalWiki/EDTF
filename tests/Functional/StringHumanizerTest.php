@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional;
 
+use EDTF\EdtfFactory;
 use EDTF\PackagePrivate\SaneParser;
 use EDTF\EdtfValue;
 use EDTF\Humanizer;
@@ -12,9 +13,7 @@ use EDTF\PackagePrivate\Humanize\PrivateStringHumanizer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\Humanize\PrivateStringHumanizer
- * @covers \EDTF\PackagePrivate\Humanize\HumanizerFactory
- * @covers \EDTF\PackagePrivate\Humanize\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\EnglishHumanizer
  * @covers \EDTF\PackagePrivate\Parser
  * @covers \EDTF\Interval
  * @covers \EDTF\IntervalSide
@@ -27,7 +26,6 @@ class StringHumanizerTest extends TestCase {
 		yield 'Year only' => [ '1975', '1975' ];
 
 		yield 'Leading zeroes' => [ '0042', '42' ];
-		yield 'Year 0' => [ '0', '0' ];
 
 		yield 'Negative years' => [ '-1234', '1234 BC' ];
 
@@ -78,39 +76,9 @@ class StringHumanizerTest extends TestCase {
 	public function testHumanization( string $edtf, string $humanized ): void {
 		$this->assertSame(
 			$humanized,
-			HumanizerFactory::newStringHumanizerForLanguage( 'en' )->humanize( $edtf )
-		);
-	}
-
-	public function testReturnsUnsupportedEdtfAsIs(): void {
-		$stringHumanizer = new PrivateStringHumanizer(
-			$this->newNullHumanizer(),
-			new SaneParser()
-		);
-
-		$this->assertSame(
-			'0042',
-			$stringHumanizer->humanize( '0042' )
-		);
-	}
-
-	private function newNullHumanizer(): Humanizer {
-		return new class implements Humanizer {
-			public function humanize( EdtfValue $edtf ): string {
-				return '';
-			}
-		};
-	}
-
-	public function testHandlesError(): void {
-		$stringHumanizer = new PrivateStringHumanizer(
-			$this->newNullHumanizer(),
-			new SaneParser()
-		);
-
-		$this->assertSame(
-			'this cannot be parsed',
-			$stringHumanizer->humanize( 'this cannot be parsed' )
+			EdtfFactory::newHumanizerForLanguage( 'en' )->humanize(
+				EdtfFactory::newParser()->parse( $edtf )->getEdtfValue()
+			)
 		);
 	}
 
