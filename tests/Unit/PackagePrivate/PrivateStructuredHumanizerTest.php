@@ -105,6 +105,40 @@ class PrivateStructuredHumanizerTest extends TestCase {
 		);
 	}
 
+	public function testAllValuesSetWithTwoEdtf(): void {
+		$set = new Set(
+			[
+				new Season( 2021, 21 ),
+				new Season( 2021, 23 ),
+			],
+			true,
+			false,
+			false
+		);
+
+		$this->assertHumanizedToSingleMessage(
+			'Spring 2021 and Autumn 2021',
+			$this->humanize( $set )
+		);
+	}
+
+	public function testOneValueSetWithTwoEdtf(): void {
+		$set = new Set(
+			[
+				new Season( 2021, 21 ),
+				new Season( 2021, 23 ),
+			],
+			false,
+			false,
+			false
+		);
+
+		$this->assertHumanizedToSingleMessage(
+			'Spring 2021 or Autumn 2021',
+			$this->humanize( $set )
+		);
+	}
+
 	public function testAllValueSetsWithStructuredResult(): void {
 		$set = new Set(
 			[

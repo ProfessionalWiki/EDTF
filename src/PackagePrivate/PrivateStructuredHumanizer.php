@@ -46,11 +46,9 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 			);
 		}
 
-		if ( $edtf->isAllMembers() ) {
-			return $this->humanizeAllMemberSet( $humanizedDates );
-		}
-
-		return $this->humanizeOneMemberSet( $humanizedDates );
+		return HumanizationResult::newSimpleHumanization(
+			$this->humanizeSetDatesToSingleMessage( $humanizedDates, $edtf->isAllMembers() )
+		);
 	}
 
 	private function getHumanizedDatesFromSet( Set $edtf ): HumanizedSetDates {
@@ -63,16 +61,20 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 		return new HumanizedSetDates( $humanizedDates );
 	}
 
-	private function humanizeAllMemberSet( HumanizedSetDates $humanizedDates ): HumanizationResult {
-		return HumanizationResult::newSimpleHumanization(
-			'All of these: ' . implode( ', ', $humanizedDates->humanizedDates )
-		);
-	}
+	private function humanizeSetDatesToSingleMessage( HumanizedSetDates $humanizedDates, bool $isAllMembers ): string {
+		if ( count( $humanizedDates->humanizedDates ) === 2 ) {
+			if ( $isAllMembers ) {
+				return $humanizedDates->humanizedDates[0] . ' and ' . $humanizedDates->humanizedDates[1];
+			}
 
-	private function humanizeOneMemberSet( HumanizedSetDates $humanizedDates ): HumanizationResult {
-		return HumanizationResult::newSimpleHumanization(
-			'One of these: ' . implode( ', ', $humanizedDates->humanizedDates )
-		);
+			return $humanizedDates->humanizedDates[0] . ' or ' . $humanizedDates->humanizedDates[1];
+		}
+
+		if ( $isAllMembers ) {
+			return 'All of these: ' . implode( ', ', $humanizedDates->humanizedDates );
+		}
+
+		return 'One of these: ' . implode( ', ', $humanizedDates->humanizedDates );
 	}
 
 }
