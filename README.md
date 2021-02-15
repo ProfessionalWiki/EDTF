@@ -62,7 +62,6 @@ All level 0, 1 and 2 EDTF formats can be parsed and represented, except for:
 
 Humanization has more limits:
 
-* Sets (you can still humanize each date and put them in something like a HTML list with appropriate header)
 * Significant digits (EDTF level 2): `1950S2` (some year between 1900 and 1999, estimated to be 1950)
 * Group Qualification (EDTF level 2): `2004-06~-11` (year and month approximate)
 * Qualification of Individual Component (EDTF level 2): `?2004-06-~11` (year uncertain; month known; day approximate)
