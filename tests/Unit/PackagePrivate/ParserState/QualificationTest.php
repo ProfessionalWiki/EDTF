@@ -1,12 +1,12 @@
 <?php
 
-namespace EDTF\Tests\Unit\PackagePrivate\ValueObjects\Composites;
+namespace EDTF\Tests\Unit\PackagePrivate\ParserState;
 
-use EDTF\PackagePrivate\ValueObjects\Composites\Qualification;
+use EDTF\PackagePrivate\ParserState\Qualification;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\ValueObjects\Composites\Qualification
+ * @covers \EDTF\PackagePrivate\ParserState\Qualification
  */
 class QualificationTest extends TestCase
 {

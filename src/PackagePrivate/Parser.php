@@ -9,7 +9,7 @@ use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
 use EDTF\IntervalSide;
-use EDTF\PackagePrivate\ValueObjects\ParsedData;
+use EDTF\PackagePrivate\ParserState\ParsedData;
 use EDTF\Qualification;
 use EDTF\Season;
 use EDTF\Set;

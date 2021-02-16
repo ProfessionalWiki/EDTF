@@ -1,6 +1,6 @@
 <?php
 
-namespace EDTF\PackagePrivate\ValueObjects\Composites;
+namespace EDTF\PackagePrivate\ParserState;
 
 use Carbon\Carbon;
 use \InvalidArgumentException;

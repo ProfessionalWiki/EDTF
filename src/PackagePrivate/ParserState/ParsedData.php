@@ -1,11 +1,11 @@
 <?php
 
-namespace EDTF\PackagePrivate\ValueObjects;
+namespace EDTF\PackagePrivate\ParserState;
 
-use EDTF\PackagePrivate\ValueObjects\Composites\Date;
-use EDTF\PackagePrivate\ValueObjects\Composites\Qualification;
-use EDTF\PackagePrivate\ValueObjects\Composites\Time;
-use EDTF\PackagePrivate\ValueObjects\Composites\Timezone;
+use EDTF\PackagePrivate\ParserState\Date;
+use EDTF\PackagePrivate\ParserState\Qualification;
+use EDTF\PackagePrivate\ParserState\Time;
+use EDTF\PackagePrivate\ParserState\Timezone;
 
 class ParsedData
 {

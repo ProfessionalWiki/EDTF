@@ -2,11 +2,11 @@
 
 namespace EDTF\PackagePrivate;
 
-use EDTF\PackagePrivate\ValueObjects\Composites\Qualification;
-use EDTF\PackagePrivate\ValueObjects\Composites\Time;
-use EDTF\PackagePrivate\ValueObjects\Composites\Timezone;
-use EDTF\PackagePrivate\ValueObjects\ParsedData;
-use EDTF\PackagePrivate\ValueObjects\Composites\Date;
+use EDTF\PackagePrivate\ParserState\Qualification;
+use EDTF\PackagePrivate\ParserState\Time;
+use EDTF\PackagePrivate\ParserState\Timezone;
+use EDTF\PackagePrivate\ParserState\ParsedData;
+use EDTF\PackagePrivate\ParserState\Date;
 
 class RegexMatchesMapper
 {
