@@ -2,13 +2,13 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Tests\Unit\PackagePrivate;
+namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
-use EDTF\PackagePrivate\HumanizedSetDates;
+use EDTF\PackagePrivate\Humanizer\HumanizedSetDates;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\HumanizedSetDates
+ * @covers \EDTF\PackagePrivate\Humanizer\HumanizedSetDates
  */
 class HumanizedSetDatesTest extends TestCase {
 

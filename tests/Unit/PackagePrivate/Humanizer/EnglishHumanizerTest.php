@@ -2,16 +2,16 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Tests\Unit\Humanize\Languages;
+namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
-use EDTF\PackagePrivate\EnglishHumanizer;
+use EDTF\PackagePrivate\Humanizer\EnglishHumanizer;
 use EDTF\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\Humanizer\EnglishHumanizer
  */
 class EnglishHumanizerTest extends TestCase {
 

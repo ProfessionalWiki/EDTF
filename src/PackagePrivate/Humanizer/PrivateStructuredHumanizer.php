@@ -2,11 +2,12 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\PackagePrivate;
+namespace EDTF\PackagePrivate\Humanizer;
 
 use EDTF\EdtfValue;
 use EDTF\HumanizationResult;
 use EDTF\Humanizer;
+use EDTF\PackagePrivate\Humanizer\HumanizedSetDates;
 use EDTF\Set;
 use EDTF\StructuredHumanizer;
 

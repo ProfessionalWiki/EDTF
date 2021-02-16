@@ -10,7 +10,7 @@ use EDTF\PackagePrivate\Humanize\PrivateStringHumanizer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\Humanizer\EnglishHumanizer
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Interval
  * @covers \EDTF\IntervalSide

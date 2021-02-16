@@ -4,9 +4,9 @@ declare( strict_types = 1 );
 
 namespace EDTF;
 
-use EDTF\PackagePrivate\EnglishHumanizer;
-use EDTF\PackagePrivate\FrenchHumanizer;
-use EDTF\PackagePrivate\PrivateStructuredHumanizer;
+use EDTF\PackagePrivate\Humanizer\EnglishHumanizer;
+use EDTF\PackagePrivate\Humanizer\FrenchHumanizer;
+use EDTF\PackagePrivate\Humanizer\PrivateStructuredHumanizer;
 use EDTF\PackagePrivate\SaneParser;
 use EDTF\PackagePrivate\Validator;
 

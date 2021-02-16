@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\PackagePrivate;
+namespace EDTF\PackagePrivate\Humanizer;
 
 class HumanizedSetDates {
 

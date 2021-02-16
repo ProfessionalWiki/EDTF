@@ -9,7 +9,7 @@
 >
     <projectFiles>
         <directory name="src/PackagePrivate" />
-        <directory name="tests/Unit/Humanize" />
+        <directory name="tests/Unit/PackagePrivate/Humanizer" />
 
         <ignoreFiles>
             <directory name="src/PackagePrivate/Carbon" />

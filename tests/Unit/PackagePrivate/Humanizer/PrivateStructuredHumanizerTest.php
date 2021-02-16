@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\Tests\Unit\PackagePrivate;
+namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
 use EDTF\EdtfFactory;
 use EDTF\EdtfValue;
@@ -14,7 +14,7 @@ use EDTF\Tests\TestDoubles\NullEdtfValue;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\PrivateStructuredHumanizer
+ * @covers \EDTF\PackagePrivate\Humanizer\PrivateStructuredHumanizer
  * @covers \EDTF\HumanizationResult
  */
 class PrivateStructuredHumanizerTest extends TestCase {

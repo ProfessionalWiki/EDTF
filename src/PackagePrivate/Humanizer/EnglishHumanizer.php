@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF\PackagePrivate;
+namespace EDTF\PackagePrivate\Humanizer;
 
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
