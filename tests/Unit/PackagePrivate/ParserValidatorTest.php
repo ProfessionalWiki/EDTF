@@ -2,18 +2,18 @@
 
 namespace EDTF\Tests\Unit\PackagePrivate;
 
-use EDTF\PackagePrivate\Parser;
-use EDTF\PackagePrivate\ParserValidator;
-use EDTF\PackagePrivate\ParserState\Date;
-use EDTF\PackagePrivate\ParserState\Qualification;
-use EDTF\PackagePrivate\ParserState\Time;
-use EDTF\PackagePrivate\ParserState\Timezone;
-use EDTF\PackagePrivate\ParserState\ParsedData;
+use EDTF\PackagePrivate\Parser\Date;
+use EDTF\PackagePrivate\Parser\ParsedData;
+use EDTF\PackagePrivate\Parser\Parser;
+use EDTF\PackagePrivate\Parser\ParserValidator;
+use EDTF\PackagePrivate\Parser\Qualification;
+use EDTF\PackagePrivate\Parser\Time;
+use EDTF\PackagePrivate\Parser\Timezone;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\ParserValidator
+ * @covers \EDTF\PackagePrivate\Parser\ParserValidator
  * @package EDTF\Tests\Unit\PackagePrivate
  */
 class ParserValidatorTest extends TestCase

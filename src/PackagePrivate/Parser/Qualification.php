@@ -1,6 +1,6 @@
 <?php
 
-namespace EDTF\PackagePrivate\ParserState;
+namespace EDTF\PackagePrivate\Parser;
 
 class Qualification
 {

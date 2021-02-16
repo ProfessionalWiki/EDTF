@@ -4,15 +4,15 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional;
 
-use EDTF\PackagePrivate\Validator;
 use EDTF\ExampleData\ValidEdtfStrings;
+use EDTF\PackagePrivate\Validator;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Validator
  * @covers \EDTF\ExampleData\ValidEdtfStrings
- * @covers \EDTF\PackagePrivate\Parser
- * @covers \EDTF\PackagePrivate\ParserValidator
+ * @covers \EDTF\PackagePrivate\Parser\Parser
+ * @covers \EDTF\PackagePrivate\Parser\ParserValidator
  */
 class EdtfValidatorTest extends TestCase {
 

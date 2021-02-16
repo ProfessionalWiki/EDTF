@@ -2,14 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace EDTF\PackagePrivate;
+namespace EDTF\PackagePrivate\Parser;
 
 use EDTF\EdtfValue;
 use EDTF\ExtDate;
 use EDTF\ExtDateTime;
 use EDTF\Interval;
 use EDTF\IntervalSide;
-use EDTF\PackagePrivate\ParserState\ParsedData;
 use EDTF\Qualification;
 use EDTF\Season;
 use EDTF\Set;
@@ -36,7 +35,7 @@ class Parser
     public function __construct()
     {
     	// TODO: avoid file read every time an instance is created
-        $patterns = file_get_contents(__DIR__.'/../../config/regex.txt');
+        $patterns = file_get_contents(__DIR__.'/../../../config/regex.txt');
         $this->regexPattern = '/'.$patterns.'/';
 
         $this->mapper = new RegexMatchesMapper();

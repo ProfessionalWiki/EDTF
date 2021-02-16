@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EDTF;
 
 use EDTF\PackagePrivate\CoversTrait;
-use EDTF\PackagePrivate\Parser;
+use EDTF\PackagePrivate\Parser\Parser;
 
 class Season implements EdtfValue
 {

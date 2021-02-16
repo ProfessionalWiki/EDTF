@@ -6,8 +6,6 @@ namespace EDTF\PackagePrivate\Carbon;
 
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
-use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
-use EDTF\PackagePrivate\Carbon\DatetimeFactoryInterface;
 
 /**
  * This factory allows us to avoid calling Carbon static methods (i.e. Carbon::create(...)) from code.

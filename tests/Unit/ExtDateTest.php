@@ -5,10 +5,10 @@ namespace EDTF\Tests\Unit;
 use Carbon\Carbon;
 use EDTF\Exceptions\ExtDateException;
 use EDTF\ExtDate;
-use EDTF\Qualification;
-use EDTF\UnspecifiedDigit;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
+use EDTF\Qualification;
+use EDTF\UnspecifiedDigit;
 use PHPUnit\Framework\TestCase;
 
 /**

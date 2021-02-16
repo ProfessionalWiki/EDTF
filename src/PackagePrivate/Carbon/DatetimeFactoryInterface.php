@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace EDTF\PackagePrivate\Carbon;
 
-use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
-
 /**
  * FIXME: return type missing
  * TODO: what value does this interface bring?

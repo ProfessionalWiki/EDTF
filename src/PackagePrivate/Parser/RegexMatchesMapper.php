@@ -1,12 +1,6 @@
 <?php
 
-namespace EDTF\PackagePrivate;
-
-use EDTF\PackagePrivate\ParserState\Qualification;
-use EDTF\PackagePrivate\ParserState\Time;
-use EDTF\PackagePrivate\ParserState\Timezone;
-use EDTF\PackagePrivate\ParserState\ParsedData;
-use EDTF\PackagePrivate\ParserState\Date;
+namespace EDTF\PackagePrivate\Parser;
 
 class RegexMatchesMapper
 {

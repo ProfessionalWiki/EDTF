@@ -5,16 +5,13 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Functional;
 
 use EDTF\EdtfFactory;
-use EDTF\PackagePrivate\SaneParser;
-use EDTF\EdtfValue;
-use EDTF\Humanizer;
 use EDTF\PackagePrivate\Humanize\HumanizerFactory;
 use EDTF\PackagePrivate\Humanize\PrivateStringHumanizer;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\EnglishHumanizer
- * @covers \EDTF\PackagePrivate\Parser
+ * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Interval
  * @covers \EDTF\IntervalSide
  */

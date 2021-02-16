@@ -1,12 +1,12 @@
 <?php
 
-namespace EDTF\Tests\Unit\PackagePrivate\ParserState;
+namespace EDTF\Tests\Unit\PackagePrivate\Parser;
 
-use EDTF\PackagePrivate\ParserState\Timezone;
+use EDTF\PackagePrivate\Parser\Timezone;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\ParserState\Time
+ * @covers \EDTF\PackagePrivate\Parser\Time
  */
 class TimezoneTest extends TestCase
 {

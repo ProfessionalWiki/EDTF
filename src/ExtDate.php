@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EDTF;
 
-use EDTF\PackagePrivate\CoversTrait;
 use EDTF\Exceptions\ExtDateException;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryInterface;
+use EDTF\PackagePrivate\CoversTrait;
 
 class ExtDate implements EdtfValue
 {

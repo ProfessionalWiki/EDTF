@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\ExtDateTime
- * @covers \EDTF\PackagePrivate\Parser
+ * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Unit
  */
 class PrefixedYearTest extends TestCase

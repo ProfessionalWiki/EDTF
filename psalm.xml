@@ -12,9 +12,8 @@
         <directory name="tests/Unit/Humanize" />
 
         <ignoreFiles>
-            <file name="src/PackagePrivate/Parser.php" />
-            <file name="src/PackagePrivate/RegexMatchesMapper.php" />
             <directory name="src/PackagePrivate/Carbon" />
+            <directory name="src/PackagePrivate/Parser" />
 
             <directory name="vendor" />
 

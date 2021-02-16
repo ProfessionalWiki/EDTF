@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace EDTF\Tests\Functional;
 
 use EDTF\EdtfValue;
-use EDTF\PackagePrivate\Parser;
+use EDTF\PackagePrivate\Parser\Parser;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\Parser
+ * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Functional
  */
 class EdtfTest extends TestCase

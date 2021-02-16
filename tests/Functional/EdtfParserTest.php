@@ -4,16 +4,16 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional;
 
-use EDTF\PackagePrivate\SaneParser;
 use EDTF\ExampleData\ValidEdtfStrings;
+use EDTF\PackagePrivate\SaneParser;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\SaneParser
  * @covers \EDTF\ParsingResult
  * @covers \EDTF\ExampleData\ValidEdtfStrings
- * @covers \EDTF\PackagePrivate\Parser
- * @covers \EDTF\PackagePrivate\ParserValidator
+ * @covers \EDTF\PackagePrivate\Parser\Parser
+ * @covers \EDTF\PackagePrivate\Parser\ParserValidator
  */
 class EdtfParserTest extends TestCase {
 

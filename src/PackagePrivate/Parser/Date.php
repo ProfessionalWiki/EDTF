@@ -1,9 +1,9 @@
 <?php
 
-namespace EDTF\PackagePrivate\ParserState;
+namespace EDTF\PackagePrivate\Parser;
 
 use Carbon\Carbon;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 class Date
 {

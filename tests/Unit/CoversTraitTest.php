@@ -1,6 +1,6 @@
 <?php
 
-namespace EDTF\Tests\Unit\Contracts;
+namespace EDTF\Tests\Unit;
 
 use EDTF\ExtDate;
 use PHPUnit\Framework\TestCase;

@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace EDTF\PackagePrivate;
 
 use EDTF\EdtfParser;
+use EDTF\PackagePrivate\Parser\Parser;
 use EDTF\ParsingResult;
 
 class SaneParser implements EdtfParser {

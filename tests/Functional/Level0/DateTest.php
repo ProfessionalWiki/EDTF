@@ -10,7 +10,7 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\Parser
+ * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\ExtDate
  * @package EDTF\Tests\Unit
  */
