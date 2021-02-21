@@ -11,8 +11,9 @@ use EDTF\Model\ExtDateTime;
 use EDTF\Model\Interval;
 use EDTF\Model\Season;
 use EDTF\Model\UnspecifiedDigit;
+use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 
-class EnglishHumanizer implements Humanizer {
+class InternationalizedHumanizer implements Humanizer {
 
 	private const SEASON_MAP = [
 		21 => 'Spring',
@@ -52,6 +53,12 @@ class EnglishHumanizer implements Humanizer {
 		11 => 'November',
 		12 => 'December',
 	];
+
+	private MessageBuilder $messageBuilder;
+
+	public function __construct( MessageBuilder $messageBuilder ) {
+		$this->messageBuilder = $messageBuilder;
+	}
 
 	public function humanize( EdtfValue $edtf ): string {
 		if ( $edtf instanceof ExtDate ) {

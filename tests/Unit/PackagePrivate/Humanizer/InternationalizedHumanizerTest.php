@@ -4,16 +4,16 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
+use EDTF\EdtfFactory;
 use EDTF\EdtfValue;
 use EDTF\Model\ExtDate;
-use EDTF\PackagePrivate\Humanizer\EnglishHumanizer;
 use EDTF\Model\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\Humanizer\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer
  */
-class EnglishHumanizerTest extends TestCase {
+class InternationalizedHumanizerTest extends TestCase {
 
 	/**
 	 * @dataProvider seasonProvider
@@ -25,7 +25,7 @@ class EnglishHumanizerTest extends TestCase {
 	private function assertHumanizes( string $expected, EdtfValue $input ): void {
 		$this->assertSame(
 			$expected,
-			( new EnglishHumanizer() )->humanize( $input )
+			EdtfFactory::newStructuredHumanizerForLanguage( 'en' )->humanize( $input )->getSimpleHumanization()
 		);
 	}
 

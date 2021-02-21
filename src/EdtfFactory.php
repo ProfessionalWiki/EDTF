@@ -4,7 +4,8 @@ declare( strict_types = 1 );
 
 namespace EDTF;
 
-use EDTF\PackagePrivate\Humanizer\EnglishHumanizer;
+use EDTF\PackagePrivate\Humanizer\Internationalization\ArrayMessageBuilder;
+use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
 use EDTF\PackagePrivate\Humanizer\FrenchHumanizer;
 use EDTF\PackagePrivate\Humanizer\PrivateStructuredHumanizer;
 use EDTF\PackagePrivate\SaneParser;
@@ -25,7 +26,11 @@ class EdtfFactory {
 			return new FrenchHumanizer();
 		}
 
-		return new EnglishHumanizer();
+		return new InternationalizedHumanizer( new ArrayMessageBuilder(
+			[
+
+			]
+		) );
 	}
 
 	public static function newStructuredHumanizerForLanguage( string $languageCode ): StructuredHumanizer {
