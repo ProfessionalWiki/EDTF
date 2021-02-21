@@ -28,7 +28,9 @@ class EdtfFactory {
 
 		return new InternationalizedHumanizer( new ArrayMessageBuilder(
 			[
-				'edtf-maybe-circa' => 'Maybe circa $1'
+				'edtf-maybe-circa' => 'Maybe circa $1',
+				'edtf-circa' => 'Circa $1',
+				'edtf-maybe' => 'Maybe $1',
 			]
 		) );
 	}
