@@ -19,7 +19,22 @@ class ArrayMessageBuilder implements MessageBuilder {
 	}
 
 	public function buildMessage( string $messageKey, string ...$arguments ): string {
-		return str_replace( '$1', $arguments[0], $this->messages[$messageKey] );
+		if ( !array_key_exists( $messageKey, $this->messages ) ) {
+			throw new UnknownMessageKey();
+		}
+
+		return $this->replaceVariables( $this->messages[$messageKey], ...$arguments );
+	}
+
+	private function replaceVariables( string $messageTemplate, string ...$arguments ): string {
+		return str_replace(
+			array_map(
+				fn( int $key ) => '$' . (string)( $key + 1 ),
+				array_keys( $arguments )
+			),
+			$arguments,
+			$messageTemplate
+		);
 	}
 
 }
