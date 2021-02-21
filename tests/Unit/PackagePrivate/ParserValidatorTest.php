@@ -18,10 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ParserValidatorTest extends TestCase
 {
-    /**
-     * @var ParserValidator
-     */
-    private $validator;
+    private ParserValidator $validator;
 
     /**
      * @var MockObject|Parser
