@@ -3,7 +3,6 @@
 namespace EDTF\Tests\Unit\Model;
 
 use Carbon\Carbon;
-use EDTF\Exceptions\ExtDateException;
 use EDTF\Model\ExtDate;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
@@ -11,6 +10,7 @@ use EDTF\Model\Qualification;
 use EDTF\Model\UnspecifiedDigit;
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * @covers \EDTF\Model\ExtDate
@@ -37,7 +37,7 @@ class ExtDateTest extends TestCase
     /**
      * @param ExtDate $extDate
      * @param int $expectedMin
-     * @throws \EDTF\Exceptions\ExtDateException
+     * @throws \RuntimeException
      * @dataProvider minDataProvider
      */
     public function testGetMin(ExtDate $extDate, int $expectedMin)
@@ -68,7 +68,7 @@ class ExtDateTest extends TestCase
             ->with($year, $month, $day)
             ->willThrowException(new DatetimeFactoryException);
 
-        $this->expectException(ExtDateException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("Can't generate minimum date.");
 
         $date->setDatetimeFactory($dateTimeFactoryMock);
@@ -90,7 +90,7 @@ class ExtDateTest extends TestCase
 
         $date->setDatetimeFactory($dateTimeFactoryMock);
 
-		$this->expectException(ExtDateException::class);
+		$this->expectException(RuntimeException::class);
 		$this->expectExceptionMessage("Can't generate max value");
         $date->getMax();
     }

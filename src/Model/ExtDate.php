@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace EDTF\Model;
 
 use EDTF\EdtfValue;
-use EDTF\Exceptions\ExtDateException;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryInterface;
 use EDTF\PackagePrivate\CoversTrait;
-use EDTF\Model\Qualification;
-use EDTF\Model\UnspecifiedDigit;
+use RuntimeException;
 
 class ExtDate implements EdtfValue
 {
@@ -50,7 +48,7 @@ class ExtDate implements EdtfValue
     }
 
     /**
-     * @throws ExtDateException
+     * @throws RuntimeException
      */
     public function getMin(): int
     {
@@ -62,7 +60,7 @@ class ExtDate implements EdtfValue
     }
 
     /**
-     * @throws ExtDateException
+     * @throws RuntimeException
      */
     public function getMax(): int
     {
@@ -74,7 +72,7 @@ class ExtDate implements EdtfValue
     }
 
     /**
-     * @throws ExtDateException
+     * @throws RuntimeException
      */
     private function calculateMin(): int
     {
@@ -89,12 +87,12 @@ class ExtDate implements EdtfValue
             $c = $this->datetimeFactory->create($this->year, $minMonth, $minDay);
             return $c->startOfDay()->getTimestamp();
         } catch (DatetimeFactoryException $e) {
-            throw new ExtDateException("Can't generate minimum date.");
+            throw new RuntimeException("Can't generate minimum date.");
         }
     }
 
     /**
-     * @throws ExtDateException
+     * @throws RuntimeException
      */
     private function calculateMax(): int
     {
@@ -110,7 +108,7 @@ class ExtDate implements EdtfValue
             $c = $this->datetimeFactory->create($maxYear, $maxMonth, $maxDay);
             return $c->endOfDay()->getTimestamp();
         } catch (DatetimeFactoryException $e) {
-            throw new ExtDateException("Can't generate max value");
+            throw new RuntimeException("Can't generate max value");
         }
     }
 

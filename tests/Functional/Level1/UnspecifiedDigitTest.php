@@ -20,7 +20,7 @@ class UnspecifiedDigitTest extends TestCase
 
     /**
      * @dataProvider unspecifiedYear
-     * @throws \EDTF\Exceptions\ExtDateException
+     * @throws \RuntimeException
      */
     public function testWithUnspecifiedYear(string $input, int $expectedYear, int $expectedMin, int $expectedMax)
     {
@@ -54,7 +54,7 @@ class UnspecifiedDigitTest extends TestCase
 
     /**
      * @dataProvider unspecifiedDay
-     * @throws \EDTF\Exceptions\ExtDateException
+     * @throws \RuntimeException
      */
     public function testWithUnspecifiedDay(string $input, int $expectedYear, int $expectedMonth, $expectedDay, int $expectedMin, int $expectedMax)
     {
