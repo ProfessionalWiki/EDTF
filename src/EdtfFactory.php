@@ -31,6 +31,33 @@ class EdtfFactory {
 				'edtf-maybe-circa' => 'Maybe circa $1',
 				'edtf-circa' => 'Circa $1',
 				'edtf-maybe' => 'Maybe $1',
+
+				'edtf-spring' => 'Spring',
+				'edtf-summer' => 'Summer',
+				'edtf-autumn' => 'Autumn',
+				'edtf-winter' => 'Winter',
+				'edtf-spring-north' => 'Spring (Northern Hemisphere)',
+				'edtf-summer-north' => 'Summer (Northern Hemisphere)',
+				'edtf-autumn-north' => 'Autumn (Northern Hemisphere)',
+				'edtf-winter-north' => 'Winter (Northern Hemisphere)',
+				'edtf-spring-south' => 'Spring (Southern Hemisphere)',
+				'edtf-summer-south' => 'Summer (Southern Hemisphere)',
+				'edtf-autumn-south' => 'Autumn (Southern Hemisphere)',
+				'edtf-winter-south' => 'Winter (Southern Hemisphere)',
+				'edtf-quarter-1' => 'First quarter',
+				'edtf-quarter-2' => 'Second quarter',
+				'edtf-quarter-3' => 'Third quarter',
+				'edtf-quarter-4' => 'Fourth quarter',
+				'edtf-quadrimester-1' => 'First quadrimester',
+				'edtf-quadrimester-2' => 'Second quadrimester',
+				'edtf-quadrimester-3' => 'Third quadrimester',
+				'edtf-semester-1' => 'First semester',
+				'edtf-semester-2' => 'Second semester',
+
+				'edtf-season-and-year' => '$1 $2',
+
+				'edtf-day-and-year' => '$1 of unknown month, $2',
+
 			]
 		) );
 	}

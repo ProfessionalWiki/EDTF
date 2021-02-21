@@ -16,27 +16,27 @@ use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 class InternationalizedHumanizer implements Humanizer {
 
 	private const SEASON_MAP = [
-		21 => 'Spring',
-		22 => 'Summer',
-		23 => 'Autumn',
-		24 => 'Winter',
-		25 => 'Spring (Northern Hemisphere)',
-		26 => 'Summer (Northern Hemisphere)',
-		27 => 'Autumn (Northern Hemisphere)',
-		28 => 'Winter (Northern Hemisphere)',
-		29 => 'Spring (Southern Hemisphere)',
-		30 => 'Summer (Southern Hemisphere)',
-		31 => 'Autumn (Southern Hemisphere)',
-		32 => 'Winter (Southern Hemisphere)',
-		33 => 'First quarter',
-		34 => 'Second quarter',
-		35 => 'Third quarter',
-		36 => 'Fourth quarter',
-		37 => 'First quadrimester',
-		38 => 'Second quadrimester',
-		39 => 'Third quadrimester',
-		40 => 'First semester',
-		41 => 'Second semester',
+		21 => 'edtf-spring',
+		22 => 'edtf-summer',
+		23 => 'edtf-autumn',
+		24 => 'edtf-winter',
+		25 => 'edtf-spring-north',
+		26 => 'edtf-summer-north',
+		27 => 'edtf-autumn-north',
+		28 => 'edtf-winter-north',
+		29 => 'edtf-spring-south',
+		30 => 'edtf-summer-south',
+		31 => 'edtf-autumn-south',
+		32 => 'edtf-winter-south',
+		33 => 'edtf-quarter-1',
+		34 => 'edtf-quarter-2',
+		35 => 'edtf-quarter-3',
+		36 => 'edtf-quarter-4',
+		37 => 'edtf-quadrimester-1',
+		38 => 'edtf-quadrimester-2',
+		39 => 'edtf-quadrimester-3',
+		40 => 'edtf-semester-1',
+		41 => 'edtf-semester-2',
 	];
 
 	private const MONTH_MAP = [
@@ -81,7 +81,11 @@ class InternationalizedHumanizer implements Humanizer {
 	}
 
 	private function humanizeSeason( Season $season ): string {
-		return self::SEASON_MAP[$season->getSeason()] . ' ' . $season->getYear();
+		return $this->message(
+			'edtf-season-and-year',
+			$this->message( self::SEASON_MAP[$season->getSeason()] ),
+			(string)$season->getYear()
+		);
 	}
 
 	private function humanizeDate( ExtDate $date ): string {
@@ -136,7 +140,7 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		if ( $year !== null && $month === null && $day !== null ) {
-			return $day . ' of unknown month, ' . $year;
+			return $this->message( 'edtf-day-and-year', $day, $year );
 		}
 
 		return implode(
