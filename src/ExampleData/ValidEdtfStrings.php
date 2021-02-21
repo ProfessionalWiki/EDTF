@@ -4,6 +4,11 @@ declare( strict_types = 1 );
 
 namespace EDTF\ExampleData;
 
+/**
+ * Valid EDTF strings that can be used for automated testing.
+ *
+ * @codeCoverageIgnore (since PHPUnit fails to mark code executed via dataProvider as covered)
+ */
 class ValidEdtfStrings {
 
 	/**
