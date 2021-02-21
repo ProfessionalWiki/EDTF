@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace EDTF;
+namespace EDTF\Model;
 
+use EDTF\EdtfValue;
 use EDTF\PackagePrivate\CoversTrait;
 use EDTF\PackagePrivate\Parser\Parser;
 

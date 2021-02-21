@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace EDTF;
+namespace EDTF\Model;
 
+use EDTF\EdtfValue;
 use EDTF\Exceptions\ExtDateException;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryInterface;
 use EDTF\PackagePrivate\CoversTrait;
+use EDTF\Model\Qualification;
+use EDTF\Model\UnspecifiedDigit;
 
 class ExtDate implements EdtfValue
 {

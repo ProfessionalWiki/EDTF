@@ -9,7 +9,7 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Interval
+ * @covers \EDTF\Model\Interval
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Functional
  */

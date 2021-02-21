@@ -2,14 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\Model;
 
-use EDTF\ExtDate;
-use EDTF\ExtDateTime;
+use EDTF\Model\ExtDate;
+use EDTF\Model\ExtDateTime;
+use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\ExtDateTime
+ * @covers \EDTF\Model\ExtDateTime
  * @package EDTF\Tests\Unit
  */
 class ExtDateTimeTest extends TestCase

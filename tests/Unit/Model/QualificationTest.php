@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\Model;
 
-use EDTF\Qualification;
+use EDTF\Model\Qualification;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Qualification
+ * @covers \EDTF\Model\Qualification
  * @package EDTF\Tests\Unit
  */
 class QualificationTest extends TestCase

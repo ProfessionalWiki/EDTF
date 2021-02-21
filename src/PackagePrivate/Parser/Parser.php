@@ -5,14 +5,14 @@ declare(strict_types = 1);
 namespace EDTF\PackagePrivate\Parser;
 
 use EDTF\EdtfValue;
-use EDTF\ExtDate;
-use EDTF\ExtDateTime;
-use EDTF\Interval;
-use EDTF\IntervalSide;
-use EDTF\Qualification;
-use EDTF\Season;
-use EDTF\Set;
-use EDTF\UnspecifiedDigit;
+use EDTF\Model\ExtDate;
+use EDTF\Model\ExtDateTime;
+use EDTF\Model\Interval;
+use EDTF\Model\IntervalSide;
+use EDTF\Model\Qualification;
+use EDTF\Model\Season;
+use EDTF\Model\Set;
+use EDTF\Model\UnspecifiedDigit;
 
 /**
  * TODO: there might be cohesive sets of code to extract, for instance QualificationParser

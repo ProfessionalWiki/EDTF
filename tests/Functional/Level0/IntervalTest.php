@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Functional\Level0;
 
-use EDTF\ExtDate;
-use EDTF\Interval;
+use EDTF\Model\ExtDate;
+use EDTF\Model\Interval;
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Interval
+ * @covers \EDTF\Model\Interval
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Unit
  */

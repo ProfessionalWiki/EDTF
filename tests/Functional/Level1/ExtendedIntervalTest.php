@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
- * @covers \EDTF\Interval
+ * @covers \EDTF\Model\Interval
  * @package EDTF\Tests\Unit
  */
 class ExtendedIntervalTest extends TestCase

@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
- * @covers \EDTF\ExtDate
+ * @covers \EDTF\Model\ExtDate
  * @package EDTF\Tests\Functional
  */
 class QualificationTest extends TestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EDTF;
+namespace EDTF\Model;
 
 class Qualification
 {

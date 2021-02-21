@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Unit\PackagePrivate\Parser;
 
-use EDTF\ExtDate;
-use EDTF\Interval;
+use EDTF\Model\ExtDate;
+use EDTF\Model\Interval;
 use EDTF\PackagePrivate\Parser\Parser;
 use PHPUnit\Framework\TestCase;
 

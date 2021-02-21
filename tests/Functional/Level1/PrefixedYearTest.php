@@ -8,7 +8,7 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\ExtDateTime
+ * @covers \EDTF\Model\ExtDateTime
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Unit
  */

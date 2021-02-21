@@ -1,8 +1,8 @@
 <?php
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\PackagePrivate;
 
-use EDTF\ExtDate;
+use EDTF\Model\ExtDate;
 use PHPUnit\Framework\TestCase;
 
 /**

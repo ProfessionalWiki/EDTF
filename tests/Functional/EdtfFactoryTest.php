@@ -5,9 +5,9 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Functional;
 
 use EDTF\EdtfFactory;
-use EDTF\ExtDate;
-use EDTF\Season;
-use EDTF\Set;
+use EDTF\Model\ExtDate;
+use EDTF\Model\Season;
+use EDTF\Model\Set;
 use PHPUnit\Framework\TestCase;
 
 /**

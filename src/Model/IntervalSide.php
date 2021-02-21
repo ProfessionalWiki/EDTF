@@ -2,7 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace EDTF;
+namespace EDTF\Model;
+
+use EDTF\Model\ExtDate;
+use EDTF\Model\Interval;
 
 class IntervalSide {
 

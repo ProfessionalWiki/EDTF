@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\Model;
 
 use Carbon\Carbon;
-use EDTF\ExtDate;
-use EDTF\Set;
+use EDTF\Model\ExtDate;
+use EDTF\Model\Set;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Set
+ * @covers \EDTF\Model\Set
  */
 class SetTest extends TestCase
 {

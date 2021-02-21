@@ -8,7 +8,7 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Season
+ * @covers \EDTF\Model\Season
  * @covers \EDTF\PackagePrivate\Parser\Parser
  */
 class SeasonTest extends TestCase

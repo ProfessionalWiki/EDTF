@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
- * @covers \EDTF\ExtDateTime
+ * @covers \EDTF\Model\ExtDateTime
  * @package EDTF\Tests\Unit
  */
 class DateTimeTest extends TestCase

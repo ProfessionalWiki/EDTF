@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\Model;
 
 use Carbon\Carbon;
 use EDTF\PackagePrivate\SaneParser;
-use EDTF\Season;
+use EDTF\Model\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Season
+ * @covers \EDTF\Model\Season
  * @package EDTF\Tests\Unit
  */
 class SeasonTest extends TestCase

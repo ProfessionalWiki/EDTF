@@ -1,14 +1,14 @@
 <?php
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\Model;
 
-use EDTF\ExtDate;
-use EDTF\Interval;
-use EDTF\IntervalSide;
+use EDTF\Model\ExtDate;
+use EDTF\Model\Interval;
+use EDTF\Model\IntervalSide;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\Interval
+ * @covers \EDTF\Model\Interval
  * @package EDTF\Tests\Unit
  */
 class IntervalTest extends TestCase

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace EDTF\Tests\Functional\Level0;
 
 
-use EDTF\ExtDate;
+use EDTF\Model\ExtDate;
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
- * @covers \EDTF\ExtDate
+ * @covers \EDTF\Model\ExtDate
  * @package EDTF\Tests\Unit
  */
 class DateTest extends TestCase

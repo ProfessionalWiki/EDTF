@@ -6,10 +6,10 @@ namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
 use EDTF\EdtfFactory;
 use EDTF\EdtfValue;
-use EDTF\ExtDate;
+use EDTF\Model\ExtDate;
 use EDTF\HumanizationResult;
-use EDTF\Season;
-use EDTF\Set;
+use EDTF\Model\Season;
+use EDTF\Model\Set;
 use EDTF\Tests\TestDoubles\NullEdtfValue;
 use PHPUnit\Framework\TestCase;
 

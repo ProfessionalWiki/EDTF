@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
- * @covers \EDTF\Interval
- * @covers \EDTF\ExtDateTime
+ * @covers \EDTF\Model\Interval
+ * @covers \EDTF\Model\ExtDateTime
  *
  * @package EDTF\Tests\Unit
  */

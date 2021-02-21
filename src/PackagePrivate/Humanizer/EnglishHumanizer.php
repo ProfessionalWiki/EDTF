@@ -5,12 +5,12 @@ declare( strict_types = 1 );
 namespace EDTF\PackagePrivate\Humanizer;
 
 use EDTF\EdtfValue;
-use EDTF\ExtDate;
-use EDTF\ExtDateTime;
+use EDTF\Model\ExtDate;
+use EDTF\Model\ExtDateTime;
 use EDTF\Humanizer;
-use EDTF\Interval;
-use EDTF\Season;
-use EDTF\UnspecifiedDigit;
+use EDTF\Model\Interval;
+use EDTF\Model\Season;
+use EDTF\Model\UnspecifiedDigit;
 
 class EnglishHumanizer implements Humanizer {
 

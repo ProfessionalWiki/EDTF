@@ -9,8 +9,8 @@ use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\ExtDate
- * @covers \EDTF\UnspecifiedDigit
+ * @covers \EDTF\Model\ExtDate
+ * @covers \EDTF\Model\UnspecifiedDigit
  *
  * @package EDTF\Tests\Functional
  */

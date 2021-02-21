@@ -1,18 +1,19 @@
 <?php
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\Model;
 
 use Carbon\Carbon;
 use EDTF\Exceptions\ExtDateException;
-use EDTF\ExtDate;
+use EDTF\Model\ExtDate;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
-use EDTF\Qualification;
-use EDTF\UnspecifiedDigit;
+use EDTF\Model\Qualification;
+use EDTF\Model\UnspecifiedDigit;
+use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\ExtDate
+ * @covers \EDTF\Model\ExtDate
  * @package EDTF\Tests\Unit
  */
 class ExtDateTest extends TestCase

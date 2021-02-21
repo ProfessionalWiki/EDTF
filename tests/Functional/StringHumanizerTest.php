@@ -12,8 +12,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \EDTF\PackagePrivate\Humanizer\EnglishHumanizer
  * @covers \EDTF\PackagePrivate\Parser\Parser
- * @covers \EDTF\Interval
- * @covers \EDTF\IntervalSide
+ * @covers \EDTF\Model\Interval
+ * @covers \EDTF\Model\IntervalSide
  */
 class StringHumanizerTest extends TestCase {
 

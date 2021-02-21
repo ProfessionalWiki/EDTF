@@ -1,12 +1,12 @@
 <?php
 
-namespace EDTF\Tests\Unit;
+namespace EDTF\Tests\Unit\Model;
 
-use EDTF\UnspecifiedDigit;
+use EDTF\Model\UnspecifiedDigit;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\UnspecifiedDigit
+ * @covers \EDTF\Model\UnspecifiedDigit
  * @package EDTF\Tests\Unit
  */
 class UnspecifiedDigitTest extends TestCase

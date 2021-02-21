@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
- * @covers \EDTF\Set
+ * @covers \EDTF\Model\Set
  * @package EDTF\Tests\Functional
  */
 class SetRepresentationTest extends TestCase

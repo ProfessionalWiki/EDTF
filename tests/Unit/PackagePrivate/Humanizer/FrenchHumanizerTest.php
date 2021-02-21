@@ -5,7 +5,7 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
 use EDTF\PackagePrivate\Humanizer\FrenchHumanizer;
-use EDTF\Season;
+use EDTF\Model\Season;
 use PHPUnit\Framework\TestCase;
 
 /**

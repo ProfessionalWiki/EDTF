@@ -7,12 +7,12 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Unit;
 
-use EDTF\ExtDate;
-use EDTF\ExtDateTime;
-use EDTF\Interval;
+use EDTF\Model\ExtDate;
+use EDTF\Model\ExtDateTime;
+use EDTF\Model\Interval;
 use EDTF\PackagePrivate\Parser\Parser;
-use EDTF\Season;
-use EDTF\Set;
+use EDTF\Model\Season;
+use EDTF\Model\Set;
 
 /**
  * @todo Remove this class after library become stable

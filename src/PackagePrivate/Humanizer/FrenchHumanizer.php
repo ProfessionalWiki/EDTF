@@ -6,7 +6,7 @@ namespace EDTF\PackagePrivate\Humanizer;
 
 use EDTF\EdtfValue;
 use EDTF\Humanizer;
-use EDTF\Season;
+use EDTF\Model\Season;
 
 class FrenchHumanizer implements Humanizer {
 
