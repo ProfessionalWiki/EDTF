@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
+ * @covers \EDTF\Model\Interval
  * @package EDTF\Tests\Functional
  */
 class SignificantDigitsTest extends TestCase
