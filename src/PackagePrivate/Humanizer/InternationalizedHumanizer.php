@@ -88,7 +88,7 @@ class InternationalizedHumanizer implements Humanizer {
 		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
 
 		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain() ) {
-			return 'Maybe circa ' . $humanizedDate;
+			return $this->messageBuilder->buildMessage( 'edtf-maybe-circa', $humanizedDate );
 		}
 
 		if ( $date->getQualification()->isApproximate() ) {

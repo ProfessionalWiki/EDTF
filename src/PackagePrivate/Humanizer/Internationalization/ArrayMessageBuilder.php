@@ -19,7 +19,7 @@ class ArrayMessageBuilder implements MessageBuilder {
 	}
 
 	public function buildMessage( string $messageKey, string ...$arguments ): string {
-		return '';
+		return str_replace( '$1', $arguments[0], $this->messages[$messageKey] );
 	}
 
 }
