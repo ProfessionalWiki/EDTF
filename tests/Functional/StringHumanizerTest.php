@@ -8,7 +8,7 @@ use EDTF\EdtfFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \EDTF\PackagePrivate\Humanizer\EnglishHumanizer
+ * @covers \EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Model\Interval
  * @covers \EDTF\Model\IntervalSide
