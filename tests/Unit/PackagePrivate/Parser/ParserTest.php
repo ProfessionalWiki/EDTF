@@ -11,6 +11,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
+ * @covers \EDTF\PackagePrivate\Parser\RegexMatchesMapper
+ * @covers \EDTF\PackagePrivate\Parser\Date
+ * @covers \EDTF\PackagePrivate\Parser\ParserData
+ * @covers \EDTF\PackagePrivate\Parser\Qualification
+ * @covers \EDTF\PackagePrivate\Parser\Time
+ * @covers \EDTF\PackagePrivate\Parser\Timezone
  * @package EDTF\Tests\Unit
  */
 class ParserTest extends TestCase
