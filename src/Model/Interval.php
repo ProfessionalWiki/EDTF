@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace EDTF\Model;
 
 use EDTF\EdtfValue;
-use EDTF\Model\IntervalSide;
-use EDTF\Model\ExtDate;
 use EDTF\PackagePrivate\CoversTrait;
 
 class Interval implements EdtfValue

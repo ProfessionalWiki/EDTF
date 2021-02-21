@@ -7,7 +7,6 @@ namespace EDTF\PackagePrivate\Humanizer;
 use EDTF\EdtfValue;
 use EDTF\HumanizationResult;
 use EDTF\Humanizer;
-use EDTF\PackagePrivate\Humanizer\HumanizedSetDates;
 use EDTF\Model\Set;
 use EDTF\StructuredHumanizer;
 

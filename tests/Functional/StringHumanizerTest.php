@@ -5,8 +5,6 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Functional;
 
 use EDTF\EdtfFactory;
-use EDTF\PackagePrivate\Humanize\HumanizerFactory;
-use EDTF\PackagePrivate\Humanize\PrivateStringHumanizer;
 use PHPUnit\Framework\TestCase;
 
 /**

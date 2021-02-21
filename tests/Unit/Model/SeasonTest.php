@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EDTF\Tests\Unit\Model;
 
 use Carbon\Carbon;
-use EDTF\PackagePrivate\SaneParser;
 use EDTF\Model\Season;
+use EDTF\PackagePrivate\SaneParser;
 use PHPUnit\Framework\TestCase;
 
 /**

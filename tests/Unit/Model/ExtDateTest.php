@@ -4,10 +4,10 @@ namespace EDTF\Tests\Unit\Model;
 
 use Carbon\Carbon;
 use EDTF\Model\ExtDate;
-use EDTF\PackagePrivate\Carbon\CarbonFactory;
-use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
 use EDTF\Model\Qualification;
 use EDTF\Model\UnspecifiedDigit;
+use EDTF\PackagePrivate\Carbon\CarbonFactory;
+use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
