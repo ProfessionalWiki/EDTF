@@ -35,8 +35,11 @@ class StringHumanizerTest extends TestCase {
 		yield 'Unspecified year decade' => [ '197X', '1970s' ];
 		yield 'Unspecified year century ' => [ '19XX', '1900s' ];
 
-		yield 'Interval with year to year' => [ '2019/2021', '2019 to 2021' ];
-		yield 'Interval year and month' => [ '2019-01/2021-02', 'January 2019 to February 2021' ];
+		yield 'Interval with year to year' => [ '2019/2021', '2019 to 2021', 'De 2019 à 2021' ];
+
+		// TODO: just a foundation to test French translations. Will be extended later
+        // check what is the exact French translation below. Probably, it should be different
+		yield 'Interval year and month' => [ '2019-01/2021-02', 'January 2019 to February 2021', 'De Janvier 2019 à Février 2021' ];
 		yield 'Interval different date formats' => [ '2019/2021-02-09', '2019 to February 9th, 2021' ];
 
 		yield 'Interval with open end' => [ '2019/..', '2019 or later' ];
@@ -68,13 +71,23 @@ class StringHumanizerTest extends TestCase {
 	/**
 	 * @dataProvider humanizationProvider
 	 */
-	public function testHumanization( string $edtf, string $humanized ): void {
+	public function testHumanization( string $edtf, string $humanizedEn, ?string $humanizedFr = null ): void {
 		$this->assertSame(
-			$humanized,
+			$humanizedEn,
 			EdtfFactory::newHumanizerForLanguage( 'en' )->humanize(
 				EdtfFactory::newParser()->parse( $edtf )->getEdtfValue()
 			)
 		);
+
+		// TODO: just a foundation to test French translations. Will be extended later
+		if (null !== $humanizedFr) {
+            $this->assertSame(
+                $humanizedFr,
+                EdtfFactory::newHumanizerForLanguage( 'fr' )->humanize(
+                    EdtfFactory::newParser()->parse( $edtf )->getEdtfValue()
+                )
+            );
+        }
 	}
 
 }

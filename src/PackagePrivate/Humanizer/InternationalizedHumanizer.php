@@ -39,20 +39,20 @@ class InternationalizedHumanizer implements Humanizer {
 		41 => 'edtf-semester-2',
 	];
 
-	private const MONTH_MAP = [
-		1 => 'January',
-		2 => 'February',
-		3 => 'March',
-		4 => 'April',
-		5 => 'May',
-		6 => 'June',
-		7 => 'July',
-		8 => 'August',
-		9 => 'September',
-		10 => 'October',
-		11 => 'November',
-		12 => 'December',
-	];
+    private const MONTH_MAP = [
+        1 => 'edtf-january',
+        2 => 'edtf-february',
+        3 => 'edtf-march',
+        4 => 'edtf-april',
+        5 => 'edtf-may',
+        6 => 'edtf-june',
+        7 => 'edtf-july',
+        8 => 'edtf-august',
+        9 => 'edtf-september',
+        10 => 'edtf-october',
+        11 => 'edtf-november',
+        12 => 'edtf-december',
+    ];
 
 	private MessageBuilder $messageBuilder;
 
@@ -124,7 +124,7 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		if ( $month !== null ) {
-			$month = self::MONTH_MAP[$month];
+			$month = $this->message(self::MONTH_MAP[$month]);
 		}
 
 		if ( $day !== null ) {
@@ -175,23 +175,39 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private function humanizeInterval( Interval $interval ): string {
 		if ( $interval->isNormalInterval() ) {
-			return $this->humanize( $interval->getStartDate() ) . ' to ' . $this->humanize( $interval->getEndDate() );
+		    return $this->message(
+		        'edtf-interval-normal',
+                $this->humanize($interval->getStartDate()),
+                $this->humanize($interval->getEndDate())
+            );
 		}
 
 		if ( $interval->hasOpenEnd() ) {
-			return $this->humanize( $interval->getStartDate() ) . ' or later';
+		    return $this->message(
+		        'edtf-interval-open-end',
+                $this->humanize($interval->getStartDate())
+            );
 		}
 
 		if ( $interval->hasOpenStart() ) {
-			return $this->humanize( $interval->getEndDate() ) . ' or earlier';
+		    return $this->message(
+		        'edtf-interval-open-start',
+                $this->humanize($interval->getEndDate())
+            );
 		}
 
 		if ( $interval->hasUnknownEnd() ) {
-			return 'From ' . $this->humanize( $interval->getStartDate() ) . ' to unknown';
+		    return $this->message(
+		        'edtf-interval-unknown-end',
+                $this->humanize($interval->getStartDate())
+            );
 		}
 
 		if ( $interval->hasUnknownStart() ) {
-			return 'From unknown to ' . $this->humanize( $interval->getEndDate() );
+		    return $this->message(
+		        'edtf-interval-unknown-start',
+                $this->humanize($interval->getEndDate())
+            );
 		}
 
 		return '';
