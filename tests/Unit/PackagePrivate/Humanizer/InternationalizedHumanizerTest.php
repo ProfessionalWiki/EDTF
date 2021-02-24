@@ -26,7 +26,7 @@ class InternationalizedHumanizerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->messageBuilderSpy = new MessageBuilderSpy($this);
+        $this->messageBuilderSpy = new MessageBuilderSpy();
         $this->humanizer = new InternationalizedHumanizer($this->messageBuilderSpy);
     }
 
