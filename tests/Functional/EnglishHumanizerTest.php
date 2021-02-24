@@ -35,7 +35,7 @@ class EnglishHumanizerTest extends TestCase {
 		yield 'Unspecified year decade' => [ '197X', '1970s' ];
 		yield 'Unspecified year century ' => [ '19XX', '1900s' ];
 
-		yield 'Interval with year to year' => [ '2019/2021', '2019 to 2021', 'De 2019 à 2021' ];
+		yield 'Interval with year to year' => [ '2019/2021', '2019 to 2021' ];
 		yield 'Interval year and month' => [ '2019-01/2021-02', 'January 2019 to February 2021' ];
 		yield 'Interval different date formats' => [ '2019/2021-02-09', '2019 to February 9th, 2021' ];
 
