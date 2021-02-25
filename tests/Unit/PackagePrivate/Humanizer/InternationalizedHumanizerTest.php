@@ -167,6 +167,13 @@ class InternationalizedHumanizerTest extends TestCase
         $this->assertBuilderWasCalledWith('edtf-august');
     }
 
+    public function testBC(): void
+    {
+        $yearBC = new ExtDate(-800);
+        $this->humanizer->humanize($yearBC);
+        $this->assertBuilderCalledOnceWith('edtf-bc');
+    }
+
     private function assertBuilderCalledOnceWith(string $messageKey, ?array $expectedArguments = null): void
     {
         $this->assertCount( 1, $this->messageBuilderSpy->getBuildMessageCalls());

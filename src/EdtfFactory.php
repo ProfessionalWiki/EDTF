@@ -67,6 +67,7 @@ class EdtfFactory {
 				'edtf-season-and-year' => '$1 $2',
 
 				'edtf-day-and-year' => '$1 of unknown month, $2',
+                'edtf-bc' => ' BC',
 
                 // Months
                 'edtf-january' => 'January',

@@ -153,7 +153,7 @@ class InternationalizedHumanizer implements Humanizer {
     {
 	    $endingChar = $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
 
-		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . ' BC';
+		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . $this->message('edtf-bc');
 	}
 
     /**
