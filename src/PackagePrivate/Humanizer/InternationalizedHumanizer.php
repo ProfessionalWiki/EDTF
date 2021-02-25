@@ -56,9 +56,12 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private MessageBuilder $messageBuilder;
 
-	public function __construct( MessageBuilder $messageBuilder ) {
+    private string $languageCode;
+
+    public function __construct( MessageBuilder $messageBuilder, string $languageCode ) {
 		$this->messageBuilder = $messageBuilder;
-	}
+        $this->languageCode = $languageCode;
+    }
 
 	public function humanize( EdtfValue $edtf ): string {
 		if ( $edtf instanceof ExtDate ) {
@@ -127,7 +130,7 @@ class InternationalizedHumanizer implements Humanizer {
 			$month = $this->message(self::MONTH_MAP[$month]);
 		}
 
-		if ( $day !== null ) {
+		if ( $day !== null && $this->supportOrdinalEnding()) {
 			$day = $this->inflectNumber( $day );
 		}
 
@@ -233,5 +236,10 @@ class InternationalizedHumanizer implements Humanizer {
 			. (string)floor( abs( $offsetInMinutes ) / 60 )
 			. ( $offsetInMinutes % 60 === 0 ? '' : sprintf(":%02d", abs( $offsetInMinutes ) % 60 ) );
 	}
+
+	private function supportOrdinalEnding(): bool
+    {
+        return $this->languageCode === 'en';
+    }
 
 }

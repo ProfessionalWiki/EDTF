@@ -33,7 +33,8 @@ class EdtfFactory {
                 'edtf-interval-normal' => 'De $1 à $2',
             ]);
 
-			return new InternationalizedHumanizer($messageBuilder);
+
+			return new InternationalizedHumanizer($messageBuilder, $languageCode);
 		}
 
 		return new InternationalizedHumanizer( new ArrayMessageBuilder(
@@ -93,7 +94,7 @@ class EdtfFactory {
                 // Timezone
                 'edtf-local-time' => 'local time',
 			]
-		) );
+		), $languageCode );
 	}
 
 	public static function newStructuredHumanizerForLanguage( string $languageCode ): StructuredHumanizer {

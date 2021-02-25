@@ -28,7 +28,7 @@ class InternationalizedHumanizerTest extends TestCase
     {
         parent::setUp();
         $this->messageBuilderSpy = new MessageBuilderSpy();
-        $this->humanizer = new InternationalizedHumanizer($this->messageBuilderSpy);
+        $this->humanizer = new InternationalizedHumanizer($this->messageBuilderSpy, 'en');
     }
 
     /**
