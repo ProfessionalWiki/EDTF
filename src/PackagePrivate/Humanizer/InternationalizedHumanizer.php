@@ -56,9 +56,12 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private MessageBuilder $messageBuilder;
 
-	public function __construct( MessageBuilder $messageBuilder ) {
+    private string $languageCode;
+
+    public function __construct( MessageBuilder $messageBuilder, string $languageCode ) {
 		$this->messageBuilder = $messageBuilder;
-	}
+        $this->languageCode = $languageCode;
+    }
 
 	public function humanize( EdtfValue $edtf ): string {
 		if ( $edtf instanceof ExtDate ) {
@@ -128,7 +131,7 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		if ( $day !== null ) {
-			$day = $this->inflectNumber( $day );
+			$day = $this->supportOrdinalEnding() ? $this->inflectNumber( $day ) : (string) $day;
 		}
 
 		return $this->humanizeYearMonthDay( $year, $month, $day );
@@ -153,7 +156,7 @@ class InternationalizedHumanizer implements Humanizer {
     {
 	    $endingChar = $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
 
-		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . ' BC';
+		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . $this->message('edtf-bc');
 	}
 
     /**
@@ -221,7 +224,7 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private function humanizeTimeZoneOffset( ?int $offsetInMinutes ): string {
 		if ( $offsetInMinutes === null ) {
-			return '(local time)';
+			return '(' . $this->message('edtf-local-time') . ')';
 		}
 
 		if ( $offsetInMinutes === 0 ) {
@@ -233,5 +236,10 @@ class InternationalizedHumanizer implements Humanizer {
 			. (string)floor( abs( $offsetInMinutes ) / 60 )
 			. ( $offsetInMinutes % 60 === 0 ? '' : sprintf(":%02d", abs( $offsetInMinutes ) % 60 ) );
 	}
+
+	private function supportOrdinalEnding(): bool
+    {
+        return $this->languageCode === 'en';
+    }
 
 }

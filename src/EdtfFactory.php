@@ -33,7 +33,8 @@ class EdtfFactory {
                 'edtf-interval-normal' => 'De $1 à $2',
             ]);
 
-			return new InternationalizedHumanizer($messageBuilder);
+
+			return new InternationalizedHumanizer($messageBuilder, $languageCode);
 		}
 
 		return new InternationalizedHumanizer( new ArrayMessageBuilder(
@@ -67,6 +68,7 @@ class EdtfFactory {
 				'edtf-season-and-year' => '$1 $2',
 
 				'edtf-day-and-year' => '$1 of unknown month, $2',
+                'edtf-bc' => ' BC',
 
                 // Months
                 'edtf-january' => 'January',
@@ -88,8 +90,11 @@ class EdtfFactory {
                 'edtf-interval-open-start' => '$1 or earlier',
                 'edtf-interval-unknown-end' => 'From $1 to unknown',
                 'edtf-interval-unknown-start' => 'From unknown to $1',
+
+                // Timezone
+                'edtf-local-time' => 'local time',
 			]
-		) );
+		), $languageCode );
 	}
 
 	public static function newStructuredHumanizerForLanguage( string $languageCode ): StructuredHumanizer {
