@@ -130,8 +130,8 @@ class InternationalizedHumanizer implements Humanizer {
 			$month = $this->message(self::MONTH_MAP[$month]);
 		}
 
-		if ( $day !== null && $this->supportOrdinalEnding()) {
-			$day = $this->inflectNumber( $day );
+		if ( $day !== null ) {
+			$day = $this->supportOrdinalEnding() ? $this->inflectNumber( $day ) : (string) $day;
 		}
 
 		return $this->humanizeYearMonthDay( $year, $month, $day );
