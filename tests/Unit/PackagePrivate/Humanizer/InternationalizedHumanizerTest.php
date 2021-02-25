@@ -185,8 +185,7 @@ class InternationalizedHumanizerTest extends TestCase
 
     private function assertBuilderWasCalledWith(string $messageKey): void
     {
-        $buildMessageCalls = $this->messageBuilderSpy->getBuildMessageCalls();
-        $allMessageKeys = array_merge(...$buildMessageCalls);
+		$allMessageKeys = array_merge(...$this->messageBuilderSpy->getBuildMessageCalls());
 
         $this->assertContainsEquals(
             $messageKey,
