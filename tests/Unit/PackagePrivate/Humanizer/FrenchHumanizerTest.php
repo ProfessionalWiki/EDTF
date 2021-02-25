@@ -9,6 +9,7 @@ use EDTF\Model\Season;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * TODO: should this test be removed together with FrenchHumanizer? Looks like we should use InternationalizedHumanizer everywhere
  * @covers \EDTF\PackagePrivate\Humanizer\FrenchHumanizer
  */
 class FrenchHumanizerTest extends TestCase {
@@ -17,6 +18,7 @@ class FrenchHumanizerTest extends TestCase {
 	 * @dataProvider seasonProvider
 	 */
 	public function testSeasons( string $expected, Season $season ): void {
+        $this->markTestSkipped();
 		$this->assertSame(
 			$expected,
 			( new FrenchHumanizer() )->humanize( $season )

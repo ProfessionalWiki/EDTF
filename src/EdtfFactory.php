@@ -23,7 +23,17 @@ class EdtfFactory {
 
 	public static function newHumanizerForLanguage( string $languageCode ): Humanizer {
 		if ( $languageCode === 'fr' ) {
-			return new FrenchHumanizer();
+
+		    // TODO: just a foundation for FR translations. Will be extended later
+		    $messageBuilder = new ArrayMessageBuilder([
+                'edtf-season-and-year' => '$1 $2',
+                'edtf-spring' => 'Printemps',
+                'edtf-january' => 'Janvier',
+                'edtf-february' => 'Février',
+                'edtf-interval-normal' => 'De $1 à $2',
+            ]);
+
+			return new InternationalizedHumanizer($messageBuilder);
 		}
 
 		return new InternationalizedHumanizer( new ArrayMessageBuilder(
@@ -58,6 +68,26 @@ class EdtfFactory {
 
 				'edtf-day-and-year' => '$1 of unknown month, $2',
 
+                // Months
+                'edtf-january' => 'January',
+                'edtf-february' => 'February',
+                'edtf-march' => 'March',
+                'edtf-april' => 'April',
+                'edtf-may' => 'May',
+                'edtf-june' => 'June',
+                'edtf-july' => 'July',
+                'edtf-august' => 'August',
+                'edtf-september' => 'September',
+                'edtf-october' => 'October',
+                'edtf-november' => 'November',
+                'edtf-december' => 'December',
+
+                // Intervals
+                'edtf-interval-normal' => '$1 to $2',
+                'edtf-interval-open-end' => '$1 or later',
+                'edtf-interval-open-start' => '$1 or earlier',
+                'edtf-interval-unknown-end' => 'From $1 to unknown',
+                'edtf-interval-unknown-start' => 'From unknown to $1',
 			]
 		) );
 	}

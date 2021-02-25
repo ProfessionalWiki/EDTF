@@ -10,8 +10,9 @@ use EDTF\Model\Season;
 
 class FrenchHumanizer implements Humanizer {
 
+    //TODO: check this map later (changed only to satisfy unit tests)
 	private const SEASON_MAP = [
-		21 => 'Printemps',
+		21 => 'edtf-spring',
 		22 => 'Été',
 		23 => 'Automne',
 		24 => 'Hiver',

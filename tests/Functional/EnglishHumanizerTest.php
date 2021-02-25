@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\Model\Interval
  * @covers \EDTF\Model\IntervalSide
  */
-class StringHumanizerTest extends TestCase {
+class EnglishHumanizerTest extends TestCase {
 
 	public function humanizationProvider(): \Generator {
 		yield 'Full date' => [ '1975-07-01', 'July 1st, 1975' ];

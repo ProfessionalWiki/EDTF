@@ -7,15 +7,30 @@ namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 use EDTF\EdtfFactory;
 use EDTF\EdtfValue;
 use EDTF\Model\ExtDate;
+use EDTF\Model\Interval;
+use EDTF\Model\IntervalSide;
 use EDTF\Model\Season;
+use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
+use EDTF\Tests\TestDoubles\MessageBuilderSpy;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer
  */
-class InternationalizedHumanizerTest extends TestCase {
+class InternationalizedHumanizerTest extends TestCase
+{
+    private MessageBuilderSpy $messageBuilderSpy;
 
-	/**
+    private InternationalizedHumanizer $humanizer;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->messageBuilderSpy = new MessageBuilderSpy();
+        $this->humanizer = new InternationalizedHumanizer($this->messageBuilderSpy);
+    }
+
+    /**
 	 * @dataProvider seasonProvider
 	 */
 	public function testSeasons( string $expected, Season $season ): void {
@@ -80,4 +95,74 @@ class InternationalizedHumanizerTest extends TestCase {
 		yield [ '22nd of unknown month, 2021', new ExtDate( 2021, null, 22 ) ];
 	}
 
+	public function testSimpleDate(): void
+    {
+        $date = new ExtDate( 2021, 4, 3 );
+        $this->humanizer->humanize($date);
+        $this->assertBuilderCalledOnceWith('edtf-april');
+    }
+
+    public function testNormalInterval(): void
+    {
+        $interval = new Interval(
+            IntervalSide::newFromDate(new ExtDate(1987)),
+            IntervalSide::newFromDate(new ExtDate(2020))
+        );
+
+        $this->humanizer->humanize($interval);
+        $this->assertBuilderCalledOnceWith('edtf-interval-normal', ['1987', '2020']);
+    }
+
+    public function testIntervalOpenEnd(): void
+    {
+        $interval = new Interval(
+            IntervalSide::newFromDate(new ExtDate(1987)),
+            IntervalSide::newOpenInterval()
+        );
+
+        $this->humanizer->humanize($interval);
+        $this->assertBuilderCalledOnceWith('edtf-interval-open-end', ['1987']);
+    }
+
+    public function testIntervalOpenStart(): void
+    {
+        $interval = new Interval(
+            IntervalSide::newOpenInterval(),
+            IntervalSide::newFromDate(new ExtDate(2020))
+        );
+
+        $this->humanizer->humanize($interval);
+        $this->assertBuilderCalledOnceWith('edtf-interval-open-start', ['2020']);
+    }
+
+    public function testIntervalUnknownEnd(): void
+    {
+        $interval = new Interval(
+            IntervalSide::newFromDate(new ExtDate(1987)),
+            IntervalSide::newUnknownInterval()
+        );
+
+        $this->humanizer->humanize($interval);
+        $this->assertBuilderCalledOnceWith('edtf-interval-unknown-end', ['1987']);
+    }
+
+    public function testIntervalUnknownStart(): void
+    {
+        $interval = new Interval(
+            IntervalSide::newUnknownInterval(),
+            IntervalSide::newFromDate(new ExtDate(2001))
+        );
+
+        $this->humanizer->humanize($interval);
+        $this->assertBuilderCalledOnceWith('edtf-interval-unknown-start', ['2001']);
+    }
+
+    private function assertBuilderCalledOnceWith(string $messageKey, ?array $expectedArguments = null): void
+    {
+        $this->assertCount( 1, $this->messageBuilderSpy->getBuildMessageCalls());
+        $this->assertEquals(
+            array_merge([$messageKey], $expectedArguments ?? []),
+            $this->messageBuilderSpy->getBuildMessageCalls()[0]
+        );
+    }
 }
