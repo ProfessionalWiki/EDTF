@@ -88,6 +88,9 @@ class EdtfFactory {
                 'edtf-interval-open-start' => '$1 or earlier',
                 'edtf-interval-unknown-end' => 'From $1 to unknown',
                 'edtf-interval-unknown-start' => 'From unknown to $1',
+
+                // Timezone
+                'edtf-local-time' => 'local time',
 			]
 		) );
 	}

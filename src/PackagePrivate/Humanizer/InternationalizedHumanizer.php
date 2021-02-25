@@ -221,7 +221,7 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private function humanizeTimeZoneOffset( ?int $offsetInMinutes ): string {
 		if ( $offsetInMinutes === null ) {
-			return '(local time)';
+			return '(' . $this->message('edtf-local-time') . ')';
 		}
 
 		if ( $offsetInMinutes === 0 ) {

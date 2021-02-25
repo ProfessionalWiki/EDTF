@@ -7,6 +7,7 @@ namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 use EDTF\EdtfFactory;
 use EDTF\EdtfValue;
 use EDTF\Model\ExtDate;
+use EDTF\Model\ExtDateTime;
 use EDTF\Model\Interval;
 use EDTF\Model\IntervalSide;
 use EDTF\Model\Season;
@@ -157,12 +158,33 @@ class InternationalizedHumanizerTest extends TestCase
         $this->assertBuilderCalledOnceWith('edtf-interval-unknown-start', ['2001']);
     }
 
+    public function testTimezoneLocalTime(): void
+    {
+        $dateTime = new ExtDateTime(new ExtDate(1987, 8, 12), 12, 24, 45);
+
+        $this->humanizer->humanize($dateTime);
+        $this->assertBuilderWasCalledWith('edtf-local-time');
+        $this->assertBuilderWasCalledWith('edtf-august');
+    }
+
     private function assertBuilderCalledOnceWith(string $messageKey, ?array $expectedArguments = null): void
     {
         $this->assertCount( 1, $this->messageBuilderSpy->getBuildMessageCalls());
         $this->assertEquals(
             array_merge([$messageKey], $expectedArguments ?? []),
             $this->messageBuilderSpy->getBuildMessageCalls()[0]
+        );
+    }
+
+    private function assertBuilderWasCalledWith(string $messageKey): void
+    {
+        $buildMessageCalls = $this->messageBuilderSpy->getBuildMessageCalls();
+        $allMessageKeys = array_merge(...$buildMessageCalls);
+
+        $this->assertContainsEquals(
+            $messageKey,
+            $allMessageKeys,
+            "Message builder was called with " . implode(', ', $allMessageKeys)
         );
     }
 }
