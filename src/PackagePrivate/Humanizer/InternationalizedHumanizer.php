@@ -12,6 +12,7 @@ use EDTF\Model\Interval;
 use EDTF\Model\Season;
 use EDTF\Model\UnspecifiedDigit;
 use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
+use EDTF\PackagePrivate\Humanizer\Strategy\LanguageStrategy;
 
 class InternationalizedHumanizer implements Humanizer {
 
@@ -56,11 +57,11 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private MessageBuilder $messageBuilder;
 
-    private string $languageCode;
+    private LanguageStrategy $languageStrategy;
 
-    public function __construct( MessageBuilder $messageBuilder, string $languageCode ) {
+    public function __construct( MessageBuilder $messageBuilder, LanguageStrategy $languageStrategy ) {
 		$this->messageBuilder = $messageBuilder;
-        $this->languageCode = $languageCode;
+        $this->languageStrategy = $languageStrategy;
     }
 
 	public function humanize( EdtfValue $edtf ): string {
@@ -131,7 +132,7 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		if ( $day !== null ) {
-			$day = $this->supportOrdinalEnding() ? $this->inflectNumber( $day ) : (string) $day;
+		    $day = $this->languageStrategy->applyOrdinalEnding($day);
 		}
 
 		return $this->humanizeYearMonthDay( $year, $month, $day );
@@ -139,7 +140,7 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private function humanizeYearMonthDay( ?string $year, ?string $month, ?string $day ): string {
 	    if ( $year !== null && $month !== null && $day !== null ) {
-			return $month . ' ' . $day . ', ' . $year;
+	        return $this->languageStrategy->composeFullDateString($year, $month, $day);
 		}
 
 		if ( $year !== null && $month === null && $day !== null ) {
@@ -167,14 +168,6 @@ class InternationalizedHumanizer implements Humanizer {
     {
         return $unspecifiedDigit->century() || $unspecifiedDigit->decade();
     }
-
-	private function inflectNumber(int $number): string {
-		if ( $number % 100 >= 11 && $number % 100 <= 13 ) {
-			return $number. 'th';
-		}
-
-		return $number . [ 'th','st','nd','rd','th','th','th','th','th','th' ][$number % 10];
-	}
 
 	private function humanizeInterval( Interval $interval ): string {
 		if ( $interval->isNormalInterval() ) {
@@ -236,10 +229,4 @@ class InternationalizedHumanizer implements Humanizer {
 			. (string)floor( abs( $offsetInMinutes ) / 60 )
 			. ( $offsetInMinutes % 60 === 0 ? '' : sprintf(":%02d", abs( $offsetInMinutes ) % 60 ) );
 	}
-
-	private function supportOrdinalEnding(): bool
-    {
-        return $this->languageCode === 'en';
-    }
-
 }

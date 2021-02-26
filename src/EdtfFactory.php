@@ -6,8 +6,9 @@ namespace EDTF;
 
 use EDTF\PackagePrivate\Humanizer\Internationalization\ArrayMessageBuilder;
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
-use EDTF\PackagePrivate\Humanizer\FrenchHumanizer;
 use EDTF\PackagePrivate\Humanizer\PrivateStructuredHumanizer;
+use EDTF\PackagePrivate\Humanizer\Strategy\EnglishStrategy;
+use EDTF\PackagePrivate\Humanizer\Strategy\FrenchStrategy;
 use EDTF\PackagePrivate\SaneParser;
 use EDTF\PackagePrivate\Validator;
 
@@ -28,13 +29,25 @@ class EdtfFactory {
 		    $messageBuilder = new ArrayMessageBuilder([
                 'edtf-season-and-year' => '$1 $2',
                 'edtf-spring' => 'Printemps',
-                'edtf-january' => 'Janvier',
-                'edtf-february' => 'Février',
+
+                // Months
+                'edtf-january'   => 'janvier',
+                'edtf-february'  => 'février',
+                'edtf-march'     => 'mars',
+                'edtf-april'     => 'avril',
+                'edtf-may'       => 'mai',
+                'edtf-june'      => 'juin',
+                'edtf-july'      => 'juillet',
+                'edtf-august'    => 'août',
+                'edtf-september' => 'septembre',
+                'edtf-october'   => 'octobre',
+                'edtf-november'  => 'novembre',
+                'edtf-december'  => 'decembre',
+
                 'edtf-interval-normal' => 'De $1 à $2',
             ]);
 
-
-			return new InternationalizedHumanizer($messageBuilder, $languageCode);
+			return new InternationalizedHumanizer($messageBuilder, new FrenchStrategy());
 		}
 
 		return new InternationalizedHumanizer( new ArrayMessageBuilder(
@@ -94,7 +107,7 @@ class EdtfFactory {
                 // Timezone
                 'edtf-local-time' => 'local time',
 			]
-		), $languageCode );
+		), new EnglishStrategy() );
 	}
 
 	public static function newStructuredHumanizerForLanguage( string $languageCode ): StructuredHumanizer {
