@@ -179,61 +179,61 @@ class ValidEdtfStrings {
 		yield '31XXX-XX';
 		
 		// These are from the ISO standard document, should validate
-		yield '1985-04-12'
-		yield '1985-04'
-		yield '1985'
-		yield '1985-04-12T23:20:30'
-		yield '1985-04-12T23:20:30Z'
-		yield '1985-04-12T23:20:30+04:30'
-		yield '1985-04-12T23:20:30+04'
-		yield '1964/2008'
-		yield '2004-06/2006-08'
-		yield '2004-02-01/2005-02-08'
-		yield '2004-02-01/2005-02'
-		yield '2004-02-01/2005'
-		yield '2005/2006-02'
-		yield 'Y1700000002'
-		yield '-1985'
-		yield '2001-21'
-		yield '1985-04-12?'
-		yield '1985-04?'
-		yield '1985~'
-		yield '1985-04-XX'
-		yield '1985-XX-XX'
-		yield '2004-XX'
-		yield '201X'
-		yield '20XX'
-		yield '1985-04-12/..'
-		yield '../1985-04-12'
-		yield '1986-04/'
-		yield '/1985'
-		yield '1984?/2004%'
-		yield '1984-01-02~/2004-06-04'
-		yield '1984~/2004-06'
-		yield '../1985-04-12?'
-		yield '1985-04-12~/'
-		yield 'Y-17E7'
-		yield '1950S2'
-		yield 'Y171010000S3'
-		yield 'Y3388E2S3'
-		yield '2001-34'
-		yield '{1960, 1961-12}'
-		yield '[1667, 1760-12]'
-		yield '..1984'
-		yield '1984..'
-		yield '1670..1673'
+		yield '1985-04-12';
+		yield '1985-04';
+		yield '1985';
+		yield '1985-04-12T23:20:30';
+		yield '1985-04-12T23:20:30Z';
+		yield '1985-04-12T23:20:30+04:30';
+		yield '1985-04-12T23:20:30+04';
+		yield '1964/2008';
+		yield '2004-06/2006-08';
+		yield '2004-02-01/2005-02-08';
+		yield '2004-02-01/2005-02';
+		yield '2004-02-01/2005';
+		yield '2005/2006-02';
+		yield 'Y1700000002';
+		yield '-1985';
+		yield '2001-21';
+		yield '1985-04-12?';
+		yield '1985-04?';
+		yield '1985~';
+		yield '1985-04-XX';
+		yield '1985-XX-XX';
+		yield '2004-XX';
+		yield '201X';
+		yield '20XX';
+		yield '1985-04-12/..';
+		yield '../1985-04-12';
+		yield '1986-04/';
+		yield '/1985';
+		yield '1984?/2004%';
+		yield '1984-01-02~/2004-06-04';
+		yield '1984~/2004-06';
+		yield '../1985-04-12?';
+		yield '1985-04-12~/';
+		yield 'Y-17E7';
+		yield '1950S2';
+		yield 'Y171010000S3';
+		yield 'Y3388E2S3';
+		yield '2001-34';
+		yield '{1960, 1961-12}';
+		yield '[1667, 1760-12]';
+		yield '..1984';
+		yield '1984..';
+		yield '1670..1673';
 		//yield '..1983-12-31,1984-10-10..1984-11-01,1984-11-05..' I need to verify if this should work
-		yield '2004-06~-11'
-		yield '2004?-06-11'
-		yield '?2004-06-~11'
-		yield '2004-%06-11'
-		yield '2004-06-~01/2004-06-~20'
-		yield '..2004-06-01/~2004-06-20'
-		yield '2004-06-01~/2004-06-20..'
-		yield '156X-12-25'
-		yield 'XXXX-12-XX'
-		yield '1XXX-XX'
-		yield '1XXX-12'
+		yield '2004-06~-11';
+		yield '2004?-06-11';
+		yield '?2004-06-~11';
+		yield '2004-%06-11';
+		yield '2004-06-~01/2004-06-~20';
+		yield '..2004-06-01/~2004-06-20';
+		yield '2004-06-01~/2004-06-20..';
+		yield '156X-12-25';
+		yield 'XXXX-12-XX';
+		yield '1XXX-XX';
+		yield '1XXX-12';
 	}
 
 }
