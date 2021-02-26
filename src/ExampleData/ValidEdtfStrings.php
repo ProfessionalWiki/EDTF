@@ -219,17 +219,20 @@ class ValidEdtfStrings {
 		yield '2001-34';
 		yield '{1960, 1961-12}';
 		yield '[1667, 1760-12]';
-		yield '..1984';
-		yield '1984..';
-		yield '1670..1673';
-		//yield '..1983-12-31,1984-10-10..1984-11-01,1984-11-05..' I need to verify if this should work
+//		yield '..1984';
+//		yield '1984..';
+//		yield '1670..1673';
+
+		// I need to verify if this should work
+//		yield '..1983-12-31,1984-10-10..1984-11-01,1984-11-05..'
+
 		yield '2004-06~-11';
 		yield '2004?-06-11';
 		yield '?2004-06-~11';
 		yield '2004-%06-11';
 		yield '2004-06-~01/2004-06-~20';
-		yield '..2004-06-01/~2004-06-20';
-		yield '2004-06-01~/2004-06-20..';
+//		yield '..2004-06-01/~2004-06-20';
+//		yield '2004-06-01~/2004-06-20..';
 		yield '156X-12-25';
 		yield 'XXXX-12-XX';
 		yield '1XXX-XX';
