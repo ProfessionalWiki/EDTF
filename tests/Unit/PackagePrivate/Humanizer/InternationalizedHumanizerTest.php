@@ -84,8 +84,8 @@ class InternationalizedHumanizerTest extends TestCase
 		yield [ 'February 2021', new ExtDate( 2021, 2 ) ];
 
 		yield [ '2021', new ExtDate( 2021 ) ];
-		yield [ '0', new ExtDate( 0 ) ];
-		yield [ '1 BC', new ExtDate( -1 ) ];
+		yield [ 'Year 0', new ExtDate( 0 ) ];
+		yield [ 'Year 1 BC', new ExtDate( -1 ) ];
 
 		yield [ 'August', new ExtDate( null, 8 ) ];
 		yield [ 'January', new ExtDate( null, 1 ) ];
@@ -101,7 +101,8 @@ class InternationalizedHumanizerTest extends TestCase
     {
         $date = new ExtDate( 2021, 4, 3 );
         $this->humanizer->humanize($date);
-        $this->assertBuilderCalledOnceWith('edtf-april');
+        $this->assertBuilderWasCalledWith('edtf-full-date');
+        $this->assertBuilderWasCalledWith('edtf-april');
     }
 
     public function testNormalInterval(): void
@@ -172,7 +173,8 @@ class InternationalizedHumanizerTest extends TestCase
     {
         $yearBC = new ExtDate(-800);
         $this->humanizer->humanize($yearBC);
-        $this->assertBuilderCalledOnceWith('edtf-bc');
+        $this->assertBuilderWasCalledWith('edtf-bc');
+        $this->assertBuilderWasCalledWith('edtf-year');
     }
 
     private function assertBuilderCalledOnceWith(string $messageKey, ?array $expectedArguments = null): void

@@ -27,8 +27,10 @@ class EdtfFactory {
 
 		    // TODO: just a foundation for FR translations. Will be extended later
 		    $messageBuilder = new ArrayMessageBuilder([
+		        'edtf-full-date' => '$3 $2 $1',
                 'edtf-season-and-year' => '$1 $2',
                 'edtf-spring' => 'Printemps',
+                'edtf-year' => 'Année ',
 
                 // Months
                 'edtf-january'   => 'janvier',
@@ -78,10 +80,12 @@ class EdtfFactory {
 				'edtf-semester-1' => 'First semester',
 				'edtf-semester-2' => 'Second semester',
 
+				'edtf-full-date' => '$2 $3, $1',
 				'edtf-season-and-year' => '$1 $2',
 
 				'edtf-day-and-year' => '$1 of unknown month, $2',
                 'edtf-bc' => ' BC',
+                'edtf-year' => 'Year ',
 
                 // Months
                 'edtf-january' => 'January',

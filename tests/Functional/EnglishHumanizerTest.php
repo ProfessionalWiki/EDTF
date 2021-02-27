@@ -20,7 +20,7 @@ class EnglishHumanizerTest extends TestCase {
 		yield 'Year and month' => [ '1975-07', 'July 1975' ];
 		yield 'Year only' => [ '1975', '1975' ];
 
-		yield 'Leading zeroes' => [ '0042', '42' ];
+		yield 'Leading zeroes' => [ '0042', 'Year 42' ];
 
 		yield 'Negative years' => [ '-1234', '1234 BC' ];
 

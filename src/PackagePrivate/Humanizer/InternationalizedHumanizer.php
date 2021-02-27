@@ -64,9 +64,16 @@ class InternationalizedHumanizer implements Humanizer {
         $this->languageStrategy = $languageStrategy;
     }
 
-	public function humanize( EdtfValue $edtf ): string {
+    /**
+     * @param EdtfValue $edtf
+     * @param EdtfValue|null $context Having the context means that value is going to be humanized in context of
+     * other EDTF value. I.e. date is being humanized in context of interval value. Sometimes this context can be
+     * useful to determine additional details for date humanization
+     * @return string
+     */
+	public function humanize( EdtfValue $edtf, ?EdtfValue $context = null ): string {
 		if ( $edtf instanceof ExtDate ) {
-			return $this->humanizeDate( $edtf );
+			return $this->humanizeDate( $edtf, $context );
 		}
 
 		if ( $edtf instanceof ExtDateTime ) {
@@ -92,8 +99,8 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
-	private function humanizeDate( ExtDate $date ): string {
-		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
+	private function humanizeDate( ExtDate $date, ?EdtfValue $context = null ): string {
+		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date, $context );
 
 		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain() ) {
 			return $this->message( 'edtf-maybe-circa', $humanizedDate );
@@ -115,7 +122,7 @@ class InternationalizedHumanizer implements Humanizer {
 	}
 
 
-	private function humanizeDateWithoutUncertainty( ExtDate $date ): string {
+	private function humanizeDateWithoutUncertainty( ExtDate $date, ?EdtfValue $context ): string {
 		$year = $date->getYear();
 		$month = $date->getMonth();
 		$day = $date->getDay();
@@ -135,17 +142,21 @@ class InternationalizedHumanizer implements Humanizer {
 		    $day = $this->languageStrategy->applyOrdinalEnding($day);
 		}
 
-		return $this->humanizeYearMonthDay( $year, $month, $day );
+		return $this->humanizeYearMonthDay( $year, $month, $day, $context );
 	}
 
-	private function humanizeYearMonthDay( ?string $year, ?string $month, ?string $day ): string {
+	private function humanizeYearMonthDay( ?string $year, ?string $month, ?string $day, ?EdtfValue $context = null ): string {
 	    if ( $year !== null && $month !== null && $day !== null ) {
-	        return $this->languageStrategy->composeFullDateString($year, $month, $day);
+	        return $this->message('edtf-full-date', $year, $month, $day);
 		}
 
 		if ( $year !== null && $month === null && $day !== null ) {
 			return $this->message( 'edtf-day-and-year', $day, $year );
 		}
+
+		if ($day == null && $month !== null && $context === null) {
+		    $month = ucfirst($month);
+        }
 
 		return implode(
 			' ',
@@ -157,7 +168,14 @@ class InternationalizedHumanizer implements Humanizer {
     {
 	    $endingChar = $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
 
-		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . $this->message('edtf-bc');
+	    $humanized = '';
+	    if (abs($year) < 1000) {
+	        $humanized .= $this->message('edtf-year');
+        }
+
+		return $year >= 0
+            ? $humanized . (string)$year . $endingChar
+            : $humanized . (string)(-$year) . $this->message('edtf-bc');
 	}
 
     /**
@@ -173,8 +191,8 @@ class InternationalizedHumanizer implements Humanizer {
 		if ( $interval->isNormalInterval() ) {
 		    return $this->message(
 		        'edtf-interval-normal',
-                $this->humanize($interval->getStartDate()),
-                $this->humanize($interval->getEndDate())
+                $this->humanize($interval->getStartDate(), $interval),
+                $this->humanize($interval->getEndDate(), $interval)
             );
 		}
 

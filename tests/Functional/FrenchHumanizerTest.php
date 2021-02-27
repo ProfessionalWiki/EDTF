@@ -21,6 +21,9 @@ class FrenchHumanizerTest extends TestCase
         yield 'Interval year and month' => [ '2019-01/2021-02', 'De janvier 2019 à février 2021' ];
         yield 'Full date' => [ '1975-07-10', '10 juillet 1975' ];
         yield 'Full date first day' => [ '1975-07-01', '1er juillet 1975' ];
+        yield 'Year and month' => [ '1975-07', 'Juillet 1975' ];
+        yield 'Year only' => [ '1975', '1975' ];
+        yield 'Leading zeroes' => [ '0042', 'Année 42' ];
     }
 
     /**
