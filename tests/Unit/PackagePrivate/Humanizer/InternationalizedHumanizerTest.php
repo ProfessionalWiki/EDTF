@@ -12,6 +12,7 @@ use EDTF\Model\Interval;
 use EDTF\Model\IntervalSide;
 use EDTF\Model\Season;
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
+use EDTF\PackagePrivate\Humanizer\Strategy\EnglishStrategy;
 use EDTF\Tests\TestDoubles\MessageBuilderSpy;
 use PHPUnit\Framework\TestCase;
 
@@ -28,7 +29,7 @@ class InternationalizedHumanizerTest extends TestCase
     {
         parent::setUp();
         $this->messageBuilderSpy = new MessageBuilderSpy();
-        $this->humanizer = new InternationalizedHumanizer($this->messageBuilderSpy, 'en');
+        $this->humanizer = new InternationalizedHumanizer($this->messageBuilderSpy, new EnglishStrategy());
     }
 
     /**
