@@ -7,7 +7,9 @@
 [![Download count](https://poser.pugx.org/professional-wiki/edtf/d/total.png)](https://packagist.org/packages/professional-wiki/edtf)
 
 EDTF PHP is a small library for parsing, representing and working with the
-[Extended Date/Time Format](https://www.loc.gov/standards/datetime/) specification.
+[Extended Date/Time Format] specification.
+
+EDTF PHP was created by and is maintained by [Professional.Wiki]. Initial development was funded by the Luxembourg Ministry of Culture.
 
 ## Usage
 
@@ -102,3 +104,7 @@ To run all CI checks, execute
 You can also invoke PHPUnit directly to pass it arguments, as follows
 
     vendor/bin/phpunit --filter SomeClassNameOrFilter
+
+
+[Professional.Wiki]: https://professional.wiki
+[Extended Date/Time Format]: https://www.loc.gov/standards/datetime/
