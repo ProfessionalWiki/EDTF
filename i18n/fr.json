@@ -1,0 +1,17 @@
+{
+    "edtf-season-and-year": "$1 $2",
+    "edtf-spring": "Printemps",
+    "edtf-january": "janvier",
+    "edtf-february": "février",
+    "edtf-march": "mars",
+    "edtf-april": "avril",
+    "edtf-may": "mai",
+    "edtf-june": "juin",
+    "edtf-july": "juillet",
+    "edtf-august": "août",
+    "edtf-september": "septembre",
+    "edtf-october": "octobre",
+    "edtf-november": "novembre",
+    "edtf-december": "decembre",
+    "edtf-interval-normal": "De $1 à $2"
+}
