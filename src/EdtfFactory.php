@@ -24,13 +24,19 @@ class EdtfFactory {
 
 	public static function newHumanizerForLanguage( string $languageCode ): Humanizer {
 		if ( $languageCode === 'fr' ) {
-
-		    // TODO: just a foundation for FR translations. Will be extended later
 		    $messageBuilder = new ArrayMessageBuilder([
+                'edtf-maybe-circa' => 'Circa $1 (incertain)',
+                'edtf-circa' => 'Circa $1',
+                'edtf-maybe' => '$1 (incertain)',
+
 		        'edtf-full-date' => '$3 $2 $1',
                 'edtf-season-and-year' => '$1 $2',
-                'edtf-spring' => 'Printemps',
-                'edtf-year' => 'Année ',
+                'edtf-spring' => 'Printemps', // TODO: add another seasons (see EN keys)
+
+                'edtf-day-and-year' => '$1 of unknown month, $2',
+                'edtf-bc-year' => '$1 avant JC',
+                'edtf-bc-year-short' => 'Année $1 avant JC',
+                'edtf-year-short' => 'Année $1',
 
                 // Months
                 'edtf-january'   => 'janvier',
@@ -46,7 +52,15 @@ class EdtfFactory {
                 'edtf-november'  => 'novembre',
                 'edtf-december'  => 'decembre',
 
+                // Intervals
                 'edtf-interval-normal' => 'De $1 à $2',
+                'edtf-interval-open-end' => 'De $1 (fin indéterminée)',
+                'edtf-interval-open-start' => 'Jusqu’à $1',
+                'edtf-interval-unknown-end' => 'Depuis $1 jusqu’à une fin inconnue',
+                'edtf-interval-unknown-start' => 'Depuis un début inconnu jusqu’à $1',
+
+                // Timezone
+                'edtf-local-time' => 'heure locale',
             ]);
 
 			return new InternationalizedHumanizer($messageBuilder, new FrenchStrategy());
@@ -84,8 +98,9 @@ class EdtfFactory {
 				'edtf-season-and-year' => '$1 $2',
 
 				'edtf-day-and-year' => '$1 of unknown month, $2',
-                'edtf-bc' => ' BC',
-                'edtf-year' => 'Year ',
+                'edtf-bc-year' => '$1 BC',
+                'edtf-bc-year-short' => 'Year $1 BC',
+                'edtf-year-short' => 'Year $1',
 
                 // Months
                 'edtf-january' => 'January',

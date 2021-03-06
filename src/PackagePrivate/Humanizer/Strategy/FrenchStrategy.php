@@ -8,4 +8,9 @@ class FrenchStrategy implements LanguageStrategy
     {
         return $number === 1 ? $number . 'er' : (string) $number;
     }
+
+    public function monthUppercaseFirst(): bool
+    {
+        return false;
+    }
 }

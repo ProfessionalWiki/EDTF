@@ -10,6 +10,7 @@ use EDTF\Model\ExtDate;
 use EDTF\Model\ExtDateTime;
 use EDTF\Model\Interval;
 use EDTF\Model\IntervalSide;
+use EDTF\Model\Qualification;
 use EDTF\Model\Season;
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
 use EDTF\PackagePrivate\Humanizer\Strategy\EnglishStrategy;
@@ -175,6 +176,40 @@ class InternationalizedHumanizerTest extends TestCase
         $this->humanizer->humanize($yearBC);
         $this->assertBuilderWasCalledWith('edtf-bc');
         $this->assertBuilderWasCalledWith('edtf-year');
+    }
+
+    public function testYearCirca(): void
+    {
+        $yearCirca = new ExtDate(1987, null, null, new Qualification(Qualification::APPROXIMATE));
+        $this->humanizer->humanize($yearCirca);
+        $this->assertBuilderCalledOnceWith('edtf-circa', ['1987']);
+    }
+
+    public function testFullDateCirca(): void
+    {
+        $dateCirca = new ExtDate(1654, 12, 12, new Qualification(0, 0, Qualification::APPROXIMATE));
+        $this->humanizer->humanize($dateCirca);
+        $this->assertBuilderWasCalledWith('edtf-december');
+        $this->assertBuilderWasCalledWith('edtf-circa');
+        $this->assertBuilderWasCalledWith('edtf-full-date');
+    }
+
+    public function testUncertain(): void
+    {
+        $uncertainDate = new ExtDate(1800, 5, 29, new Qualification(0, 0, Qualification::UNCERTAIN));
+        $this->humanizer->humanize($uncertainDate);
+        $this->assertBuilderWasCalledWith('edtf-maybe');
+        $this->assertBuilderWasCalledWith('edtf-may');
+        $this->assertBuilderWasCalledWith('edtf-full-date');
+    }
+
+    public function testUncertainAndApproximate(): void
+    {
+        $uncertainDate = new ExtDate(1700, 4, 29, new Qualification(0, 0, Qualification::UNCERTAIN_AND_APPROXIMATE));
+        $this->humanizer->humanize($uncertainDate);
+        $this->assertBuilderWasCalledWith('edtf-maybe-circa');
+        $this->assertBuilderWasCalledWith('edtf-april');
+        $this->assertBuilderWasCalledWith('edtf-full-date');
     }
 
     private function assertBuilderCalledOnceWith(string $messageKey, ?array $expectedArguments = null): void

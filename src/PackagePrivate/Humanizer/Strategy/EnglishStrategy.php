@@ -12,4 +12,9 @@ class EnglishStrategy implements LanguageStrategy
 
         return $number . [ 'th','st','nd','rd','th','th','th','th','th','th' ][$number % 10];
     }
+
+    public function monthUppercaseFirst(): bool
+    {
+        return true;
+    }
 }
