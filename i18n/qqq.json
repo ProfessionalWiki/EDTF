@@ -1,0 +1,12 @@
+{
+	"edtf-circa" :"Approximate {{EdtfDate}}. $1 is a date",
+	"edtf-maybe": "{{EdtfDate}} with uncertainty. $1 is a date",
+	"edtf-maybe-circa": "Approximate {{EdtfDate}} with uncertainty. $1 is a date",
+
+	"edtf-spring": "Spring season, often combined with a year",
+	"edtf-summer":"Summer season, often combined with a year",
+	"edtf-autumn":"Autumn season, often combined with a year",
+	"edtf-winter":"Winter season, often combined with a year",
+	
+	"edtf-season-and-year":"Concatenation of season ($1) and year ($2)"
+}
