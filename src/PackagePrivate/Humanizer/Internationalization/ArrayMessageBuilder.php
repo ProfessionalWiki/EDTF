@@ -20,7 +20,7 @@ class ArrayMessageBuilder implements MessageBuilder {
 
 	public function buildMessage( string $messageKey, string ...$arguments ): string {
 		if ( !array_key_exists( $messageKey, $this->messages ) ) {
-			throw new UnknownMessageKey();
+			throw new UnknownMessageKey("Translation for key '$messageKey' was not found");
 		}
 
 		return $this->replaceVariables( $this->messages[$messageKey], ...$arguments );

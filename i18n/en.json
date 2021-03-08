@@ -27,9 +27,13 @@
 	"edtf-semester-1":"First semester",
 	"edtf-semester-2":"Second semester",
 
+	"edtf-full-date": "$2 $3, $1",
+
 	"edtf-season-and-year":"$1 $2",
 	"edtf-day-and-year":"$1 of unknown month, $2",
-	"edtf-bc":" BC",
+	"edtf-bc-year": "$1 BC",
+	"edtf-bc-year-short": "Year $1 BC",
+	"edtf-year-short": "Year $1",
 
 	"edtf-january":"January",
 	"edtf-february":"February",

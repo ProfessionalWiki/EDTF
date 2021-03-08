@@ -174,8 +174,7 @@ class InternationalizedHumanizerTest extends TestCase
     {
         $yearBC = new ExtDate(-800);
         $this->humanizer->humanize($yearBC);
-        $this->assertBuilderWasCalledWith('edtf-bc');
-        $this->assertBuilderWasCalledWith('edtf-year');
+        $this->assertBuilderCalledOnceWith('edtf-bc-year-short', ['800']);
     }
 
     public function testYearCirca(): void
