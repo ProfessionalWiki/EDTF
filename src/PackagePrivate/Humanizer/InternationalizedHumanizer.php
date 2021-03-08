@@ -143,7 +143,7 @@ class InternationalizedHumanizer implements Humanizer {
 		return $this->humanizeYearMonthDay( $year, $month, $day );
 	}
 
-	private function humanizeYearMonthDay( ?string $year, ?string $month, ?string $day, $hasContext = false ): string {
+	private function humanizeYearMonthDay( ?string $year, ?string $month, ?string $day ): string {
 	    if ( $year !== null && $month !== null && $day !== null ) {
 	        return $this->message('edtf-full-date', $year, $month, $day);
 		}
