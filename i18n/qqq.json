@@ -1,12 +1,60 @@
 {
-	"edtf-circa" :"Approximate {{EdtfDate}}. $1 is a date",
+	"edtf-circa": "Approximate {{EdtfDate}}. $1 is a date",
 	"edtf-maybe": "{{EdtfDate}} with uncertainty. $1 is a date",
 	"edtf-maybe-circa": "Approximate {{EdtfDate}} with uncertainty. $1 is a date",
 
 	"edtf-spring": "Spring season, often combined with a year",
-	"edtf-summer":"Summer season, often combined with a year",
-	"edtf-autumn":"Autumn season, often combined with a year",
-	"edtf-winter":"Winter season, often combined with a year",
-	
-	"edtf-season-and-year":"Concatenation of season ($1) and year ($2)"
+	"edtf-summer": "Summer season, often combined with a year",
+	"edtf-autumn": "Autumn season, often combined with a year",
+	"edtf-winter": "Winter season, often combined with a year",
+
+	"edtf-spring-north": "Spring season in Northern Hemisphere of Earth",
+	"edtf-summer-north": "Summer season in Northern Hemisphere of Earth",
+	"edtf-autumn-north": "Autumn season in Northern Hemisphere of Earth",
+	"edtf-winter-north": "Winter season in Northern Hemisphere of Earth",
+	"edtf-spring-south": "Spring season in Southern Hemisphere of Earth",
+	"edtf-summer-south": "Summer season in Southern Hemisphere of Earth",
+	"edtf-autumn-south": "Autumn season in Southern Hemisphere of Earth",
+	"edtf-winter-south": "Winter season in Southern Hemisphere of Earth",
+
+	"edtf-quarter-1": "First quarter of the year (3 months), often combined with a year",
+	"edtf-quarter-2": "Second quarter of the year (3 months), often combined with a year",
+	"edtf-quarter-3": "Third quarter of the year (3 months), often combined with a year",
+	"edtf-quarter-4": "Fourth quarter of the year (3 months), often combined with a year",
+
+	"edtf-quadrimester-1": "First quadrimester of the year (4 months), often combined with a year",
+	"edtf-quadrimester-2": "Second quadrimester of the year (4 months), often combined with a year",
+	"edtf-quadrimester-3": "Third quadrimester of the year (4 months), often combined with a year",
+
+	"edtf-semester-1": "First semester of the year (6 months), often combined with a year",
+	"edtf-semester-2": "Second semester of the year (6 months), often combined with a year",
+
+	"edtf-full-date": "Fully specified {{EdtfDate}} - day ($3), month ($2) and year ($1)",
+
+	"edtf-season-and-year": "Concatenation of season ($1) and year ($2)",
+	"edtf-day-and-year": "Concatenation of day ($1) and year ($2), month is unknown",
+	"edtf-bc-year": "Earlier then 0 year of humanity years chronology (BC). $1 is a year, 4 digits long (>1000). Word 'year' is skipped",
+	"edtf-bc-year-short": "Earlier then 0 year of humanity years chronology (BC). $1 is a year, less then 4 digits long. Explicitly specifies word 'year' after/before the digits",
+	"edtf-year-short": "$1 is a year, less then 4 digits long. Explicitly specifies word 'year' after/before the digits",
+
+	"edtf-january": "January",
+	"edtf-february": "February",
+	"edtf-march": "March",
+	"edtf-april": "April",
+	"edtf-may": "May",
+	"edtf-june": "June",
+	"edtf-july": "July",
+	"edtf-august": "August",
+	"edtf-september": "September",
+	"edtf-october": "October",
+	"edtf-november": "November",
+	"edtf-december": "December",
+
+	"edtf-interval-normal": "Interval with both 'from' and 'to' margins specified. $1 and $2 - {{EdtfDate}}",
+	"edtf-interval-open-end": "Interval starting at {{EdtfDate}} specified as $1. End is open",
+	"edtf-interval-open-start": "Interval with open start. Ending at {{EdtfDate}} specified as $1",
+	"edtf-interval-unknown-end": "Interval starting at {{EdtfDate}} specified as $1. End is unknown",
+	"edtf-interval-unknown-start": "Interval with unknown start. Ending at {{EdtfDate}} specified as $1",
+
+	"edtf-local-time": "Local time"
 }
