@@ -1,6 +1,40 @@
 {
-    "edtf-season-and-year": "$1 $2",
+    "edtf-maybe-circa": "Circa $1 (incertain)",
+    "edtf-circa" :"Circa $1",
+    "edtf-maybe": "$1 (incertain)",
+
     "edtf-spring": "Printemps",
+    "edtf-summer": "",
+    "edtf-autumn": "",
+    "edtf-winter": "",
+
+    "edtf-spring-north": "",
+    "edtf-summer-north": "",
+    "edtf-autumn-north": "",
+    "edtf-winter-north": "",
+    "edtf-spring-south": "",
+    "edtf-summer-south": "",
+    "edtf-autumn-south": "",
+    "edtf-winter-south": "",
+
+    "edtf-quarter-1": "",
+    "edtf-quarter-2": "",
+    "edtf-quarter-3": "",
+    "edtf-quarter-4": "",
+    "edtf-quadrimester-1": "",
+    "edtf-quadrimester-2": "",
+    "edtf-quadrimester-3": "",
+    "edtf-semester-1": "",
+    "edtf-semester-2": "",
+
+    "edtf-full-date": "$3 $2 $1",
+
+    "edtf-season-and-year": "$1 $2",
+    "edtf-day-and-year": "",
+    "edtf-bc-year": "$1 avant JC",
+    "edtf-bc-year-short": "Année $1 avant JC",
+    "edtf-year-short": "Année $1",
+
     "edtf-january": "janvier",
     "edtf-february": "février",
     "edtf-march": "mars",
@@ -13,5 +47,12 @@
     "edtf-october": "octobre",
     "edtf-november": "novembre",
     "edtf-december": "decembre",
-    "edtf-interval-normal": "De $1 à $2"
+
+    "edtf-interval-normal": "De $1 à $2",
+    "edtf-interval-open-end": "De $1 (fin indéterminée)",
+    "edtf-interval-open-start": "Jusqu’à $1",
+    "edtf-interval-unknown-end": "Depuis $1 jusqu’à une fin inconnue",
+    "edtf-interval-unknown-start": "Depuis un début inconnu jusqu’à $1",
+
+    "edtf-local-time" :"heure locale"
 }

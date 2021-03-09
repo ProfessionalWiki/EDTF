@@ -9,8 +9,8 @@ class FrenchStrategy implements LanguageStrategy
         return $number === 1 ? $number . 'er' : (string) $number;
     }
 
-    public function composeFullDateString(string $year, string $month, string $day): string
+    public function monthUppercaseFirst(): bool
     {
-        return implode(' ', [$day, $month, $year]);
+        return false;
     }
 }

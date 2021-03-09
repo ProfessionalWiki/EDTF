@@ -100,7 +100,10 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		if ( $date->getQualification()->isApproximate() ) {
-			return $this->message( 'edtf-circa', $humanizedDate );
+			return $this->message(
+			    'edtf-circa',
+                !$this->languageStrategy->monthUppercaseFirst() ? strtolower($humanizedDate) : $humanizedDate
+            );
 		}
 
 		if ( $date->getQualification()->uncertain() ) {
@@ -113,7 +116,6 @@ class InternationalizedHumanizer implements Humanizer {
 	private function message( string $key, string ...$parameters ): string {
 		return $this->messageBuilder->buildMessage( $key, ...$parameters );
 	}
-
 
 	private function humanizeDateWithoutUncertainty( ExtDate $date ): string {
 		$year = $date->getYear();
@@ -129,6 +131,9 @@ class InternationalizedHumanizer implements Humanizer {
 
 		if ( $month !== null ) {
 			$month = $this->message(self::MONTH_MAP[$month]);
+			if ($day === null) {
+                $month = ucfirst($month);
+            }
 		}
 
 		if ( $day !== null ) {
@@ -140,7 +145,7 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private function humanizeYearMonthDay( ?string $year, ?string $month, ?string $day ): string {
 	    if ( $year !== null && $month !== null && $day !== null ) {
-	        return $this->languageStrategy->composeFullDateString($year, $month, $day);
+	        return $this->message('edtf-full-date', $year, $month, $day);
 		}
 
 		if ( $year !== null && $month === null && $day !== null ) {
@@ -156,8 +161,21 @@ class InternationalizedHumanizer implements Humanizer {
 	private function humanizeYear( int $year, UnspecifiedDigit $unspecifiedDigit ): string
     {
 	    $endingChar = $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
+	    $yearStr = (string) abs($year);
 
-		return $year >= 0 ? (string)$year . $endingChar : (string)(-$year) . $this->message('edtf-bc');
+	    if ($year <= -1000) {
+	        return $this->message('edtf-bc-year', $yearStr);
+        }
+
+	    if ($year < 0) {
+	        return $this->message('edtf-bc-year-short', $yearStr);
+        }
+
+	    if ($year < 1000) {
+	        return $this->message('edtf-year-short', $yearStr . $endingChar);
+        }
+
+	    return $yearStr . $endingChar;
 	}
 
     /**
@@ -171,10 +189,14 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private function humanizeInterval( Interval $interval ): string {
 		if ( $interval->isNormalInterval() ) {
+
+		    $humanizedStartDate = $this->humanize($interval->getStartDate());
+		    $humanizedEndDate = $this->humanize($interval->getEndDate());
+
 		    return $this->message(
 		        'edtf-interval-normal',
-                $this->humanize($interval->getStartDate()),
-                $this->humanize($interval->getEndDate())
+                !$this->languageStrategy->monthUppercaseFirst() ? strtolower($humanizedStartDate) : $humanizedStartDate,
+                !$this->languageStrategy->monthUppercaseFirst() ? strtolower($humanizedEndDate) : $humanizedEndDate
             );
 		}
 

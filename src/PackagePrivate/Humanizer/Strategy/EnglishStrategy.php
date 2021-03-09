@@ -13,8 +13,8 @@ class EnglishStrategy implements LanguageStrategy
         return $number . [ 'th','st','nd','rd','th','th','th','th','th','th' ][$number % 10];
     }
 
-    public function composeFullDateString(string $year, string $month, string $day): string
+    public function monthUppercaseFirst(): bool
     {
-        return $month . ' ' . $day . ', ' . $year;
+        return true;
     }
 }

@@ -20,7 +20,7 @@ class EnglishHumanizerTest extends TestCase {
 		yield 'Year and month' => [ '1975-07', 'July 1975' ];
 		yield 'Year only' => [ '1975', '1975' ];
 
-		yield 'Leading zeroes' => [ '0042', '42' ];
+		yield 'Leading zeroes' => [ '0042', 'Year 42' ];
 
 		yield 'Negative years' => [ '-1234', '1234 BC' ];
 
@@ -62,7 +62,7 @@ class EnglishHumanizerTest extends TestCase {
 		yield 'Time with UTC+00:05' => [ '1985-04-12T23:20:30+00:05', '23:20:30 UTC+0:05 April 12th, 1985' ];
 
 		yield 'Time with leading zeroes' => [ '1985-04-12T01:02:03Z', '01:02:03 UTC April 12th, 1985' ];
-//		yield 'Time with all zeroes' => [ '1985-04-12T00:00:00Z', '00:00:00 UTC April 12th, 1985' ];
+		yield 'Time with all zeroes' => [ '1985-04-12T00:00:00Z', '00:00:00 UTC April 12th, 1985' ];
 	}
 
 	/**
