@@ -55,11 +55,19 @@ class Interval implements EdtfValue
         return $this->start->getDate();
     }
 
+	public function hasStartDate(): bool {
+		return $this->start->isNormalInterval();
+    }
+
     public function getEndDate(): ExtDate
     {
 		// TODO: why do we need this method?
         return $this->end->getDate();
     }
+
+	public function hasEndDate(): bool {
+		return $this->end->isNormalInterval();
+	}
 
     public function getSignificantDigit(): ?int
     {
