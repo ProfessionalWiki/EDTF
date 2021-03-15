@@ -29,13 +29,13 @@ class EdtfFactory {
     /**
      * @throws LoaderException
      */
-	public static function newHumanizerForLanguage( string $languageCode ): Humanizer
+	public static function newHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): Humanizer
     {
         $loader = new JsonFileLoader();
         $messages = $loader->load($languageCode);
 
-        if ($languageCode !== 'en') {
-            $fallbackMessages = $loader->load('en');
+        if ($languageCode !== $fallbackLanguageCode) {
+            $fallbackMessages = $loader->load($fallbackLanguageCode);
             $messageBuilder = new FallbackMessageBuilder(new ArrayMessageBuilder($messages), $fallbackMessages);
         } else {
             $messageBuilder = new ArrayMessageBuilder($messages);
