@@ -11,6 +11,9 @@ class FallbackMessageBuilder extends ArrayMessageBuilder implements MessageBuild
      */
     private MessageBuilder $builder;
 
+    /**
+     * @param array<string, string> $messages
+     */
     public function __construct(MessageBuilder $builder, array $messages)
     {
         parent::__construct($messages);
