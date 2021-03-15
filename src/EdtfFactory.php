@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace EDTF;
 
 use EDTF\PackagePrivate\Humanizer\Internationalization\ArrayMessageBuilder;
+use EDTF\PackagePrivate\Humanizer\Internationalization\FallbackMessageBuilder;
 use EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\JsonFileLoader;
 use EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\LoaderException;
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
@@ -33,7 +34,14 @@ class EdtfFactory {
         $loader = new JsonFileLoader();
         $messages = $loader->load($languageCode);
 
-        return new InternationalizedHumanizer(new ArrayMessageBuilder($messages), self::getLanguageStrategy($languageCode));
+        if ($languageCode !== 'en') {
+            $fallbackMessages = $loader->load('en');
+            $messageBuilder = new FallbackMessageBuilder(new ArrayMessageBuilder($messages), $fallbackMessages);
+        } else {
+            $messageBuilder = new ArrayMessageBuilder($messages);
+        }
+
+        return new InternationalizedHumanizer($messageBuilder, self::getLanguageStrategy($languageCode));
 	}
 
     /**
