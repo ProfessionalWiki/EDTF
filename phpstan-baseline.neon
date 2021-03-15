@@ -15,9 +15,3 @@ parameters:
             count: 2
             path: tests/Functional/Level2/SetRepresentationTest.php
 
-        -
-            message: "#^Unreachable statement - code above always terminates.$#"
-            count: 1
-            path: tests/Unit/PackagePrivate/Humanizer/FrenchHumanizerTest.php
-
-
