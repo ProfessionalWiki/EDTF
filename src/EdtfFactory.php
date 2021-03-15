@@ -36,7 +36,7 @@ class EdtfFactory {
 
         if ($languageCode !== $fallbackLanguageCode) {
             $fallbackMessages = $loader->load($fallbackLanguageCode);
-            $messageBuilder = new FallbackMessageBuilder(new ArrayMessageBuilder($messages), $fallbackMessages);
+            $messageBuilder = new FallbackMessageBuilder(new ArrayMessageBuilder($messages), new ArrayMessageBuilder($fallbackMessages));
         } else {
             $messageBuilder = new ArrayMessageBuilder($messages);
         }
