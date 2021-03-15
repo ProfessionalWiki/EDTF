@@ -53,4 +53,45 @@ class IntervalTest extends TestCase
 		$this->assertFalse( $interval->isOpenInterval() );
 		$this->assertTrue( $interval->isUnknownInterval() );
 	}
+
+	public function testHasStartAndEndDateForIntervalWithOpenStart(): void {
+		$interval = new Interval(
+			IntervalSide::newOpenInterval(),
+			IntervalSide::newFromDate( new ExtDate( 2020, 2, 8 ) )
+		);
+
+		$this->assertFalse( $interval->hasStartDate() );
+		$this->assertTrue( $interval->hasEndDate() );
+	}
+
+	public function testHasStartAndEndDateForIntervalWithUnknownStart(): void {
+		$interval = new Interval(
+			IntervalSide::newUnknownInterval(),
+			IntervalSide::newFromDate( new ExtDate( 2020, 2, 8 ) )
+		);
+
+		$this->assertFalse( $interval->hasStartDate() );
+		$this->assertTrue( $interval->hasEndDate() );
+	}
+
+	public function testHasStartAndEndDateForIntervalWithOpenEnd(): void {
+		$interval = new Interval(
+			IntervalSide::newFromDate( new ExtDate( 2020, 2, 8 ) ),
+			IntervalSide::newOpenInterval()
+		);
+
+		$this->assertFalse( $interval->hasEndDate() );
+		$this->assertTrue( $interval->hasStartDate() );
+	}
+
+	public function testHasStartAndEndDateForIntervalWithUnknownEnd(): void {
+		$interval = new Interval(
+			IntervalSide::newFromDate( new ExtDate( 2020, 2, 8 ) ),
+			IntervalSide::newUnknownInterval()
+		);
+
+		$this->assertFalse( $interval->hasEndDate() );
+		$this->assertTrue( $interval->hasStartDate() );
+	}
+
 }

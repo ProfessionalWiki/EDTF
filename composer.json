@@ -1,7 +1,7 @@
 {
 	"name": "professional-wiki/edtf",
 	"license": "GPL-2.0-or-later",
-	"description": "EDTF PHP is a small library for parsing, representing and working with the Extended Date/Time Format specification",
+	"description": "PHP library to parse, represent and work with dates that follow the Extended Date/Time Format specification.",
 	"require": {
 		"php": "^7.4|^8",
 		"symfony/polyfill-php80": "^1.18.1",
