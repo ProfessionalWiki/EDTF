@@ -21,6 +21,8 @@ class SeasonTest extends TestCase
         $this->assertSame(2010, $season->getYear());
         $this->assertSame(33, $season->getSeason());
         $this->assertSame([1, 2, 3], $season->getMonths());
+        $this->assertSame(1, $season->getStartMonth());
+        $this->assertSame(3, $season->getEndMonth());
     }
 
     public function testSpringValues(): void

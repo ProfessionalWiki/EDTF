@@ -6,7 +6,6 @@ namespace EDTF\Model;
 
 use EDTF\EdtfValue;
 use EDTF\PackagePrivate\CoversTrait;
-use EDTF\PackagePrivate\Parser\Parser;
 
 class Season implements EdtfValue
 {
@@ -15,86 +14,83 @@ class Season implements EdtfValue
     private int $year;
     private int $season;
 
-    private EdtfValue $start;
-    private EdtfValue $end;
+    private ExtDate $start;
+    private ExtDate $end;
 
     public function __construct(int $year, int $season)
     {
         $this->year = $year;
         $this->season = $season;
 
-        // FIXME: do not do work in the constructor
-		$year = (string)$this->year;
-
-		$this->start = (new Parser())->createEdtf($year.'-'.$this->generateStartMonth());
-		$this->end = (new Parser())->createEdtf($year.'-'.$this->generateEndMonth());
+		$this->start = new ExtDate($year, $this->generateStartMonth());
+		$this->end = new ExtDate($year, $this->generateEndMonth());
     }
 
-    private function generateStartMonth(): string
+    private function generateStartMonth(): int
     {
         switch($this->season){
             case 21:
             case 25:
             case 29:
-                return '03';
+                return 3;
             case 22:
             case 26:
             case 30:
-                return '06';
+                return 6;
             case 23:
             case 27:
             case 31:
             case 39;
-                return '09';
+                return 9;
             case 24:
             case 28:
             case 32:
-                return '12';
+                return 12;
             case 36:
-                return '10';
+                return 10;
             case 34:
-                return '04';
+                return 4;
             case 35:
             case 41:
-                return '07';
+                return 7;
             case 38:
-                return '05';
+                return 5;
             default:
-                return '01';
+                return 1;
         }
     }
 
-    private function generateEndMonth(): string
+    private function generateEndMonth(): int
     {
         switch($this->season){
             case 21:
             case 25:
             case 29:
-                return '05';
+                return 5;
             case 22:
             case 26:
             case 30:
             case 38:
-                return '08';
+                return 8;
             case 23:
             case 27:
             case 31:
-                return '11';
+                return 11;
             case 24:
             case 28:
             case 32:
-                return '02';
+                return 2;
             case 33:
-                return '03';
+                return 3;
             case 34:
             case 40:
-                return '06';
+                return 6;
             case 35:
-                return '09';
+                return 9;
             case 37:
-                return '04';
+                return 4;
             default:
-                return '12';
+                return 12;
         }
     }
 
@@ -171,5 +167,15 @@ class Season implements EdtfValue
             default:
                 return [];
         }
+    }
+
+    public function getStartMonth(): int
+    {
+        return $this->start->getMonth();
+    }
+
+    public function getEndMonth(): int
+    {
+        return $this->end->getMonth();
     }
 }
