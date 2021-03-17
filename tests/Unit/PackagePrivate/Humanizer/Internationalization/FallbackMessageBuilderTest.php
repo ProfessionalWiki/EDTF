@@ -16,19 +16,7 @@ class FallbackMessageBuilderTest extends TestCase
 {
     public function testBuildMessageThrowsException(): void
     {
-        $primaryBuilder = $this->createMock(ArrayMessageBuilder::class);
-        $primaryBuilder
-            ->method('buildMessage')
-            ->willThrowException(new UnknownMessageKey());
-
-        $fallbackBuilder = $this->createMock(ArrayMessageBuilder::class);
-        $fallbackBuilder
-            ->expects($this->once())
-            ->method('buildMessage')
-            ->with('not-existing-key')
-            ->willThrowException(new UnknownMessageKey());
-
-        $builder = new FallbackMessageBuilder($primaryBuilder, $fallbackBuilder);
+        $builder = new FallbackMessageBuilder(new ArrayMessageBuilder([]), new ArrayMessageBuilder([]));
         $this->expectException(UnknownMessageKey::class);
 
         $builder->buildMessage('not-existing-key');
@@ -36,17 +24,8 @@ class FallbackMessageBuilderTest extends TestCase
 
     public function testBuildMessageUseFallbackTranslation(): void
     {
-        $primaryBuilder = $this->createMock(ArrayMessageBuilder::class);
-        $primaryBuilder
-            ->method('buildMessage')
-            ->willThrowException(new UnknownMessageKey());
-
-        $fallbackBuilder = $this->createMock(ArrayMessageBuilder::class);
-        $fallbackBuilder
-            ->expects($this->once())
-            ->method('buildMessage')
-            ->with('random-string')
-            ->willReturn("Random string");
+        $primaryBuilder = new ArrayMessageBuilder([]);
+        $fallbackBuilder = new ArrayMessageBuilder(['random-string' => 'Random string']);
 
         $builder = new FallbackMessageBuilder($primaryBuilder, $fallbackBuilder);
 
@@ -55,18 +34,14 @@ class FallbackMessageBuilderTest extends TestCase
 
     public function testBuildMessageUsePrimaryTranslation(): void
     {
-        $primaryBuilder = $this->createMock(ArrayMessageBuilder::class);
-        $primaryBuilder
-            ->method('buildMessage')
-            ->with('random-string')
-            ->willReturn('Random string');
+        $primaryBuilder = new ArrayMessageBuilder(['random-string' => 'Random string']);
 
-        $fallbackBuilder = $this->createMock(ArrayMessageBuilder::class);
-        $fallbackBuilder
+        $fallbackBuilderSpy = $this->createMock(ArrayMessageBuilder::class);
+        $fallbackBuilderSpy
             ->expects($this->never())
             ->method('buildMessage');
 
-        $builder = new FallbackMessageBuilder($primaryBuilder, $fallbackBuilder);
+        $builder = new FallbackMessageBuilder($primaryBuilder, $fallbackBuilderSpy);
         $this->assertSame("Random string", $builder->buildMessage('random-string'));
     }
 }
