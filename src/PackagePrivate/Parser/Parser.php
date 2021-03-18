@@ -22,22 +22,15 @@ use EDTF\Model\UnspecifiedDigit;
  */
 class Parser
 {
-    private string $regexPattern;
+    private static string $regexPattern = '';
 
     private string $input = "";
-
     private array $matches = [];
-
     private RegexMatchesMapper $mapper;
-
     private ParsedData $parsedData;
 
     public function __construct()
     {
-    	// TODO: avoid file read every time an instance is created
-        $patterns = file_get_contents(__DIR__.'/../../../config/regex.txt');
-        $this->regexPattern = '/'.$patterns.'/';
-
         $this->mapper = new RegexMatchesMapper();
     }
 
@@ -52,7 +45,7 @@ class Parser
         $input = strtoupper($input);
         $this->input = $input;
 
-        preg_match($this->regexPattern, $input, $matches);
+        preg_match($this->getRegexPattern(), $input, $matches);
 
         $this->parsedData = $this->mapper->mapMatchesToObject($matches);
 
@@ -63,6 +56,14 @@ class Parser
             throw new \InvalidArgumentException($validator->getMessages());
         }
         return $this;
+    }
+
+	private function getRegexPattern(): string {
+		if ( self::$regexPattern === '' ) {
+			self::$regexPattern = '/' . file_get_contents(__DIR__.'/../../../config/regex.txt') . '/';
+		}
+
+		return self::$regexPattern;
     }
 
     public function getParsedData(): ParsedData
