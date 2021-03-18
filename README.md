@@ -104,7 +104,7 @@ You can run the style checks by executing
     
 To run all CI checks, execute
 
-    make ci
+    make
     
 You can also invoke PHPUnit directly to pass it arguments, as follows
 
