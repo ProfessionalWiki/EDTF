@@ -11,6 +11,16 @@ EDTF PHP is a small library for parsing, representing and working with the
 
 EDTF PHP was created by and is maintained by [Professional.Wiki]. Initial development was funded by the Luxembourg Ministry of Culture.
 
+- [Usage](#usage)
+  * [Parsing](#parsing)
+  * [Validating](#validating)
+  * [Humanizing](#humanizing)
+  * [Object model](#object-model)
+- [EDTF support and limits](#edtf-support-and-limits)
+- [Installation](#installation)
+- [Development](#development)
+- [Release notes](#release-notes)
+
 ## Usage
 
 ### Parsing
@@ -51,7 +61,7 @@ $edtfDate->isOpenInterval(); // bool
 $edtfDate->getQualification(); // \EDTF\Qualification
 ```
 
-## EDTF support / limits
+## EDTF support and limits
 
 All level 0, 1 and 2 EDTF formats can be parsed and represented, except for:
 
