@@ -14,27 +14,34 @@ use PHPUnit\Framework\TestCase;
  */
 class FallbackMessageBuilderTest extends TestCase
 {
-    private ArrayMessageBuilder $localeMessageBuilder;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->localeMessageBuilder = $this->createMock(ArrayMessageBuilder::class);
-        $this->localeMessageBuilder
-            ->method('buildMessage')
-            ->willThrowException(new UnknownMessageKey());
-    }
-
     public function testBuildMessageThrowsException(): void
     {
-        $fallbackMessageBuilder = new FallbackMessageBuilder($this->localeMessageBuilder, []);
+        $builder = new FallbackMessageBuilder(new ArrayMessageBuilder([]), new ArrayMessageBuilder([]));
         $this->expectException(UnknownMessageKey::class);
-        $fallbackMessageBuilder->buildMessage('not-existing-key');
+
+        $builder->buildMessage('not-existing-key');
     }
 
     public function testBuildMessageUseFallbackTranslation(): void
     {
-        $fallbackMessageBuilder = new FallbackMessageBuilder($this->localeMessageBuilder, ['random-string' => "Random string"]);
-        $this->assertSame("Random string", $fallbackMessageBuilder->buildMessage('random-string'));
+        $primaryBuilder = new ArrayMessageBuilder([]);
+        $fallbackBuilder = new ArrayMessageBuilder(['random-string' => 'Random string']);
+
+        $builder = new FallbackMessageBuilder($primaryBuilder, $fallbackBuilder);
+
+        $this->assertSame("Random string", $builder->buildMessage('random-string'));
+    }
+
+    public function testBuildMessageUsePrimaryTranslation(): void
+    {
+        $primaryBuilder = new ArrayMessageBuilder(['random-string' => 'Random string']);
+
+        $fallbackBuilderSpy = $this->createMock(ArrayMessageBuilder::class);
+        $fallbackBuilderSpy
+            ->expects($this->never())
+            ->method('buildMessage');
+
+        $builder = new FallbackMessageBuilder($primaryBuilder, $fallbackBuilderSpy);
+        $this->assertSame("Random string", $builder->buildMessage('random-string'));
     }
 }

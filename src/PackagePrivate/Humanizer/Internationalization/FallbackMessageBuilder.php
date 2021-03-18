@@ -4,20 +4,16 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer\Internationalization;
 
-class FallbackMessageBuilder extends ArrayMessageBuilder implements MessageBuilder
+class FallbackMessageBuilder implements MessageBuilder
 {
-    /**
-     * @var MessageBuilder
-     */
-    private MessageBuilder $builder;
+    private MessageBuilder $primaryBuilder;
 
-    /**
-     * @param array<string, string> $messages
-     */
-    public function __construct(MessageBuilder $builder, array $messages)
+    private MessageBuilder $fallbackBuilder;
+
+    public function __construct(MessageBuilder $primaryBuilder, MessageBuilder $fallbackBuilder)
     {
-        parent::__construct($messages);
-        $this->builder = $builder;
+        $this->primaryBuilder = $primaryBuilder;
+        $this->fallbackBuilder = $fallbackBuilder;
     }
 
     /**
@@ -26,9 +22,9 @@ class FallbackMessageBuilder extends ArrayMessageBuilder implements MessageBuild
     public function buildMessage(string $messageKey, string ...$arguments): string
     {
         try {
-            $message = $this->builder->buildMessage($messageKey, ...$arguments);
+            $message = $this->primaryBuilder->buildMessage($messageKey, ...$arguments);
         } catch (UnknownMessageKey $exception) {
-            $message = $this->getTranslation($messageKey, ...$arguments);
+            $message = $this->fallbackBuilder->buildMessage($messageKey, ...$arguments);
         }
 
         return $message;
