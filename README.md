@@ -98,7 +98,7 @@ You can run the tests by executing
 
     make test
     
-You can run the style checks by executing
+You can run style checks and static analysis by executing
 
     make cs
     
