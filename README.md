@@ -100,6 +100,17 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
     vendor/bin/phpunit --filter SomeClassNameOrFilter
 
+## Release notes
+
+### Version 1.0.0 - 2021-03-19
+
+* Initial release with
+    * Support for EDTF levels 0, 1 and 2
+    * Parsing
+    * Object model
+    * Internationalized humanization
+    * Validation service
+    * Example data
 
 [Professional.Wiki]: https://professional.wiki
 [Extended Date/Time Format]: https://www.loc.gov/standards/datetime/
