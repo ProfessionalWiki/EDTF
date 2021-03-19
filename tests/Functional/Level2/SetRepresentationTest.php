@@ -203,4 +203,17 @@ class SetRepresentationTest extends TestCase
         $expectedMax = Carbon::create(1984, 12, 31, 23, 59, 59)->getTimestamp();
         $this->assertSame($expectedMax, $set->getMax());
     }
+
+    public function testOpenMiddleWithMonths(): void {
+    	self::markTestSkipped( 'FIXME!' ); // FIXME
+//		$this->assertEquals(
+//			[
+//				new ExtDate( 2020, 1, null ),
+//				new ExtDate( 2020, 2, null ),
+//				new ExtDate( 2020, 3, null ),
+//				new ExtDate( 2020, 4, null ),
+//			],
+//			$this->createSet('{2020-01..2020-04}')->getDates()
+//		);
+    }
 }
