@@ -9,11 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer
+ * @covers \EDTF\PackagePrivate\Humanizer\PrivateStructuredHumanizer
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Model\Interval
  * @covers \EDTF\Model\IntervalSide
  */
-class EnglishHumanizerTest extends TestCase {
+class EnglishHumanizationTest extends TestCase {
 
 	public function humanizationProvider(): \Generator {
 		yield 'Full date' => [ '1975-07-01', 'July 1st, 1975' ];
@@ -76,5 +77,42 @@ class EnglishHumanizerTest extends TestCase {
 			)
 		);
 	}
+
+	/**
+	 * @dataProvider setHumanizationProvider
+	 */
+	public function testSetHumanization( string $edtf, string $humanized ): void {
+		$this->assertSame(
+			$humanized,
+			EdtfFactory::newStructuredHumanizerForLanguage( 'en' )->humanize(
+				EdtfFactory::newParser()->parse( $edtf )->getEdtfValue()
+			)->getSimpleHumanization()
+		);
+	}
+
+	public function setHumanizationProvider(): \Generator {
+		yield 'Disjunction' => [ '[2020, 2021]', '2020 or 2021' ];
+		yield 'Conjunction' => [ '{2020, 2021}', '2020 and 2021' ];
+
+		yield '.. between years' => [ '{2020..2022}', 'All of these: 2020, 2021, 2022' ];
+		yield 'Open start' => [ '{..2020}', 'All of these: 2020' ]; // FIXME
+		yield 'Open end' => [ '{2020..}', 'All of these: 2020' ]; // FIXME
+
+//		yield '.. between months' => [ '{2020-01..2020-03}', 'All of these: January 2020, February 2020, March 2020' ]; // FIXME
+	}
+
+	// FIXME
+//	public function testStructuredSetHumanization(): void {
+//		$this->assertSame(
+//			[],
+//			$this->getStructuredHumanization( '{..1983-12-31,1984-10-10..1984-11-01,1984-11-05..}' )
+//		);
+//	}
+//
+//	private function getStructuredHumanization( string $edtf ): array {
+//		return EdtfFactory::newStructuredHumanizerForLanguage( 'en' )->humanize(
+//			EdtfFactory::newParser()->parse( $edtf )->getEdtfValue()
+//		)->getStructuredHumanization();
+//	}
 
 }
