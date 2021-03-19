@@ -41,10 +41,18 @@ class ExtDate implements EdtfValue
         $this->month = $month;
         $this->day = $day;
 		$this->year = $this->fixedYear( $year );
-        $this->qualification = is_null($qualification) ? new Qualification():$qualification;
-        $this->unspecifiedDigit = is_null($unspecified) ? new UnspecifiedDigit():$unspecified;
+        $this->qualification = $qualification ?? new Qualification();
+        $this->unspecifiedDigit = $unspecified ?? $this->newUnspecifiedDigit( $year, $month, $day );
 
         $this->datetimeFactory = new CarbonFactory();
+    }
+
+	private function newUnspecifiedDigit( ?int $year, ?int $month, ?int $day ): UnspecifiedDigit {
+    	return new UnspecifiedDigit(
+			$year === null ? null :  (string)$year,
+			$month === null ? null : str_pad( (string)$month, 2, '0', STR_PAD_LEFT ),
+			$day === null ? null : str_pad( (string)$day, 2, '0', STR_PAD_LEFT ),
+		);
     }
 
     // TODO: fix parser - it should not give null for "year 0"

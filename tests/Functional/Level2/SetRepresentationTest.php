@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EDTF\Tests\Functional\Level2;
 
 use Carbon\Carbon;
+use EDTF\Model\ExtDate;
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -21,14 +22,18 @@ class SetRepresentationTest extends TestCase
     {
         $set = $this->createSet('[1667,1668,1670..1672]');
 
-        $lists = $set->getDates();
-
         $this->assertFalse($set->isAllMembers());
-        $this->assertSame(1667, $lists[0]->getYear());
-        $this->assertSame(1668, $lists[1]->getYear());
-        $this->assertSame(1670, $lists[2]->getYear());
-        $this->assertSame(1671, $lists[3]->getYear());
-        $this->assertSame(1672, $lists[4]->getYear());
+
+        $this->assertEquals(
+        	[
+				new ExtDate( 1667 ),
+				new ExtDate( 1668 ),
+				new ExtDate( 1670 ),
+				new ExtDate( 1671 ),
+				new ExtDate( 1672 ),
+			],
+			$set->getDates()
+        );
 
         $expectedMin = Carbon::create(1667)->getTimestamp();
         $this->assertSame($expectedMin, $set->getMin());
@@ -40,15 +45,17 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithEarlierDate(): void
     {
         $set = $this->createSet('[..1760-12-03]');
-        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
         $this->assertTrue($set->hasOpenStart());
         $this->assertFalse($set->hasOpenEnd());
 
-        $this->assertSame(1760, $lists[0]->getYear());
-        $this->assertSame(12, $lists[0]->getMonth());
-        $this->assertSame(3, $lists[0]->getDay());
+		$this->assertEquals(
+			[
+				new ExtDate( 1760, 12, 3 ),
+			],
+			$set->getDates()
+		);
 
         $this->assertSame(0, $set->getMin());
 
@@ -59,15 +66,17 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithLaterMonth(): void
     {
         $set = $this->createSet('[1760-12..]');
-        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
         $this->assertFalse($set->hasOpenStart());
         $this->assertTrue($set->hasOpenEnd());
 
-        $this->assertSame(1760, $lists[0]->getYear());
-        $this->assertSame(12, $lists[0]->getMonth());
-        $this->assertNull($lists[0]->getDay());
+		$this->assertEquals(
+			[
+				new ExtDate( 1760, 12, null ),
+			],
+			$set->getDates()
+		);
 
         $expectedMin = Carbon::create(1760, 12, 1)->getTimestamp();
         $this->assertSame($expectedMin, $set->getMin());
@@ -78,16 +87,19 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithLaterMonthAndPrecision(): void
     {
         $set = $this->createSet('[1760-01,1760-02,1760-12..]');
-        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
         $this->assertFalse($set->hasOpenStart());
         $this->assertTrue($set->hasOpenEnd());
 
-        $this->assertCount(3, $lists);
-        $this->assertSame(1, $lists[0]->getMonth());
-        $this->assertSame(2, $lists[1]->getMonth());
-        $this->assertSame(12, $lists[2]->getMonth());
+		$this->assertEquals(
+			[
+				new ExtDate( 1760, 1, null ),
+				new ExtDate( 1760, 2, null ),
+				new ExtDate( 1760, 12, null ),
+			],
+			$set->getDates()
+		);
 
         $expectedMin = Carbon::create(1760)->getTimestamp();
         $this->assertSame($expectedMin, $set->getMin());
@@ -98,16 +110,18 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithYearPrecisionOrYearMonthPrecision(): void
     {
         $set = $this->createSet('[1667,1760-12]');
-        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
         $this->assertFalse($set->hasOpenStart());
         $this->assertFalse($set->hasOpenEnd());
 
-        $this->assertCount(2, $lists);
-        $this->assertSame(1667, $lists[0]->getYear());
-        $this->assertSame(1760, $lists[1]->getYear());
-        $this->assertSame(12, $lists[1]->getMonth());
+		$this->assertEquals(
+			[
+				new ExtDate( 1667, null, null ),
+				new ExtDate( 1760, 12, null ),
+			],
+			$set->getDates()
+		);
 
         $expectedMin = Carbon::create(1667)->getTimestamp();
         $this->assertSame($expectedMin, $set->getMin());
@@ -119,14 +133,17 @@ class SetRepresentationTest extends TestCase
     public function testOneOfWithYearOnlyPrecisionAndEarlier(): void
     {
         $set = $this->createSet('[..1984]');
-        $lists = $set->getDates();
 
         $this->assertFalse($set->isAllMembers());
         $this->assertTrue($set->hasOpenStart());
         $this->assertFalse($set->hasOpenEnd());
 
-        $this->assertCount(1, $lists);
-        $this->assertSame(1984, $lists[0]->getYear());
+		$this->assertEquals(
+			[
+				new ExtDate( 1984, null, null ),
+			],
+			$set->getDates()
+		);
 
         $this->assertSame(0, $set->getMin());
 

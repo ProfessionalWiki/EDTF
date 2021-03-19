@@ -58,10 +58,10 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 		return $this->messageBuilder->buildMessage( $key, ...$parameters );
 	}
 
-	private function getHumanizedDatesFromSet( Set $edtf ): HumanizedSetDates {
+	private function getHumanizedDatesFromSet( Set $set ): HumanizedSetDates {
 		$humanizedDates = [];
 
-		foreach ( $edtf->getDates() as $date ) {
+		foreach ( $set->getDates() as $date ) {
 			$humanizedDates[] = $this->humanizer->humanize( $date );
 		}
 
