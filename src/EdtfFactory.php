@@ -6,6 +6,7 @@ namespace EDTF;
 
 use EDTF\PackagePrivate\Humanizer\Internationalization\ArrayMessageBuilder;
 use EDTF\PackagePrivate\Humanizer\Internationalization\FallbackMessageBuilder;
+use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 use EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\JsonFileLoader;
 use EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\LoaderException;
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
@@ -31,17 +32,23 @@ class EdtfFactory {
      */
 	public static function newHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): Humanizer
     {
-        $loader = new JsonFileLoader();
-        $messages = $loader->load($languageCode);
+        return new InternationalizedHumanizer(
+        	self::newMessageBuilder($languageCode, $fallbackLanguageCode),
+			self::getLanguageStrategy($languageCode)
+		);
+	}
 
-        if ($languageCode !== $fallbackLanguageCode) {
-            $fallbackMessages = $loader->load($fallbackLanguageCode);
-            $messageBuilder = new FallbackMessageBuilder(new ArrayMessageBuilder($messages), new ArrayMessageBuilder($fallbackMessages));
-        } else {
-            $messageBuilder = new ArrayMessageBuilder($messages);
-        }
+	private static function newMessageBuilder( string $languageCode, string $fallbackLanguageCode ): MessageBuilder {
+		$loader = new JsonFileLoader();
 
-        return new InternationalizedHumanizer($messageBuilder, self::getLanguageStrategy($languageCode));
+		if ($languageCode === $fallbackLanguageCode) {
+			return $messageBuilder = new ArrayMessageBuilder($loader->load($languageCode));
+		}
+
+		return new FallbackMessageBuilder(
+			new ArrayMessageBuilder($loader->load($languageCode)),
+			new ArrayMessageBuilder($loader->load($fallbackLanguageCode))
+		);
 	}
 
     /**
@@ -57,14 +64,9 @@ class EdtfFactory {
     {
         switch ($languageCode) {
             case "fr":
-                $strategy = new FrenchStrategy();
-                break;
-            case "en":
-            default:
-                $strategy = new EnglishStrategy();
-                break;
+                return new FrenchStrategy();
         }
 
-        return $strategy;
+        return new EnglishStrategy();
     }
 }
