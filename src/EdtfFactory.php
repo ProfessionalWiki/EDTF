@@ -54,9 +54,10 @@ class EdtfFactory {
     /**
      * @throws LoaderException
      */
-	public static function newStructuredHumanizerForLanguage( string $languageCode ): StructuredHumanizer {
+	public static function newStructuredHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): StructuredHumanizer {
 		return new PrivateStructuredHumanizer(
-			self::newHumanizerForLanguage( $languageCode )
+			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode ),
+			self::newMessageBuilder($languageCode, $fallbackLanguageCode)
 		);
 	}
 

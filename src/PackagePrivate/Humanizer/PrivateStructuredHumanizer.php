@@ -8,14 +8,17 @@ use EDTF\EdtfValue;
 use EDTF\HumanizationResult;
 use EDTF\Humanizer;
 use EDTF\Model\Set;
+use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 use EDTF\StructuredHumanizer;
 
 class PrivateStructuredHumanizer implements StructuredHumanizer {
 
 	private Humanizer $humanizer;
+	private MessageBuilder $messageBuilder;
 
-	public function __construct( Humanizer $humanizer ) {
+	public function __construct( Humanizer $humanizer, MessageBuilder $messageBuilder ) {
 		$this->humanizer = $humanizer;
+		$this->messageBuilder = $messageBuilder;
 	}
 
 	public function humanize( EdtfValue $edtf ): HumanizationResult {
@@ -34,7 +37,7 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 
 	private function humanizeSet( Set $edtf ): HumanizationResult {
 		if ( $edtf->getDates() === [] ) {
-			return HumanizationResult::newSimpleHumanization( 'Empty set' ); // TODO i18n
+			return HumanizationResult::newSimpleHumanization( $this->message( 'edtf-empty-set' ) );
 		}
 
 		$humanizedDates = $this->getHumanizedDatesFromSet( $edtf );
@@ -42,13 +45,17 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 		if ( $humanizedDates->shouldUseList() ) {
 			return HumanizationResult::newStructuredHumanization(
 				$humanizedDates->humanizedDates,
-				$edtf->isAllMembers() ? 'All of these:' : 'One of these:' // TODO i18n
+				$this->message( $edtf->isAllMembers() ? 'edtf-all-of-these' : 'edtf-one-of-these' )
 			);
 		}
 
 		return HumanizationResult::newSimpleHumanization(
 			$this->humanizeSetDatesToSingleMessage( $humanizedDates, $edtf->isAllMembers() )
 		);
+	}
+
+	private function message( string $key, string ...$parameters ): string {
+		return $this->messageBuilder->buildMessage( $key, ...$parameters );
 	}
 
 	private function getHumanizedDatesFromSet( Set $edtf ): HumanizedSetDates {
@@ -63,18 +70,17 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 
 	private function humanizeSetDatesToSingleMessage( HumanizedSetDates $humanizedDates, bool $isAllMembers ): string {
 		if ( count( $humanizedDates->humanizedDates ) === 2 ) {
-			if ( $isAllMembers ) {
-				return $humanizedDates->humanizedDates[0] . ' and ' . $humanizedDates->humanizedDates[1]; // TODO i18n
-			}
-
-			return $humanizedDates->humanizedDates[0] . ' or ' . $humanizedDates->humanizedDates[1]; // TODO i18n
+			return $this->message(
+				$isAllMembers ? 'edtf-both-dates' : 'edtf-one-of-two-dates',
+				$humanizedDates->humanizedDates[0],
+				$humanizedDates->humanizedDates[1]
+			);
 		}
 
-		if ( $isAllMembers ) {
-			return 'All of these: ' . implode( ', ', $humanizedDates->humanizedDates ); // TODO i18n
-		}
-
-		return 'One of these: ' . implode( ', ', $humanizedDates->humanizedDates ); // TODO i18n
+		return $this->message(
+			$isAllMembers ? 'edtf-inline-all-of-these' : 'edtf-inline-one-of-these',
+			implode( ', ', $humanizedDates->humanizedDates )
+		);
 	}
 
 }

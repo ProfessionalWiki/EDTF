@@ -56,7 +56,6 @@ class InternationalizedHumanizer implements Humanizer {
     ];
 
 	private MessageBuilder $messageBuilder;
-
     private LanguageStrategy $languageStrategy;
 
     public function __construct( MessageBuilder $messageBuilder, LanguageStrategy $languageStrategy ) {
