@@ -112,6 +112,10 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 1.0.1
+
+* Fixed handling of "year 0"
+
 ### Version 1.0.0 - 2021-03-19
 
 * Initial release with

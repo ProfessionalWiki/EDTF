@@ -143,7 +143,7 @@ class ExtDateTest extends TestCase
         $date = $this->createExtDate('0000');
 
         $this->assertInstanceOf(ExtDate::class, $date);
-        $this->assertNull($date->getYear());
+        $this->assertSame(0, $date->getYear());
         $this->assertNull($date->getMonth());
         $this->assertNull($date->getDay());
     }
