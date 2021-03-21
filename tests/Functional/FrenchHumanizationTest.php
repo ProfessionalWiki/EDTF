@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\Model\Interval
  * @covers \EDTF\Model\IntervalSide
  */
-class FrenchHumanizerTest extends TestCase
+class FrenchHumanizationTest extends TestCase
 {
     public function humanizationProvider(): \Generator {
         yield 'Interval year and month' => [ '2019-01/2021-02', 'De janvier 2019 à février 2021' ];

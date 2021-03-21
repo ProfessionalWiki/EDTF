@@ -1,13 +1,18 @@
 {
+	"@metadata": {
+		"authors": [
+			"Martsniez",
+			"Verdy p"
+		]
+	},
+	"edtf-description": "Deze PHP bibliotheek wordt gebruikt om dynamisch data in het EDTF-formaat om te zetten naar 'menselijk leesbare tekst' Hierdoor kan een tekst als 2001-21 omgezet worden naar \"de lente van 2001\".\n\nHierdoor zijn vertalingen van bijvoorbeeld seizoenen in kleine letters geschreven.",
+	"edtf-maybe-circa": "Approximate {{EdtfDate}} with uncertainty. $1 is a date",
 	"edtf-circa": "Approximate {{EdtfDate}}. $1 is a date",
 	"edtf-maybe": "{{EdtfDate}} with uncertainty. $1 is a date",
-	"edtf-maybe-circa": "Approximate {{EdtfDate}} with uncertainty. $1 is a date",
-
 	"edtf-spring": "Spring season, often combined with a year",
 	"edtf-summer": "Summer season, often combined with a year",
 	"edtf-autumn": "Autumn season, often combined with a year",
 	"edtf-winter": "Winter season, often combined with a year",
-
 	"edtf-spring-north": "Spring season in Northern Hemisphere of Earth",
 	"edtf-summer-north": "Summer season in Northern Hemisphere of Earth",
 	"edtf-autumn-north": "Autumn season in Northern Hemisphere of Earth",
@@ -16,27 +21,21 @@
 	"edtf-summer-south": "Summer season in Southern Hemisphere of Earth",
 	"edtf-autumn-south": "Autumn season in Southern Hemisphere of Earth",
 	"edtf-winter-south": "Winter season in Southern Hemisphere of Earth",
-
 	"edtf-quarter-1": "First quarter of the year (3 months), often combined with a year",
 	"edtf-quarter-2": "Second quarter of the year (3 months), often combined with a year",
 	"edtf-quarter-3": "Third quarter of the year (3 months), often combined with a year",
 	"edtf-quarter-4": "Fourth quarter of the year (3 months), often combined with a year",
-
 	"edtf-quadrimester-1": "First quadrimester of the year (4 months), often combined with a year",
 	"edtf-quadrimester-2": "Second quadrimester of the year (4 months), often combined with a year",
 	"edtf-quadrimester-3": "Third quadrimester of the year (4 months), often combined with a year",
-
 	"edtf-semester-1": "First semester of the year (6 months), often combined with a year",
 	"edtf-semester-2": "Second semester of the year (6 months), often combined with a year",
-
-	"edtf-full-date": "Fully specified {{EdtfDate}} - day ($3), month ($2) and year ($1)",
-
-	"edtf-season-and-year": "Concatenation of season ($1) and year ($2)",
+	"edtf-full-date": "Fully specified {{EdtfDate}} - day ($3), month ($2) and year ($1).\n\nChange the order and separators according to the most common convention in the target language when specifying a full date in the common calendar.",
+	"edtf-season-and-year": "Concatenation of season ($1) and year ($2)\n\ner is geen lidwoord toegevoegd omdat ik vermoed dat op $1 ook kwartalen, tertalen en semester gebruikt wordt.",
 	"edtf-day-and-year": "Concatenation of day ($1) and year ($2), month is unknown",
 	"edtf-bc-year": "Earlier then 0 year of humanity years chronology (BC). $1 is a year, 4 digits long (>1000). Word 'year' is skipped",
 	"edtf-bc-year-short": "Earlier then 0 year of humanity years chronology (BC). $1 is a year, less then 4 digits long. Explicitly specifies word 'year' after/before the digits",
 	"edtf-year-short": "$1 is a year, less then 4 digits long. Explicitly specifies word 'year' after/before the digits",
-
 	"edtf-january": "January",
 	"edtf-february": "February",
 	"edtf-march": "March",
@@ -49,12 +48,19 @@
 	"edtf-october": "October",
 	"edtf-november": "November",
 	"edtf-december": "December",
-
 	"edtf-interval-normal": "Interval with both 'from' and 'to' margins specified. $1 and $2 - {{EdtfDate}}",
 	"edtf-interval-open-end": "Interval starting at {{EdtfDate}} specified as $1. End is open",
 	"edtf-interval-open-start": "Interval with open start. Ending at {{EdtfDate}} specified as $1",
 	"edtf-interval-unknown-end": "Interval starting at {{EdtfDate}} specified as $1. End is unknown",
 	"edtf-interval-unknown-start": "Interval with unknown start. Ending at {{EdtfDate}} specified as $1",
+	"edtf-local-time": "Local time",
 
-	"edtf-local-time": "Local time"
+	"edtf-all-of-these": "Shown above a (bulleted) list of dates",
+	"edtf-one-of-these": "Shown above a (bulleted) list of dates",
+
+	"edtf-both-dates": "A date that is a combination of two dates. $1 and $2 are both an {{EdtfDate}}",
+	"edtf-one-of-two-dates": "A date that is either the first or the second date. $1 and $2 are both an {{EdtfDate}}",
+
+	"edtf-inline-all-of-these": "$1 is a list of comma separated dates. Indicates the value is all of these dates.",
+	"edtf-inline-one-of-these": "$1 is a list of comma separated dates. Indicates the value is one of these dates."
 }

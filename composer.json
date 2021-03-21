@@ -2,6 +2,18 @@
 	"name": "professional-wiki/edtf",
 	"license": "GPL-2.0-or-later",
 	"description": "PHP library to parse, represent and work with dates that follow the Extended Date/Time Format specification.",
+	"authors": [
+		{
+			"name": "Professional.Wiki",
+			"email": "info@professional.wiki",
+			"homepage": "https://Professional.Wiki"
+		},
+		{
+			"name": "Jeroen De Dauw",
+			"email": "jeroendedauw@gmail.com",
+			"homepage": "https://www.EntropyWins.wtf/mediawiki"
+		}
+	],
 	"require": {
 		"php": "^7.4|^8",
 		"symfony/polyfill-php80": "^1.18.1",

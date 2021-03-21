@@ -6,6 +6,7 @@ namespace EDTF;
 
 use EDTF\PackagePrivate\Humanizer\Internationalization\ArrayMessageBuilder;
 use EDTF\PackagePrivate\Humanizer\Internationalization\FallbackMessageBuilder;
+use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 use EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\JsonFileLoader;
 use EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\LoaderException;
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
@@ -36,25 +37,36 @@ class EdtfFactory {
         string $fallbackLanguageCode = 'en',
         $translationDir = self::I18N_DIR
     ): Humanizer {
-        $loader = new JsonFileLoader($translationDir);
-        $messages = $loader->load($languageCode);
+        return new InternationalizedHumanizer(
+        	self::newMessageBuilder($languageCode, $fallbackLanguageCode, $translationDir),
+			self::getLanguageStrategy($languageCode)
+		);
+	}
 
-        if ($languageCode !== $fallbackLanguageCode) {
-            $fallbackMessages = $loader->load($fallbackLanguageCode);
-            $messageBuilder = new FallbackMessageBuilder(new ArrayMessageBuilder($messages), new ArrayMessageBuilder($fallbackMessages));
-        } else {
-            $messageBuilder = new ArrayMessageBuilder($messages);
-        }
+	private static function newMessageBuilder(
+	    string $languageCode,
+        string $fallbackLanguageCode,
+        string $translationDir
+    ): MessageBuilder {
+		$loader = new JsonFileLoader($translationDir);
 
-        return new InternationalizedHumanizer($messageBuilder, self::getLanguageStrategy($languageCode));
+		if ($languageCode === $fallbackLanguageCode) {
+			return $messageBuilder = new ArrayMessageBuilder($loader->load($languageCode));
+		}
+
+		return new FallbackMessageBuilder(
+			new ArrayMessageBuilder($loader->load($languageCode)),
+			new ArrayMessageBuilder($loader->load($fallbackLanguageCode))
+		);
 	}
 
     /**
      * @throws LoaderException
      */
-	public static function newStructuredHumanizerForLanguage( string $languageCode ): StructuredHumanizer {
+	public static function newStructuredHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): StructuredHumanizer {
 		return new PrivateStructuredHumanizer(
-			self::newHumanizerForLanguage( $languageCode )
+			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode ),
+			self::newMessageBuilder($languageCode, $fallbackLanguageCode)
 		);
 	}
 
@@ -62,14 +74,9 @@ class EdtfFactory {
     {
         switch ($languageCode) {
             case "fr":
-                $strategy = new FrenchStrategy();
-                break;
-            case "en":
-            default:
-                $strategy = new EnglishStrategy();
-                break;
+                return new FrenchStrategy();
         }
 
-        return $strategy;
+        return new EnglishStrategy();
     }
 }

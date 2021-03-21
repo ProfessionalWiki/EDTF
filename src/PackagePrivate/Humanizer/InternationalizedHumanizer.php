@@ -56,7 +56,6 @@ class InternationalizedHumanizer implements Humanizer {
     ];
 
 	private MessageBuilder $messageBuilder;
-
     private LanguageStrategy $languageStrategy;
 
     public function __construct( MessageBuilder $messageBuilder, LanguageStrategy $languageStrategy ) {
@@ -160,7 +159,6 @@ class InternationalizedHumanizer implements Humanizer {
 
 	private function humanizeYear( int $year, UnspecifiedDigit $unspecifiedDigit ): string
     {
-	    $endingChar = $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
 	    $yearStr = (string) abs($year);
 
 	    if ($year <= -1000) {
@@ -170,6 +168,8 @@ class InternationalizedHumanizer implements Humanizer {
 	    if ($year < 0) {
 	        return $this->message('edtf-bc-year-short', $yearStr);
         }
+
+		$endingChar = $this->needsYearEndingChar($unspecifiedDigit) ? 's' : '';
 
 	    if ($year < 1000) {
 	        return $this->message('edtf-year-short', $yearStr . $endingChar);

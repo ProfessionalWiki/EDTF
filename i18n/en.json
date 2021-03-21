@@ -57,5 +57,16 @@
 	"edtf-interval-unknown-end": "From $1 to unknown",
 	"edtf-interval-unknown-start": "From unknown to $1",
 
-	"edtf-local-time": "local time"
+	"edtf-local-time": "local time",
+
+	"edtf-empty-set": "Empty set",
+
+	"edtf-all-of-these": "All of these:",
+	"edtf-one-of-these": "One of these:",
+
+	"edtf-both-dates": "$1 and $2",
+	"edtf-one-of-two-dates": "$1 or $2",
+
+	"edtf-inline-all-of-these": "All of these: $1",
+	"edtf-inline-one-of-these": "One of these: $1"
 }

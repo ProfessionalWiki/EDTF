@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"edtf-spring": "Primavera",
+	"edtf-summer": "Estate",
+	"edtf-autumn": "Autunno",
+	"edtf-winter": "Inverno",
+	"edtf-spring-north": "Primavera (emisfero settentrionale)",
+	"edtf-summer-north": "Estate (emisfero settentrionale)",
+	"edtf-autumn-north": "Autunno (emisfero settentrionale)",
+	"edtf-winter-north": "Inverno (emisfero settentrionale)",
+	"edtf-spring-south": "Primavera (emisfero meridionale)",
+	"edtf-summer-south": "Estate (emisfero meridionale)",
+	"edtf-autumn-south": "Autunno (emisfero meridionale)",
+	"edtf-winter-south": "Inverno (emisfero meridionale)",
+	"edtf-quarter-1": "Primo trimestre",
+	"edtf-quarter-3": "Terzo trimestre",
+	"edtf-quarter-4": "Quarto trimestre",
+	"edtf-quadrimester-2": "Secondo trimestre",
+	"edtf-quadrimester-3": "Terzo quadrimestre",
+	"edtf-semester-1": "Primo semestre",
+	"edtf-full-date": "$3 $2 $1",
+	"edtf-bc-year": "$1 a.C.",
+	"edtf-january": "Gennaio",
+	"edtf-february": "Febbraio",
+	"edtf-march": "Marzo",
+	"edtf-april": "Aprile",
+	"edtf-may": "Maggio",
+	"edtf-june": "Giugno",
+	"edtf-july": "Luglio",
+	"edtf-august": "Agosto",
+	"edtf-september": "Settembre",
+	"edtf-october": "Ottobre",
+	"edtf-november": "Novembre",
+	"edtf-december": "Dicembre",
+	"edtf-interval-normal": "$1 a $2"
+}

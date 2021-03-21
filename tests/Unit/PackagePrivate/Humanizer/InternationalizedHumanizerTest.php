@@ -230,4 +230,5 @@ class InternationalizedHumanizerTest extends TestCase
             "Message builder was called with " . implode(', ', $allMessageKeys)
         );
     }
+
 }
