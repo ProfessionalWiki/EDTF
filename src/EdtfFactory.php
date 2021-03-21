@@ -43,6 +43,9 @@ class EdtfFactory {
 		);
 	}
 
+    /**
+     * @throws LoaderException
+     */
 	private static function newMessageBuilder(
 	    string $languageCode,
         string $fallbackLanguageCode,
@@ -63,10 +66,14 @@ class EdtfFactory {
     /**
      * @throws LoaderException
      */
-	public static function newStructuredHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): StructuredHumanizer {
+	public static function newStructuredHumanizerForLanguage(
+	    string $languageCode,
+        string $fallbackLanguageCode = 'en',
+        $translationDir = self::I18N_DIR
+    ): StructuredHumanizer {
 		return new PrivateStructuredHumanizer(
-			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode ),
-			self::newMessageBuilder($languageCode, $fallbackLanguageCode)
+			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode, $translationDir ),
+			self::newMessageBuilder($languageCode, $fallbackLanguageCode, $translationDir)
 		);
 	}
 
