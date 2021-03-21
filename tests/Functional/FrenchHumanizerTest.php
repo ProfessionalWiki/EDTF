@@ -61,4 +61,20 @@ class FrenchHumanizerTest extends TestCase
             )
         );
     }
+
+    public function testFallbackEnglishTranslationForJanuary(): void
+    {
+        $testResourcesPath = __DIR__ . '/resources/i18n';
+        $humanizer = EdtfFactory::newHumanizerForLanguage('fr', 'en', $testResourcesPath);
+
+        $this->assertSame(
+            "January 1980",
+            $humanizer->humanize(EdtfFactory::newParser()->parse('1980-01')->getEdtfValue())
+        );
+
+        $this->assertSame(
+            "Février 1980",
+            $humanizer->humanize(EdtfFactory::newParser()->parse('1980-02')->getEdtfValue())
+        );
+    }
 }

@@ -18,6 +18,8 @@ use EDTF\PackagePrivate\Validator;
 
 class EdtfFactory {
 
+    private const I18N_DIR = __DIR__ . "/../i18n";
+
 	public static function newParser(): EdtfParser {
 		return new SaneParser();
 	}
@@ -29,9 +31,12 @@ class EdtfFactory {
     /**
      * @throws LoaderException
      */
-	public static function newHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): Humanizer
-    {
-        $loader = new JsonFileLoader();
+	public static function newHumanizerForLanguage(
+	    string $languageCode,
+        string $fallbackLanguageCode = 'en',
+        $translationDir = self::I18N_DIR
+    ): Humanizer {
+        $loader = new JsonFileLoader($translationDir);
         $messages = $loader->load($languageCode);
 
         if ($languageCode !== $fallbackLanguageCode) {
