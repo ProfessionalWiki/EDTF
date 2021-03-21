@@ -6,17 +6,22 @@ namespace EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader;
 
 class JsonFileLoader implements Loader
 {
-    private const I18N_DIR = __DIR__ . "/../../../../../i18n";
+    private string $i18nPath;
+
+    public function __construct(string $i18nPath)
+    {
+        $this->i18nPath = $i18nPath;
+    }
 
     /**
      * @throws LoaderException
      */
     public function load(string $languageCode): array
     {
-        $file = self::I18N_DIR . "/$languageCode.json";
+        $file = $this->i18nPath . "/$languageCode.json";
 
         if (!file_exists($file)) {
-            $file = self::I18N_DIR . "/en.json";
+            $file = $this->i18nPath . "/en.json";
         }
 
         $json = file_get_contents($file);

@@ -19,6 +19,8 @@ use EDTF\PackagePrivate\Validator;
 
 class EdtfFactory {
 
+    private const I18N_DIR = __DIR__ . "/../i18n";
+
 	public static function newParser(): EdtfParser {
 		return new SaneParser();
 	}
@@ -30,16 +32,26 @@ class EdtfFactory {
     /**
      * @throws LoaderException
      */
-	public static function newHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): Humanizer
-    {
+	public static function newHumanizerForLanguage(
+	    string $languageCode,
+        string $fallbackLanguageCode = 'en',
+        $translationDir = self::I18N_DIR
+    ): Humanizer {
         return new InternationalizedHumanizer(
-        	self::newMessageBuilder($languageCode, $fallbackLanguageCode),
+        	self::newMessageBuilder($languageCode, $fallbackLanguageCode, $translationDir),
 			self::getLanguageStrategy($languageCode)
 		);
 	}
 
-	private static function newMessageBuilder( string $languageCode, string $fallbackLanguageCode ): MessageBuilder {
-		$loader = new JsonFileLoader();
+    /**
+     * @throws LoaderException
+     */
+	private static function newMessageBuilder(
+	    string $languageCode,
+        string $fallbackLanguageCode,
+        string $translationDir
+    ): MessageBuilder {
+		$loader = new JsonFileLoader($translationDir);
 
 		if ($languageCode === $fallbackLanguageCode) {
 			return $messageBuilder = new ArrayMessageBuilder($loader->load($languageCode));
@@ -54,10 +66,14 @@ class EdtfFactory {
     /**
      * @throws LoaderException
      */
-	public static function newStructuredHumanizerForLanguage( string $languageCode, string $fallbackLanguageCode = 'en' ): StructuredHumanizer {
+	public static function newStructuredHumanizerForLanguage(
+	    string $languageCode,
+        string $fallbackLanguageCode = 'en',
+        $translationDir = self::I18N_DIR
+    ): StructuredHumanizer {
 		return new PrivateStructuredHumanizer(
-			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode ),
-			self::newMessageBuilder($languageCode, $fallbackLanguageCode)
+			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode, $translationDir ),
+			self::newMessageBuilder($languageCode, $fallbackLanguageCode, $translationDir)
 		);
 	}
 
