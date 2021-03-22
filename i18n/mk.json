@@ -52,5 +52,12 @@
 	"edtf-interval-open-start": "$1 или порано",
 	"edtf-interval-unknown-end": "Од $1 до непознато",
 	"edtf-interval-unknown-start": "Од непознато до $1",
-	"edtf-local-time": "месно време"
+	"edtf-local-time": "месно време",
+	"edtf-empty-set": "Празно множество",
+	"edtf-all-of-these": "Сите овие:",
+	"edtf-one-of-these": "Едно од овие:",
+	"edtf-both-dates": "$1 и $2",
+	"edtf-one-of-two-dates": "$1 или $2",
+	"edtf-inline-all-of-these": "Сите овие: $1",
+	"edtf-inline-one-of-these": "Едно од овие: $1"
 }

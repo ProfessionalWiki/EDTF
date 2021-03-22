@@ -1,13 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"DigitaalWerktuig",
 			"Martsniez"
 		]
 	},
 	"edtf-description": "PHP bibliotheek om data te interpreteren, presenteren en te verwerken dat de Extended Date/Time formaat specificatie volgt.",
-	"edtf-maybe-circa": "Circa $1 (onzeker)",
+	"edtf-maybe-circa": "mogelijk circa $1",
 	"edtf-circa": "circa $1",
-	"edtf-maybe": "$1 (onzeker)",
+	"edtf-maybe": "mogelijk $1",
 	"edtf-spring": "lente",
 	"edtf-summer": "zomer",
 	"edtf-autumn": "herfst",
@@ -16,7 +17,7 @@
 	"edtf-summer-north": "zomer (noordelijk halfrond)",
 	"edtf-autumn-north": "herfst (noordelijk halfrond)",
 	"edtf-winter-north": "winter (noordelijk halfrond)",
-	"edtf-spring-south": "winter (noordelijk halfrond)",
+	"edtf-spring-south": "lente (zuidelijk halfrond)",
 	"edtf-summer-south": "zomer (zuidelijk halfrond)",
 	"edtf-autumn-south": "herfst (zuidelijk halfrond)",
 	"edtf-winter-south": "winter (zuidelijk halfrond)",
@@ -29,12 +30,12 @@
 	"edtf-quadrimester-3": "derde tertaal",
 	"edtf-semester-1": "eerste semester",
 	"edtf-semester-2": "tweede semester",
-	"edtf-full-date": "$3-$2-$1",
+	"edtf-full-date": "$3 $2 $1",
 	"edtf-season-and-year": "de $1 van het jaar $2",
-	"edtf-day-and-year": "$1 van onbekende maand in $2",
+	"edtf-day-and-year": "dag $1 van onbekende maand in $2",
 	"edtf-bc-year": "$1 v.Chr.",
-	"edtf-bc-year-short": "$1 jaar v.Chr.",
-	"edtf-year-short": "Jaar $1",
+	"edtf-bc-year-short": "jaar $1 v.Chr.",
+	"edtf-year-short": "jaar $1",
 	"edtf-january": "januari",
 	"edtf-february": "februari",
 	"edtf-march": "maart",

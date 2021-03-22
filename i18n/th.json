@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bebiezaza"
+		]
+	},
+	"edtf-spring": "ฤดูใบไม้ผลิ",
+	"edtf-summer": "ฤดูร้อน",
+	"edtf-autumn": "ฤดูใบไม้ร่วง",
+	"edtf-winter": "ฤดูหนาว",
+	"edtf-spring-north": "ฤดูใบไม้ผลิ (ซีกโลกเหนือ)",
+	"edtf-summer-north": "ฤดูร้อน (ซีกโลกเหนือ)",
+	"edtf-autumn-north": "ฤดูใบไม้ร่วง (ซีกโลกเหนือ)",
+	"edtf-winter-north": "ฤดูหนาว (ซีกโลกเหนือ)",
+	"edtf-spring-south": "ฤดูใบไม้ผลิ (ซีกโลกใต้)",
+	"edtf-summer-south": "ฤดูร้อน (ซีกโลกใต้)",
+	"edtf-autumn-south": "ฤดูใบไม้ร่วง (ซีกโลกใต้)",
+	"edtf-winter-south": "ฤดูหนาว (ซีกโลกใต้)",
+	"edtf-quarter-1": "ไตรมาสที่ 1",
+	"edtf-quarter-2": "ไตรมาสที่ 2",
+	"edtf-quarter-3": "ไตรมาสที่ 3",
+	"edtf-quarter-4": "ไตรมาสที่ 4",
+	"edtf-full-date": "$3 $2 $1",
+	"edtf-bc-year": "$1 ปีก่อนคริสตกาล",
+	"edtf-january": "มกราคม",
+	"edtf-february": "กุมภาพันธ์",
+	"edtf-march": "มีนาคม",
+	"edtf-april": "เมษายน",
+	"edtf-may": "พฤษภาคม",
+	"edtf-june": "มิถุนายน",
+	"edtf-july": "กรกฎาคม",
+	"edtf-august": "สิงหาคม",
+	"edtf-september": "กันยายน",
+	"edtf-october": "ตุลาคม",
+	"edtf-november": "พฤศจิกายน",
+	"edtf-december": "ธันวาคม",
+	"edtf-both-dates": "$1 และ $2",
+	"edtf-one-of-two-dates": "$1 หรือ $2"
+}

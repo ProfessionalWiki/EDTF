@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ahrada2016"
+		]
+	},
+	"edtf-maybe": "Tarii $1",
+	"edtf-spring": "Birraa",
+	"edtf-winter": "Ganna",
+	"edtf-autumn-north": "Arfaasaa (Hemeesfeera kaabaa)",
+	"edtf-winter-north": "Ganna (Hemeesfeera Kaabaa)",
+	"edtf-spring-south": "Birraa (Hemeesfeera kibbaa)",
+	"edtf-winter-south": "Ganna (Hemeesfeera Kibbaa)",
+	"edtf-quarter-1": "Kurmaana tokkoffaa",
+	"edtf-quarter-2": "Kurmaana lammaffaa",
+	"edtf-quarter-3": "Kurmaana sadaffaa",
+	"edtf-quarter-4": "Kurmaana Arfaffaa",
+	"edtf-quadrimester-1": "Waqtii tokkoffaa",
+	"edtf-quadrimester-2": "Waqtii lammaffaa",
+	"edtf-semester-2": "Semisteera lammaffaa",
+	"edtf-full-date": "$2 $3, $1",
+	"edtf-bc-year": "$1 DhKD",
+	"edtf-march": "Bitootessa",
+	"edtf-april": "Eebila",
+	"edtf-may": "Caamsa",
+	"edtf-june": "Waxabajji",
+	"edtf-november": "Sadaasa",
+	"edtf-interval-normal": "$1 hanga $2",
+	"edtf-interval-open-start": "$1 ykn isa darbe",
+	"edtf-interval-unknown-end": "$1 irraa gara hin beekamnetti",
+	"edtf-interval-unknown-start": "Ka hin beekamne irraa gara $1",
+	"edtf-local-time": "Yeroo biyyaa",
+	"edtf-empty-set": "Tuuta duwwaa",
+	"edtf-all-of-these": "Hunda keessaa:",
+	"edtf-one-of-these": "Keessaa tokko:",
+	"edtf-both-dates": "$1 fi $2",
+	"edtf-one-of-two-dates": "$1 ykn $2",
+	"edtf-inline-all-of-these": "Hunda keessaa:$1",
+	"edtf-inline-one-of-these": "Keessaa tokko:$1"
+}

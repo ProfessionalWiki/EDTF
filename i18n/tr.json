@@ -52,5 +52,12 @@
 	"edtf-interval-open-start": "$1 ya da daha önce",
 	"edtf-interval-unknown-end": "$1 tarihinden bilinmeyen tarihe",
 	"edtf-interval-unknown-start": "Bilinmeyen tarihten $1 tarihine",
-	"edtf-local-time": "yerel saat"
+	"edtf-local-time": "yerel saat",
+	"edtf-empty-set": "Boş küme",
+	"edtf-all-of-these": "Bunların hepsi:",
+	"edtf-one-of-these": "Bunlardan biri:",
+	"edtf-both-dates": "$1 ve $2",
+	"edtf-one-of-two-dates": "$1 ya da $2",
+	"edtf-inline-all-of-these": "Bunların hepsi: $1",
+	"edtf-inline-one-of-these": "Bunlardan biri: $1"
 }
