@@ -204,16 +204,116 @@ class SetRepresentationTest extends TestCase
         $this->assertSame($expectedMax, $set->getMax());
     }
 
-    public function testOpenMiddleWithMonths(): void {
-    	self::markTestSkipped( 'FIXME!' ); // FIXME
-//		$this->assertEquals(
-//			[
-//				new ExtDate( 2020, 1, null ),
-//				new ExtDate( 2020, 2, null ),
-//				new ExtDate( 2020, 3, null ),
-//				new ExtDate( 2020, 4, null ),
-//			],
-//			$this->createSet('{2020-01..2020-04}')->getDates()
-//		);
+    public function testOpenMiddleWithMonthsPrecision(): void {
+		$this->assertEquals(
+			[
+				new ExtDate( 2020, 1, null ),
+				new ExtDate( 2020, 2, null ),
+				new ExtDate( 2020, 3, null ),
+				new ExtDate( 2020, 4, null ),
+			],
+			$this->createSet('{2020-01..2020-04}')->getDates()
+		);
+
+        $this->assertEquals(
+            [
+                new ExtDate( 2020, 9, null ),
+                new ExtDate( 2020, 10, null ),
+                new ExtDate( 2020, 11, null ),
+                new ExtDate( 2020, 12, null ),
+                new ExtDate( 2021, 1, null ),
+                new ExtDate( 2021, 2, null ),
+            ],
+            $this->createSet('{2020-09..2021-02}')->getDates()
+        );
+
+        $this->assertEquals(
+            [
+                new ExtDate( 2020, 9, null ),
+                new ExtDate( 2020, 10, null ),
+                new ExtDate( 2020, 11, null ),
+                new ExtDate( 2020, 12, null ),
+                new ExtDate( 2021, 1, null ),
+                new ExtDate( 2021, 2, null ),
+                new ExtDate( 2021, 3, null ),
+                new ExtDate( 2021, 4, null ),
+                new ExtDate( 2021, 5, null ),
+                new ExtDate( 2021, 6, null ),
+                new ExtDate( 2021, 7, null ),
+                new ExtDate( 2021, 8, null ),
+                new ExtDate( 2021, 9, null ),
+                new ExtDate( 2021, 10, null ),
+                new ExtDate( 2021, 11, null ),
+                new ExtDate( 2021, 12, null ),
+                new ExtDate( 2022, 1, null ),
+                new ExtDate( 2022, 2, null ),
+            ],
+            $this->createSet('{2020-09..2022-02}')->getDates()
+        );
+    }
+
+    public function testOpenMiddleWithDayPrecision(): void
+    {
+        $set = $this->createSet('{2020-01-03..2020-01-05}');
+        $this->assertEquals(
+            [
+                new ExtDate( 2020, 1, 3 ),
+                new ExtDate( 2020, 1, 4 ),
+                new ExtDate( 2020, 1, 5 ),
+            ],
+            $set->getDates()
+        );
+
+        $set = $this->createSet('{2020-01-31..2020-02-02}');
+        $this->assertEquals(
+            [
+                new ExtDate( 2020, 1, 31 ),
+                new ExtDate( 2020, 2, 1 ),
+                new ExtDate( 2020, 2, 2 ),
+            ],
+            $set->getDates()
+        );
+
+        $set = $this->createSet('{1985-01-01..1986-01-01}');
+        $this->assertCount(
+            366,
+            $set->getDates()
+        );
+        $this->assertEquals(
+            new ExtDate(1985, 1, 1),
+            $set->getDates()[0]
+        );
+        $this->assertEquals(
+            new ExtDate(1986, 1, 1),
+            $set->getDates()[365]
+        );
+
+        $set = $this->createSet('{1987-01-01..1988-02-25}');
+        $this->assertCount(
+            421,
+            $set->getDates()
+        );
+        $this->assertEquals(
+            new ExtDate(1987, 1, 1),
+            $set->getDates()[0]
+        );
+        $this->assertEquals(
+            new ExtDate(1988, 2, 25),
+            $set->getDates()[420]
+        );
+
+        $set = $this->createSet('{2001-01-02..2003-01-02}');
+        $this->assertCount(
+            731,
+            $set->getDates()
+        );
+        $this->assertEquals(
+            new ExtDate(2001, 1, 2),
+            $set->getDates()[0]
+        );
+        $this->assertEquals(
+            new ExtDate(2003, 1, 2),
+            $set->getDates()[730]
+        );
     }
 }

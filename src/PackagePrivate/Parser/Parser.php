@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace EDTF\PackagePrivate\Parser;
 
+use Carbon\Carbon;
 use EDTF\EdtfValue;
 use EDTF\Model\ExtDate;
 use EDTF\Model\ExtDateTime;
@@ -13,6 +14,7 @@ use EDTF\Model\Qualification;
 use EDTF\Model\Season;
 use EDTF\Model\Set;
 use EDTF\Model\UnspecifiedDigit;
+use http\Env\Response;
 
 /**
  * TODO: there might be cohesive sets of code to extract, for instance QualificationParser
@@ -259,17 +261,121 @@ class Parser
 				$sets[] = (new Parser())->createEdtf($matches[1]);
 			}
 			elseif(false != preg_match('/(.+)\.\.(.+)/', $value, $matches)){
-				$start = (int)$matches[1];
-				$end = (int)$matches[2];
-				for($i=$start;$i<=$end;$i++){
-					$sets[] = (new Parser())->createEdtf((string)$i);
-				}
+                $fromExtDate = (new Parser())->createEdtf($matches[1]);
+                if (!$fromExtDate instanceof ExtDate) {
+                    throw new \InvalidArgumentException("String $matches[1] is not valid to build a set");
+                }
+
+                $toExtDate = (new Parser())->createEdtf($matches[2]);
+                if (!$toExtDate instanceof ExtDate) {
+                    throw new \InvalidArgumentException("String $matches[2] is not valid to build a set");
+                }
+
+                if ($fromExtDate->precision() !== $toExtDate->precision()) {
+                    throw new \InvalidArgumentException("Unable to build a set. All input elements should have the same precision");
+                }
+
+                $precision = $fromExtDate->precision();
+
+                if ($precision === ExtDate::PRECISION_MONTH) {
+                    $sets = array_merge($sets, $this->resolveSetValuesForMonthPrecision($fromExtDate, $toExtDate));
+                } elseif ($precision === ExtDate::PRECISION_YEAR) {
+                    $sets = array_merge($sets, $this->resolveSetValuesForYearPrecision($fromExtDate, $toExtDate));
+                } elseif ($precision === ExtDate::PRECISION_DAY) {
+                    $sets = array_merge($sets, $this->resolveSetValuesForDayPrecision($fromExtDate, $toExtDate));
+                }
 			}
 			continue;
 		}
 
 		return new Set($sets, $allMembers, $earlier, $later);
 	}
+
+	private function resolveSetValuesForYearPrecision(ExtDate $progressionStart, ExtDate $progressionEnd): array
+    {
+        $values = [];
+        for ($i = $progressionStart->getYear(); $i <= $progressionEnd->getYear(); $i++) {
+            $values[] = new ExtDate($i);
+        }
+
+        return $values;
+    }
+
+	private function resolveSetValuesForMonthPrecision(ExtDate $progressionStart, ExtDate $progressionEnd): array
+    {
+        $yearTurnsLeft = $progressionEnd->getYear() - $progressionStart->getYear();
+        return $this->monthRecursion($yearTurnsLeft, $progressionStart, $progressionEnd);
+    }
+
+    private function resolveSetValuesForDayPrecisionWithinAYear(ExtDate $progressionStart, ExtDate $progressionEnd)
+    {
+        $monthTurnsLeft = $progressionEnd->getMonth() - $progressionStart->getMonth();
+        return $this->dayRecursion($monthTurnsLeft, $progressionStart, $progressionEnd);
+    }
+
+    private function resolveSetValuesForDayPrecision(ExtDate $progressionStart, ExtDate $progressionEnd): array
+    {
+        $monthTurnsLeft = $progressionEnd->getMonth() - $progressionStart->getMonth();
+        $yearTurnsLeft = $progressionEnd->getYear() - $progressionStart->getYear();
+
+        $values = [];
+        while ($yearTurnsLeft > 0) {
+            $currentYear = $progressionStart->getYear();
+            $values = array_merge($values, $this->resolveSetValuesForDayPrecisionWithinAYear($progressionStart, new ExtDate($currentYear, 12, 31)));
+            $progressionStart = new ExtDate(++$currentYear, 1, 1);
+            $yearTurnsLeft--;
+        }
+
+        return array_merge($values, $this->dayRecursion($monthTurnsLeft, $progressionStart, $progressionEnd));
+    }
+
+    private function dayRecursion(int $monthTurnsLeft, ExtDate $progressionStart, ExtDate $progressionEnd): array
+    {
+        $values = [];
+
+        $currentYear = $progressionStart->getYear();
+        $currentMonth = $progressionStart->getMonth();
+
+        if ($monthTurnsLeft === 0) {
+            $limit = $progressionEnd->getDay();
+        } else {
+            $limit = Carbon::create($currentYear, $currentMonth)->lastOfMonth()->day;
+        }
+
+        for ($i = $progressionStart->getDay(); $i <= $limit; $i++) {
+            $values[] = new ExtDate($currentYear, $currentMonth, $i);
+        }
+
+        if ($monthTurnsLeft === 0) {
+            return $values;
+        }
+
+        $monthTurnsLeft--;
+
+        return array_merge($values, $this->dayRecursion($monthTurnsLeft, new ExtDate($currentYear, ++$currentMonth, 1), $progressionEnd));
+    }
+
+    private function monthRecursion(int $yearTurnsLeft, ExtDate $progressionStart, ExtDate $progressionEnd): array
+    {
+        $values = [];
+        $currentYear = $progressionStart->getYear();
+        if ($yearTurnsLeft === 0) {
+            $limit = $progressionEnd->getMonth();
+        } else {
+            $limit = 12;
+        }
+
+        for ($i = $progressionStart->getMonth(); $i <= $limit; $i++) {
+            $values[] = new ExtDate($currentYear, $i);
+        }
+
+        if ($yearTurnsLeft === 0) {
+            return $values;
+        }
+        $yearTurnsLeft--;
+
+        return array_merge($values, $this->monthRecursion($yearTurnsLeft, new ExtDate(++$currentYear, 1), $progressionEnd));
+    }
 
 	private function buildInterval(string $input): Interval
 	{
