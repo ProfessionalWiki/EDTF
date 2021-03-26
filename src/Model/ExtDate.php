@@ -13,9 +13,13 @@ use RuntimeException;
 
 class ExtDate implements EdtfValue
 {
+    use CoversTrait;
+
     private const MAX_POSSIBLE_MONTH = 12;
 
-    use CoversTrait;
+    const PRECISION_YEAR = 0;
+    const PRECISION_MONTH = 1;
+    const PRECISION_DAY = 2;
 
     private ?int $year;
     private ?int $month;
@@ -313,5 +317,22 @@ class ExtDate implements EdtfValue
     public function setDatetimeFactory(DatetimeFactoryInterface $factory): void
     {
         $this->datetimeFactory = $factory;
+    }
+
+    public function precision(): ?int
+    {
+        if ($this->day !== null) {
+            return self::PRECISION_DAY;
+        }
+
+        if ($this->month !== null) {
+            return self::PRECISION_MONTH;
+        }
+
+        if ($this->year !== null) {
+            return self::PRECISION_YEAR;
+        }
+
+        return null;
     }
 }

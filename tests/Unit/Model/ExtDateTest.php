@@ -148,6 +148,24 @@ class ExtDateTest extends TestCase
         $this->assertNull($date->getDay());
     }
 
+	/**
+	 * @dataProvider datePrecisionProvider
+	 */
+    public function testPrecision(ExtDate $edtf, ?int $expectedPrecision): void
+	{
+		$this->assertEquals($edtf->precision(), $expectedPrecision);
+	}
+
+    public function datePrecisionProvider(): array
+	{
+		return [
+			[new ExtDate(2000), ExtDate::PRECISION_YEAR],
+			[new ExtDate(2001, 02), ExtDate::PRECISION_MONTH],
+			[new ExtDate(2001, 2, 24), ExtDate::PRECISION_DAY],
+			[new ExtDate(), null],
+		];
+	}
+
     public function minDataProvider(): array
     {
         return [

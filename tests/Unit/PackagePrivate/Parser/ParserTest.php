@@ -8,6 +8,7 @@ use EDTF\Model\ExtDate;
 use EDTF\Model\Interval;
 use EDTF\PackagePrivate\Parser\Parser;
 use PHPUnit\Framework\TestCase;
+use \InvalidArgumentException;
 
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
@@ -37,13 +38,13 @@ class ParserTest extends TestCase
 
     public function testThrowExceptionWhenCreatingEdtfFromEmptyString()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->createParser("");
     }
 
     public function testThrowExceptionOnInvalidDataFormat()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $parser = new Parser();
         $parser->createEdtf('foo');
@@ -181,7 +182,7 @@ class ParserTest extends TestCase
 
     public function testThrowExceptionOnInvalidSeasonNumber()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->createParser('2001-99');
     }
 
@@ -273,4 +274,49 @@ class ParserTest extends TestCase
         $this->assertNull($data->getDate()->getMonthNum());
         $this->assertNull($data->getDate()->getDayNum());
     }
+
+	/**
+	 * @dataProvider setOpenMiddlePrecisionMismatch
+	 */
+    public function testThrowExceptionWhenCreatingOpenMiddleSetWithPrecisionMismatch(string $invalidOpenMiddleSet): void
+	{
+		$parser = new Parser();
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Unable to build a set. All input elements should have the same precision");
+    	$parser->createEdtf($invalidOpenMiddleSet);
+	}
+
+	public function setOpenMiddlePrecisionMismatch(): array
+	{
+		return [
+			['{1990..1991-02}'],
+			['{1990..1991-02-25}'],
+			['{1990-01..1991}'],
+			['{1990-01..1991-02-10}'],
+			['{1990-01-02..2005}'],
+			['{1990-01-20..2000-02}']
+		];
+	}
+
+	/**
+	 * @dataProvider setOpenMiddleNonExtDateValues
+	 */
+	public function testThrowExceptionWhenCreatingOpenMiddleSetWithNonExtDateValues(string $invalidOpenMiddleSet, string $exceptionMessage): void
+	{
+		$parser = new Parser();
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage($exceptionMessage);
+		$parser->createEdtf($invalidOpenMiddleSet);
+	}
+
+	public function setOpenMiddleNonExtDateValues(): array
+	{
+		return [
+			["{1980-25..1981}", "String 1980-25 is not valid to build a set"],
+			["{2000..2001-27}", "String 2001-27 is not valid to build a set"],
+			["{2000?..2001-27}", "String 2000? is not valid to build a set"],
+			["{2000~..2001-02}", "String 2000~ is not valid to build a set"],
+			["{2000%..2000-02}", "String 2000% is not valid to build a set"],
+		];
+	}
 }
