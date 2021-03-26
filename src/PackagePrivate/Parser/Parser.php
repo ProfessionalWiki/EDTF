@@ -260,20 +260,18 @@ class Parser
 				$sets[] = (new Parser())->createEdtf($matches[1]);
 			}
 			elseif(false != preg_match('/(.+)\.\.(.+)/', $value, $matches)){
+				/** @var ExtDate $fromExtDate */
                 $fromExtDate = (new Parser())->createEdtf($matches[1]);
                 if ($this->isInvalidOpenMiddleSetPart($fromExtDate)) {
                     throw new InvalidArgumentException("String $matches[1] is not valid to build a set");
                 }
 
+				/** @var ExtDate $toExtDate */
                 $toExtDate = (new Parser())->createEdtf($matches[2]);
                 if ($this->isInvalidOpenMiddleSetPart($toExtDate)) {
                     throw new InvalidArgumentException("String $matches[2] is not valid to build a set");
                 }
 
-                /**
-				 * @var $fromExtDate ExtDate
-				 * @var $toExtDate ExtDate
-				 */
                 if ($fromExtDate->precision() !== $toExtDate->precision()) {
                     throw new InvalidArgumentException("Unable to build a set. All input elements should have the same precision");
                 }
