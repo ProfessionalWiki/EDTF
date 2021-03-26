@@ -14,12 +14,11 @@ use EDTF\Model\Qualification;
 use EDTF\Model\Season;
 use EDTF\Model\Set;
 use EDTF\Model\UnspecifiedDigit;
-use http\Env\Response;
+use \InvalidArgumentException;
 
 /**
  * TODO: there might be cohesive sets of code to extract, for instance QualificationParser
  * TODO: remove public getters if they are not needed (likely most are not)
- * TODO: make builder methods private where possible
  * @internal
  */
 class Parser
@@ -41,7 +40,7 @@ class Parser
         $input = $this->removeExtraSpaces($input);
 
         if("" === $input){
-            throw new \InvalidArgumentException("Can't create EDTF from empty string.");
+            throw new InvalidArgumentException("Can't create EDTF from empty string.");
         }
 
         $input = strtoupper($input);
@@ -74,7 +73,7 @@ class Parser
     }
 
 	/**
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
     public function createEdtf(string $input): EdtfValue
     {
@@ -101,7 +100,7 @@ class Parser
         return $this->buildDate();
     }
 
-	public function buildDate(): ExtDate
+	private function buildDate(): ExtDate
 	{
 	    $date = $this->parsedData->getDate();
 
@@ -114,7 +113,7 @@ class Parser
 		);
 	}
 
-	public function buildUnspecifiedDigit(): UnspecifiedDigit
+	private function buildUnspecifiedDigit(): UnspecifiedDigit
 	{
 	    $date = $this->parsedData->getDate();
 
@@ -125,7 +124,7 @@ class Parser
 		);
 	}
 
-	public function buildDateTime(): ExtDateTime
+	private function buildDateTime(): ExtDateTime
 	{
 	    $timezone = $this->parsedData->getTimezone();
 	    $date = $this->parsedData->getDate();
@@ -154,7 +153,7 @@ class Parser
 		return new Season($date->getYearNum(), $date->getSeason());
 	}
 
-	public function buildQualification(): Qualification
+	private function buildQualification(): Qualification
 	{
 		// TODO: use fields directly
 
@@ -222,7 +221,7 @@ class Parser
 		return (int)self::$map[$flag];
 	}
 
-	public function buildSet(string $input): Set
+	private function buildSet(string $input): Set
 	{
 		preg_match(
 			"/(?x)
@@ -234,7 +233,7 @@ class Parser
 			$matches
 		);
 		if(0 === count($matches)){
-			throw new \InvalidArgumentException(sprintf(
+			throw new InvalidArgumentException(sprintf(
 				"Can't create EDTF::Set from '%s' input", $input
 			));
 		}
@@ -262,17 +261,21 @@ class Parser
 			}
 			elseif(false != preg_match('/(.+)\.\.(.+)/', $value, $matches)){
                 $fromExtDate = (new Parser())->createEdtf($matches[1]);
-                if (!$fromExtDate instanceof ExtDate) {
-                    throw new \InvalidArgumentException("String $matches[1] is not valid to build a set");
+                if ($this->isInvalidOpenMiddleSetPart($fromExtDate)) {
+                    throw new InvalidArgumentException("String $matches[1] is not valid to build a set");
                 }
 
                 $toExtDate = (new Parser())->createEdtf($matches[2]);
-                if (!$toExtDate instanceof ExtDate) {
-                    throw new \InvalidArgumentException("String $matches[2] is not valid to build a set");
+                if ($this->isInvalidOpenMiddleSetPart($toExtDate)) {
+                    throw new InvalidArgumentException("String $matches[2] is not valid to build a set");
                 }
 
+                /**
+				 * @var $fromExtDate ExtDate
+				 * @var $toExtDate ExtDate
+				 */
                 if ($fromExtDate->precision() !== $toExtDate->precision()) {
-                    throw new \InvalidArgumentException("Unable to build a set. All input elements should have the same precision");
+                    throw new InvalidArgumentException("Unable to build a set. All input elements should have the same precision");
                 }
 
                 $precision = $fromExtDate->precision();
@@ -289,6 +292,13 @@ class Parser
 		}
 
 		return new Set($sets, $allMembers, $earlier, $later);
+	}
+
+	private function isInvalidOpenMiddleSetPart($part): bool
+	{
+		return !$part instanceof ExtDate
+			|| $part->uncertain()
+			|| $part->approximate();
 	}
 
 	private function resolveSetValuesForYearPrecision(ExtDate $progressionStart, ExtDate $progressionEnd): array
@@ -382,7 +392,7 @@ class Parser
 		$pos = strrpos($input, '/');
 
 		if(false === $pos){
-			throw new \InvalidArgumentException(
+			throw new InvalidArgumentException(
 				sprintf("Can't create interval from %s",$input)
 			);
 		}
