@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joquliina"
+		]
+	},
+	"edtf-maybe": "Ehkä $1",
+	"edtf-spring": "Kevät",
+	"edtf-summer": "Kesä",
+	"edtf-autumn": "Syksy",
+	"edtf-winter": "Talvi",
+	"edtf-january": "tammikuu",
+	"edtf-february": "helmikuu",
+	"edtf-march": "maaliskuu",
+	"edtf-april": "huhtikuu",
+	"edtf-may": "toukokuu",
+	"edtf-june": "kesäkuu",
+	"edtf-july": "heinäkuu",
+	"edtf-august": "elokuu",
+	"edtf-october": "lokakuu",
+	"edtf-november": "marraskuu",
+	"edtf-december": "joulukuu",
+	"edtf-local-time": "paikallinen aika"
+}

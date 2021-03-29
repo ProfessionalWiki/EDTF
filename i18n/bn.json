@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"R4356th",
+			"WikiAbuHuraira",
+			"আফতাবুজ্জামান"
+		]
+	},
+	"edtf-spring": "বসন্ত",
+	"edtf-summer": "গ্রীষ্ম",
+	"edtf-autumn": "শরত",
+	"edtf-winter": "শীত",
+	"edtf-full-date": "$3, $2, $1",
+	"edtf-season-and-year": "$1 $2",
+	"edtf-bc-year": "খ্রিস্টপূর্ব $1",
+	"edtf-january": "জানুয়ারি",
+	"edtf-february": "ফেব্রুয়ারি",
+	"edtf-march": "মার্চ",
+	"edtf-april": "এপ্রিল",
+	"edtf-may": "মে",
+	"edtf-june": "জুন",
+	"edtf-july": "জুলাই",
+	"edtf-august": "আগস্ট",
+	"edtf-september": "সেপ্টেম্বর",
+	"edtf-october": "অক্টোবর",
+	"edtf-november": "নভেম্বর",
+	"edtf-december": "ডিসেম্বর",
+	"edtf-interval-normal": "$1 থেকে $2",
+	"edtf-local-time": "স্থানীয় সময়",
+	"edtf-empty-set": "খালি সেট",
+	"edtf-all-of-these": "এগুলির সব:",
+	"edtf-one-of-these": "এগুলির একটি:",
+	"edtf-both-dates": "$1 ও $2",
+	"edtf-one-of-two-dates": "$1 বা $2",
+	"edtf-inline-all-of-these": "এগুলির সব: $1",
+	"edtf-inline-one-of-these": "এগুলির একটি: $1"
+}

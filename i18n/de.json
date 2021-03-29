@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"FF-11",
 			"FF11",
 			"Kghbln"
 		]
@@ -55,10 +56,10 @@
 	"edtf-interval-unknown-start": "von unbekannt bis $1",
 	"edtf-local-time": "Ortszeit",
 	"edtf-empty-set": "Leerer Wertesatz",
-	"edtf-all-of-these": "Alle dieser Angaben:",
+	"edtf-all-of-these": "Alle diese Angaben:",
 	"edtf-one-of-these": "Eine dieser Angaben:",
 	"edtf-both-dates": "$1 und $2",
 	"edtf-one-of-two-dates": "$1 oder $2",
-	"edtf-inline-all-of-these": "Alle dieser Angaben: $1",
+	"edtf-inline-all-of-these": "Alle diese Angaben: $1",
 	"edtf-inline-one-of-these": "Eine dieser Angaben: $1"
 }
