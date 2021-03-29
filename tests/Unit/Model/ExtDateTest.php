@@ -14,6 +14,7 @@ use RuntimeException;
 
 /**
  * @covers \EDTF\Model\ExtDate
+ * @covers \EDTF\PackagePrivate\Carbon\CarbonFactory;
  * @package EDTF\Tests\Unit
  */
 class ExtDateTest extends TestCase
