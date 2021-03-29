@@ -5,11 +5,13 @@
 [![codecov](https://codecov.io/gh/ProfessionalWiki/EDTF/branch/master/graph/badge.svg?token=GnOG3FF16Z)](https://codecov.io/gh/ProfessionalWiki/EDTF)
 [![Latest Stable Version](https://poser.pugx.org/professional-wiki/edtf/version.png)](https://packagist.org/packages/professional-wiki/edtf)
 [![Download count](https://poser.pugx.org/professional-wiki/edtf/d/total.png)](https://packagist.org/packages/professional-wiki/edtf)
+[![License](https://img.shields.io/packagist/l/professional-wiki/edtf)](LICENSE)
 
 EDTF PHP is a small library for parsing, representing and working with the
 [Extended Date/Time Format] specification.
 
 EDTF PHP was created by and is maintained by [Professional.Wiki]. Initial development was funded by the Luxembourg Ministry of Culture.
+It is an open source project, and contributions are welcome!
 
 - [Usage](#usage)
   * [Parsing](#parsing)

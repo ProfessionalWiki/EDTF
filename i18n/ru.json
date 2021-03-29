@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"edtf-spring": "Весна",
+	"edtf-summer": "Лето",
+	"edtf-autumn": "Осень",
+	"edtf-winter": "Зима",
+	"edtf-autumn-north": "Осень (Северное полушарие)",
+	"edtf-quarter-1": "Первый квартал",
+	"edtf-quarter-2": "Второй квартал",
+	"edtf-january": "Январь",
+	"edtf-february": "Февраль",
+	"edtf-march": "Март",
+	"edtf-april": "Апрель",
+	"edtf-may": "Май",
+	"edtf-june": "Июнь",
+	"edtf-july": "Июль",
+	"edtf-august": "Август",
+	"edtf-september": "Сентябрь",
+	"edtf-october": "Октябрь",
+	"edtf-november": "Ноябрь",
+	"edtf-december": "Декабрь",
+	"edtf-local-time": "местное время",
+	"edtf-both-dates": "$1 и $2",
+	"edtf-one-of-two-dates": "$1 или $2"
+}

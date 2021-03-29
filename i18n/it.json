@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Beta16"
+			"Beta16",
+			"Toa"
 		]
 	},
 	"edtf-spring": "Primavera",
@@ -19,7 +20,7 @@
 	"edtf-quarter-1": "Primo trimestre",
 	"edtf-quarter-3": "Terzo trimestre",
 	"edtf-quarter-4": "Quarto trimestre",
-	"edtf-quadrimester-2": "Secondo trimestre",
+	"edtf-quadrimester-2": "Secondo quadrimestre",
 	"edtf-quadrimester-3": "Terzo quadrimestre",
 	"edtf-semester-1": "Primo semestre",
 	"edtf-full-date": "$3 $2 $1",
@@ -36,5 +37,7 @@
 	"edtf-october": "Ottobre",
 	"edtf-november": "Novembre",
 	"edtf-december": "Dicembre",
-	"edtf-interval-normal": "$1 a $2"
+	"edtf-interval-normal": "$1 a $2",
+	"edtf-both-dates": "$1 e $2",
+	"edtf-one-of-two-dates": "$1 o $2"
 }

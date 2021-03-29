@@ -50,5 +50,12 @@
 	"edtf-interval-open-start": "$1或更早",
 	"edtf-interval-unknown-end": "从$1到未知",
 	"edtf-interval-unknown-start": "从未知到$1",
-	"edtf-local-time": "当地时间"
+	"edtf-local-time": "当地时间",
+	"edtf-empty-set": "空白系列",
+	"edtf-all-of-these": "所有这些：",
+	"edtf-one-of-these": "这些中一个：",
+	"edtf-both-dates": "$1和$2",
+	"edtf-one-of-two-dates": "于$1和$2之间",
+	"edtf-inline-all-of-these": "所有这些：$1",
+	"edtf-inline-one-of-these": "这些中的一个：$1"
 }
