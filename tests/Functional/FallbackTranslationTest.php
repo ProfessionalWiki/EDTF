@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer
+ * @covers \EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\JsonFileLoader
  */
 class FallbackTranslationTest extends TestCase
 {
