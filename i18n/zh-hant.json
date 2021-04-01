@@ -52,5 +52,12 @@
 	"edtf-interval-open-start": "$1或之前",
 	"edtf-interval-unknown-end": "從$1到未知",
 	"edtf-interval-unknown-start": "從未知到$1",
-	"edtf-local-time": "本地時間"
+	"edtf-local-time": "本地時間",
+	"edtf-empty-set": "空集合",
+	"edtf-all-of-these": "這些全部：",
+	"edtf-one-of-these": "這些其一：",
+	"edtf-both-dates": "$1 與 $2",
+	"edtf-one-of-two-dates": "$1 或 $2",
+	"edtf-inline-all-of-these": "這些全部：$1",
+	"edtf-inline-one-of-these": "這些其一：$1"
 }
