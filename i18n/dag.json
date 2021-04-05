@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Achiri Bitamsimli",
+			"Anamzooya",
+			"Sir Amugi"
+		]
+	},
+	"edtf-maybe": "Din tooi $1",
+	"edtf-bc-year-short": "Yuuni $1 BC",
+	"edtf-year-short": "Yuuni $1",
+	"edtf-january": "Silmin Goli January",
+	"edtf-february": "Silmin goli February",
+	"edtf-march": "Silmin goli march",
+	"edtf-april": "Gaambanda",
+	"edtf-may": "Silmingoli may",
+	"edtf-june": "Kpini bilaa",
+	"edtf-july": "Silmin Goli July",
+	"edtf-august": "Silmin goli August",
+	"edtf-september": "Silmin Goli September",
+	"edtf-october": "Silmin Goli October",
+	"edtf-november": "Silmin Goli November",
+	"edtf-december": "Silmin Goli December",
+	"edtf-interval-normal": "$1 zaŋ chaŋ $2",
+	"edtf-local-time": "Saha",
+	"edtf-empty-set": "Sheli kani",
+	"edtf-all-of-these": "Di zaa",
+	"edtf-one-of-these": "Ŋɔ puuni sheli:",
+	"edtf-both-dates": "$1 ni $2",
+	"edtf-one-of-two-dates": "$1 bei $2",
+	"edtf-inline-all-of-these": "Di zaa: $1",
+	"edtf-inline-one-of-these": "Dimbɔŋɔnima yini"
+}
