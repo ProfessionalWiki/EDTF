@@ -7,6 +7,7 @@ namespace EDTF\PackagePrivate\Humanizer;
 use EDTF\EdtfValue;
 use EDTF\HumanizationResult;
 use EDTF\Humanizer;
+use EDTF\Model\ExtDate;
 use EDTF\Model\Set;
 use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 use EDTF\StructuredHumanizer;
@@ -35,22 +36,47 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 		return HumanizationResult::newSimpleHumanization( $humanized );
 	}
 
-	private function humanizeSet( Set $edtf ): HumanizationResult {
-		if ( $edtf->getDates() === [] ) {
+	private function humanizeSet( Set $set ): HumanizationResult {
+
+		if ($set->isSingleElement()) {
+
+			$date = $set->getDates()[0];
+
+			if (! $date instanceof ExtDate) {
+				throw new \InvalidArgumentException("Set element can be only of ExtDate type");
+			}
+
+			$precisionSuffix = $date->precisionAsString();
+			$humanizedDate = $this->humanizer->humanize($date);
+
+			if ($set->hasOpenStart()) {
+				return HumanizationResult::newSimpleHumanization(
+					$this->message($set->isAllMembers() ? 'edtf-' . $precisionSuffix . '-and-all-earlier' : 'edtf-' . $precisionSuffix . '-or-earlier', $humanizedDate)
+				);
+			}
+
+			if ($set->hasOpenEnd()) {
+				return HumanizationResult::newSimpleHumanization(
+					$this->message($set->isAllMembers() ? 'edtf-' . $precisionSuffix . '-and-all-later' : 'edtf-' . $precisionSuffix . '-or-later', $humanizedDate)
+				);
+			}
+		}
+
+		if ( $set->getDates() === [] ) {
 			return HumanizationResult::newSimpleHumanization( $this->message( 'edtf-empty-set' ) );
 		}
 
-		$humanizedDates = $this->getHumanizedDatesFromSet( $edtf );
+		$humanizedDates = $this->getHumanizedDatesFromSet( $set );
 
 		if ( $humanizedDates->shouldUseList() ) {
 			return HumanizationResult::newStructuredHumanization(
 				$humanizedDates->humanizedDates,
-				$this->message( $edtf->isAllMembers() ? 'edtf-all-of-these' : 'edtf-one-of-these' )
+				$this->message( $set->isAllMembers() ? 'edtf-all-of-these' : 'edtf-one-of-these' )
 			);
 		}
 
 		return HumanizationResult::newSimpleHumanization(
-			$this->humanizeSetDatesToSingleMessage( $humanizedDates, $edtf->isAllMembers() )
+			$this->humanizeSetDatesToSingleMessage( $humanizedDates, $set->isAllMembers() )
 		);
 	}
 

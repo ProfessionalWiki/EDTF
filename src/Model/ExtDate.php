@@ -335,4 +335,18 @@ class ExtDate implements EdtfValue
 
         return null;
     }
+
+    public function precisionAsString(): string
+	{
+		$precision = '';
+		if ($this->day !== null) {
+			$precision = 'day';
+		} elseif ($this->month !== null) {
+			$precision = 'month';
+		} elseif ($this->year !== null) {
+			$precision = 'year';
+		}
+
+		return $precision;
+	}
 }
