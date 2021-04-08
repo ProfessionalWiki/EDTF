@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Veeven"
+		]
+	},
+	"edtf-summer": "ఎండాకాలం",
+	"edtf-quarter-1": "మొదటి త్రైమాసం",
+	"edtf-quarter-2": "రెండవ త్రైమాసం",
+	"edtf-quarter-3": "మూడవ త్రైమాసం",
+	"edtf-quarter-4": "నాలుగవ త్రైమాసం",
+	"edtf-season-and-year": "$1 $2",
+	"edtf-january": "జనవరి",
+	"edtf-february": "ఫిబ్రవరి",
+	"edtf-march": "మార్చి",
+	"edtf-april": "ఏప్రిల్",
+	"edtf-may": "మే",
+	"edtf-june": "జూన్",
+	"edtf-july": "జూలై",
+	"edtf-august": "ఆగస్టు",
+	"edtf-september": "సెప్టెంబరు",
+	"edtf-october": "అక్టోబరు",
+	"edtf-november": "నవంబరు",
+	"edtf-december": "డిసెంబరు",
+	"edtf-local-time": "స్థానిక సమయం",
+	"edtf-all-of-these": "ఇవన్నీ:",
+	"edtf-one-of-these": "వీటిలో ఒకటి:",
+	"edtf-both-dates": "$1, $2",
+	"edtf-inline-all-of-these": "ఇవన్నీ: $1",
+	"edtf-inline-one-of-these": "వీటిలో ఒకటి: $1"
+}
