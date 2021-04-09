@@ -250,11 +250,21 @@ class Parser
 				$sets[] = (new Parser())->createEdtf($value);
 			}
 			elseif(false != preg_match('/^\.\.(.+)/', $value, $matches)){
+
+				if (count($values) > 1) {
+					throw new InvalidArgumentException("Only single element is allowed in open start set");
+				}
+
 				// earlier date like ..1760-12-03
 				$earlier = true;
 				$sets[] = (new Parser())->createEdtf($matches[1]);
 			}
 			elseif(false != preg_match('/(.+)\.\.$/', $value, $matches)){
+
+				if (count($values) > 1) {
+					throw new InvalidArgumentException("Only single element is allowed in open end set");
+				}
+
 				// later date like 1760-12..
 				$later = true;
 				$sets[] = (new Parser())->createEdtf($matches[1]);

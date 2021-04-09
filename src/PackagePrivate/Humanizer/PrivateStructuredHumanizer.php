@@ -11,6 +11,7 @@ use EDTF\Model\ExtDate;
 use EDTF\Model\Set;
 use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 use EDTF\StructuredHumanizer;
+use \InvalidArgumentException;
 
 class PrivateStructuredHumanizer implements StructuredHumanizer {
 
@@ -43,7 +44,7 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 			$date = $set->getDates()[0];
 
 			if (! $date instanceof ExtDate) {
-				throw new \InvalidArgumentException("Set element can be only of ExtDate type");
+				throw new InvalidArgumentException("Set element can be only of ExtDate type");
 			}
 
 			$precisionSuffix = $date->precisionAsString();

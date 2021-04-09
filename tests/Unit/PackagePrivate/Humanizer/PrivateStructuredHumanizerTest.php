@@ -190,5 +190,4 @@ class PrivateStructuredHumanizerTest extends TestCase {
 			$result->getStructuredHumanization()
 		);
 	}
-
 }
