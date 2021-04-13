@@ -4,10 +4,10 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer;
 
+use EDTF\Contracts\HasPrecision;
 use EDTF\EdtfValue;
 use EDTF\HumanizationResult;
 use EDTF\Humanizer;
-use EDTF\Model\ExtDate;
 use EDTF\Model\Set;
 use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 use EDTF\StructuredHumanizer;
@@ -41,14 +41,14 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 
 		if ($set->isSingleElement()) {
 
-			$date = $set->getDates()[0];
+			$edtf = $set->getDates()[0];
 
-			if (! $date instanceof ExtDate) {
-				throw new InvalidArgumentException("Set element can be only of ExtDate type");
+			if (! $edtf instanceof HasPrecision) {
+				throw new InvalidArgumentException("Set element should support 'precisionAsString' method");
 			}
 
-			$precisionSuffix = $date->precisionAsString();
-			$humanizedDate = $this->humanizer->humanize($date);
+			$precisionSuffix = $edtf->precisionAsString();
+			$humanizedDate = $this->humanizer->humanize($edtf);
 
 			if ($set->hasOpenStart()) {
 				return HumanizationResult::newSimpleHumanization(

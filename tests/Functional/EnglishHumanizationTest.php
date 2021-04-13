@@ -111,7 +111,12 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Open start one day of a set' => [ '[..1975-03-26]', 'March 26th, 1975; or an earlier date' ];
 		yield 'Open end one day of a set' => [ '[1967-11-26..]', 'November 26th, 1967; or a later date' ];
 
-//		yield '.. between months' => [ '{2020-01..2020-03}', 'All of these: January 2020, February 2020, March 2020' ]; // FIXME
+		yield 'Open start all seasons included' => [ '{..1987-21}', 'Spring 1987 and all earlier seasons' ];
+		yield 'Open end all seasons included' => [ '{2005-22..}', 'Summer 2005 and all later seasons' ];
+		yield 'Open start one season of a set' => [ '[..1990-23]', 'Autumn 1990 or an earlier season' ];
+		yield 'Open end one season of a set' => [ '[1992-21..]', 'Spring 1992 or a later season' ];
+
+		yield '.. between months' => [ '{2020-01..2020-03}', 'All of these: January 2020, February 2020, March 2020' ]; // FIXME
 	}
 
 	// FIXME

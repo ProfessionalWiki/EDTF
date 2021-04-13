@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF\Model;
 
+use EDTF\Contracts\HasPrecision;
 use EDTF\EdtfValue;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
@@ -11,15 +12,11 @@ use EDTF\PackagePrivate\Carbon\DatetimeFactoryInterface;
 use EDTF\PackagePrivate\CoversTrait;
 use RuntimeException;
 
-class ExtDate implements EdtfValue
+class ExtDate implements EdtfValue, HasPrecision
 {
     use CoversTrait;
 
     private const MAX_POSSIBLE_MONTH = 12;
-
-    const PRECISION_YEAR = 0;
-    const PRECISION_MONTH = 1;
-    const PRECISION_DAY = 2;
 
     private ?int $year;
     private ?int $month;

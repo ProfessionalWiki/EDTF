@@ -52,8 +52,6 @@ class EdtfValidatorTest extends TestCase {
 		yield 'month too high' => [ '2021-13-01' ];
 		yield 'too many days for non-leap year' => [ '1900-02-29' ];
 		yield 'different precision in set' => [ '{1987-10..1988}' ];
-		yield 'open end "or" set has more than one element' => [ '[1895,1980..]' ];
-		yield 'open start "and" set has more than one element' => [ '{..2000,2020}' ];
 
 		foreach ( ValidEdtfStrings::all() as $key => $value ) {
 			yield [ 'invalid ' . $value ];

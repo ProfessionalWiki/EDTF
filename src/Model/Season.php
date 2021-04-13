@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace EDTF\Model;
 
+use EDTF\Contracts\HasPrecision;
 use EDTF\EdtfValue;
 use EDTF\PackagePrivate\CoversTrait;
 
-class Season implements EdtfValue
+class Season implements EdtfValue, HasPrecision
 {
     use CoversTrait;
 
@@ -178,4 +179,14 @@ class Season implements EdtfValue
     {
         return $this->end->getMonth();
     }
+
+    public function precision(): ?int
+	{
+		return self::PRECISION_SEASON;
+	}
+
+	public function precisionAsString(): string
+	{
+		return 'season';
+	}
 }
