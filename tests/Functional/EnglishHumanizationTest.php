@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Model\Interval
  * @covers \EDTF\Model\IntervalSide
+ * @covers \EDTF\PackagePrivate\Humanizer\Strategy\EnglishStrategy
  */
 class EnglishHumanizationTest extends TestCase {
 
@@ -95,10 +96,27 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Conjunction' => [ '{2020, 2021}', '2020 and 2021' ];
 
 		yield '.. between years' => [ '{2020..2022}', 'All of these: 2020, 2021, 2022' ];
-		yield 'Open start' => [ '{..2020}', 'All of these: 2020' ]; // FIXME
-		yield 'Open end' => [ '{2020..}', 'All of these: 2020' ]; // FIXME
+		yield 'Open start all years included' => [ '{..2020}', 'The year 2020 and all earlier years' ];
+		yield 'Open end all years included' => [ '{2020..}', 'The year 2020 and all later years' ];
+		yield 'Open start one year of a set' => [ '[..2020]', 'The year 2020 or an earlier year' ];
+		yield 'Open end one year of a set' => [ '[2020..]', 'The year 2020 or a later year' ];
 
-//		yield '.. between months' => [ '{2020-01..2020-03}', 'All of these: January 2020, February 2020, March 2020' ]; // FIXME
+		yield 'Open start all months included' => [ '{..1975-07}', 'July 1975 and all earlier months' ];
+		yield 'Open end all months included' => [ '{1975-07..}', 'July 1975 and all later months' ];
+		yield 'Open start one month of a set' => [ '[..1975-03]', 'March 1975 or an earlier month' ];
+		yield 'Open end one month of a set' => [ '[1967-11..]', 'November 1967 or a later month' ];
+
+		yield 'Open start all days included' => [ '{..1975-07-11}', 'July 11th, 1975; and all earlier dates' ];
+		yield 'Open end all days included' => [ '{1975-07-11..}', 'July 11th, 1975; and all later dates' ];
+		yield 'Open start one day of a set' => [ '[..1975-03-26]', 'March 26th, 1975; or an earlier date' ];
+		yield 'Open end one day of a set' => [ '[1967-11-26..]', 'November 26th, 1967; or a later date' ];
+
+		yield 'Open start all seasons included' => [ '{..1987-21}', 'Spring 1987 and all earlier seasons' ];
+		yield 'Open end all seasons included' => [ '{2005-22..}', 'Summer 2005 and all later seasons' ];
+		yield 'Open start one season of a set' => [ '[..1990-23]', 'Autumn 1990 or an earlier season' ];
+		yield 'Open end one season of a set' => [ '[1992-21..]', 'Spring 1992 or a later season' ];
+
+		yield '.. between months' => [ '{2020-01..2020-03}', 'All of these: January 2020, February 2020, March 2020' ]; // FIXME
 	}
 
 	// FIXME

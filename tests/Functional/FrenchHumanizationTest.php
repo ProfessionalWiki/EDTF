@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Model\Interval
  * @covers \EDTF\Model\IntervalSide
+ * @covers \EDTF\PackagePrivate\Humanizer\Strategy\FrenchStrategy
  */
 class FrenchHumanizationTest extends TestCase
 {

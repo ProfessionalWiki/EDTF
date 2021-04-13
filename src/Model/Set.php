@@ -83,6 +83,11 @@ class Set implements EdtfValue
         return $this->dates;
     }
 
+    public function isSingleElement(): bool
+	{
+		return count($this->getDates()) === 1;
+	}
+
     private function startElementInSet(): EdtfValue
     {
         return $this->dates[0];

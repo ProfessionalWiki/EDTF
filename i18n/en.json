@@ -64,6 +64,30 @@
 	"edtf-all-of-these": "All of these:",
 	"edtf-one-of-these": "One of these:",
 
+	"edtf-year-and-all-earlier": "The year $1 and all earlier years",
+	"edtf-year-or-earlier": "The year $1 or an earlier year",
+
+	"edtf-year-and-all-later": "The year $1 and all later years",
+	"edtf-year-or-later": "The year $1 or a later year",
+
+	"edtf-month-and-all-earlier": "$1 and all earlier months",
+	"edtf-month-and-all-later": "$1 and all later months",
+
+	"edtf-month-or-earlier": "$1 or an earlier month",
+	"edtf-month-or-later": "$1 or a later month",
+
+	"edtf-day-and-all-earlier": "$1; and all earlier dates",
+	"edtf-day-and-all-later": "$1; and all later dates",
+
+	"edtf-day-or-earlier": "$1; or an earlier date",
+	"edtf-day-or-later": "$1; or a later date",
+
+	"edtf-season-or-earlier": "$1 or an earlier season",
+	"edtf-season-or-later": "$1 or a later season",
+
+	"edtf-season-and-all-earlier": "$1 and all earlier seasons",
+	"edtf-season-and-all-later": "$1 and all later seasons",
+
 	"edtf-both-dates": "$1 and $2",
 	"edtf-one-of-two-dates": "$1 or $2",
 

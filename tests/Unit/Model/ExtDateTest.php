@@ -14,6 +14,7 @@ use RuntimeException;
 
 /**
  * @covers \EDTF\Model\ExtDate
+ * @covers \EDTF\PackagePrivate\Carbon\CarbonFactory
  * @package EDTF\Tests\Unit
  */
 class ExtDateTest extends TestCase
@@ -151,18 +152,19 @@ class ExtDateTest extends TestCase
 	/**
 	 * @dataProvider datePrecisionProvider
 	 */
-    public function testPrecision(ExtDate $edtf, ?int $expectedPrecision): void
+    public function testPrecision(ExtDate $edtf, ?int $expectedPrecisionInt, string $expectedPrecisionString): void
 	{
-		$this->assertEquals($edtf->precision(), $expectedPrecision);
+		$this->assertEquals($expectedPrecisionInt, $edtf->precision());
+		$this->assertEquals($expectedPrecisionString, $edtf->precisionAsString());
 	}
 
     public function datePrecisionProvider(): array
 	{
 		return [
-			[new ExtDate(2000), ExtDate::PRECISION_YEAR],
-			[new ExtDate(2001, 02), ExtDate::PRECISION_MONTH],
-			[new ExtDate(2001, 2, 24), ExtDate::PRECISION_DAY],
-			[new ExtDate(), null],
+			[new ExtDate(2000), ExtDate::PRECISION_YEAR, 'year'],
+			[new ExtDate(2001, 02), ExtDate::PRECISION_MONTH, 'month'],
+			[new ExtDate(2001, 2, 24), ExtDate::PRECISION_DAY, 'day'],
+			[new ExtDate(), null, ''],
 		];
 	}
 
