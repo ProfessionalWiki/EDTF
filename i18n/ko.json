@@ -54,6 +54,11 @@
 	"edtf-interval-unknown-end": "$1부터 알 수 없는 시점까지",
 	"edtf-interval-unknown-start": "알 수 없는 시점부터 $1까지",
 	"edtf-local-time": "현지 시각",
-	"edtf-both-dates": "$1와 $2",
-	"edtf-one-of-two-dates": "$1이나 $2"
+	"edtf-empty-set": "빈 집합",
+	"edtf-all-of-these": "다음 중 모든 항목:",
+	"edtf-one-of-these": "다음 중 하나:",
+	"edtf-both-dates": "$1 및 $2",
+	"edtf-one-of-two-dates": "$1 또는 $2",
+	"edtf-inline-all-of-these": "다음 중 모든 항목: $1",
+	"edtf-inline-one-of-these": "다음 중 하나: $1"
 }

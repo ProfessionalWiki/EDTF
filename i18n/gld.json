@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"RFScott"
+		]
+	},
+	"edtf-spring": "Неӈне",
+	"edtf-summer": "Дёан",
+	"edtf-autumn": "Боло",
+	"edtf-winter": "Туэ",
+	"edtf-summer-north": "Дёан",
+	"edtf-autumn-north": "Боло",
+	"edtf-summer-south": "Дёан",
+	"edtf-autumn-south": "Боло",
+	"edtf-winter-south": "Туэ",
+	"edtf-bc-year-short": "Айӈани $1 до н.э.",
+	"edtf-year-short": "Айӈани $1",
+	"edtf-january": "Агдима биа",
+	"edtf-february": "Нэудима биа",
+	"edtf-march": "Хӯн биа",
+	"edtf-april": "Нюӈгун биа",
+	"edtf-june": "Дякпон биа",
+	"edtf-july": "Амтака хуруйни биа",
+	"edtf-september": "Дава исӣни биа",
+	"edtf-october": "Муйрэ биа",
+	"edtf-november": "Ичэ биа",
+	"edtf-december": "Гуси биани"
+}
