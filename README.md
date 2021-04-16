@@ -114,7 +114,11 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
-### Version 1.1.0
+### Version 1.2.0 - 2021-04-16
+
+* Improved humanization of open sets
+
+### Version 1.1.0 - 2021-03-20
 
 * Added internationalization to the `StructuredHumanizer` service
 * Fixed handling of "year 0"
