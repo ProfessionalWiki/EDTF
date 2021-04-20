@@ -336,16 +336,15 @@ class ExtDate extends EdtfValue implements Coverable, HasPrecision, SimpleEdtf
 
     public function precisionAsString(): string
 	{
-		$precision = '';
 		if ($this->day) {
-			$precision = 'day';
+			return 'day';
 		} elseif ($this->month) {
-			$precision = 'month';
+			return 'month';
 		} elseif ($this->year) {
-			$precision = 'year';
+			return 'year';
 		}
 
-		return $precision;
+		return '';
 	}
 
 	public function getSeason(): ?int
