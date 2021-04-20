@@ -4,9 +4,10 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\TestDoubles;
 
-use EDTF\EdtfValue;
+use EDTF\Contracts\Coverable;
+use EDTF\Model\EdtfValue;
 
-class NullEdtfValue implements EdtfValue {
+class NullEdtfValue extends EdtfValue implements Coverable {
 
 	public function getMax(): int {
 		return 0;
@@ -16,7 +17,7 @@ class NullEdtfValue implements EdtfValue {
 		return 0;
 	}
 
-	public function covers( EdtfValue $edtf ): bool {
+	public function covers( Coverable $edtf ): bool {
 		return false;
 	}
 

@@ -18,6 +18,9 @@ use PHPUnit\Framework\TestCase;
 class EnglishHumanizationTest extends TestCase {
 
 	public function humanizationProvider(): \Generator {
+
+		yield 'Interval with season to season' => [ '2010-21/2012-26', 'Spring 2010 to Summer (Northern Hemisphere) 2012' ];
+
 		yield 'Full date' => [ '1975-07-01', 'July 1st, 1975' ];
 		yield 'Year and month' => [ '1975-07', 'July 1975' ];
 		yield 'Year only' => [ '1975', '1975' ];

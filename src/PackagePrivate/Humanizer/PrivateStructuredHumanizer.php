@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer;
 
+use EDTF\Model\EdtfValue;
 use EDTF\Contracts\HasPrecision;
-use EDTF\EdtfValue;
 use EDTF\HumanizationResult;
 use EDTF\Humanizer;
 use EDTF\Model\Set;
@@ -23,7 +23,7 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 		$this->messageBuilder = $messageBuilder;
 	}
 
-	public function humanize( EdtfValue $edtf ): HumanizationResult {
+	public function humanize(EdtfValue $edtf): HumanizationResult {
 		if ( $edtf instanceof Set ) {
 			return $this->humanizeSet( $edtf );
 		}

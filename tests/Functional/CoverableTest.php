@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EDTF\Tests\Functional;
 
-use EDTF\EdtfValue;
+use EDTF\Contracts\Coverable;
 use EDTF\PackagePrivate\Parser\Parser;
 use PHPUnit\Framework\TestCase;
 
@@ -12,9 +12,9 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Functional
  */
-class EdtfTest extends TestCase
+class CoverableTest extends TestCase
 {
-    private function edtf(string $input): EdtfValue
+    private function edtf(string $input): Coverable
     {
         return (new Parser())->createEdtf($input);
     }

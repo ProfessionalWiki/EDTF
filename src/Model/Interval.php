@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace EDTF\Model;
 
-use EDTF\EdtfValue;
+use EDTF\Contracts\Coverable;
+use EDTF\Contracts\SimpleEdtf;
 use EDTF\PackagePrivate\CoversTrait;
 
-class Interval implements EdtfValue
+class Interval extends EdtfValue implements Coverable
 {
     use CoversTrait;
 
@@ -49,7 +50,7 @@ class Interval implements EdtfValue
         return $this->end->getDate()->getMax();
     }
 
-    public function getStartDate(): ExtDate
+    public function getStartDate(): SimpleEdtf
     {
     	// TODO: why do we need this method?
         return $this->start->getDate();
@@ -59,7 +60,7 @@ class Interval implements EdtfValue
 		return $this->start->isNormalInterval();
     }
 
-    public function getEndDate(): ExtDate
+    public function getEndDate(): SimpleEdtf
     {
 		// TODO: why do we need this method?
         return $this->end->getDate();

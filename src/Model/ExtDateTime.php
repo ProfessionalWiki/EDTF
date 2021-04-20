@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace EDTF\Model;
 
-use EDTF\EdtfValue;
+use EDTF\Contracts\Coverable;
 use EDTF\PackagePrivate\CoversTrait;
 
-class ExtDateTime implements EdtfValue
+class ExtDateTime extends EdtfValue implements Coverable
 {
 	use CoversTrait;
 

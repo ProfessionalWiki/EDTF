@@ -4,15 +4,17 @@ declare( strict_types = 1 );
 
 namespace EDTF\Model;
 
+use EDTF\Contracts\SimpleEdtf;
+
 class IntervalSide {
 
-	private ?ExtDate $date;
+	private ?SimpleEdtf $date;
 	private int $type;
 
 	private function __construct() {
 	}
 
-	public static function newFromDate( ExtDate $date ): self {
+	public static function newFromDate( SimpleEdtf $date ): self {
 		$instance = new self();
 		$instance->type = Interval::NORMAL;
 		$instance->date = $date;
@@ -45,7 +47,7 @@ class IntervalSide {
 		return Interval::UNKNOWN === $this->type;
 	}
 
-	public function getDate(): ExtDate {
+	public function getDate(): SimpleEdtf {
 		return $this->date;
 	}
 

@@ -10,6 +10,6 @@ interface Humanizer {
 	 * Returns a natural language version of the EDTF value,
 	 * or an empty string if the EDTF value is not supported.
 	 */
-	public function humanize( EdtfValue $edtf ): string;
+	public function humanize(Model\EdtfValue $edtf): string;
 
 }

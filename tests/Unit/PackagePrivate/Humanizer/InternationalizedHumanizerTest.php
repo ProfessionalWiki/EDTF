@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 
 namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
+use EDTF\Model\EdtfValue;
 use EDTF\EdtfFactory;
-use EDTF\EdtfValue;
 use EDTF\Model\ExtDate;
 use EDTF\Model\ExtDateTime;
 use EDTF\Model\Interval;

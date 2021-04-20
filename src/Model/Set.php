@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace EDTF\Model;
 
-use EDTF\EdtfValue;
+use EDTF\Contracts\Coverable;
+use EDTF\Contracts\SimpleEdtf;
 
-class Set implements EdtfValue
+class Set extends EdtfValue implements Coverable
 {
-
 	/**
-	 * @var array<int, EdtfValue>
+	 * @var array<int, SimpleEdtf>
 	 */
     private array $dates;
 	private bool $allMembers;
@@ -18,7 +18,7 @@ class Set implements EdtfValue
 	private bool $hasOpenEnd;
 
     /**
-     * @param array<int, EdtfValue> $lists
+     * @param array<int, SimpleEdtf> $lists
      * @param bool $allMembers
      * @param bool $hasOpenStart
      * @param bool $hasOpenEnd
@@ -39,7 +39,7 @@ class Set implements EdtfValue
     /**
      * @TODO: (low priority) add a way to covers with earlier or later
      */
-    public function covers(EdtfValue $edtf): bool
+    public function covers(Coverable $edtf): bool
     {
         foreach( $this->dates as $list){
             if ($list->covers($edtf)) {
@@ -76,7 +76,7 @@ class Set implements EdtfValue
     }
 
 	/**
-	 * @return array<int, EdtfValue>
+	 * @return array<int, SimpleEdtf>
 	 */
     public function getDates(): array
     {
@@ -88,12 +88,12 @@ class Set implements EdtfValue
 		return count($this->getDates()) === 1;
 	}
 
-    private function startElementInSet(): EdtfValue
+    private function startElementInSet(): SimpleEdtf
     {
         return $this->dates[0];
     }
 
-    private function endElementInSet(): EdtfValue
+    private function endElementInSet(): SimpleEdtf
     {
         $listsCount = count($this->dates);
         return $listsCount === 1 ? $this->dates[0] : $this->dates[$listsCount - 1];

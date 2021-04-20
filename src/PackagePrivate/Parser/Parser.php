@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace EDTF\PackagePrivate\Parser;
 
 use Carbon\Carbon;
-use EDTF\EdtfValue;
+use EDTF\Contracts\Coverable;
 use EDTF\Model\ExtDate;
 use EDTF\Model\ExtDateTime;
 use EDTF\Model\Interval;
@@ -75,7 +75,7 @@ class Parser
 	/**
 	 * @throws InvalidArgumentException
 	 */
-    public function createEdtf(string $input): EdtfValue
+    public function createEdtf(string $input): Coverable
     {
         if (false !== strpos($input, '/')) {
             return $this->buildInterval($input);
@@ -414,6 +414,13 @@ class Parser
 
 		$parser = new Parser();
 		$parser->parse($dateString);
+
+		$date = $parser->getParsedData()->getDate();
+
+		if ($date->getSeason() !== 0) {
+			return IntervalSide::newFromDate($parser->buildSeason());
+		}
+
 		return IntervalSide::newFromDate( $parser->buildDate() );
 	}
 

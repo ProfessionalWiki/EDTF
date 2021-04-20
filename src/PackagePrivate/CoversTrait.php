@@ -5,14 +5,14 @@ declare(strict_types = 1);
 namespace EDTF\PackagePrivate;
 
 use Carbon\Carbon;
-use EDTF\EdtfValue;
+use EDTF\Contracts\Coverable;
 
 /**
  * TODO: this could be an object or service used inside of SpecificEdtfType::covers()
  */
 trait CoversTrait
 {
-    public function covers(EdtfValue $edtf): bool
+    public function covers(Coverable $edtf): bool
     {
         $min = Carbon::createFromTimestamp($this->getMin());
         $max = Carbon::createFromTimestamp($this->getMax());

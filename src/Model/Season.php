@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace EDTF\Model;
 
+use EDTF\Contracts\Coverable;
 use EDTF\Contracts\HasPrecision;
-use EDTF\EdtfValue;
+use EDTF\Contracts\SimpleEdtf;
 use EDTF\PackagePrivate\CoversTrait;
 
-class Season implements EdtfValue, HasPrecision
+class Season extends EdtfValue implements Coverable, HasPrecision, SimpleEdtf
 {
     use CoversTrait;
 
@@ -188,5 +189,15 @@ class Season implements EdtfValue, HasPrecision
 	public function precisionAsString(): string
 	{
 		return 'season';
+	}
+
+	public function getMonth(): ?int
+	{
+		return null;
+	}
+
+	public function getDay(): ?int
+	{
+		return null;
 	}
 }

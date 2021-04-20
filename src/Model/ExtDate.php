@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace EDTF\Model;
 
+use EDTF\Contracts\Coverable;
 use EDTF\Contracts\HasPrecision;
-use EDTF\EdtfValue;
+use EDTF\Contracts\SimpleEdtf;
 use EDTF\PackagePrivate\Carbon\CarbonFactory;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryException;
 use EDTF\PackagePrivate\Carbon\DatetimeFactoryInterface;
 use EDTF\PackagePrivate\CoversTrait;
 use RuntimeException;
 
-class ExtDate implements EdtfValue, HasPrecision
+class ExtDate extends EdtfValue implements Coverable, HasPrecision, SimpleEdtf
 {
     use CoversTrait;
 
@@ -345,5 +346,10 @@ class ExtDate implements EdtfValue, HasPrecision
 		}
 
 		return $precision;
+	}
+
+	public function getSeason(): ?int
+	{
+		return 0;
 	}
 }

@@ -31,7 +31,7 @@ It is an open source project, and contributions are welcome!
 $parser = \EDTF\EdtfFactory::newParser();
 $parsingResult = $parser->parse('1985-04-12T23:20:30');
 $parsingResult->isValid(); // true
-$parsingResult->getEdtfValue(); // \EDTF\EdtfValue
+$parsingResult->getEdtfValue(); // \EDTF\Model\EdtfValue
 $parsingResult->getInput(); // '1985-04-12T23:20:30'
 ```
 
@@ -54,7 +54,7 @@ $humanizer->humanize($edtfValue); // string
 ```php
 $edtfValue->getMax(); // int
 $edtfValue->getMin(); // int
-$edtfValue->covers(\EDTF\EdtfValue $anotherValue); // bool
+$edtfValue->covers(Coverable $anotherValue); // bool
 ```
 
 ```php
