@@ -6,6 +6,6 @@ namespace EDTF;
 
 interface StructuredHumanizer {
 
-	public function humanize( Model\EdtfValue $edtf ): HumanizationResult;
+	public function humanize( $edtf ): HumanizationResult;
 
 }

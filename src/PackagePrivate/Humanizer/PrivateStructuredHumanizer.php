@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer;
 
-use EDTF\Model\EdtfValue;
 use EDTF\Contracts\HasPrecision;
 use EDTF\HumanizationResult;
 use EDTF\Humanizer;
@@ -23,7 +22,10 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 		$this->messageBuilder = $messageBuilder;
 	}
 
-	public function humanize(EdtfValue $edtf): HumanizationResult {
+	/**
+	 * @psalm-suppress MissingParamType
+	 */
+	public function humanize($edtf): HumanizationResult {
 		if ( $edtf instanceof Set ) {
 			return $this->humanizeSet( $edtf );
 		}

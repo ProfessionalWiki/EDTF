@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer;
 
-use EDTF\Model\EdtfValue;
 use EDTF\Humanizer;
 use EDTF\Model\ExtDate;
 use EDTF\Model\ExtDateTime;
@@ -63,7 +62,11 @@ class InternationalizedHumanizer implements Humanizer {
         $this->languageStrategy = $languageStrategy;
     }
 
-	public function humanize(EdtfValue $edtf): string {
+	/**
+	 * @psalm-suppress MissingParamType
+	 * TODO: everything leads to the fact that this method should be reviewed and maybe refactored
+	 */
+	public function humanize($edtf): string {
 		if ( $edtf instanceof ExtDate ) {
 			return $this->humanizeDate( $edtf );
 		}
