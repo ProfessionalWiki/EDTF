@@ -124,16 +124,17 @@ class ExtDateTime implements EdtfValue
 		return $this->date;
 	}
 
-	public function iso8601(): string {
-		$date = new \DateTime();
-		$date->setDate($this->getYear(), $this->getMonth(), $this->getDay());
-		$date->setTime($this->getHour(), $this->getMinute(), $this->getSecond());
-		try {
-			$date->setTimezone(new \DateTimeZone($this->getTzSign() . sprintf("%02s:%02s", $this->getTzHour(), $this->getTzMinute())));
-		} catch (\Exception $e) {
-			// Timezone probably not provided. Swallow the exception.
-		}
-		
-		return $date->format('c');
-	}
+    public function iso8601(): string
+    {
+        $date = new \DateTime();
+        $date->setDate($this->getYear(), $this->getMonth(), $this->getDay());
+        $date->setTime($this->getHour(), $this->getMinute(), $this->getSecond());
+        try {
+            $date->setTimezone(new \DateTimeZone($this->getTzSign() . sprintf("%02s:%02s", $this->getTzHour(), $this->getTzMinute())));
+        } catch (\Exception $e) {
+            // Timezone probably not provided. Swallow the exception.
+        }
+        
+        return $date->format('c');
+    }
 }
