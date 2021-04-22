@@ -223,6 +223,8 @@ class Parser
 
 	private function buildSet(string $input): Set
 	{
+		$input = $this->removeExtraSpaces($input);
+
 		preg_match(
 			"/(?x)
 					 ^(?<openFlag>[\[|\{])
