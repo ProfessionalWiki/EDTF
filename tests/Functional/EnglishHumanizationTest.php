@@ -92,6 +92,10 @@ class EnglishHumanizationTest extends TestCase {
 	}
 
 	public function setHumanizationProvider(): \Generator {
+
+		yield 'Open set with space at the beginning' => [ '{ ..1983}', 'The year 1983 and all earlier years' ];
+		yield 'Open set with space at the end' => [ '{ 1983.. }', 'The year 1983 and all later years' ];
+
 		yield 'Disjunction' => [ '[2020, 2021]', '2020 or 2021' ];
 		yield 'Conjunction' => [ '{2020, 2021}', '2020 and 2021' ];
 
