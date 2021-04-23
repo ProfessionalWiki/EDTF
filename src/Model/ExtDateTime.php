@@ -129,12 +129,19 @@ class ExtDateTime implements EdtfValue
         $date = new \DateTime();
         $date->setDate($this->getYear(), $this->getMonth(), $this->getDay());
         $date->setTime($this->getHour(), $this->getMinute(), $this->getSecond());
-        try {
+
+        // The hour, minute, and second are stored as given, but adding the timezone
+        // on to the DateTime will shift the time, so we need to pull it back off.
+        if (!is_null($this->timezoneOffset)) {
+            if($this->timezoneOffset > 0 ) {
+                $date->sub(new \DateInterval('PT' . $this->timezoneOffset . 'M'));
+            } else {
+                $date->add(new \DateInterval('PT' . abs($this->timezoneOffset) . 'M'));
+            }
             $date->setTimezone(new \DateTimeZone($this->getTzSign() . sprintf("%02s:%02s", $this->getTzHour(), $this->getTzMinute())));
-        } catch (\Exception $e) {
-            // Timezone probably not provided. Swallow the exception.
+            return $date->format('c');
         }
         
-        return $date->format('c');
+        return $date->format('Y-m-d\Th:i:s');
     }
 }
