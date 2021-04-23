@@ -4,10 +4,12 @@ declare( strict_types = 1 );
 
 namespace EDTF;
 
+use EDTF\Contracts\Coverable;
+
 class ParsingResult {
 
 	private string $inputValue;
-	private ?Model\EdtfValue $edtf = null;
+	private ?Coverable $edtf = null;
 
 	private function __construct( string $inputValue ) {
 		$this->inputValue = $inputValue;
@@ -17,7 +19,7 @@ class ParsingResult {
 		return new self( $inputValue );
 	}
 
-	public static function newValid( string $inputValue, Model\EdtfValue $edtf ): self {
+	public static function newValid( string $inputValue, Coverable $edtf ): self {
 		$instance = new self( $inputValue );
 		$instance->edtf = $edtf;
 		return $instance;
@@ -30,7 +32,7 @@ class ParsingResult {
 	/**
 	 * @psalm-suppress InvalidNullableReturnType
 	 */
-	public function getEdtfValue(): Model\EdtfValue {
+	public function getEdtfValue(): Coverable {
 		/**
 		 * @psalm-suppress NullableReturnStatement
 		 */
