@@ -158,6 +158,14 @@ class ExtDateTest extends TestCase
 		$this->assertEquals($expectedPrecisionString, $edtf->precisionAsString());
 	}
 
+    /**
+     * @dataProvider isoDateProvider
+     */
+    public function testIsoDate(ExtDate $edtf, string $expectedIsoString): void
+    {
+        $this->assertEquals($expectedIsoString, $edtf->iso8601());
+    }
+
     public function datePrecisionProvider(): array
 	{
 		return [
@@ -201,6 +209,34 @@ class ExtDateTest extends TestCase
                 new ExtDate(1987, 2),
                 $daysInMonth = Carbon::create(1987, 2)->lastOfMonth()->endOfDay()->timestamp
             ]
+        ];
+    }
+
+    public function isoDateProvider(): array
+    {
+        return [
+            [
+                new ExtDate(1987),
+                '1987'
+            ],
+            [
+                new ExtDate(1987, 10),
+                '1987-10'
+            ],
+            [
+                new ExtDate(1987, 10, 1),
+                '1987-10-01'
+            ],
+            [
+                new ExtDate(
+                    1987, 10, 1, 
+                    new Qualification(
+                        Qualification::UNDEFINED, 
+                        Qualification::APPROXIMATE
+                    )
+                ),
+                '1987-10-01'
+            ],
         ];
     }
 }

@@ -67,4 +67,22 @@ class ExtDateTimeTest extends TestCase
         $this->assertSame(10, $date->getSecond());
         $this->assertSame(300, $date->getTimezoneOffset());
     }
+
+    public function testIsoDate(): void
+    {
+
+        $date = $this->createExtDateTime('2004-01-01T10:10:10');
+        $this->assertSame('2004-01-01T10:10:10', $date->iso8601());
+
+        $date = $this->createExtDateTime('2004-01-01T10:10:10+00:00');
+        $this->assertSame('2004-01-01T10:10:10+00:00', $date->iso8601());
+
+        $date = $this->createExtDateTime('2004-01-01T10:10:10+05:00');
+        $this->assertSame('2004-01-01T10:10:10+05:00', $date->iso8601());
+
+        $date = $this->createExtDateTime('2004-01-01T10:10:10-05:00');
+        $this->assertSame('2004-01-01T10:10:10-05:00', $date->iso8601());
+
+
+    }
 }

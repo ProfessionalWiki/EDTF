@@ -345,4 +345,20 @@ class ExtDate implements EdtfValue, HasPrecision
 
 		return '';
 	}
+
+    public function iso8601(): string
+    {
+        $iso = '';
+        if ($this->year) {
+            $iso = strval($this->year);
+            if ($this->month) {
+                $iso .= '-' . sprintf("%02s", $this->month);
+                if ($this->day) {
+                    $iso .= '-' . sprintf("%02s", $this->day);
+                }
+            }
+        }
+
+        return $iso;
+    }
 }
