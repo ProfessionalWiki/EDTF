@@ -54,7 +54,7 @@ class EdtfFactory {
 		$loader = new JsonFileLoader( $translationDir );
 
 		if ( $languageCode === $fallbackLanguageCode ) {
-			return $messageBuilder = new ArrayMessageBuilder( $loader->load( $languageCode ) );
+			return new ArrayMessageBuilder( $loader->load( $languageCode ) );
 		}
 
 		return new FallbackMessageBuilder(
