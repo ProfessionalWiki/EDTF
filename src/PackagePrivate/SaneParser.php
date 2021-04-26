@@ -18,7 +18,7 @@ class SaneParser implements EdtfParser {
 			$edtf = $this->getInternalParser()->createEdtf( $edtfString );
 		}
 		catch ( InvalidArgumentException $ex ) {
-			return ParsingResult::newError( $edtfString );
+			return ParsingResult::newError( $edtfString, $ex->getMessage() );
 		}
 
 		return ParsingResult::newValid( $edtfString, $edtf );

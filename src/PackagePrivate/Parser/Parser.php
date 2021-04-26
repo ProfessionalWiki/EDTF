@@ -39,7 +39,7 @@ class Parser {
 		$input = $this->removeExtraSpaces( $input );
 
 		if ( "" === $input ) {
-			throw new InvalidArgumentException( "Can't create EDTF from empty string." );
+			throw new InvalidArgumentException( "Can't create EDTF from empty string" );
 		}
 
 		$input = strtoupper( $input );
@@ -225,7 +225,7 @@ class Parser {
 		if ( 0 === count( $matches ) ) {
 			throw new InvalidArgumentException(
 				sprintf(
-					"Can't create EDTF::Set from '%s' input",
+					"Can't create Set from '%s' input",
 					$input
 				)
 			);

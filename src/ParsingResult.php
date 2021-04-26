@@ -8,13 +8,16 @@ class ParsingResult {
 
 	private string $inputValue;
 	private ?EdtfValue $edtf = null;
+	private string $errorMessage = '';
 
 	private function __construct( string $inputValue ) {
 		$this->inputValue = $inputValue;
 	}
 
-	public static function newError( string $inputValue ): self {
-		return new self( $inputValue );
+	public static function newError( string $inputValue, string $errorMessage ): self {
+		$instance = new self( $inputValue );
+		$instance->errorMessage = $errorMessage;
+		return $instance;
 	}
 
 	public static function newValid( string $inputValue, EdtfValue $edtf ): self {
@@ -39,6 +42,10 @@ class ParsingResult {
 
 	public function getInput(): string {
 		return $this->inputValue;
+	}
+
+	public function getErrorMessage(): string {
+		return $this->errorMessage;
 	}
 
 }
