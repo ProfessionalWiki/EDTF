@@ -11,7 +11,7 @@ use EDTF\Humanizer;
 use EDTF\Model\Set;
 use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
 use EDTF\StructuredHumanizer;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 class PrivateStructuredHumanizer implements StructuredHumanizer {
 
@@ -38,27 +38,33 @@ class PrivateStructuredHumanizer implements StructuredHumanizer {
 	}
 
 	private function humanizeSet( Set $set ): HumanizationResult {
-
-		if ($set->isSingleElement()) {
-
+		if ( $set->isSingleElement() ) {
 			$edtf = $set->getDates()[0];
 
-			if (! $edtf instanceof HasPrecision) {
-				throw new InvalidArgumentException("Set element should support 'precisionAsString' method");
+			if ( !$edtf instanceof HasPrecision ) {
+				throw new InvalidArgumentException( "Set element should support 'precisionAsString' method" );
 			}
 
 			$precisionSuffix = $edtf->precisionAsString();
-			$humanizedDate = $this->humanizer->humanize($edtf);
+			$humanizedDate = $this->humanizer->humanize( $edtf );
 
-			if ($set->hasOpenStart()) {
+			if ( $set->hasOpenStart() ) {
 				return HumanizationResult::newSimpleHumanization(
-					$this->message($set->isAllMembers() ? 'edtf-' . $precisionSuffix . '-and-all-earlier' : 'edtf-' . $precisionSuffix . '-or-earlier', $humanizedDate)
+					$this->message(
+						$set->isAllMembers(
+						) ? 'edtf-' . $precisionSuffix . '-and-all-earlier' : 'edtf-' . $precisionSuffix . '-or-earlier',
+						$humanizedDate
+					)
 				);
 			}
 
-			if ($set->hasOpenEnd()) {
+			if ( $set->hasOpenEnd() ) {
 				return HumanizationResult::newSimpleHumanization(
-					$this->message($set->isAllMembers() ? 'edtf-' . $precisionSuffix . '-and-all-later' : 'edtf-' . $precisionSuffix . '-or-later', $humanizedDate)
+					$this->message(
+						$set->isAllMembers(
+						) ? 'edtf-' . $precisionSuffix . '-and-all-later' : 'edtf-' . $precisionSuffix . '-or-later',
+						$humanizedDate
+					)
 				);
 			}
 		}

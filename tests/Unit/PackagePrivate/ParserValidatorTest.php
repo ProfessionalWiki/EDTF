@@ -16,136 +16,131 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\PackagePrivate\Parser\ParserValidator
  * @package EDTF\Tests\Unit\PackagePrivate
  */
-class ParserValidatorTest extends TestCase
-{
-    private ParserValidator $validator;
+class ParserValidatorTest extends TestCase {
 
-    /**
-     * @var MockObject|Parser
-     */
-    private $parser;
+	private ParserValidator $validator;
 
-    public function setUp(): void
-    {
-        $this->parser = $this->createMock(Parser::class);
-        $this->parser->expects($this->any())
-            ->method('getInput')
-            ->willReturn('input');
-        $this->validator = new ParserValidator($this->parser);
-    }
+	/**
+	 * @var MockObject|Parser
+	 */
+	private $parser;
 
-    public function testSuccessValidation()
-    {
-        $this->parser->expects($this->once())
-            ->method('getMatches')
-            ->willReturn(['yearNum' => '1987', 'monthNum' => '12']);
+	public function setUp(): void {
+		$this->parser = $this->createMock( Parser::class );
+		$this->parser->expects( $this->any() )
+			->method( 'getInput' )
+			->willReturn( 'input' );
+		$this->validator = new ParserValidator( $this->parser );
+	}
 
-        $date = $this->createMock(Date::class);
-        $date->expects($this->once())
-            ->method('getSeason')
-            ->willReturn(24);
+	public function testSuccessValidation() {
+		$this->parser->expects( $this->once() )
+			->method( 'getMatches' )
+			->willReturn( [ 'yearNum' => '1987', 'monthNum' => '12' ] );
 
-        $parsedData = new ParsedData(
-            $date,
-            $this->createEmptyTime(),
-            $this->createEmptyQualification(),
-            $this->createEmptyTimeZone()
-        );
+		$date = $this->createMock( Date::class );
+		$date->expects( $this->once() )
+			->method( 'getSeason' )
+			->willReturn( 24 );
 
-        $this->parser->expects($this->once())
-            ->method('getParsedData')
-            ->willReturn($parsedData);
+		$parsedData = new ParsedData(
+			$date,
+			$this->createEmptyTime(),
+			$this->createEmptyQualification(),
+			$this->createEmptyTimeZone()
+		);
 
-        $this->validator->isValid();
+		$this->parser->expects( $this->once() )
+			->method( 'getParsedData' )
+			->willReturn( $parsedData );
 
-        $this->assertEquals("", $this->validator->getMessages());
-    }
+		$this->validator->isValid();
 
-    /**
-     * @dataProvider invalidDataTypeProvider
-     * @param mixed $yearNum
-     * @param mixed $monthNum
-     * @param string $wrongKeyNames
-     */
-    public function testDataTypeFailsInputValidation($yearNum, $monthNum, string $wrongKeyNames)
-    {
-        $this->parser->expects($this->once())
-            ->method('getMatches')
-            ->willReturn(['yearNum' => $yearNum, 'monthNum' => $monthNum]);
+		$this->assertEquals( "", $this->validator->getMessages() );
+	}
 
-        $this->validator->isValid();
-        $this->assertStringContainsString("Invalid data format: $wrongKeyNames must be a string", $this->validator->getMessages());
-    }
+	/**
+	 * @dataProvider invalidDataTypeProvider
+	 *
+	 * @param mixed $yearNum
+	 * @param mixed $monthNum
+	 * @param string $wrongKeyNames
+	 */
+	public function testDataTypeFailsInputValidation( $yearNum, $monthNum, string $wrongKeyNames ) {
+		$this->parser->expects( $this->once() )
+			->method( 'getMatches' )
+			->willReturn( [ 'yearNum' => $yearNum, 'monthNum' => $monthNum ] );
 
-    public function testEmptyStringsFailInputValidation()
-    {
-        $this->parser->expects($this->once())
-            ->method('getMatches')
-            ->willReturn(['yearNum' => '', 'monthNum' => '']);
+		$this->validator->isValid();
+		$this->assertStringContainsString(
+			"Invalid data format: $wrongKeyNames must be a string",
+			$this->validator->getMessages()
+		);
+	}
 
-        $this->validator->isValid();
-        $this->assertEquals("Invalid edtf format input", $this->validator->getMessages());
-    }
+	public function testEmptyStringsFailInputValidation() {
+		$this->parser->expects( $this->once() )
+			->method( 'getMatches' )
+			->willReturn( [ 'yearNum' => '', 'monthNum' => '' ] );
 
-    public function testInvalidSeasonValueFailsSeasonValidation()
-    {
-        $this->parser->expects($this->once())
-            ->method('getMatches')
-            ->willReturn(['yearNum' => '1987', 'monthNum' => '10']);
+		$this->validator->isValid();
+		$this->assertEquals( "Invalid edtf format input", $this->validator->getMessages() );
+	}
 
-        $date = $this->createMock(Date::class);
-        $date->expects($this->once())
-            ->method('getSeason')
-            ->willReturn(19);
+	public function testInvalidSeasonValueFailsSeasonValidation() {
+		$this->parser->expects( $this->once() )
+			->method( 'getMatches' )
+			->willReturn( [ 'yearNum' => '1987', 'monthNum' => '10' ] );
 
-        $parsedData = new ParsedData(
-            $date,
-            $this->createEmptyTime(),
-            $this->createEmptyQualification(),
-            $this->createEmptyTimeZone()
-        );
+		$date = $this->createMock( Date::class );
+		$date->expects( $this->once() )
+			->method( 'getSeason' )
+			->willReturn( 19 );
 
-        $this->parser->expects($this->once())
-            ->method('getParsedData')
-            ->willReturn($parsedData);
+		$parsedData = new ParsedData(
+			$date,
+			$this->createEmptyTime(),
+			$this->createEmptyQualification(),
+			$this->createEmptyTimeZone()
+		);
 
-        $this->validator->isValid();
-        $this->assertEquals(
-            "Invalid season number 19 in input is out of range. Accepted season number is between 21-41",
-            $this->validator->getMessages()
-        );
-    }
+		$this->parser->expects( $this->once() )
+			->method( 'getParsedData' )
+			->willReturn( $parsedData );
 
-    public function invalidDataTypeProvider()
-    {
-        return [
-            [1987, '10', 'yearNum'],
-            ['1987', 10, 'monthNum'],
-            [10.0, 12, 'yearNum'],
-            [null, '10', 'yearNum'],
-            [false, null, 'yearNum']
-        ];
-    }
+		$this->validator->isValid();
+		$this->assertEquals(
+			"Invalid season number 19 in input is out of range. Accepted season number is between 21-41",
+			$this->validator->getMessages()
+		);
+	}
 
-    private function createEmptyQualification(): Qualification
-    {
-        return new Qualification(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        );
-    }
+	public function invalidDataTypeProvider() {
+		return [
+			[ 1987, '10', 'yearNum' ],
+			[ '1987', 10, 'monthNum' ],
+			[ 10.0, 12, 'yearNum' ],
+			[ null, '10', 'yearNum' ],
+			[ false, null, 'yearNum' ]
+		];
+	}
 
-    private function createEmptyTime(): Time
-    {
-        return new Time(null, null, null);
-    }
+	private function createEmptyQualification(): Qualification {
+		return new Qualification(
+			null,
+			null,
+			null,
+			null,
+			null,
+			null
+		);
+	}
 
-    private function createEmptyTimeZone(): Timezone
-    {
-        return new Timezone(null, null, null, null);
-    }
+	private function createEmptyTime(): Time {
+		return new Time( null, null, null );
+	}
+
+	private function createEmptyTimeZone(): Timezone {
+		return new Timezone( null, null, null, null );
+	}
 }

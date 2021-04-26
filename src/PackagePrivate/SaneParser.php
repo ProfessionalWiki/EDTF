@@ -7,6 +7,7 @@ namespace EDTF\PackagePrivate;
 use EDTF\EdtfParser;
 use EDTF\PackagePrivate\Parser\Parser;
 use EDTF\ParsingResult;
+use InvalidArgumentException;
 
 class SaneParser implements EdtfParser {
 
@@ -15,7 +16,8 @@ class SaneParser implements EdtfParser {
 	public function parse( string $edtfString ): ParsingResult {
 		try {
 			$edtf = $this->getInternalParser()->createEdtf( $edtfString );
-		} catch ( \InvalidArgumentException $ex ) {
+		}
+		catch ( InvalidArgumentException $ex ) {
 			return ParsingResult::newError( $edtfString );
 		}
 

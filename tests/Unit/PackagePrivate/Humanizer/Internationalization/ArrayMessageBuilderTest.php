@@ -21,11 +21,13 @@ class ArrayMessageBuilderTest extends TestCase {
 	}
 
 	public function testSimpleMessage(): void {
-		$builder = new ArrayMessageBuilder( [
-			'wrong-key' => 'Wrong result',
-			'right-key' => 'Right result',
-			'another-wrong-key' => 'Another wrong result',
-		] );
+		$builder = new ArrayMessageBuilder(
+			[
+				'wrong-key' => 'Wrong result',
+				'right-key' => 'Right result',
+				'another-wrong-key' => 'Another wrong result',
+			]
+		);
 
 		$this->assertSame(
 			'Right result',
@@ -34,14 +36,16 @@ class ArrayMessageBuilderTest extends TestCase {
 	}
 
 	public function testParameters(): void {
-		$builder = new ArrayMessageBuilder( [
-			'right-key' => 'This was written by $2 on $1 ($1)',
-		] );
+		$builder = new ArrayMessageBuilder(
+			[
+				'right-key' => 'This was written by $2 on $1 ($1)',
+			]
+		);
 
 		$this->assertSame(
 			'This was written by Jeroen De Dauw on 2021-02-21 (2021-02-21)',
 			$builder->buildMessage( 'right-key', '2021-02-21', 'Jeroen De Dauw' )
 		);
 	}
-	
+
 }

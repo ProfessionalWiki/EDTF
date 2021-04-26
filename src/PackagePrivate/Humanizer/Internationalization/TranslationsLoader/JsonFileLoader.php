@@ -4,34 +4,32 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader;
 
-class JsonFileLoader implements Loader
-{
-    private string $i18nPath;
+class JsonFileLoader implements Loader {
 
-    public function __construct(string $i18nPath)
-    {
-        $this->i18nPath = $i18nPath;
-    }
+	private string $i18nPath;
 
-    /**
-     * @throws LoaderException
-     */
-    public function load(string $languageCode): array
-    {
-        $file = $this->i18nPath . "/$languageCode.json";
+	public function __construct( string $i18nPath ) {
+		$this->i18nPath = $i18nPath;
+	}
 
-        if (!file_exists($file)) {
-            $file = $this->i18nPath . "/en.json";
-        }
+	/**
+	 * @throws LoaderException
+	 */
+	public function load( string $languageCode ): array {
+		$file = $this->i18nPath . "/$languageCode.json";
 
-        $json = file_get_contents($file);
-        if ($json === false) {
-            throw new LoaderException("Failed to load translations from file $file");
-        }
+		if ( !file_exists( $file ) ) {
+			$file = $this->i18nPath . "/en.json";
+		}
 
-        /** @var array $translations */
-        $translations = json_decode($json, true);
+		$json = file_get_contents( $file );
+		if ( $json === false ) {
+			throw new LoaderException( "Failed to load translations from file $file" );
+		}
 
-        return $translations;
-    }
+		/** @var array $translations */
+		$translations = json_decode( $json, true );
+
+		return $translations;
+	}
 }

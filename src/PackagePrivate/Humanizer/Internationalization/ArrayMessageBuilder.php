@@ -18,24 +18,23 @@ class ArrayMessageBuilder implements MessageBuilder {
 		$this->messages = $messages;
 	}
 
-    /**
-     * @throws UnknownMessageKey
-     */
+	/**
+	 * @throws UnknownMessageKey
+	 */
 	public function buildMessage( string $messageKey, string ...$arguments ): string {
-		return $this->getTranslation($messageKey, ...$arguments);
+		return $this->getTranslation( $messageKey, ...$arguments );
 	}
 
-    /**
-     * @throws UnknownMessageKey
-     */
-	protected function getTranslation(string $messageKey, string ...$arguments): string
-    {
-        if ( !array_key_exists( $messageKey, $this->messages ) ) {
-            throw new UnknownMessageKey("Translation for key '$messageKey' was not found");
-        }
+	/**
+	 * @throws UnknownMessageKey
+	 */
+	protected function getTranslation( string $messageKey, string ...$arguments ): string {
+		if ( !array_key_exists( $messageKey, $this->messages ) ) {
+			throw new UnknownMessageKey( "Translation for key '$messageKey' was not found" );
+		}
 
-        return $this->replaceVariables( $this->messages[$messageKey], ...$arguments );
-    }
+		return $this->replaceVariables( $this->messages[$messageKey], ...$arguments );
+	}
 
 	private function replaceVariables( string $messageTemplate, string ...$arguments ): string {
 		return str_replace(

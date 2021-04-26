@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Functional;
 
 use EDTF\EdtfFactory;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EnglishHumanizationTest extends TestCase {
 
-	public function humanizationProvider(): \Generator {
+	public function humanizationProvider(): Generator {
 		yield 'Full date' => [ '1975-07-01', 'July 1st, 1975' ];
 		yield 'Year and month' => [ '1975-07', 'July 1975' ];
 		yield 'Year only' => [ '1975', '1975' ];
@@ -91,8 +92,7 @@ class EnglishHumanizationTest extends TestCase {
 		);
 	}
 
-	public function setHumanizationProvider(): \Generator {
-
+	public function setHumanizationProvider(): Generator {
 		yield 'Open set with space at the beginning' => [ '{ ..1983}', 'The year 1983 and all earlier years' ];
 		yield 'Open set with space at the end' => [ '{ 1983.. }', 'The year 1983 and all later years' ];
 
@@ -120,7 +120,9 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Open start one season of a set' => [ '[..1990-23]', 'Autumn 1990 or an earlier season' ];
 		yield 'Open end one season of a set' => [ '[1992-21..]', 'Spring 1992 or a later season' ];
 
-		yield '.. between months' => [ '{2020-01..2020-03}', 'All of these: January 2020, February 2020, March 2020' ]; // FIXME
+		yield '.. between months' => [
+			'{2020-01..2020-03}',
+			'All of these: January 2020, February 2020, March 2020' ]; // FIXME
 	}
 
 	// FIXME

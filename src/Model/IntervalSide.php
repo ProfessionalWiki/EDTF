@@ -35,13 +35,11 @@ class IntervalSide {
 		return $this->type === Interval::NORMAL;
 	}
 
-	public function isOpenInterval(): bool
-	{
+	public function isOpenInterval(): bool {
 		return Interval::OPEN === $this->type;
 	}
 
-	public function isUnknownInterval(): bool
-	{
+	public function isUnknownInterval(): bool {
 		return Interval::UNKNOWN === $this->type;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional\Level1;
 
@@ -12,21 +12,19 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Unit
  */
-class PrefixedYearTest extends TestCase
-{
-    use FactoryTrait;
+class PrefixedYearTest extends TestCase {
 
-    public function testPositiveYear()
-    {
-        $dateTime = $this->createExtDate('Y170000002');
+	use FactoryTrait;
 
-        $this->assertSame(170000002, $dateTime->getYear());
-    }
+	public function testPositiveYear() {
+		$dateTime = $this->createExtDate( 'Y170000002' );
 
-    public function testNegativeYear()
-    {
-        $dateTime = $this->createExtDate('Y-170000002');
+		$this->assertSame( 170000002, $dateTime->getYear() );
+	}
 
-        $this->assertSame(-170000002, $dateTime->getYear());
-    }
+	public function testNegativeYear() {
+		$dateTime = $this->createExtDate( 'Y-170000002' );
+
+		$this->assertSame( -170000002, $dateTime->getYear() );
+	}
 }

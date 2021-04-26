@@ -4,6 +4,8 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer\Internationalization;
 
-class UnknownMessageKey extends \RuntimeException {
+use RuntimeException;
+
+class UnknownMessageKey extends RuntimeException {
 
 }

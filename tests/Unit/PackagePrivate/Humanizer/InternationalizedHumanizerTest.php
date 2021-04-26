@@ -15,25 +15,25 @@ use EDTF\Model\Season;
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
 use EDTF\PackagePrivate\Humanizer\Strategy\EnglishStrategy;
 use EDTF\Tests\TestDoubles\MessageBuilderSpy;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer
  */
-class InternationalizedHumanizerTest extends TestCase
-{
-    private MessageBuilderSpy $messageBuilderSpy;
+class InternationalizedHumanizerTest extends TestCase {
 
-    private InternationalizedHumanizer $humanizer;
+	private MessageBuilderSpy $messageBuilderSpy;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->messageBuilderSpy = new MessageBuilderSpy();
-        $this->humanizer = new InternationalizedHumanizer($this->messageBuilderSpy, new EnglishStrategy());
-    }
+	private InternationalizedHumanizer $humanizer;
 
-    /**
+	protected function setUp(): void {
+		parent::setUp();
+		$this->messageBuilderSpy = new MessageBuilderSpy();
+		$this->humanizer = new InternationalizedHumanizer( $this->messageBuilderSpy, new EnglishStrategy() );
+	}
+
+	/**
 	 * @dataProvider seasonProvider
 	 */
 	public function testSeasons( string $expected, Season $season ): void {
@@ -47,7 +47,7 @@ class InternationalizedHumanizerTest extends TestCase
 		);
 	}
 
-	public function seasonProvider(): \Generator {
+	public function seasonProvider(): Generator {
 		yield [ 'Spring 2001', new Season( 2001, 21 ) ];
 		yield [ 'Summer 1234', new Season( 1234, 22 ) ];
 		yield [ 'Autumn 10000', new Season( 10000, 23 ) ];
@@ -67,7 +67,7 @@ class InternationalizedHumanizerTest extends TestCase
 		$this->assertHumanizes( $expected, $date );
 	}
 
-	public function simpleDateProvider(): \Generator {
+	public function simpleDateProvider(): Generator {
 		yield [ 'January 1st, 2021', new ExtDate( 2021, 1, 1 ) ];
 		yield [ 'February 9th, 2021', new ExtDate( 2021, 2, 9 ) ];
 		yield [ 'March 13th, 2021', new ExtDate( 2021, 3, 13 ) ];
@@ -98,137 +98,125 @@ class InternationalizedHumanizerTest extends TestCase
 		yield [ '22nd of unknown month, 2021', new ExtDate( 2021, null, 22 ) ];
 	}
 
-	public function testSimpleDate(): void
-    {
-        $date = new ExtDate( 2021, 4, 3 );
-        $this->humanizer->humanize($date);
-        $this->assertBuilderWasCalledWith('edtf-full-date');
-        $this->assertBuilderWasCalledWith('edtf-april');
-    }
+	public function testSimpleDate(): void {
+		$date = new ExtDate( 2021, 4, 3 );
+		$this->humanizer->humanize( $date );
+		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
+		$this->assertBuilderWasCalledWith( 'edtf-april' );
+	}
 
-    public function testNormalInterval(): void
-    {
-        $interval = new Interval(
-            IntervalSide::newFromDate(new ExtDate(1987)),
-            IntervalSide::newFromDate(new ExtDate(2020))
-        );
+	public function testNormalInterval(): void {
+		$interval = new Interval(
+			IntervalSide::newFromDate( new ExtDate( 1987 ) ),
+			IntervalSide::newFromDate( new ExtDate( 2020 ) )
+		);
 
-        $this->humanizer->humanize($interval);
-        $this->assertBuilderCalledOnceWith('edtf-interval-normal', ['1987', '2020']);
-    }
+		$this->humanizer->humanize( $interval );
+		$this->assertBuilderCalledOnceWith( 'edtf-interval-normal', [ '1987', '2020' ] );
+	}
 
-    public function testIntervalOpenEnd(): void
-    {
-        $interval = new Interval(
-            IntervalSide::newFromDate(new ExtDate(1987)),
-            IntervalSide::newOpenInterval()
-        );
+	public function testIntervalOpenEnd(): void {
+		$interval = new Interval(
+			IntervalSide::newFromDate( new ExtDate( 1987 ) ),
+			IntervalSide::newOpenInterval()
+		);
 
-        $this->humanizer->humanize($interval);
-        $this->assertBuilderCalledOnceWith('edtf-interval-open-end', ['1987']);
-    }
+		$this->humanizer->humanize( $interval );
+		$this->assertBuilderCalledOnceWith( 'edtf-interval-open-end', [ '1987' ] );
+	}
 
-    public function testIntervalOpenStart(): void
-    {
-        $interval = new Interval(
-            IntervalSide::newOpenInterval(),
-            IntervalSide::newFromDate(new ExtDate(2020))
-        );
+	public function testIntervalOpenStart(): void {
+		$interval = new Interval(
+			IntervalSide::newOpenInterval(),
+			IntervalSide::newFromDate( new ExtDate( 2020 ) )
+		);
 
-        $this->humanizer->humanize($interval);
-        $this->assertBuilderCalledOnceWith('edtf-interval-open-start', ['2020']);
-    }
+		$this->humanizer->humanize( $interval );
+		$this->assertBuilderCalledOnceWith( 'edtf-interval-open-start', [ '2020' ] );
+	}
 
-    public function testIntervalUnknownEnd(): void
-    {
-        $interval = new Interval(
-            IntervalSide::newFromDate(new ExtDate(1987)),
-            IntervalSide::newUnknownInterval()
-        );
+	public function testIntervalUnknownEnd(): void {
+		$interval = new Interval(
+			IntervalSide::newFromDate( new ExtDate( 1987 ) ),
+			IntervalSide::newUnknownInterval()
+		);
 
-        $this->humanizer->humanize($interval);
-        $this->assertBuilderCalledOnceWith('edtf-interval-unknown-end', ['1987']);
-    }
+		$this->humanizer->humanize( $interval );
+		$this->assertBuilderCalledOnceWith( 'edtf-interval-unknown-end', [ '1987' ] );
+	}
 
-    public function testIntervalUnknownStart(): void
-    {
-        $interval = new Interval(
-            IntervalSide::newUnknownInterval(),
-            IntervalSide::newFromDate(new ExtDate(2001))
-        );
+	public function testIntervalUnknownStart(): void {
+		$interval = new Interval(
+			IntervalSide::newUnknownInterval(),
+			IntervalSide::newFromDate( new ExtDate( 2001 ) )
+		);
 
-        $this->humanizer->humanize($interval);
-        $this->assertBuilderCalledOnceWith('edtf-interval-unknown-start', ['2001']);
-    }
+		$this->humanizer->humanize( $interval );
+		$this->assertBuilderCalledOnceWith( 'edtf-interval-unknown-start', [ '2001' ] );
+	}
 
-    public function testTimezoneLocalTime(): void
-    {
-        $dateTime = new ExtDateTime(new ExtDate(1987, 8, 12), 12, 24, 45);
+	public function testTimezoneLocalTime(): void {
+		$dateTime = new ExtDateTime( new ExtDate( 1987, 8, 12 ), 12, 24, 45 );
 
-        $this->humanizer->humanize($dateTime);
-        $this->assertBuilderWasCalledWith('edtf-local-time');
-        $this->assertBuilderWasCalledWith('edtf-august');
-    }
+		$this->humanizer->humanize( $dateTime );
+		$this->assertBuilderWasCalledWith( 'edtf-local-time' );
+		$this->assertBuilderWasCalledWith( 'edtf-august' );
+	}
 
-    public function testBC(): void
-    {
-        $yearBC = new ExtDate(-800);
-        $this->humanizer->humanize($yearBC);
-        $this->assertBuilderCalledOnceWith('edtf-bc-year-short', ['800']);
-    }
+	public function testBC(): void {
+		$yearBC = new ExtDate( -800 );
+		$this->humanizer->humanize( $yearBC );
+		$this->assertBuilderCalledOnceWith( 'edtf-bc-year-short', [ '800' ] );
+	}
 
-    public function testYearCirca(): void
-    {
-        $yearCirca = new ExtDate(1987, null, null, new Qualification(Qualification::APPROXIMATE));
-        $this->humanizer->humanize($yearCirca);
-        $this->assertBuilderCalledOnceWith('edtf-circa', ['1987']);
-    }
+	public function testYearCirca(): void {
+		$yearCirca = new ExtDate( 1987, null, null, new Qualification( Qualification::APPROXIMATE ) );
+		$this->humanizer->humanize( $yearCirca );
+		$this->assertBuilderCalledOnceWith( 'edtf-circa', [ '1987' ] );
+	}
 
-    public function testFullDateCirca(): void
-    {
-        $dateCirca = new ExtDate(1654, 12, 12, new Qualification(0, 0, Qualification::APPROXIMATE));
-        $this->humanizer->humanize($dateCirca);
-        $this->assertBuilderWasCalledWith('edtf-december');
-        $this->assertBuilderWasCalledWith('edtf-circa');
-        $this->assertBuilderWasCalledWith('edtf-full-date');
-    }
+	public function testFullDateCirca(): void {
+		$dateCirca = new ExtDate( 1654, 12, 12, new Qualification( 0, 0, Qualification::APPROXIMATE ) );
+		$this->humanizer->humanize( $dateCirca );
+		$this->assertBuilderWasCalledWith( 'edtf-december' );
+		$this->assertBuilderWasCalledWith( 'edtf-circa' );
+		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
+	}
 
-    public function testUncertain(): void
-    {
-        $uncertainDate = new ExtDate(1800, 5, 29, new Qualification(0, 0, Qualification::UNCERTAIN));
-        $this->humanizer->humanize($uncertainDate);
-        $this->assertBuilderWasCalledWith('edtf-maybe');
-        $this->assertBuilderWasCalledWith('edtf-may');
-        $this->assertBuilderWasCalledWith('edtf-full-date');
-    }
+	public function testUncertain(): void {
+		$uncertainDate = new ExtDate( 1800, 5, 29, new Qualification( 0, 0, Qualification::UNCERTAIN ) );
+		$this->humanizer->humanize( $uncertainDate );
+		$this->assertBuilderWasCalledWith( 'edtf-maybe' );
+		$this->assertBuilderWasCalledWith( 'edtf-may' );
+		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
+	}
 
-    public function testUncertainAndApproximate(): void
-    {
-        $uncertainDate = new ExtDate(1700, 4, 29, new Qualification(0, 0, Qualification::UNCERTAIN_AND_APPROXIMATE));
-        $this->humanizer->humanize($uncertainDate);
-        $this->assertBuilderWasCalledWith('edtf-maybe-circa');
-        $this->assertBuilderWasCalledWith('edtf-april');
-        $this->assertBuilderWasCalledWith('edtf-full-date');
-    }
+	public function testUncertainAndApproximate(): void {
+		$uncertainDate = new ExtDate(
+			1700, 4, 29, new Qualification( 0, 0, Qualification::UNCERTAIN_AND_APPROXIMATE )
+		);
+		$this->humanizer->humanize( $uncertainDate );
+		$this->assertBuilderWasCalledWith( 'edtf-maybe-circa' );
+		$this->assertBuilderWasCalledWith( 'edtf-april' );
+		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
+	}
 
-    private function assertBuilderCalledOnceWith(string $messageKey, ?array $expectedArguments = null): void
-    {
-        $this->assertCount( 1, $this->messageBuilderSpy->getBuildMessageCalls());
-        $this->assertEquals(
-            array_merge([$messageKey], $expectedArguments ?? []),
-            $this->messageBuilderSpy->getBuildMessageCalls()[0]
-        );
-    }
+	private function assertBuilderCalledOnceWith( string $messageKey, ?array $expectedArguments = null ): void {
+		$this->assertCount( 1, $this->messageBuilderSpy->getBuildMessageCalls() );
+		$this->assertEquals(
+			array_merge( [ $messageKey ], $expectedArguments ?? [] ),
+			$this->messageBuilderSpy->getBuildMessageCalls()[0]
+		);
+	}
 
-    private function assertBuilderWasCalledWith(string $messageKey): void
-    {
-		$allMessageKeys = array_merge(...$this->messageBuilderSpy->getBuildMessageCalls());
+	private function assertBuilderWasCalledWith( string $messageKey ): void {
+		$allMessageKeys = array_merge( ...$this->messageBuilderSpy->getBuildMessageCalls() );
 
-        $this->assertContainsEquals(
-            $messageKey,
-            $allMessageKeys,
-            "Message builder was called with " . implode(', ', $allMessageKeys)
-        );
-    }
+		$this->assertContainsEquals(
+			$messageKey,
+			$allMessageKeys,
+			"Message builder was called with " . implode( ', ', $allMessageKeys )
+		);
+	}
 
 }

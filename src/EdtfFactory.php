@@ -19,7 +19,7 @@ use EDTF\PackagePrivate\Validator;
 
 class EdtfFactory {
 
-    private const I18N_DIR = __DIR__ . "/../i18n";
+	private const I18N_DIR = __DIR__ . "/../i18n";
 
 	public static function newParser(): EdtfParser {
 		return new SaneParser();
@@ -29,61 +29,60 @@ class EdtfFactory {
 		return Validator::newInstance();
 	}
 
-    /**
-     * @throws LoaderException
-     */
+	/**
+	 * @throws LoaderException
+	 */
 	public static function newHumanizerForLanguage(
-	    string $languageCode,
-        string $fallbackLanguageCode = 'en',
-        $translationDir = self::I18N_DIR
-    ): Humanizer {
-        return new InternationalizedHumanizer(
-        	self::newMessageBuilder($languageCode, $fallbackLanguageCode, $translationDir),
-			self::getLanguageStrategy($languageCode)
+		string $languageCode,
+		string $fallbackLanguageCode = 'en',
+		$translationDir = self::I18N_DIR
+	): Humanizer {
+		return new InternationalizedHumanizer(
+			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir ),
+			self::getLanguageStrategy( $languageCode )
 		);
 	}
 
-    /**
-     * @throws LoaderException
-     */
+	/**
+	 * @throws LoaderException
+	 */
 	private static function newMessageBuilder(
-	    string $languageCode,
-        string $fallbackLanguageCode,
-        string $translationDir
-    ): MessageBuilder {
-		$loader = new JsonFileLoader($translationDir);
+		string $languageCode,
+		string $fallbackLanguageCode,
+		string $translationDir
+	): MessageBuilder {
+		$loader = new JsonFileLoader( $translationDir );
 
-		if ($languageCode === $fallbackLanguageCode) {
-			return $messageBuilder = new ArrayMessageBuilder($loader->load($languageCode));
+		if ( $languageCode === $fallbackLanguageCode ) {
+			return $messageBuilder = new ArrayMessageBuilder( $loader->load( $languageCode ) );
 		}
 
 		return new FallbackMessageBuilder(
-			new ArrayMessageBuilder($loader->load($languageCode)),
-			new ArrayMessageBuilder($loader->load($fallbackLanguageCode))
+			new ArrayMessageBuilder( $loader->load( $languageCode ) ),
+			new ArrayMessageBuilder( $loader->load( $fallbackLanguageCode ) )
 		);
 	}
 
-    /**
-     * @throws LoaderException
-     */
+	/**
+	 * @throws LoaderException
+	 */
 	public static function newStructuredHumanizerForLanguage(
-	    string $languageCode,
-        string $fallbackLanguageCode = 'en',
-        $translationDir = self::I18N_DIR
-    ): StructuredHumanizer {
+		string $languageCode,
+		string $fallbackLanguageCode = 'en',
+		$translationDir = self::I18N_DIR
+	): StructuredHumanizer {
 		return new PrivateStructuredHumanizer(
 			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode, $translationDir ),
-			self::newMessageBuilder($languageCode, $fallbackLanguageCode, $translationDir)
+			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir )
 		);
 	}
 
-	private static function getLanguageStrategy(string $languageCode): LanguageStrategy
-    {
-        switch ($languageCode) {
-            case "fr":
-                return new FrenchStrategy();
-        }
+	private static function getLanguageStrategy( string $languageCode ): LanguageStrategy {
+		switch ( $languageCode ) {
+			case "fr":
+				return new FrenchStrategy();
+		}
 
-        return new EnglishStrategy();
-    }
+		return new EnglishStrategy();
+	}
 }

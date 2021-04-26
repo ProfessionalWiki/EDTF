@@ -2,41 +2,36 @@
 
 namespace EDTF\PackagePrivate\Parser;
 
-class ParsedData
-{
-    private Date $date;
+class ParsedData {
 
-    private Time $time;
+	private Date $date;
 
-    private Qualification $qualification;
+	private Time $time;
 
-    private Timezone $timezone;
+	private Qualification $qualification;
 
-    public function __construct(Date $date, Time $time, Qualification $qualification, Timezone $timezone)
-    {
-        $this->date = $date;
-        $this->time = $time;
-        $this->qualification = $qualification;
-        $this->timezone = $timezone;
-    }
+	private Timezone $timezone;
 
-    public function getDate(): Date
-    {
-        return $this->date;
-    }
+	public function __construct( Date $date, Time $time, Qualification $qualification, Timezone $timezone ) {
+		$this->date = $date;
+		$this->time = $time;
+		$this->qualification = $qualification;
+		$this->timezone = $timezone;
+	}
 
-    public function getTime(): Time
-    {
-        return $this->time;
-    }
+	public function getDate(): Date {
+		return $this->date;
+	}
 
-    public function getQualification(): Qualification
-    {
-        return $this->qualification;
-    }
+	public function getTime(): Time {
+		return $this->time;
+	}
 
-    public function getTimezone(): Timezone
-    {
-        return $this->timezone;
-    }
+	public function getQualification(): Qualification {
+		return $this->qualification;
+	}
+
+	public function getTimezone(): Timezone {
+		return $this->timezone;
+	}
 }

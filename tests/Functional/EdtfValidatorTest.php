@@ -6,6 +6,7 @@ namespace EDTF\Tests\Functional;
 
 use EDTF\ExampleData\ValidEdtfStrings;
 use EDTF\PackagePrivate\Validator;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,7 +26,7 @@ class EdtfValidatorTest extends TestCase {
 		);
 	}
 
-	public function validValueProvider(): \Generator {
+	public function validValueProvider(): Generator {
 		foreach ( ValidEdtfStrings::all() as $key => $value ) {
 			yield $key => [ $value ];
 		}
@@ -40,7 +41,7 @@ class EdtfValidatorTest extends TestCase {
 		);
 	}
 
-	public function invalidValueProvider(): \Generator {
+	public function invalidValueProvider(): Generator {
 		yield 'empty string' => [ '' ];
 		yield 'random stuff' => [ '~=[,,_,,]:3' ];
 

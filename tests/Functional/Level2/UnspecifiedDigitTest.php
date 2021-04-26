@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional\Level2;
 
@@ -13,135 +13,128 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\Model\ExtDate
  * @package EDTF\Tests\Functional
  */
-class UnspecifiedDigitTest extends TestCase
-{
-    use FactoryTrait;
+class UnspecifiedDigitTest extends TestCase {
 
-    public function testWithOneDigitYearOnly()
-    {
-        $d = $this->createExtDate('156X-12-25');
+	use FactoryTrait;
 
-        $this->assertTrue($d->unspecified());
-        $this->assertTrue($d->unspecified('year'));
-        $this->assertFalse($d->unspecified('month'));
-        $this->assertFalse($d->unspecified('day'));
+	public function testWithOneDigitYearOnly() {
+		$d = $this->createExtDate( '156X-12-25' );
 
-        $this->assertSame(1560, $d->getYear());
+		$this->assertTrue( $d->unspecified() );
+		$this->assertTrue( $d->unspecified( 'year' ) );
+		$this->assertFalse( $d->unspecified( 'month' ) );
+		$this->assertFalse( $d->unspecified( 'day' ) );
 
-        $expectedMin = Carbon::create(1560, 12, 25)->getTimestamp();
-        $this->assertSame($expectedMin, $d->getMin());
+		$this->assertSame( 1560, $d->getYear() );
 
-        $expectedMax = Carbon::create(1569, 12, 25, 23, 59, 59)->getTimestamp();
-        $this->assertSame($expectedMax, $d->getMax());
-    }
+		$expectedMin = Carbon::create( 1560, 12, 25 )->getTimestamp();
+		$this->assertSame( $expectedMin, $d->getMin() );
 
-    public function testWithTwoDigitYear()
-    {
-        $d = $this->createExtDate('15XX-12-25');
+		$expectedMax = Carbon::create( 1569, 12, 25, 23, 59, 59 )->getTimestamp();
+		$this->assertSame( $expectedMax, $d->getMax() );
+	}
 
-        $this->assertTrue($d->unspecified());
-        $this->assertTrue($d->unspecified('year'));
-        $this->assertFalse($d->unspecified('month'));
-        $this->assertFalse($d->unspecified('day'));
+	public function testWithTwoDigitYear() {
+		$d = $this->createExtDate( '15XX-12-25' );
 
-        $this->assertSame(1500, $d->getYear());
+		$this->assertTrue( $d->unspecified() );
+		$this->assertTrue( $d->unspecified( 'year' ) );
+		$this->assertFalse( $d->unspecified( 'month' ) );
+		$this->assertFalse( $d->unspecified( 'day' ) );
 
-        $expectedMin = Carbon::create(1500, 12, 25)->getTimestamp();
-        $this->assertSame($expectedMin, $d->getMin());
+		$this->assertSame( 1500, $d->getYear() );
 
-        $expectedMax = Carbon::create(1599, 12, 25, 23, 59, 59)->getTimestamp();
-        $this->assertSame($expectedMax, $d->getMax());
-    }
+		$expectedMin = Carbon::create( 1500, 12, 25 )->getTimestamp();
+		$this->assertSame( $expectedMin, $d->getMin() );
 
-    public function testWithUnspecifiedYearAndDay()
-    {
-        $d = $this->createExtDate('XXXX-12-XX');
+		$expectedMax = Carbon::create( 1599, 12, 25, 23, 59, 59 )->getTimestamp();
+		$this->assertSame( $expectedMax, $d->getMax() );
+	}
 
-        $this->assertTrue($d->unspecified());
-        $this->assertTrue($d->unspecified('year'));
-        $this->assertFalse($d->unspecified('month'));
-        $this->assertTrue($d->unspecified('day'));
+	public function testWithUnspecifiedYearAndDay() {
+		$d = $this->createExtDate( 'XXXX-12-XX' );
 
-        $this->assertNull($d->getYear());
-        $this->assertSame(0, $d->getMin());
-        $this->assertSame(0, $d->getMax());
-    }
+		$this->assertTrue( $d->unspecified() );
+		$this->assertTrue( $d->unspecified( 'year' ) );
+		$this->assertFalse( $d->unspecified( 'month' ) );
+		$this->assertTrue( $d->unspecified( 'day' ) );
 
-    public function testWithThreeDigitYearAndTwoDigitMonth()
-    {
-        $d = $this->createExtDate('1XXX-XX');
+		$this->assertNull( $d->getYear() );
+		$this->assertSame( 0, $d->getMin() );
+		$this->assertSame( 0, $d->getMax() );
+	}
 
-        $this->assertTrue($d->unspecified());
-        $this->assertTrue($d->unspecified('year'));
-        $this->assertTrue($d->unspecified('month'));
-        $this->assertFalse($d->unspecified('day'));
+	public function testWithThreeDigitYearAndTwoDigitMonth() {
+		$d = $this->createExtDate( '1XXX-XX' );
 
-        $this->assertSame(1000, $d->getYear());
-        $this->assertNull($d->getMonth());
+		$this->assertTrue( $d->unspecified() );
+		$this->assertTrue( $d->unspecified( 'year' ) );
+		$this->assertTrue( $d->unspecified( 'month' ) );
+		$this->assertFalse( $d->unspecified( 'day' ) );
 
-        $expectedMin = Carbon::create(1000)->getTimestamp();
-        $this->assertSame($expectedMin, $d->getMin());
+		$this->assertSame( 1000, $d->getYear() );
+		$this->assertNull( $d->getMonth() );
 
-        $expectedMax = Carbon::create(1999, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertSame($expectedMax, $d->getMax());
-    }
+		$expectedMin = Carbon::create( 1000 )->getTimestamp();
+		$this->assertSame( $expectedMin, $d->getMin() );
 
-    public function testWithThreeDigitYearOnly()
-    {
-        $d = $this->createExtDate('1XXX-12');
+		$expectedMax = Carbon::create( 1999, 12, 31, 23, 59, 59 )->getTimestamp();
+		$this->assertSame( $expectedMax, $d->getMax() );
+	}
 
-        $this->assertTrue($d->unspecified());
-        $this->assertTrue($d->unspecified('year'));
-        $this->assertFalse($d->unspecified('month'));
-        $this->assertFalse($d->unspecified('day'));
+	public function testWithThreeDigitYearOnly() {
+		$d = $this->createExtDate( '1XXX-12' );
 
-        $this->assertSame(1000, $d->getYear());
-        $this->assertSame(12, $d->getMonth());
+		$this->assertTrue( $d->unspecified() );
+		$this->assertTrue( $d->unspecified( 'year' ) );
+		$this->assertFalse( $d->unspecified( 'month' ) );
+		$this->assertFalse( $d->unspecified( 'day' ) );
 
-        $expectedMin = Carbon::create(1000, 12)->getTimestamp();
-        $this->assertSame($expectedMin, $d->getMin());
+		$this->assertSame( 1000, $d->getYear() );
+		$this->assertSame( 12, $d->getMonth() );
 
-        $expectedMax = Carbon::create(1999, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertSame($expectedMax, $d->getMax());
-    }
+		$expectedMin = Carbon::create( 1000, 12 )->getTimestamp();
+		$this->assertSame( $expectedMin, $d->getMin() );
 
-    public function testWithOneDigitMonth()
-    {
-        $d = $this->createExtDate('1984-1X');
+		$expectedMax = Carbon::create( 1999, 12, 31, 23, 59, 59 )->getTimestamp();
+		$this->assertSame( $expectedMax, $d->getMax() );
+	}
 
-        $this->assertTrue($d->unspecified());
-        $this->assertFalse($d->unspecified('year'));
-        $this->assertTrue($d->unspecified('month'));
-        $this->assertFalse($d->unspecified('day'));
+	public function testWithOneDigitMonth() {
+		$d = $this->createExtDate( '1984-1X' );
 
-        $this->assertSame(1984, $d->getYear());
-        $this->assertSame(10, $d->getMonth());
+		$this->assertTrue( $d->unspecified() );
+		$this->assertFalse( $d->unspecified( 'year' ) );
+		$this->assertTrue( $d->unspecified( 'month' ) );
+		$this->assertFalse( $d->unspecified( 'day' ) );
 
-        $expectedMin = Carbon::create(1984, 10)->getTimestamp();
-        $this->assertSame($expectedMin, $d->getMin());
+		$this->assertSame( 1984, $d->getYear() );
+		$this->assertSame( 10, $d->getMonth() );
 
-        $expectedMax = Carbon::create(1984, 12, 31, 23, 59, 59)->getTimestamp();
-        $this->assertSame($expectedMax, $d->getMax());
-    }
+		$expectedMin = Carbon::create( 1984, 10 )->getTimestamp();
+		$this->assertSame( $expectedMin, $d->getMin() );
 
-    public function testWithThreeDigitYearAndOneDigitMonthLessThan10()
-    {
-        $d = $this->createExtDate('1XXX-0X');
-        $this->assertTrue($d->unspecified());
-        $this->assertTrue($d->unspecified('year'));
-        $this->assertTrue($d->unspecified('month'));
-        $this->assertFalse($d->unspecified('day'));
+		$expectedMax = Carbon::create( 1984, 12, 31, 23, 59, 59 )->getTimestamp();
+		$this->assertSame( $expectedMax, $d->getMax() );
+	}
 
-        $this->assertSame(1000, $d->getYear());
+	public function testWithThreeDigitYearAndOneDigitMonthLessThan10() {
+		$d = $this->createExtDate( '1XXX-0X' );
+		$this->assertTrue( $d->unspecified() );
+		$this->assertTrue( $d->unspecified( 'year' ) );
+		$this->assertTrue( $d->unspecified( 'month' ) );
+		$this->assertFalse( $d->unspecified( 'day' ) );
 
-        // TODO: implement the logic to support this case (in case of unspecified, return the least possible)
-        // $this->assertSame(1, $d->getMonth());
+		$this->assertSame( 1000, $d->getYear() );
 
-        $expectedMin = Carbon::create(1000)->getTimestamp();
-        $this->assertSame($expectedMin, $d->getMin());
+		// TODO: implement the logic to support this case (in case of unspecified, return the least possible)
+		// $this->assertSame(1, $d->getMonth());
 
-        $expectedMax = Carbon::create(1999, 9, 30, 23, 59, 59)->getTimestamp();
-        $this->assertSame($expectedMax, $d->getMax());
-    }
+		$expectedMin = Carbon::create( 1000 )->getTimestamp();
+		$this->assertSame( $expectedMin, $d->getMin() );
+
+		$expectedMax = Carbon::create( 1999, 9, 30, 23, 59, 59 )->getTimestamp();
+		$this->assertSame( $expectedMax, $d->getMax() );
+	}
 
 }

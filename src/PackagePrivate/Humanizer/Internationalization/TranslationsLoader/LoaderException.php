@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 
 namespace EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader;
 
-use \Exception;
+use Exception;
 
-class LoaderException extends Exception
-{
+class LoaderException extends Exception {
+
 }

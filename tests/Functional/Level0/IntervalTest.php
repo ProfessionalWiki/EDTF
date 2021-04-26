@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace EDTF\Tests\Functional\Level0;
 
@@ -14,112 +14,106 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @package EDTF\Tests\Unit
  */
-class IntervalTest extends TestCase
-{
-    use FactoryTrait;
+class IntervalTest extends TestCase {
 
-    public function testWithYearPrecision(): void
-    {
-        $interval = $this->createInterval('1964/2008');
+	use FactoryTrait;
 
-        $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDate::class, $interval->getEndDate());
-        $this->assertInstanceOf(ExtDate::class, $interval->getStartDate());
+	public function testWithYearPrecision(): void {
+		$interval = $this->createInterval( '1964/2008' );
 
-        $this->assertSame(1964, $interval->getStartDate()->getYear());
-        $this->assertSame(2008, $interval->getEndDate()->getYear());
-    }
+		$this->assertInstanceOf( Interval::class, $interval );
+		$this->assertInstanceOf( ExtDate::class, $interval->getEndDate() );
+		$this->assertInstanceOf( ExtDate::class, $interval->getStartDate() );
 
-    public function testWithMonthPrecision(): void
-    {
-        $interval = $this->createInterval("2004-06/2006-08");
+		$this->assertSame( 1964, $interval->getStartDate()->getYear() );
+		$this->assertSame( 2008, $interval->getEndDate()->getYear() );
+	}
 
-        $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDate::class, $interval->getEndDate());
-        $this->assertInstanceOf(ExtDate::class, $interval->getStartDate());
+	public function testWithMonthPrecision(): void {
+		$interval = $this->createInterval( "2004-06/2006-08" );
 
-        // lower tests
-        $this->assertSame(2004, $interval->getStartDate()->getYear());
-        $this->assertSame(6, $interval->getStartDate()->getMonth());
+		$this->assertInstanceOf( Interval::class, $interval );
+		$this->assertInstanceOf( ExtDate::class, $interval->getEndDate() );
+		$this->assertInstanceOf( ExtDate::class, $interval->getStartDate() );
 
-        // upper tests
-        $this->assertSame(2006, $interval->getEndDate()->getYear());
-        $this->assertSame(8, $interval->getEndDate()->getMonth());
-    }
+		// lower tests
+		$this->assertSame( 2004, $interval->getStartDate()->getYear() );
+		$this->assertSame( 6, $interval->getStartDate()->getMonth() );
 
-    public function testWithDayPrecision(): void
-    {
-        $interval = $this->createInterval("2004-02-01/2005-02-08");
+		// upper tests
+		$this->assertSame( 2006, $interval->getEndDate()->getYear() );
+		$this->assertSame( 8, $interval->getEndDate()->getMonth() );
+	}
 
-        $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDate::class, $interval->getEndDate());
-        $this->assertInstanceOf(ExtDate::class, $interval->getStartDate());
+	public function testWithDayPrecision(): void {
+		$interval = $this->createInterval( "2004-02-01/2005-02-08" );
 
-        // lower tests
-        $this->assertSame(2004, $interval->getStartDate()->getYear());
-        $this->assertSame(2, $interval->getStartDate()->getMonth());
-        $this->assertSame(1, $interval->getStartDate()->getDay());
+		$this->assertInstanceOf( Interval::class, $interval );
+		$this->assertInstanceOf( ExtDate::class, $interval->getEndDate() );
+		$this->assertInstanceOf( ExtDate::class, $interval->getStartDate() );
 
-        // upper tests
-        $this->assertSame(2005, $interval->getEndDate()->getYear());
-        $this->assertSame(2, $interval->getEndDate()->getMonth());
-        $this->assertSame(8, $interval->getEndDate()->getDay());
-    }
+		// lower tests
+		$this->assertSame( 2004, $interval->getStartDate()->getYear() );
+		$this->assertSame( 2, $interval->getStartDate()->getMonth() );
+		$this->assertSame( 1, $interval->getStartDate()->getDay() );
 
-    public function testStartWithDayPrecisionAndEndWithMonthPrecision(): void
-    {
-        $interval = $this->createInterval("2004-02-01/2005-02");
+		// upper tests
+		$this->assertSame( 2005, $interval->getEndDate()->getYear() );
+		$this->assertSame( 2, $interval->getEndDate()->getMonth() );
+		$this->assertSame( 8, $interval->getEndDate()->getDay() );
+	}
 
-        $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDate::class, $interval->getEndDate());
-        $this->assertInstanceOf(ExtDate::class, $interval->getStartDate());
+	public function testStartWithDayPrecisionAndEndWithMonthPrecision(): void {
+		$interval = $this->createInterval( "2004-02-01/2005-02" );
 
-        // lower tests
-        $this->assertSame(2004, $interval->getStartDate()->getYear());
-        $this->assertSame(2, $interval->getStartDate()->getMonth());
-        $this->assertSame(1, $interval->getStartDate()->getDay());
+		$this->assertInstanceOf( Interval::class, $interval );
+		$this->assertInstanceOf( ExtDate::class, $interval->getEndDate() );
+		$this->assertInstanceOf( ExtDate::class, $interval->getStartDate() );
 
-        // upper tests
-        $this->assertSame(2005, $interval->getEndDate()->getYear());
-        $this->assertSame(2, $interval->getEndDate()->getMonth());
-        $this->assertNull($interval->getEndDate()->getDay());
-    }
+		// lower tests
+		$this->assertSame( 2004, $interval->getStartDate()->getYear() );
+		$this->assertSame( 2, $interval->getStartDate()->getMonth() );
+		$this->assertSame( 1, $interval->getStartDate()->getDay() );
 
-    public function testStartWithDayPrecisionAndEndWithYearPrecision(): void
-    {
-        $interval = $this->createInterval("2004-02-01/2005");
+		// upper tests
+		$this->assertSame( 2005, $interval->getEndDate()->getYear() );
+		$this->assertSame( 2, $interval->getEndDate()->getMonth() );
+		$this->assertNull( $interval->getEndDate()->getDay() );
+	}
 
-        $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDate::class, $interval->getEndDate());
-        $this->assertInstanceOf(ExtDate::class, $interval->getStartDate());
+	public function testStartWithDayPrecisionAndEndWithYearPrecision(): void {
+		$interval = $this->createInterval( "2004-02-01/2005" );
 
-        // lower tests
-        $this->assertSame(2004, $interval->getStartDate()->getYear());
-        $this->assertSame(2, $interval->getStartDate()->getMonth());
-        $this->assertSame(1, $interval->getStartDate()->getDay());
+		$this->assertInstanceOf( Interval::class, $interval );
+		$this->assertInstanceOf( ExtDate::class, $interval->getEndDate() );
+		$this->assertInstanceOf( ExtDate::class, $interval->getStartDate() );
 
-        // upper tests
-        $this->assertSame(2005, $interval->getEndDate()->getYear());
-        $this->assertNull($interval->getEndDate()->getMonth());
-        $this->assertNull($interval->getEndDate()->getDay());
-    }
+		// lower tests
+		$this->assertSame( 2004, $interval->getStartDate()->getYear() );
+		$this->assertSame( 2, $interval->getStartDate()->getMonth() );
+		$this->assertSame( 1, $interval->getStartDate()->getDay() );
 
-    public function testStartWithYearPrecisionEndWithMonthPrecision(): void
-    {
-        $interval = $this->createInterval("2005/2006-02");
+		// upper tests
+		$this->assertSame( 2005, $interval->getEndDate()->getYear() );
+		$this->assertNull( $interval->getEndDate()->getMonth() );
+		$this->assertNull( $interval->getEndDate()->getDay() );
+	}
 
-        $this->assertInstanceOf(Interval::class, $interval);
-        $this->assertInstanceOf(ExtDate::class, $interval->getEndDate());
-        $this->assertInstanceOf(ExtDate::class, $interval->getStartDate());
+	public function testStartWithYearPrecisionEndWithMonthPrecision(): void {
+		$interval = $this->createInterval( "2005/2006-02" );
 
-        // lower tests
-        $this->assertSame(2005, $interval->getStartDate()->getYear());
-        $this->assertNull($interval->getStartDate()->getMonth());
-        $this->assertNull($interval->getStartDate()->getDay());
+		$this->assertInstanceOf( Interval::class, $interval );
+		$this->assertInstanceOf( ExtDate::class, $interval->getEndDate() );
+		$this->assertInstanceOf( ExtDate::class, $interval->getStartDate() );
 
-        // upper tests
-        $this->assertSame(2006, $interval->getEndDate()->getYear());
-        $this->assertSame(2, $interval->getEndDate()->getMonth());
-        $this->assertNull($interval->getEndDate()->getDay());
-    }
+		// lower tests
+		$this->assertSame( 2005, $interval->getStartDate()->getYear() );
+		$this->assertNull( $interval->getStartDate()->getMonth() );
+		$this->assertNull( $interval->getStartDate()->getDay() );
+
+		// upper tests
+		$this->assertSame( 2006, $interval->getEndDate()->getYear() );
+		$this->assertSame( 2, $interval->getEndDate()->getMonth() );
+		$this->assertNull( $interval->getEndDate()->getDay() );
+	}
 }

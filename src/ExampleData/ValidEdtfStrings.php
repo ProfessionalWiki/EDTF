@@ -4,6 +4,8 @@ declare( strict_types = 1 );
 
 namespace EDTF\ExampleData;
 
+use Generator;
+
 /**
  * Valid EDTF strings that can be used for automated testing.
  *
@@ -14,18 +16,18 @@ class ValidEdtfStrings {
 	/**
 	 * Values taken from https://www.loc.gov/standards/datetime/
 	 */
-	public static function allFromStandard(): \Generator {
+	public static function allFromStandard(): Generator {
 		yield from self::level0();
 		yield from self::level1();
 		yield from self::level2();
 	}
 
-	public static function all(): \Generator {
+	public static function all(): Generator {
 		yield from self::allFromStandard();
 		yield from self::luxSample();
 	}
 
-	public static function level0(): \Generator {
+	public static function level0(): Generator {
 		yield '1985-04-12';
 		yield '1904-02-29';
 		yield '1985-04';
@@ -44,7 +46,7 @@ class ValidEdtfStrings {
 		yield '2005/2006-02';
 	}
 
-	public static function level1(): \Generator {
+	public static function level1(): Generator {
 		yield 'Y170000002';
 		yield 'Y-170000002';
 
@@ -79,7 +81,7 @@ class ValidEdtfStrings {
 		yield '-1985';
 	}
 
-	public static function level2(): \Generator {
+	public static function level2(): Generator {
 		yield 'Y-17E7';
 
 		yield '1950S2';
@@ -120,7 +122,7 @@ class ValidEdtfStrings {
 		yield '2004-06-XX/2004-07-03';
 	}
 
-	public static function luxSample():\Generator {
+	public static function luxSample(): Generator {
 		yield '-0044';
 		yield '-0100';
 		yield '02XX';
@@ -133,7 +135,7 @@ class ValidEdtfStrings {
 		yield '1985-07-09';
 		yield '1520-06';
 		yield '1520';
-		
+
 		// From Representation Spreadsheet
 		yield '1985-04-12';
 		yield '1985-04';
@@ -180,7 +182,7 @@ class ValidEdtfStrings {
 		yield '1156X-12-25';
 		yield '2XXXX-12-XX';
 		yield '31XXX-XX';
-		
+
 		// These are from the ISO standard document, should validate
 		yield '1985-04-12';
 		yield '1985-04';

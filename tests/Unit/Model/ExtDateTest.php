@@ -17,226 +17,216 @@ use RuntimeException;
  * @covers \EDTF\PackagePrivate\Carbon\CarbonFactory
  * @package EDTF\Tests\Unit
  */
-class ExtDateTest extends TestCase
-{
-    use FactoryTrait;
+class ExtDateTest extends TestCase {
 
-    public function testCreate(): void
-    {
-        $q = $this->createMock(Qualification::class);
-        $u = $this->createMock(UnspecifiedDigit::class);
+	use FactoryTrait;
 
-        $d = new ExtDate(2010,10,1, $q, $u);
+	public function testCreate(): void {
+		$q = $this->createMock( Qualification::class );
+		$u = $this->createMock( UnspecifiedDigit::class );
 
-        $this->assertSame(2010, $d->getYear());
-        $this->assertSame(10, $d->getMonth());
-        $this->assertSame(1, $d->getDay());
-        $this->assertSame($q, $d->getQualification());
-        $this->assertSame($u, $d->getUnspecifiedDigit());
-    }
+		$d = new ExtDate( 2010, 10, 1, $q, $u );
 
-    /**
-     * @param ExtDate $extDate
-     * @param int $expectedMin
-     * @throws \RuntimeException
-     * @dataProvider minDataProvider
-     */
-    public function testGetMin(ExtDate $extDate, int $expectedMin)
-    {
-        $this->assertSame($expectedMin, $extDate->getMin());
-    }
+		$this->assertSame( 2010, $d->getYear() );
+		$this->assertSame( 10, $d->getMonth() );
+		$this->assertSame( 1, $d->getDay() );
+		$this->assertSame( $q, $d->getQualification() );
+		$this->assertSame( $u, $d->getUnspecifiedDigit() );
+	}
 
-    /**
-     * @param ExtDate $extDate
-     * @param int $expectedMax
-     * @dataProvider maxDataProvider
-     */
-    public function testGetMax(ExtDate $extDate, int $expectedMax)
-    {
-        $this->assertSame($expectedMax, $extDate->getMax());
-    }
+	/**
+	 * @param ExtDate $extDate
+	 * @param int $expectedMin
+	 *
+	 * @throws RuntimeException
+	 * @dataProvider minDataProvider
+	 */
+	public function testGetMin( ExtDate $extDate, int $expectedMin ) {
+		$this->assertSame( $expectedMin, $extDate->getMin() );
+	}
 
-    public function testGetMinThrowsException(): void
-    {
-        $year = 1987;
-        $month = 12;
-        $day = 100;
+	/**
+	 * @param ExtDate $extDate
+	 * @param int $expectedMax
+	 *
+	 * @dataProvider maxDataProvider
+	 */
+	public function testGetMax( ExtDate $extDate, int $expectedMax ) {
+		$this->assertSame( $expectedMax, $extDate->getMax() );
+	}
 
-        $date = new ExtDate($year, $month, $day);
+	public function testGetMinThrowsException(): void {
+		$year = 1987;
+		$month = 12;
+		$day = 100;
 
-        $dateTimeFactoryMock = $this->createMock(CarbonFactory::class);
-        $dateTimeFactoryMock->method('create')
-            ->with($year, $month, $day)
-            ->willThrowException(new DatetimeFactoryException);
+		$date = new ExtDate( $year, $month, $day );
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage("Can't generate minimum date.");
+		$dateTimeFactoryMock = $this->createMock( CarbonFactory::class );
+		$dateTimeFactoryMock->method( 'create' )
+			->with( $year, $month, $day )
+			->willThrowException( new DatetimeFactoryException() );
 
-        $date->setDatetimeFactory($dateTimeFactoryMock);
-        $date->getMin();
-    }
+		$this->expectException( RuntimeException::class );
+		$this->expectExceptionMessage( "Can't generate minimum date." );
 
-    public function testGetMaxThrowsException(): void
-    {
-        $year = 1987;
-        $month = 100;
+		$date->setDatetimeFactory( $dateTimeFactoryMock );
+		$date->getMin();
+	}
 
-        $date = new ExtDate($year, $month);
+	public function testGetMaxThrowsException(): void {
+		$year = 1987;
+		$month = 100;
 
-        $dateTimeFactoryMock = $this->createMock(CarbonFactory::class);
-        $dateTimeFactoryMock->expects($this->once())
-            ->method('create')
-            ->with($year, $month)
-            ->willThrowException(new DatetimeFactoryException);
+		$date = new ExtDate( $year, $month );
 
-        $date->setDatetimeFactory($dateTimeFactoryMock);
+		$dateTimeFactoryMock = $this->createMock( CarbonFactory::class );
+		$dateTimeFactoryMock->expects( $this->once() )
+			->method( 'create' )
+			->with( $year, $month )
+			->willThrowException( new DatetimeFactoryException() );
 
-		$this->expectException(RuntimeException::class);
-		$this->expectExceptionMessage("Can't generate max value");
-        $date->getMax();
-    }
+		$date->setDatetimeFactory( $dateTimeFactoryMock );
 
-    public function testShouldProvideUncertainInfo(): void
-    {
-        $q = new Qualification(Qualification::UNCERTAIN);
-        $d = new ExtDate(null,null,null, $q);
+		$this->expectException( RuntimeException::class );
+		$this->expectExceptionMessage( "Can't generate max value" );
+		$date->getMax();
+	}
 
-        $this->assertTrue($d->uncertain());
-        $this->assertTrue($d->uncertain('year'));
-        $this->assertFalse($d->uncertain('month'));
-        $this->assertFalse($d->uncertain('day'));
-    }
+	public function testShouldProvideUncertainInfo(): void {
+		$q = new Qualification( Qualification::UNCERTAIN );
+		$d = new ExtDate( null, null, null, $q );
 
-    public function testShouldProvideApproximateInfo(): void
-    {
-        $q = new Qualification(Qualification::UNDEFINED, Qualification::APPROXIMATE);
-        $d = new ExtDate(null,null,null, $q);
+		$this->assertTrue( $d->uncertain() );
+		$this->assertTrue( $d->uncertain( 'year' ) );
+		$this->assertFalse( $d->uncertain( 'month' ) );
+		$this->assertFalse( $d->uncertain( 'day' ) );
+	}
 
-        $this->assertTrue($d->approximate());
-        $this->assertFalse($d->approximate('year'));
-        $this->assertTrue($d->approximate('month'));
-        $this->assertFalse($d->approximate('day'));
-    }
+	public function testShouldProvideApproximateInfo(): void {
+		$q = new Qualification( Qualification::UNDEFINED, Qualification::APPROXIMATE );
+		$d = new ExtDate( null, null, null, $q );
 
-    public function testShouldProvideUncertainAndApproximateInfo(): void
-    {
-        $q = new Qualification(Qualification::UNDEFINED, Qualification::UNDEFINED, Qualification::UNCERTAIN_AND_APPROXIMATE);
-        $d = new ExtDate(null,null,null, $q);
+		$this->assertTrue( $d->approximate() );
+		$this->assertFalse( $d->approximate( 'year' ) );
+		$this->assertTrue( $d->approximate( 'month' ) );
+		$this->assertFalse( $d->approximate( 'day' ) );
+	}
 
-        $this->assertTrue($d->uncertain() && $d->approximate());
-        $this->assertFalse($d->uncertain('year'));
-        $this->assertFalse($d->uncertain('month'));
-        $this->assertTrue($d->uncertain('day') && $d->approximate('day'));
-    }
+	public function testShouldProvideUncertainAndApproximateInfo(): void {
+		$q = new Qualification(
+			Qualification::UNDEFINED,
+			Qualification::UNDEFINED,
+			Qualification::UNCERTAIN_AND_APPROXIMATE
+		);
+		$d = new ExtDate( null, null, null, $q );
 
-    public function testNegativeYear(): void
-    {
-        $date = $this->createExtDate('-0999');
+		$this->assertTrue( $d->uncertain() && $d->approximate() );
+		$this->assertFalse( $d->uncertain( 'year' ) );
+		$this->assertFalse( $d->uncertain( 'month' ) );
+		$this->assertTrue( $d->uncertain( 'day' ) && $d->approximate( 'day' ) );
+	}
 
-        $this->assertInstanceOf(ExtDate::class, $date);
-        $this->assertSame(-999, $date->getYear());
-        $this->assertNull($date->getMonth());
-        $this->assertNull($date->getDay());
-    }
+	public function testNegativeYear(): void {
+		$date = $this->createExtDate( '-0999' );
 
-    public function testWithZeroYear(): void
-    {
-        $date = $this->createExtDate('0000');
+		$this->assertInstanceOf( ExtDate::class, $date );
+		$this->assertSame( -999, $date->getYear() );
+		$this->assertNull( $date->getMonth() );
+		$this->assertNull( $date->getDay() );
+	}
 
-        $this->assertInstanceOf(ExtDate::class, $date);
-        $this->assertSame(0, $date->getYear());
-        $this->assertNull($date->getMonth());
-        $this->assertNull($date->getDay());
-    }
+	public function testWithZeroYear(): void {
+		$date = $this->createExtDate( '0000' );
+
+		$this->assertInstanceOf( ExtDate::class, $date );
+		$this->assertSame( 0, $date->getYear() );
+		$this->assertNull( $date->getMonth() );
+		$this->assertNull( $date->getDay() );
+	}
 
 	/**
 	 * @dataProvider datePrecisionProvider
 	 */
-    public function testPrecision(ExtDate $edtf, ?int $expectedPrecisionInt, string $expectedPrecisionString): void
-	{
-		$this->assertEquals($expectedPrecisionInt, $edtf->precision());
-		$this->assertEquals($expectedPrecisionString, $edtf->precisionAsString());
+	public function testPrecision( ExtDate $edtf, ?int $expectedPrecisionInt, string $expectedPrecisionString ): void {
+		$this->assertEquals( $expectedPrecisionInt, $edtf->precision() );
+		$this->assertEquals( $expectedPrecisionString, $edtf->precisionAsString() );
 	}
 
-    /**
-     * @dataProvider isoDateProvider
-     */
-    public function testIsoDate(ExtDate $edtf, string $expectedIsoString): void
-    {
-        $this->assertEquals($expectedIsoString, $edtf->iso8601());
-    }
+	/**
+	 * @dataProvider isoDateProvider
+	 */
+	public function testIsoDate( ExtDate $edtf, string $expectedIsoString ): void {
+		$this->assertEquals( $expectedIsoString, $edtf->iso8601() );
+	}
 
-    public function datePrecisionProvider(): array
-	{
+	public function datePrecisionProvider(): array {
 		return [
-			[new ExtDate(2000), ExtDate::PRECISION_YEAR, 'year'],
-			[new ExtDate(2001, 02), ExtDate::PRECISION_MONTH, 'month'],
-			[new ExtDate(2001, 2, 24), ExtDate::PRECISION_DAY, 'day'],
-			[new ExtDate(), null, ''],
+			[ new ExtDate( 2000 ), ExtDate::PRECISION_YEAR, 'year' ],
+			[ new ExtDate( 2001, 02 ), ExtDate::PRECISION_MONTH, 'month' ],
+			[ new ExtDate( 2001, 2, 24 ), ExtDate::PRECISION_DAY, 'day' ],
+			[ new ExtDate(), null, '' ],
 		];
 	}
 
-    public function minDataProvider(): array
-    {
-        return [
-            [
-                new ExtDate(1987, 10, 1),
-                Carbon::create(1987, 10)->timestamp
-            ],
-            [
-                new ExtDate(1987),
-                Carbon::create(1987)->timestamp
-            ],
-            [
-                new ExtDate(1987, 12),
-                Carbon::create(1987, 12)->timestamp
-            ]
-        ];
-    }
+	public function minDataProvider(): array {
+		return [
+			[
+				new ExtDate( 1987, 10, 1 ),
+				Carbon::create( 1987, 10 )->timestamp
+			],
+			[
+				new ExtDate( 1987 ),
+				Carbon::create( 1987 )->timestamp
+			],
+			[
+				new ExtDate( 1987, 12 ),
+				Carbon::create( 1987, 12 )->timestamp
+			]
+		];
+	}
 
-    public function maxDataProvider(): array
-    {
-        return [
-            [
-                new ExtDate(1987, 10, 1),
-                Carbon::create(1987, 10, 1, 23, 59, 59)->timestamp
-            ],
-            [
-                new ExtDate(1988),
-                Carbon::create(1988, 12, 31, 23, 59, 59)->timestamp
-            ],
-            [
-                new ExtDate(1987, 2),
-                $daysInMonth = Carbon::create(1987, 2)->lastOfMonth()->endOfDay()->timestamp
-            ]
-        ];
-    }
+	public function maxDataProvider(): array {
+		return [
+			[
+				new ExtDate( 1987, 10, 1 ),
+				Carbon::create( 1987, 10, 1, 23, 59, 59 )->timestamp
+			],
+			[
+				new ExtDate( 1988 ),
+				Carbon::create( 1988, 12, 31, 23, 59, 59 )->timestamp
+			],
+			[
+				new ExtDate( 1987, 2 ),
+				$daysInMonth = Carbon::create( 1987, 2 )->lastOfMonth()->endOfDay()->timestamp
+			]
+		];
+	}
 
-    public function isoDateProvider(): array
-    {
-        return [
-            [
-                new ExtDate(1987),
-                '1987'
-            ],
-            [
-                new ExtDate(1987, 10),
-                '1987-10'
-            ],
-            [
-                new ExtDate(1987, 10, 1),
-                '1987-10-01'
-            ],
-            [
-                new ExtDate(
-                    1987, 10, 1, 
-                    new Qualification(
-                        Qualification::UNDEFINED, 
-                        Qualification::APPROXIMATE
-                    )
-                ),
-                '1987-10-01'
-            ],
-        ];
-    }
+	public function isoDateProvider(): array {
+		return [
+			[
+				new ExtDate( 1987 ),
+				'1987'
+			],
+			[
+				new ExtDate( 1987, 10 ),
+				'1987-10'
+			],
+			[
+				new ExtDate( 1987, 10, 1 ),
+				'1987-10-01'
+			],
+			[
+				new ExtDate(
+					1987, 10, 1,
+					new Qualification(
+						Qualification::UNDEFINED,
+						Qualification::APPROXIMATE
+					)
+				),
+				'1987-10-01'
+			],
+		];
+	}
 }

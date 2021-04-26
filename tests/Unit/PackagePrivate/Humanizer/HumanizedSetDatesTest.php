@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
 use EDTF\PackagePrivate\Humanizer\HumanizedSetDates;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class HumanizedSetDatesTest extends TestCase {
 		$this->assertFalse( ( new HumanizedSetDates( $dates ) )->shouldUseList() );
 	}
 
-	public function notUseListProvider(): \Generator {
+	public function notUseListProvider(): Generator {
 		yield [];
 		yield [ '2020' ];
 		yield [ '2020', '2021' ];
@@ -31,8 +32,26 @@ class HumanizedSetDatesTest extends TestCase {
 		yield [ 'January 2019 to February 2021' ];
 
 		yield 'Long list with only years' => [
-			'2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029',
-			'2030', '2031', '2032', '2033', '2034', '2035', '2036', '2037', '2038', '2039',
+			'2020',
+			'2021',
+			'2022',
+			'2023',
+			'2024',
+			'2025',
+			'2026',
+			'2027',
+			'2028',
+			'2029',
+			'2030',
+			'2031',
+			'2032',
+			'2033',
+			'2034',
+			'2035',
+			'2036',
+			'2037',
+			'2038',
+			'2039',
 		];
 	}
 
@@ -43,7 +62,7 @@ class HumanizedSetDatesTest extends TestCase {
 		$this->assertTrue( ( new HumanizedSetDates( $dates ) )->shouldUseList() );
 	}
 
-	public function useListProvider(): \Generator {
+	public function useListProvider(): Generator {
 		yield 'Date with a comma' => [ '2020', 'July 1st, 2021' ];
 
 		yield 'Long total text' => [

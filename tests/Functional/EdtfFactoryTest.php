@@ -64,7 +64,7 @@ class EdtfFactoryTest extends TestCase {
 					[
 						new ExtDate( 2021, 2, 14 ),
 						new ExtDate( 2021, 2, 15 ),
-						],
+					],
 					true,
 					false,
 					false

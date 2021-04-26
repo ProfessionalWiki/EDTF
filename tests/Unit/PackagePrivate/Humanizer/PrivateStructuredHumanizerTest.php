@@ -6,8 +6,8 @@ namespace EDTF\Tests\Unit\PackagePrivate\Humanizer;
 
 use EDTF\EdtfFactory;
 use EDTF\EdtfValue;
-use EDTF\Model\ExtDate;
 use EDTF\HumanizationResult;
+use EDTF\Model\ExtDate;
 use EDTF\Model\Season;
 use EDTF\Model\Set;
 use EDTF\Tests\TestDoubles\NullEdtfValue;
