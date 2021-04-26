@@ -30,6 +30,9 @@ class EdtfFactory {
 	}
 
 	/**
+	 * Humanizer that returns a single string. Does not support sets.
+	 * If you want set support, use the more complex StructuredHumanizer returned by @see newStructuredHumanizerForLanguage.
+	 *
 	 * @throws LoaderException
 	 */
 	public static function newHumanizerForLanguage(
@@ -40,6 +43,20 @@ class EdtfFactory {
 		return new InternationalizedHumanizer(
 			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir ),
 			self::getLanguageStrategy( $languageCode )
+		);
+	}
+
+	/**
+	 * @throws LoaderException
+	 */
+	public static function newStructuredHumanizerForLanguage(
+		string $languageCode,
+		string $fallbackLanguageCode = 'en',
+		string $translationDir = self::I18N_DIR
+	): StructuredHumanizer {
+		return new PrivateStructuredHumanizer(
+			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode, $translationDir ),
+			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir )
 		);
 	}
 
@@ -60,20 +77,6 @@ class EdtfFactory {
 		return new FallbackMessageBuilder(
 			new ArrayMessageBuilder( $loader->load( $languageCode ) ),
 			new ArrayMessageBuilder( $loader->load( $fallbackLanguageCode ) )
-		);
-	}
-
-	/**
-	 * @throws LoaderException
-	 */
-	public static function newStructuredHumanizerForLanguage(
-		string $languageCode,
-		string $fallbackLanguageCode = 'en',
-		$translationDir = self::I18N_DIR
-	): StructuredHumanizer {
-		return new PrivateStructuredHumanizer(
-			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode, $translationDir ),
-			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir )
 		);
 	}
 

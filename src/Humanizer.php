@@ -4,6 +4,10 @@ declare( strict_types = 1 );
 
 namespace EDTF;
 
+/**
+ * Humanizer that returns a single string. Does not support sets.
+ * If you want set support, use the more complex  @see StructuredHumanizer.
+ */
 interface Humanizer {
 
 	/**
