@@ -410,6 +410,13 @@ class Parser {
 
 		$parser = new Parser();
 		$parser->parse( $dateString );
+
+		$date = $parser->getParsedData()->getDate();
+
+		if ( $date->getSeason() !== 0 ) {
+			return IntervalSide::newFromDate( $parser->buildSeason() );
+		}
+
 		return IntervalSide::newFromDate( $parser->buildDate() );
 	}
 

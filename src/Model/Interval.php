@@ -47,18 +47,34 @@ class Interval implements EdtfValue {
 		return $this->end->getDate()->getMax();
 	}
 
-	public function getStartDate(): ExtDate {
-		// TODO: why do we need this method?
-		return $this->start->getDate();
+	/**
+	 * @return ExtDate|Season
+	 */
+	public function getStartDate() {
+		$date = $this->start->getDate();
+
+		if ( $date === null ) {
+			throw new \RuntimeException( 'There is no start date' );
+		}
+
+		return $date;
 	}
 
 	public function hasStartDate(): bool {
 		return $this->start->isNormalInterval();
 	}
 
-	public function getEndDate(): ExtDate {
-		// TODO: why do we need this method?
-		return $this->end->getDate();
+	/**
+	 * @return ExtDate|Season
+	 */
+	public function getEndDate() {
+		$date = $this->end->getDate();
+
+		if ( $date === null ) {
+			throw new \RuntimeException( 'There is no end date' );
+		}
+
+		return $date;
 	}
 
 	public function hasEndDate(): bool {

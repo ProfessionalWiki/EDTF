@@ -41,6 +41,7 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Interval with year to year' => [ '2019/2021', '2019 to 2021' ];
 		yield 'Interval year and month' => [ '2019-01/2021-02', 'January 2019 to February 2021' ];
 		yield 'Interval different date formats' => [ '2019/2021-02-09', '2019 to February 9th, 2021' ];
+		yield 'Interval with seasons' => [ '2010-21/2012-26', 'Spring 2010 to Summer (Northern Hemisphere) 2012' ];
 
 		yield 'Interval with open end' => [ '2019/..', '2019 or later' ];
 		yield 'Interval with open start' => [ '../2021', '2021 or earlier' ];

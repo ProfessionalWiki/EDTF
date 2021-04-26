@@ -6,29 +6,32 @@ namespace EDTF\Model;
 
 class IntervalSide {
 
-	private ?ExtDate $date;
+	/**
+	 * @var ExtDate|Season|null
+	 */
+	private $date;
+
 	private int $type;
 
-	private function __construct() {
+	private function __construct( int $type ) {
+		$this->type = $type;
 	}
 
-	public static function newFromDate( ExtDate $date ): self {
-		$instance = new self();
-		$instance->type = Interval::NORMAL;
+	/**
+	 * @param ExtDate|Season $date
+	 */
+	public static function newFromDate( $date ): self {
+		$instance = new self( Interval::NORMAL );
 		$instance->date = $date;
 		return $instance;
 	}
 
 	public static function newOpenInterval(): self {
-		$instance = new self();
-		$instance->type = Interval::OPEN;
-		return $instance;
+		return new self( Interval::OPEN );
 	}
 
 	public static function newUnknownInterval(): self {
-		$instance = new self();
-		$instance->type = Interval::UNKNOWN;
-		return $instance;
+		return new self( Interval::UNKNOWN );
 	}
 
 	public function isNormalInterval(): bool {
@@ -43,7 +46,10 @@ class IntervalSide {
 		return Interval::UNKNOWN === $this->type;
 	}
 
-	public function getDate(): ExtDate {
+	/**
+	 * @return ExtDate|Season|null
+	 */
+	public function getDate() {
 		return $this->date;
 	}
 

@@ -6,6 +6,7 @@ namespace EDTF\Tests\Functional\Level0;
 
 use EDTF\Model\ExtDate;
 use EDTF\Model\Interval;
+use EDTF\Model\Season;
 use EDTF\Tests\Unit\FactoryTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -43,6 +44,19 @@ class IntervalTest extends TestCase {
 		// upper tests
 		$this->assertSame( 2006, $interval->getEndDate()->getYear() );
 		$this->assertSame( 8, $interval->getEndDate()->getMonth() );
+	}
+
+	public function testWithSeasonPrecision(): void {
+		$interval = $this->createInterval( '2010-21/2012-26' );
+
+		$this->assertInstanceOf( Interval::class, $interval );
+		$this->assertInstanceOf( Season::class, $interval->getStartDate() );
+		$this->assertInstanceOf( Season::class, $interval->getEndDate() );
+
+		$this->assertSame( 2010, $interval->getStartDate()->getYear() );
+		$this->assertSame( 21, $interval->getStartDate()->getSeason() );
+		$this->assertSame( 2012, $interval->getEndDate()->getYear() );
+		$this->assertSame( 26, $interval->getEndDate()->getSeason() );
 	}
 
 	public function testWithDayPrecision(): void {
