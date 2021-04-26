@@ -44,6 +44,10 @@ class ParsingResult {
 		return $this->inputValue;
 	}
 
+	/**
+	 * Returns a non-internationalized reason of why parsing failed.
+	 * This message can be quite technical and can change between releases.
+	 */
 	public function getErrorMessage(): string {
 		return $this->errorMessage;
 	}

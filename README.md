@@ -114,6 +114,11 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 1.3.0 - 2021-04-26
+
+* Fixed season support in intervals
+* Added `ParsingResult::getErrorMessage`
+
 ### Version 1.2.0 - 2021-04-16
 
 * Improved humanization of open sets
