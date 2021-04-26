@@ -19,8 +19,6 @@ use EDTF\PackagePrivate\Validator;
 
 class EdtfFactory {
 
-	private const I18N_DIR = __DIR__ . "/../i18n";
-
 	public static function newParser(): EdtfParser {
 		return new SaneParser();
 	}
@@ -37,11 +35,10 @@ class EdtfFactory {
 	 */
 	public static function newHumanizerForLanguage(
 		string $languageCode,
-		string $fallbackLanguageCode = 'en',
-		string $translationDir = self::I18N_DIR
+		string $fallbackLanguageCode = 'en'
 	): Humanizer {
 		return new InternationalizedHumanizer(
-			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir ),
+			self::newMessageBuilder( $languageCode, $fallbackLanguageCode ),
 			self::getLanguageStrategy( $languageCode )
 		);
 	}
@@ -51,12 +48,11 @@ class EdtfFactory {
 	 */
 	public static function newStructuredHumanizerForLanguage(
 		string $languageCode,
-		string $fallbackLanguageCode = 'en',
-		string $translationDir = self::I18N_DIR
+		string $fallbackLanguageCode = 'en'
 	): StructuredHumanizer {
 		return new PrivateStructuredHumanizer(
-			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode, $translationDir ),
-			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir )
+			self::newHumanizerForLanguage( $languageCode, $fallbackLanguageCode ),
+			self::newMessageBuilder( $languageCode, $fallbackLanguageCode )
 		);
 	}
 
@@ -65,10 +61,9 @@ class EdtfFactory {
 	 */
 	private static function newMessageBuilder(
 		string $languageCode,
-		string $fallbackLanguageCode,
-		string $translationDir
+		string $fallbackLanguageCode
 	): MessageBuilder {
-		$loader = new JsonFileLoader( $translationDir );
+		$loader = new JsonFileLoader( __DIR__ . '/../i18n' );
 
 		if ( $languageCode === $fallbackLanguageCode ) {
 			return new ArrayMessageBuilder( $loader->load( $languageCode ) );
