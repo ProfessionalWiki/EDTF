@@ -27,7 +27,7 @@ class JsonFileLoader implements Loader {
 			throw new LoaderException( "Failed to load translations from file $file" );
 		}
 
-		/** @var array $translations */
+		/** @var array<string, string> $translations */
 		$translations = json_decode( $json, true );
 
 		return $translations;

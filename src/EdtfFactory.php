@@ -35,7 +35,7 @@ class EdtfFactory {
 	public static function newHumanizerForLanguage(
 		string $languageCode,
 		string $fallbackLanguageCode = 'en',
-		$translationDir = self::I18N_DIR
+		string $translationDir = self::I18N_DIR
 	): Humanizer {
 		return new InternationalizedHumanizer(
 			self::newMessageBuilder( $languageCode, $fallbackLanguageCode, $translationDir ),
