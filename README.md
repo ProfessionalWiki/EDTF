@@ -117,6 +117,8 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 ### Version 1.3.0 - 2021-04-26
 
 * Fixed season support in intervals
+* Fixed parsing of open sets with an extra space like `{ ..2021}` (thanks @chaudbak)
+* Added `ExtDate::iso8601` and `ExtDateTime::iso8601` (thanks @seth-shaw-unlv)
 * Added `ParsingResult::getErrorMessage`
 
 ### Version 1.2.0 - 2021-04-16
