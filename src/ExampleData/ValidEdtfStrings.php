@@ -228,8 +228,7 @@ class ValidEdtfStrings {
 //		yield '1984..';
 //		yield '1670..1673';
 
-		// I need to verify if this should work
-//		yield '..1983-12-31,1984-10-10..1984-11-01,1984-11-05..'
+		yield '[..1983-12-31,1984-10-10..1984-11-01,1984-11-05..]';
 
 		yield '2004-06~-11';
 		yield '2004?-06-11';

@@ -165,7 +165,7 @@ class ExtDateTest extends TestCase {
 			[ new ExtDate( 2000 ), ExtDate::PRECISION_YEAR, 'year' ],
 			[ new ExtDate( 2001, 02 ), ExtDate::PRECISION_MONTH, 'month' ],
 			[ new ExtDate( 2001, 2, 24 ), ExtDate::PRECISION_DAY, 'day' ],
-			[ new ExtDate(), null, '' ],
+			[ new ExtDate(), ExtDate::PRECISION_YEAR, 'year' ],
 		];
 	}
 

@@ -13,6 +13,6 @@ interface HasPrecision {
 
 	public function precisionAsString(): string;
 
-	public function precision(): ?int;
+	public function precision(): int;
 
 }

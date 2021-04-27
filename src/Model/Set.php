@@ -5,85 +5,106 @@ declare( strict_types = 1 );
 namespace EDTF\Model;
 
 use EDTF\EdtfValue;
+use EDTF\Model\SetElement\SingleDateSetElement;
+use EDTF\PackagePrivate\CoversTrait;
 
 class Set implements EdtfValue {
+	use CoversTrait;
 
 	/**
-	 * @var array<int, EdtfValue>
+	 * @var array<int, SetElement>
 	 */
-	private array $dates;
-	private bool $allMembers;
-	private bool $hasOpenStart;
-	private bool $hasOpenEnd;
+	private array $elements = [];
+	private bool $isAllMembers;
 
 	/**
-	 * @param array<int, EdtfValue> $lists
-	 * @param bool $allMembers
-	 * @param bool $hasOpenStart
-	 * @param bool $hasOpenEnd
+	 * @param array<int, SetElement|ExtDate|Season> $setElements
+	 */
+	public static function newAllMembersSet( array $setElements ): self {
+		return new self( $setElements, true );
+	}
+
+	/**
+	 * @param array<int, SetElement|ExtDate|Season> $setElements
+	 */
+	public static function newOneMemberSet( array $setElements ): self {
+		return new self( $setElements, false );
+	}
+
+	/**
+	 * @param array<int, SetElement|ExtDate|Season> $setElements
+	 * @param bool $isAllMembers
 	 */
 	public function __construct(
-		array $lists,
-		bool $allMembers,
-		bool $hasOpenStart,
-		bool $hasOpenEnd
+		array $setElements,
+		bool $isAllMembers
 	) {
-		$this->dates = $lists;
-		$this->allMembers = $allMembers;
-		$this->hasOpenStart = $hasOpenStart;
-		$this->hasOpenEnd = $hasOpenEnd;
+		foreach ( $setElements as $element ) {
+			$this->elements[] = $this->datesToSetElements( $element );
+		}
+
+		$this->isAllMembers = $isAllMembers;
 	}
 
 	/**
-	 * @TODO: (low priority) add a way to covers with earlier or later
+	 * @param SetElement|ExtDate|Season $elementOrDate
 	 */
-	public function covers( EdtfValue $edtf ): bool {
-		foreach ( $this->dates as $list ) {
-			if ( $list->covers( $edtf ) ) {
-				return true;
-			}
+	private function datesToSetElements( $elementOrDate ): SetElement {
+		if ( $elementOrDate instanceof SetElement ) {
+			return $elementOrDate;
 		}
 
-		return false;
-	}
-
-	public function getMax(): int {
-		return $this->hasOpenEnd() ? 0 : $this->endElementInSet()->getMax();
-	}
-
-	public function getMin(): int {
-		return $this->hasOpenStart() ? 0 : $this->startElementInSet()->getMin();
+		return new SingleDateSetElement( $elementOrDate );
 	}
 
 	public function isAllMembers(): bool {
-		return $this->allMembers;
-	}
-
-	public function hasOpenStart(): bool {
-		return $this->hasOpenStart;
-	}
-
-	public function hasOpenEnd(): bool {
-		return $this->hasOpenEnd;
+		return $this->isAllMembers;
 	}
 
 	/**
-	 * @return array<int, EdtfValue>
+	 * @return array<int, SetElement>
+	 */
+	public function getElements(): array {
+		return $this->elements;
+	}
+
+	public function isEmpty(): bool {
+		return $this->elements === [];
+	}
+
+	/**
+	 * Computes all dates contained in the set. Ranges are expanded according to their precision.
+	 * This list can be very big, for instance when the set contains 1000-01-01..2000-12-30.
+	 * @return array<int, ExtDate|Season>
 	 */
 	public function getDates(): array {
-		return $this->dates;
+		$dates = [];
+
+		foreach ( $this->elements as $element ) {
+			foreach ( $element->getAllDates() as $date ) {
+				$dates[] = $date;
+			}
+		}
+
+		return $dates;
 	}
 
-	public function isSingleElement(): bool {
-		return count( $this->getDates() ) === 1;
+	public function getMax(): int {
+		return max(
+			array_map(
+				fn ( SetElement $element ) => $element->getMaxAsUnixTimestamp(),
+				$this->elements
+			)
+		);
 	}
 
-	private function startElementInSet(): EdtfValue {
-		return $this->dates[0];
+	public function getMin(): int {
+		return min(
+			array_map(
+				fn ( SetElement $element ) => $element->getMinAsUnixTimestamp(),
+				$this->elements
+			)
+		);
 	}
 
-	private function endElementInSet(): EdtfValue {
-		$listsCount = count( $this->dates );
-		return $listsCount === 1 ? $this->dates[0] : $this->dates[$listsCount - 1];
-	}
 }

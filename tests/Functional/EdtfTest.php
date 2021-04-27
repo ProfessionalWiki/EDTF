@@ -18,7 +18,7 @@ class EdtfTest extends TestCase {
 		return ( new Parser() )->createEdtf( $input );
 	}
 
-	public function testReview() {
+	public function testReview(): void {
 		// Date type
 		$edtf = $this->edtf( '2016-02' );
 		$this->assertSame( 1454284800, $edtf->getMin() );// 2016-02-01T00:00:00Z

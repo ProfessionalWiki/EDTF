@@ -13,7 +13,6 @@ use EDTF\PackagePrivate\CoversTrait;
 use RuntimeException;
 
 class ExtDate implements EdtfValue, HasPrecision {
-
 	use CoversTrait;
 
 	private const MAX_POSSIBLE_MONTH = 12;
@@ -299,7 +298,7 @@ class ExtDate implements EdtfValue, HasPrecision {
 		$this->datetimeFactory = $factory;
 	}
 
-	public function precision(): ?int {
+	public function precision(): int {
 		if ( $this->day !== null ) {
 			return self::PRECISION_DAY;
 		}
@@ -308,23 +307,15 @@ class ExtDate implements EdtfValue, HasPrecision {
 			return self::PRECISION_MONTH;
 		}
 
-		if ( $this->year !== null ) {
-			return self::PRECISION_YEAR;
-		}
-
-		return null;
+		return self::PRECISION_YEAR;
 	}
 
 	public function precisionAsString(): string {
-		if ( $this->day ) {
-			return 'day';
-		} elseif ( $this->month ) {
-			return 'month';
-		} elseif ( $this->year ) {
-			return 'year';
-		}
-
-		return '';
+		return [
+			self::PRECISION_DAY => 'day',
+			self::PRECISION_MONTH => 'month',
+			self::PRECISION_YEAR => 'year',
+		][$this->precision()];
 	}
 
 	public function iso8601(): string {

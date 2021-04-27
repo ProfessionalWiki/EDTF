@@ -22,7 +22,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 	public function testEmptySet(): void {
 		$this->assertHumanizedToSingleMessage(
 			'Empty set',
-			$this->humanize( new Set( [], false, false, false ) )
+			$this->humanize( new Set( [], false ) )
 		);
 	}
 
@@ -76,9 +76,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 				new Season( 2021, 23 ),
 				new Season( 2022, 21 )
 			],
-			true,
-			false,
-			false
+			true
 		);
 
 		$this->assertHumanizedToSingleMessage(
@@ -94,8 +92,6 @@ class PrivateStructuredHumanizerTest extends TestCase {
 				new Season( 2021, 23 ),
 				new Season( 2022, 21 )
 			],
-			false,
-			false,
 			false
 		);
 
@@ -111,9 +107,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 				new Season( 2021, 21 ),
 				new Season( 2021, 23 ),
 			],
-			true,
-			false,
-			false
+			true
 		);
 
 		$this->assertHumanizedToSingleMessage(
@@ -128,8 +122,6 @@ class PrivateStructuredHumanizerTest extends TestCase {
 				new Season( 2021, 21 ),
 				new Season( 2021, 23 ),
 			],
-			false,
-			false,
 			false
 		);
 
@@ -145,9 +137,7 @@ class PrivateStructuredHumanizerTest extends TestCase {
 				new ExtDate( 2021, 2, 14 ),
 				new ExtDate( 2021, 2, 15 ),
 			],
-			true,
-			false,
-			false
+			true
 		);
 
 		$result = $this->humanize( $set );
@@ -171,8 +161,6 @@ class PrivateStructuredHumanizerTest extends TestCase {
 				new ExtDate( 2021, 2, 14 ),
 				new ExtDate( 2021, 2, 15 ),
 			],
-			false,
-			false,
 			false
 		);
 

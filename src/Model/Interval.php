@@ -9,7 +9,6 @@ use EDTF\PackagePrivate\CoversTrait;
 use InvalidArgumentException;
 
 class Interval implements EdtfValue {
-
 	use CoversTrait;
 
 	public const NORMAL = 0;
