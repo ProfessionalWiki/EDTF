@@ -39,4 +39,21 @@ class RangeSetElementTest extends TestCase {
 		);
 	}
 
+	public function testEndCannotBeBeforeStart(): void {
+		$this->expectException( \InvalidArgumentException::class );
+
+		new RangeSetElement(
+			new ExtDate( 2001, 5 ),
+			new ExtDate( 2000, 6 )
+		);
+	}
+
+	public function testEndCannotEqualStart(): void {
+		$this->expectException( \InvalidArgumentException::class );
+
+		new RangeSetElement(
+			new ExtDate( 2001, 5 ),
+			new ExtDate( 2001, 5 )
+		);
+	}
 }

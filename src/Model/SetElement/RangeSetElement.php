@@ -22,6 +22,11 @@ class RangeSetElement implements SetElement {
 			throw new InvalidArgumentException( 'The precision of dates in a set range needs to be the same' );
 		}
 
+		// TODO: refactor to earlierThan/laterThan methods on ExtDate
+		if ( $start->getMax() >= $end->getMin() ) {
+			throw new InvalidArgumentException( 'The precision of dates in a set range needs to be the same' );
+		}
+
 		$this->start = $start;
 		$this->end = $end;
 	}

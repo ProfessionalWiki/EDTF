@@ -27,9 +27,6 @@ class ExtDate implements EdtfValue, HasPrecision {
 
 	private DatetimeFactoryInterface $datetimeFactory;
 
-	protected ?int $min = null;
-	protected ?int $max = null;
-
 	// TODO: why are these fields optional?
 	// TODO: this is especially weird since ExtDateTime contains an ExtDate, but AFAIK only the first 3 fields make sense there
 	public function __construct( ?int $year = null,
@@ -68,22 +65,14 @@ class ExtDate implements EdtfValue, HasPrecision {
 	 * @throws RuntimeException
 	 */
 	public function getMin(): int {
-		if ( null === $this->min ) {
-			$this->min = $this->calculateMin();
-		}
-
-		return $this->min;
+		return $this->calculateMin();
 	}
 
 	/**
 	 * @throws RuntimeException
 	 */
 	public function getMax(): int {
-		if ( null === $this->max ) {
-			$this->max = $this->calculateMax();
-		}
-
-		return $this->max;
+		return $this->calculateMax();
 	}
 
 	/**

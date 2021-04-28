@@ -20,7 +20,7 @@ class EdtfValidatorTest extends TestCase {
 	/**
 	 * @dataProvider validValueProvider
 	 */
-	public function testValidEdtf( string $validEdtf ) {
+	public function testValidEdtf( string $validEdtf ): void {
 		$this->assertTrue(
 			Validator::newInstance()->isValidEdtf( $validEdtf )
 		);
@@ -35,7 +35,7 @@ class EdtfValidatorTest extends TestCase {
 	/**
 	 * @dataProvider invalidValueProvider
 	 */
-	public function testInvalidEdtf( string $invalidEdtf ) {
+	public function testInvalidEdtf( string $invalidEdtf ): void {
 		$this->assertFalse(
 			Validator::newInstance()->isValidEdtf( $invalidEdtf )
 		);
@@ -52,9 +52,11 @@ class EdtfValidatorTest extends TestCase {
 		yield 'day too high' => [ '2021-01-32' ];
 		yield 'month too high' => [ '2021-13-01' ];
 		yield 'too many days for non-leap year' => [ '1900-02-29' ];
-		yield 'different precision in set' => [ '{1987-10..1988}' ];
 
-		foreach ( ValidEdtfStrings::all() as $key => $value ) {
+		yield 'different precision in set' => [ '{1987-10..1988}' ];
+		yield 'later start than end in set range' => [ '{2002..2001}' ];
+
+		foreach ( ValidEdtfStrings::all() as $value ) {
 			yield [ 'invalid ' . $value ];
 			yield [ $value . 'invalid' ];
 		}
