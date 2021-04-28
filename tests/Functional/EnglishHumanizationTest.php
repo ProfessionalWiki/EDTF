@@ -100,7 +100,6 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Disjunction' => [ '[2020, 2021]', '2020 or 2021' ];
 		yield 'Conjunction' => [ '{2020, 2021}', '2020 and 2021' ];
 
-		yield '.. between years' => [ '{2020..2022}', 'All of these: 2020, 2021, 2022' ];
 		yield 'Open start all years included' => [ '{..2020}', 'The year 2020 and all earlier years' ];
 		yield 'Open end all years included' => [ '{2020..}', 'The year 2020 and all later years' ];
 		yield 'Open start one year of a set' => [ '[..2020]', 'The year 2020 or an earlier year' ];
@@ -121,23 +120,30 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Open start one season of a set' => [ '[..1990-23]', 'Autumn 1990 or an earlier season' ];
 		yield 'Open end one season of a set' => [ '[1992-21..]', 'Spring 1992 or a later season' ];
 
-		yield '.. between months' => [
-			'{2020-01..2020-03}',
-			'All of these: January 2020, February 2020, March 2020' ]; // FIXME
+		yield 'All years range' => [ '{2020..2022}', 'All years from 2020 to 2022' ];
+		yield 'All months range' => [ '{2020-01..2020-03}', 'All months from January 2020 to March 2020' ];
+		yield 'All days range' => [ '{2020-01-01..2021-03-22}', 'All days from January 1st, 2020 to March 22nd, 2021' ];
+
+		yield 'One year range' => [ '[1000..4242]', '1000, 4242 or a year in between' ];
+		yield 'One month range' => [ '[2020-03..2022-01]', 'March 2020, January 2022 or a month in between' ];
+		yield 'One day range' => [ '[1000-01-01..4242-04-20]', 'January 1st, 1000, April 20th, 4242 or a day in between' ];
 	}
 
-	// FIXME
-//	public function testStructuredSetHumanization(): void {
-//		$this->assertSame(
-//			[],
-//			$this->getStructuredHumanization( '{..1983-12-31,1984-10-10..1984-11-01,1984-11-05..}' )
-//		);
-//	}
-//
-//	private function getStructuredHumanization( string $edtf ): array {
-//		return EdtfFactory::newStructuredHumanizerForLanguage( 'en' )->humanize(
-//			EdtfFactory::newParser()->parse( $edtf )->getEdtfValue()
-//		)->getStructuredHumanization();
-//	}
+	public function testStructuredSetHumanization(): void {
+		$this->assertSame(
+			[
+				'December 31st, 1983; and all earlier dates',
+				'All days from October 10th, 1984 to November 1st, 1984',
+				'November 5th, 1984; and all later dates'
+			],
+			$this->getStructuredHumanization( '{..1983-12-31,1984-10-10..1984-11-01,1984-11-05..}' )
+		);
+	}
+
+	private function getStructuredHumanization( string $edtf ): array {
+		return EdtfFactory::newStructuredHumanizerForLanguage( 'en' )->humanize(
+			EdtfFactory::newParser()->parse( $edtf )->getEdtfValue()
+		)->getStructuredHumanization();
+	}
 
 }

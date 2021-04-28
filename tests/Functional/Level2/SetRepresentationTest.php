@@ -12,6 +12,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Model\Set
+ * @covers \EDTF\Model\SetElement\SingleDateSetElement
+ * @covers \EDTF\Model\SetElement\RangeSetElement
+ * @covers \EDTF\Model\SetElement\OpenSetElement
  * @package EDTF\Tests\Functional
  */
 class SetRepresentationTest extends TestCase {
@@ -45,8 +48,6 @@ class SetRepresentationTest extends TestCase {
 		$set = $this->createSet( '[..1760-12-03]' );
 
 		$this->assertFalse( $set->isAllMembers() );
-		$this->assertTrue( $set->hasOpenStart() );
-		$this->assertFalse( $set->hasOpenEnd() );
 
 		$this->assertEquals(
 			[
@@ -65,8 +66,6 @@ class SetRepresentationTest extends TestCase {
 		$set = $this->createSet( '[1760-12..]' );
 
 		$this->assertFalse( $set->isAllMembers() );
-		$this->assertFalse( $set->hasOpenStart() );
-		$this->assertTrue( $set->hasOpenEnd() );
 
 		$this->assertEquals(
 			[
@@ -85,8 +84,6 @@ class SetRepresentationTest extends TestCase {
 		$set = $this->createSet( '[1760-01,1760-02,1760-12..]' );
 
 		$this->assertFalse( $set->isAllMembers() );
-		$this->assertFalse( $set->hasOpenStart() );
-		$this->assertTrue( $set->hasOpenEnd() );
 
 		$this->assertEquals(
 			[
@@ -107,8 +104,6 @@ class SetRepresentationTest extends TestCase {
 		$set = $this->createSet( '[1667,1760-12]' );
 
 		$this->assertFalse( $set->isAllMembers() );
-		$this->assertFalse( $set->hasOpenStart() );
-		$this->assertFalse( $set->hasOpenEnd() );
 
 		$this->assertEquals(
 			[
@@ -129,8 +124,6 @@ class SetRepresentationTest extends TestCase {
 		$set = $this->createSet( '[..1984]' );
 
 		$this->assertFalse( $set->isAllMembers() );
-		$this->assertTrue( $set->hasOpenStart() );
-		$this->assertFalse( $set->hasOpenEnd() );
 
 		$this->assertEquals(
 			[
@@ -150,8 +143,6 @@ class SetRepresentationTest extends TestCase {
 		$lists = $set->getDates();
 
 		$this->assertTrue( $set->isAllMembers() );
-		$this->assertFalse( $set->hasOpenStart() );
-		$this->assertFalse( $set->hasOpenEnd() );
 
 		$this->assertCount( 5, $lists );
 
@@ -167,8 +158,6 @@ class SetRepresentationTest extends TestCase {
 		$lists = $set->getDates();
 
 		$this->assertTrue( $set->isAllMembers() );
-		$this->assertFalse( $set->hasOpenStart() );
-		$this->assertFalse( $set->hasOpenEnd() );
 
 		$this->assertCount( 2, $lists );
 
@@ -184,8 +173,6 @@ class SetRepresentationTest extends TestCase {
 		$lists = $set->getDates();
 
 		$this->assertTrue( $set->isAllMembers() );
-		$this->assertTrue( $set->hasOpenStart() );
-		$this->assertFalse( $set->hasOpenEnd() );
 
 		$this->assertCount( 1, $lists );
 

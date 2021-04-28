@@ -1,15 +1,18 @@
 <?php
 
+declare( strict_types = 1 );
+
 namespace EDTF\Contracts;
 
 interface HasPrecision {
 
-	const PRECISION_YEAR = 0;
-	const PRECISION_MONTH = 1;
-	const PRECISION_DAY = 2;
-	const PRECISION_SEASON = 3;
+	public const PRECISION_YEAR = 0;
+	public const PRECISION_MONTH = 1;
+	public const PRECISION_DAY = 2;
+	public const PRECISION_SEASON = 3;
 
 	public function precisionAsString(): string;
 
-	public function precision(): ?int;
+	public function precision(): int;
+
 }

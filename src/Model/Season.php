@@ -9,7 +9,6 @@ use EDTF\EdtfValue;
 use EDTF\PackagePrivate\CoversTrait;
 
 class Season implements EdtfValue, HasPrecision {
-
 	use CoversTrait;
 
 	private int $year;
@@ -170,7 +169,7 @@ class Season implements EdtfValue, HasPrecision {
 		return $this->end->getMonth();
 	}
 
-	public function precision(): ?int {
+	public function precision(): int {
 		return self::PRECISION_SEASON;
 	}
 

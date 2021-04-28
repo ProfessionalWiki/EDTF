@@ -30,8 +30,6 @@ class EdtfFactory {
 	/**
 	 * Humanizer that returns a single string. Does not support sets.
 	 * If you want set support, use the more complex StructuredHumanizer returned by @see newStructuredHumanizerForLanguage.
-	 *
-	 * @throws LoaderException
 	 */
 	public static function newHumanizerForLanguage(
 		string $languageCode,
@@ -43,9 +41,6 @@ class EdtfFactory {
 		);
 	}
 
-	/**
-	 * @throws LoaderException
-	 */
 	public static function newStructuredHumanizerForLanguage(
 		string $languageCode,
 		string $fallbackLanguageCode = 'en'
@@ -57,6 +52,7 @@ class EdtfFactory {
 	}
 
 	/**
+	 * FIXME: catch LoaderException and fall back
 	 * @throws LoaderException
 	 */
 	private static function newMessageBuilder(

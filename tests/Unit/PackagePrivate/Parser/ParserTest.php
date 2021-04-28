@@ -258,7 +258,7 @@ class ParserTest extends TestCase {
 	public function testThrowExceptionWhenCreatingOpenMiddleSetWithPrecisionMismatch( string $invalidOpenMiddleSet ): void {
 		$parser = new Parser();
 		$this->expectException( InvalidArgumentException::class );
-		$this->expectExceptionMessage( "Unable to build a set. All input elements should have the same precision" );
+		$this->expectExceptionMessage( 'The precision of dates in a set range needs to be the same' );
 		$parser->createEdtf( $invalidOpenMiddleSet );
 	}
 
@@ -285,11 +285,11 @@ class ParserTest extends TestCase {
 
 	public function setOpenMiddleNonExtDateValues(): array {
 		return [
-			[ "{1980-25..1981}", "String 1980-25 is not valid to build a set" ],
-			[ "{2000..2001-27}", "String 2001-27 is not valid to build a set" ],
-			[ "{2000?..2001-27}", "String 2000? is not valid to build a set" ],
-			[ "{2000~..2001-02}", "String 2000~ is not valid to build a set" ],
-			[ "{2000%..2000-02}", "String 2000% is not valid to build a set" ],
+			[ "{1980-25..1981}", "Ranges in sets can only contain dates" ],
+			[ "{2000..2001-27}", "Ranges in sets can only contain dates" ],
+			[ "{2000?..2001-27}", "Dates in set ranges cannot be uncertain" ],
+			[ "{2000~..2001-02}", "Dates in set ranges cannot be approximate" ],
+			[ "{2000%..2000-02}", "Dates in set ranges cannot be uncertain" ],
 		];
 	}
 }

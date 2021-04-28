@@ -11,7 +11,6 @@ use EDTF\EdtfValue;
 use EDTF\PackagePrivate\CoversTrait;
 
 class ExtDateTime implements EdtfValue {
-
 	use CoversTrait;
 
 	private ExtDate $date;
