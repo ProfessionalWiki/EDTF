@@ -119,6 +119,7 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 * Fixed performance issue for sets with large range elements like `1000-01-01..2000-12-30`
 * Fixed humanization of sets with more than one element, of which at least one an open range
 * Improved humanization of sets with range elements like `2000..2010`
+* Intervals and set ranges with end dates earlier than their start dates are now rejected
 * Various breaking changes to the `Set` class
   * Constructor signature changed
   * Removed `hasOpenStart` and `hasOpenEnd`
