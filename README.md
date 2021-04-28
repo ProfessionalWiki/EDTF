@@ -114,7 +114,7 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
-### Version 2.0.0 -
+### Version 2.0.0 - 2021-04-28
 
 * Fixed performance issue for sets with large range elements like `1000-01-01..2000-12-30`
 * Fixed humanization of sets with more than one element, of which at least one an open range
@@ -125,9 +125,12 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
   * Removed `isSingleElement`
 * Added `Set::isEmpty`
 * Added `Set::getElements`
-* Added `SetElement` interface with implementations `OpenSetElement`, `RangeSetElement` and `SingleDateSetElement`
+* Added `SetElement` interface with implementations
+  * `OpenSetElement`
+  * `RangeSetElement`
+  * `SingleDateSetElement`
 * `ExtDate::precision` and `Season::precision` are now guaranteed to return an integer
-* `ExtDate::precisionAsString` and `Season::precisionAsString` are now guaranteed to return a non-empty string
+* `precisionAsString` in `ExtDate` and `Season` is now guaranteed to return a non-empty string
 
 ### Version 1.3.0 - 2021-04-26
 
