@@ -20,20 +20,37 @@ class Interval implements EdtfValue {
 	private ?int $significantDigit;
 	private ?int $estimated;
 
+	/**
+	 * @throws InvalidArgumentException
+	 */
 	public function __construct(
 		IntervalSide $start,
 		IntervalSide $end,
 		?int $significantDigit = null,
 		?int $estimated = null
 	) {
-		if ( !$start->isNormalInterval() && !$end->isNormalInterval() ) {
-			throw new InvalidArgumentException( 'Interval needs to have one normal side' );
-		}
-
 		$this->start = $start;
 		$this->end = $end;
 		$this->significantDigit = $significantDigit;
 		$this->estimated = $estimated;
+
+		$this->assertAtLeastOneSideIsNormal();
+		$this->assertEndIsLaterThanStart();
+	}
+
+	private function assertAtLeastOneSideIsNormal(): void {
+		if ( !$this->start->isNormalInterval() && !$this->end->isNormalInterval() ) {
+			throw new InvalidArgumentException( 'Interval needs to have one normal side' );
+		}
+	}
+
+	private function assertEndIsLaterThanStart(): void {
+		if ( $this->hasStartDate() && $this->hasEndDate() ) {
+			// TODO: refactor to earlierThan/laterThan methods on ExtDate
+			if ( $this->getStartDate()->getMax() >= $this->getEndDate()->getMin() ) {
+				throw new InvalidArgumentException( 'The precision of dates in a set range needs to be the same' );
+			}
+		}
 	}
 
 	public function getMin(): int {

@@ -94,4 +94,19 @@ class IntervalTest extends TestCase {
 		$this->assertTrue( $interval->hasStartDate() );
 	}
 
+	public function testEndCannotBeBeforeStart(): void {
+		$date2020 = IntervalSide::newFromDate( new ExtDate( 2020, 1, 1 ) );
+		$date2021 = IntervalSide::newFromDate( new ExtDate( 2021, 1, 1 ) );
+
+		$this->expectException( InvalidArgumentException::class );
+		new Interval( $date2021, $date2020 );
+	}
+
+	public function testEndCannotEqualToStart(): void {
+		$date2020 = IntervalSide::newFromDate( new ExtDate( 2020, 1, 1 ) );
+
+		$this->expectException( InvalidArgumentException::class );
+		new Interval( $date2020, $date2020 );
+	}
+
 }

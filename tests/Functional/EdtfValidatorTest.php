@@ -56,6 +56,8 @@ class EdtfValidatorTest extends TestCase {
 		yield 'different precision in set' => [ '{1987-10..1988}' ];
 		yield 'later start than end in set range' => [ '{2002..2001}' ];
 
+		yield 'later start than end in interval' => [ '2002/2001' ];
+
 		foreach ( ValidEdtfStrings::all() as $value ) {
 			yield [ 'invalid ' . $value ];
 			yield [ $value . 'invalid' ];
