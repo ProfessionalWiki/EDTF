@@ -76,5 +76,11 @@
 	"edtf-both-dates": "$1 en $2",
 	"edtf-one-of-two-dates": "$1 of $2",
 	"edtf-inline-all-of-these": "Al deze data: $1",
-	"edtf-inline-one-of-these": "Eén van deze data: $1"
+	"edtf-inline-one-of-these": "Eén van deze data: $1",
+	"edtf-set-range-all-year": "alle jaren van $1 tot $2",
+	"edtf-set-range-all-month": "alle maanden van $1 tot $2",
+	"edtf-set-range-all-day": "alle dagen van $1 tot $2",
+	"edtf-set-range-one-year": "$1, $2 of een jaar daar tussenin",
+	"edtf-set-range-one-month": "$1, $2 of een maand daar tussenin",
+	"edtf-set-range-one-day": "$1, $2 of een dag er tussenin"
 }

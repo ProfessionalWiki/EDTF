@@ -60,5 +60,11 @@
 	"edtf-both-dates": "$1 및 $2",
 	"edtf-one-of-two-dates": "$1 또는 $2",
 	"edtf-inline-all-of-these": "다음 중 모든 항목: $1",
-	"edtf-inline-one-of-these": "다음 중 하나: $1"
+	"edtf-inline-one-of-these": "다음 중 하나: $1",
+	"edtf-set-range-all-year": "모든 연도 ($1 ~ $2)",
+	"edtf-set-range-all-month": "모든 월 ($1 ~ $2)",
+	"edtf-set-range-all-day": "모든 일 ($1 ~ $2)",
+	"edtf-set-range-one-year": "$1, $2 또는 그 사이의 연도",
+	"edtf-set-range-one-month": "$1, $2 또는 그 사이의 월",
+	"edtf-set-range-one-day": "$1, $2 또는 그 사이의 일"
 }

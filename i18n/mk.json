@@ -75,5 +75,11 @@
 	"edtf-both-dates": "$1 и $2",
 	"edtf-one-of-two-dates": "$1 или $2",
 	"edtf-inline-all-of-these": "Сите овие: $1",
-	"edtf-inline-one-of-these": "Едно од овие: $1"
+	"edtf-inline-one-of-these": "Едно од овие: $1",
+	"edtf-set-range-all-year": "Сите години од $1 до $2",
+	"edtf-set-range-all-month": "Сите месеци од $1 до $2",
+	"edtf-set-range-all-day": "Сите денови од $1 до $2",
+	"edtf-set-range-one-year": "$1, $2 или година помеѓу",
+	"edtf-set-range-one-month": "$1, $2 или месец помеѓу",
+	"edtf-set-range-one-day": "$1, $2 или ден помеѓу"
 }

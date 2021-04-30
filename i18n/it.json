@@ -39,5 +39,6 @@
 	"edtf-december": "Dicembre",
 	"edtf-interval-normal": "$1 a $2",
 	"edtf-both-dates": "$1 e $2",
-	"edtf-one-of-two-dates": "$1 o $2"
+	"edtf-one-of-two-dates": "$1 o $2",
+	"edtf-set-range-all-month": "Tutti i mesi da $1 a $2"
 }
