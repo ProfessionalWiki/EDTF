@@ -56,6 +56,7 @@
 	"edtf-empty-set": "Conjunto vazio",
 	"edtf-all-of-these": "Todos esses:",
 	"edtf-one-of-these": "Um desses:",
+	"edtf-year-and-all-earlier": "O ano $1 e todos os anos anteriores",
 	"edtf-year-and-all-later": "O ano $1 e todos os anos posteriores",
 	"edtf-month-or-earlier": "$1 ou um mês anterior",
 	"edtf-day-and-all-earlier": "$1; e todas as datas anteriores",
