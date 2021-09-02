@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Danieldegroot2",
 			"DigitaalWerktuig",
 			"Martsniez"
 		]
@@ -57,7 +58,7 @@
 	"edtf-empty-set": "Lege set",
 	"edtf-all-of-these": "Al deze data:",
 	"edtf-one-of-these": "Eén van deze data:",
-	"edtf-year-and-all-earlier": "het jaar $1 and alle jaren daarvoor",
+	"edtf-year-and-all-earlier": "Het jaar $1 en alle jaren daarvoor",
 	"edtf-year-or-earlier": "het jaar $1 of een eerder jaar",
 	"edtf-year-and-all-later": "het jaar $1 en alle opvolgende jaren",
 	"edtf-year-or-later": "het jaar $1 of een later jaar",
