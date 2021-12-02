@@ -10,7 +10,7 @@
 	"edtf-winter": "Mmernu",
 	"edtf-full-date": "$3 $2 $1",
 	"edtf-season-and-year": "$1 di $2",
-	"edtf-day-and-year": "$1 di nu misi scanusciutu $2",
+	"edtf-day-and-year": "$1 d'un misi scanusciutu $2",
 	"edtf-bc-year": "$1 a.C.",
 	"edtf-bc-year-short": "Annu $1 a.C.",
 	"edtf-year-short": "Annu $1",
