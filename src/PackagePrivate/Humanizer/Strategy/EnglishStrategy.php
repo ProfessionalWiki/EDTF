@@ -9,7 +9,7 @@ class EnglishStrategy implements LanguageStrategy {
 			return $number . 'th';
 		}
 
-		return $number . [ 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th' ][$number % 10];
+		return $number . [ 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th' ][abs( $number ) % 10];
 	}
 
 	public function monthUppercaseFirst(): bool {
