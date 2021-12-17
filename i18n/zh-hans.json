@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Grace03",
 			"Hmgrmb"
 		]
 	},
@@ -57,5 +58,11 @@
 	"edtf-both-dates": "$1和$2",
 	"edtf-one-of-two-dates": "于$1和$2之间",
 	"edtf-inline-all-of-these": "所有这些：$1",
-	"edtf-inline-one-of-these": "这些中的一个：$1"
+	"edtf-inline-one-of-these": "这些中的一个：$1",
+	"edtf-set-range-all-year": "整年从$1到$2",
+	"edtf-set-range-all-month": "每个月从$1到$2",
+	"edtf-set-range-all-day": "每一天从$1到$2",
+	"edtf-set-range-one-year": "$1，$2或者一年之间",
+	"edtf-set-range-one-month": "$1，$2或者一个月之间",
+	"edtf-set-range-one-day": "$1，$2或者一天之间"
 }

@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"CNRALux",
 			"FF-11",
 			"FF11",
 			"Kghbln"
@@ -77,5 +78,11 @@
 	"edtf-both-dates": "$1 und $2",
 	"edtf-one-of-two-dates": "$1 oder $2",
 	"edtf-inline-all-of-these": "Alle diese Angaben: $1",
-	"edtf-inline-one-of-these": "Eine dieser Angaben: $1"
+	"edtf-inline-one-of-these": "Eine dieser Angaben: $1",
+	"edtf-set-range-all-year": "Alle Jahre von $1 bis $2",
+	"edtf-set-range-all-month": "Alle Monate von $1 bis $2",
+	"edtf-set-range-all-day": "Alle Tage von $1 bis $2",
+	"edtf-set-range-one-year": "$1, $2 oder ein Jahr dazwischen",
+	"edtf-set-range-one-month": "$1, $2 oder ein Monat dazwischen",
+	"edtf-set-range-one-day": "$1, $2 oder ein Tag dazwischen"
 }

@@ -75,5 +75,11 @@
 	"edtf-both-dates": "$1 ve $2",
 	"edtf-one-of-two-dates": "$1 ya da $2",
 	"edtf-inline-all-of-these": "Bunların hepsi: $1",
-	"edtf-inline-one-of-these": "Bunlardan biri: $1"
+	"edtf-inline-one-of-these": "Bunlardan biri: $1",
+	"edtf-set-range-all-year": "$1 ile $2 arası tüm yıllar",
+	"edtf-set-range-all-month": "$1 ile $2 arası tüm aylar",
+	"edtf-set-range-all-day": "$1 ile $2 arası tüm günler",
+	"edtf-set-range-one-year": "$1, $2 ya da arasında bir yıl",
+	"edtf-set-range-one-month": "$1, $2 ya da arasında bir ay",
+	"edtf-set-range-one-day": "$1, $2 ya da arasında bir gün"
 }

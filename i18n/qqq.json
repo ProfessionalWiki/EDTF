@@ -3,6 +3,7 @@
 		"authors": [
 			"Kghbln",
 			"Martsniez",
+			"Robby",
 			"Verdy p"
 		]
 	},
@@ -10,9 +11,9 @@
 	"edtf-maybe-circa": "Approximate {{EdtfDate}} with uncertainty. $1 is a date",
 	"edtf-circa": "Approximate {{EdtfDate}}. $1 is a date",
 	"edtf-maybe": "{{EdtfDate}} with uncertainty. $1 is a date",
-	"edtf-spring": "Spring season, often combined with a year",
+	"edtf-spring": "Spring season, often combined with a year\n{{identical|Spring}}",
 	"edtf-summer": "Summer season, often combined with a year",
-	"edtf-autumn": "Autumn season, often combined with a year",
+	"edtf-autumn": "Autumn season, often combined with a year\n{{identical|Autumn}}",
 	"edtf-winter": "Winter season, often combined with a year",
 	"edtf-spring-north": "Spring season in Northern Hemisphere of Earth",
 	"edtf-summer-north": "Summer season in Northern Hemisphere of Earth",
