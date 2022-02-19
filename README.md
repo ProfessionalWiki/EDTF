@@ -114,6 +114,10 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 2.0.1 - 2022-02-19
+
+* `?` is no longer recognized as valid date
+
 ### Version 2.0.0 - 2021-04-28
 
 * Fixed performance issue for sets with large range elements like `1000-01-01..2000-12-30`

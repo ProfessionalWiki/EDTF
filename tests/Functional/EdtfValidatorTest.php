@@ -43,6 +43,7 @@ class EdtfValidatorTest extends TestCase {
 
 	public function invalidValueProvider(): Generator {
 		yield 'empty string' => [ '' ];
+		yield 'Question mark (https://github.com/ProfessionalWiki/EDTF/issues/74)' => [ '?' ];
 		yield 'random stuff' => [ '~=[,,_,,]:3' ];
 
 		yield 'stuff after valid date' => [ '1985wtf' ];

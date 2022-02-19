@@ -41,7 +41,7 @@ class Parser {
 	public function parse( string $input ): self {
 		$input = $this->removeExtraSpaces( $input );
 
-		if ( "" === $input ) {
+		if ( $input === '' || $input === '?' ) {
 			throw new InvalidArgumentException( "Can't create EDTF from empty string" );
 		}
 
