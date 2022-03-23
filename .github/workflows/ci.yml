@@ -19,7 +19,6 @@ jobs:
 
     steps:
       - name: Setup PHP
-        if: matrix.coverage
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
