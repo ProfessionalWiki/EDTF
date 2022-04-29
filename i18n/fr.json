@@ -33,7 +33,7 @@
 	"edtf-semester-2": "Second semestre",
 	"edtf-full-date": "$3 $2 $1",
 	"edtf-season-and-year": "$1 $2",
-	"edtf-day-and-year": "$1e{{PLURAL:$1|r|}} jour d’un mois inconnu de $2",
+	"edtf-day-and-year": "$1e jour d’un mois inconnu de $2",
 	"edtf-bc-year": "$1 avant J.-C.",
 	"edtf-bc-year-short": "Année $1 avant J.-C.",
 	"edtf-year-short": "Année $1",
