@@ -114,6 +114,10 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 2.0.2 - 2022-04-29
+
+* Improved translations
+
 ### Version 2.0.1 - 2022-02-19
 
 * `?` is no longer recognized as valid date
