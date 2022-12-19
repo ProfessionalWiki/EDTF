@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Grace03",
-			"Hmgrmb"
+			"Hmgrmb",
+			"LittlePaw365"
 		]
 	},
 	"edtf-maybe-circa": "也许大约$1",
@@ -29,7 +30,7 @@
 	"edtf-quadrimester-3": "第三四个月/季度",
 	"edtf-semester-1": "第一学期",
 	"edtf-semester-2": "第二学期",
-	"edtf-full-date": "$2月$3日，$1年",
+	"edtf-full-date": "$1年$2$3日",
 	"edtf-season-and-year": "$1季度$2年",
 	"edtf-bc-year": "公元前$1年",
 	"edtf-bc-year-short": "公元前$1年",
