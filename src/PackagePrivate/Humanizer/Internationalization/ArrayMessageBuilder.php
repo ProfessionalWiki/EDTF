@@ -52,15 +52,15 @@ class ArrayMessageBuilder implements MessageBuilder {
 	private function convertPlural( string $messageTemplate, string ...$arguments ): string {
 		return preg_replace_callback(
 			'/{{PLURAL:(.*?)\|(.*?)}}/i',
-			function ( array $m ) use ( $arguments ) {
-				$k = intval( str_replace( '$', '', $m[1] ) ) -1;
+			function ( array $matches ) use ( $arguments ) {
+				$argumentKey = intval( str_replace( '$', '', $matches[1] ) ) -1;
 
-				if ( !array_key_exists( $k, $arguments ) ) {
+				if ( !array_key_exists( $argumentKey, $arguments ) ) {
 					return "";
 				}
 
-				$forms = explode( '|', $m[2] );
-				$count = (int)$arguments[$k];
+				$forms = explode( '|', $matches[2] );
+				$count = (int)$arguments[$argumentKey];
 
 				return $forms[(int)( $count > 1 )];
 			},
