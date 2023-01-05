@@ -39,6 +39,8 @@ class ArrayMessageBuilderTest extends TestCase {
 		$builder = new ArrayMessageBuilder(
 			[
 				'right-key' => 'This was written by $2 on $1 ($1)',
+				"edtf-day-and-year" => "$1e{{PLURAL:$1|r|}} jour d’un mois inconnu de $2",
+				"month-number" => "... and $1 month{{PLURAL:$1||s}}",
 			]
 		);
 
@@ -46,6 +48,27 @@ class ArrayMessageBuilderTest extends TestCase {
 			'This was written by Jeroen De Dauw on 2021-02-21 (2021-02-21)',
 			$builder->buildMessage( 'right-key', '2021-02-21', 'Jeroen De Dauw' )
 		);
+
+		$this->assertSame(
+			'1er jour d’un mois inconnu de 1985',
+			$builder->buildMessage( 'edtf-day-and-year', '1', '1985' )
+		);
+
+		$this->assertSame(
+			'3e jour d’un mois inconnu de 1985',
+			$builder->buildMessage( 'edtf-day-and-year', '3', '1985' )
+		);
+
+		$this->assertSame(
+			'... and 1 month',
+			$builder->buildMessage( 'month-number', '1' )
+		);
+
+		$this->assertSame(
+			'... and 3 months',
+			$builder->buildMessage( 'month-number', '3' )
+		);	
+
 	}
 
 }
