@@ -54,8 +54,14 @@ class ArrayMessageBuilder implements MessageBuilder {
 			'/{{PLURAL:(.*?)\|(.*?)}}/i',
 			function ( array $m ) use ( $arguments ) {
 				$k = intval( str_replace( '$', '', $m[1] ) ) -1;
-				$count = (int)$arguments[$k];
+
+				if ( !array_key_exists( $k, $arguments ) ) {
+					return "";
+				}
+
 				$forms = explode( '|', $m[2] );
+				$count = (int)$arguments[$k];
+
 				return $forms[(int)( $count > 1 )];
 			},
 			$messageTemplate
