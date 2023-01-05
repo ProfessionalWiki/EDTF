@@ -37,7 +37,7 @@ class ArrayMessageBuilder implements MessageBuilder {
 	}
 
 	private function replaceVariables( string $messageTemplate, string ...$arguments ): string {
-		$messageTemplate = $this->convertPlural( $messageTemplate, $arguments );
+		$messageTemplate = $this->convertPlural( $messageTemplate, ...$arguments );
 
 		return str_replace(
 			array_map(
@@ -49,14 +49,14 @@ class ArrayMessageBuilder implements MessageBuilder {
 		);
 	}
 
-	private function convertPlural( string $messageTemplate, array $arguments ): string {
+	private function convertPlural( string $messageTemplate, string ...$arguments ): string {
 		return preg_replace_callback(
 			'/{{PLURAL:(.*?)\|(.*?)}}/i',
-			function ( array $m ) use ( &$arguments ) {
-				$k = intval(str_replace( '$', '', $m[1] ) ) -1;
+			function ( array $m ) use ( $arguments ) {
+				$k = intval( str_replace( '$', '', $m[1] ) ) -1;
 				$count = (int)$arguments[$k];
 				$forms = explode( '|', $m[2] );
-				return $forms[(int)($count > 1)];
+				return $forms[(int)( $count > 1 )];
 			},
 			$messageTemplate
 		);
