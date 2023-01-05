@@ -104,12 +104,12 @@ class ArrayMessageBuilderTest extends TestCase {
 	public function testPluralMultipleArgumentsMissingParameter(): void {
 		$builder = new ArrayMessageBuilder(
 			[
-				"multiple-arguments-missing-parameter" => "day{{PLURAL:$1||s}} $1 and $2 month{{PLURAL:$2||s}}",
+				"multiple-arguments-missing-parameter" => "first parameter ($1) is {{PLURAL:$1|singular|plural}} and second parameter ($2) is {{PLURAL:$2|singular|plural}}",
 			]
 		);
 
 		$this->assertSame(
-			'days 3 and $2 month',
+			'first parameter (3) is plural and second parameter ($2) is ',
 			$builder->buildMessage( 'multiple-arguments-missing-parameter', '3' )
 		);
 
