@@ -37,6 +37,8 @@ class ArrayMessageBuilder implements MessageBuilder {
 	}
 
 	private function replaceVariables( string $messageTemplate, string ...$arguments ): string {
+		$messageTemplate = $this->convertPlural( $messageTemplate, $arguments );
+
 		return str_replace(
 			array_map(
 				fn( int $key ) => '$' . (string)( $key + 1 ),
@@ -47,4 +49,16 @@ class ArrayMessageBuilder implements MessageBuilder {
 		);
 	}
 
+	private function convertPlural( string $messageTemplate, array $arguments ): string {
+		return preg_replace_callback(
+			'/{{PLURAL:(.*?)\|(.*?)}}/i',
+			function ( array $m ) use ( &$arguments ) {
+				$k = intval(str_replace( '$', '', $m[1] ) ) -1;
+				$count = (int)$arguments[$k];
+				$forms = explode( '|', $m[2] );
+				return $forms[(int)($count > 1)];
+			},
+			$messageTemplate
+		);
+	}
 }
