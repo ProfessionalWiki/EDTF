@@ -41,6 +41,7 @@ class ArrayMessageBuilderTest extends TestCase {
 				'right-key' => 'This was written by $2 on $1 ($1)',
 				"edtf-day-and-year" => "$1e{{PLURAL:$1|r|}} jour d’un mois inconnu de $2",
 				"month-number" => "... and $1 month{{PLURAL:$1||s}}",
+				"month-number-missing-argument" => "$1 and $2 month{{PLURAL:$2||s}}",
 			]
 		);
 
@@ -67,6 +68,11 @@ class ArrayMessageBuilderTest extends TestCase {
 		$this->assertSame(
 			'... and 3 months',
 			$builder->buildMessage( 'month-number', '3' )
+		);
+
+		$this->assertSame(
+			'3 and $2 month',
+			$builder->buildMessage( 'month-number-missing-argument', '3' )
 		);	
 
 	}
