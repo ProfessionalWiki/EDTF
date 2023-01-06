@@ -91,11 +91,26 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
+	private function approximateMessage( array $info ) : string {
+		switch( count( $info ) ) {
+			case 1: return $this->message( 'edtf-approximate-one', $info[0] );
+			case 2: return $this->message( 'edtf-approximate-two', $info[0], $info[1] );
+			case 3: return $this->message( 'edtf-approximate-three', $info[0], $info[1], $info[2] );
+		}
+
+		return "";
+	}
+
 	private function humanizeDate( ExtDate $date ): string {
 		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
+		$info = [];
 
-		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain() ) {
-			return $this->message( 'edtf-maybe-circa', $humanizedDate );
+		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain( null, $info ) ) {
+			return $this->message( 'edtf-maybe-circa',
+				$humanizedDate,
+				$this->approximateMessage( $info ),
+				$this->message( 'edtf-approximate' )
+			);
 		}
 
 		if ( $date->getQualification()->isApproximate() ) {
@@ -105,8 +120,13 @@ class InternationalizedHumanizer implements Humanizer {
 			);
 		}
 
-		if ( $date->getQualification()->uncertain() ) {
-			return $this->message( 'edtf-maybe', $humanizedDate );
+		if ( $date->getQualification()->uncertain( null, $info ) ) {
+			return $this->message(
+				'edtf-maybe',
+				$humanizedDate,
+				$this->approximateMessage( $info ),
+				$this->message( 'edtf-uncertain' )
+			);
 		}
 
 		return $humanizedDate;
