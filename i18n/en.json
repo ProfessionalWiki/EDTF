@@ -1,9 +1,16 @@
 {
 	"edtf-description": "PHP library to parse, represent and work with dates that follow the Extended Date/Time Format specification.",
-	
-	"edtf-maybe-circa": "Maybe circa $1",
+
+	"edtf-approximate-one": "$1",
+	"edtf-approximate-two": "$1 and $2",
+	"edtf-approximate-three": "$1, $2 and $3",
+
+	"edtf-maybe-circa": "Maybe circa $1 ($2 $3)",
 	"edtf-circa": "Circa $1",
-	"edtf-maybe": "Maybe $1",
+	"edtf-maybe": "Maybe $1 ($2 $3)",
+
+	"edtf-uncertain": "uncertain",
+	"edtf-approximate": "approximate",
 
 	"edtf-spring": "Spring",
 	"edtf-summer": "Summer",
