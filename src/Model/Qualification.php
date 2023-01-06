@@ -52,8 +52,10 @@ class Qualification {
 		$info = [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ];
 
 		foreach ( $info as $part => $value ) {
-			$info[$part] = ( $match === $value || self::UNCERTAIN_AND_APPROXIMATE === $value );
+			$info[$part] = (bool)( $match === $value || self::UNCERTAIN_AND_APPROXIMATE === $value );
 		}
+
+		$info = array_keys( array_filter( $info ) );
 
 		return !is_null( $requested_part ) ? $info[$requested_part] : (bool)count( array_filter( $info ) );
 	}
