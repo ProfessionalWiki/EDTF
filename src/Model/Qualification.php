@@ -44,21 +44,26 @@ class Qualification {
 		return self::UNDEFINED === $this->$part;
 	}
 
-	public function uncertain( ?string $part = null ): bool {
-		if ( !is_null( $part ) ) {
-			$this->validatePartName( $part );
-			return self::UNCERTAIN === $this->$part || self::UNCERTAIN_AND_APPROXIMATE === $this->$part;
+	private function getApproximate( int $match, ?string $requested_part, ?array &$info = [] ): bool {
+		if ( !is_null( $requested_part ) ) {
+			$this->validatePartName( $requested_part );
 		}
 
-		return $this->uncertain( 'year' ) || $this->uncertain( 'month' ) || $this->uncertain( 'day' );
+		$info = [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ];
+
+		foreach ( $info as $part => $value ) {
+			$info[$part] = ( $match === $value || self::UNCERTAIN_AND_APPROXIMATE === $value );
+		}
+
+		return !is_null( $requested_part ) ? $info[$requested_part] : (bool)count( array_filter( $info ) );
 	}
 
-	public function approximate( ?string $part = null ): bool {
-		if ( !is_null( $part ) ) {
-			$this->validatePartName( $part );
-			return self::APPROXIMATE === $this->$part || self::UNCERTAIN_AND_APPROXIMATE === $this->$part;
-		}
-		return $this->approximate( 'year' ) || $this->approximate( 'month' ) || $this->approximate( 'day' );
+	public function approximate( ?string $requested_part = null, ?array &$info = [] ): bool {
+		return $this->getApproximate( self::APPROXIMATE, $requested_part, $info );
+	}
+
+	public function uncertain( ?string $requested_part = null, ?array &$info = [] ): bool {
+		return $this->getApproximate( self::UNCERTAIN, $requested_part, $info );
 	}
 
 	public function isApproximate(): bool {
@@ -72,7 +77,7 @@ class Qualification {
 
 		if ( !in_array( $part, $validParts ) ) {
 			throw new InvalidArgumentException(
-				sprintf( 'Invalid date part value: "%s". Accepted value is year,month, or day', $part )
+				sprintf( 'Invalid date part value: "%s". Accepted value is year, month, or day', $part )
 			);
 		}
 	}
