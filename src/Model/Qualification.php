@@ -57,7 +57,7 @@ class Qualification {
 
 		$info = array_keys( array_filter( $info ) );
 
-		return !is_null( $requested_part ) ? $info[$requested_part] : (bool)count( $info );
+		return !is_null( $requested_part ) ? in_array( $requested_part, $info ) : (bool)count( $info );
 	}
 
 	public function approximate( ?string $requested_part = null, ?array &$info = [] ): bool {
