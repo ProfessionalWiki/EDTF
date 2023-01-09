@@ -91,42 +91,45 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
-	private function approximateMessage( array $info ) : string {
-		switch( count( $info ) ) {
-			case 1: return $this->message( 'edtf-approximate-one', $info[0] );
-			case 2: return $this->message( 'edtf-approximate-two', $info[0], $info[1] );
-			case 3: return $this->message( 'edtf-approximate-three', $info[0], $info[1], $info[2] );
+	private function composeMessage( string $humanizedDate, array $info ) : string {
+		if ( count ( $info ) > 1 ) {
+			$msg = 'edtf-maybe-circa';
+
+		} elseif ( key( $info ) === 'uncertain' ) {
+			$msg = 'edtf-maybe';
+
+		} elseif ( key( $info ) === 'approximate' ) {
+			$msg = 'edtf-approximate';
+
+		} else {
+			$msg = 'edtf-maybe-circa';
+		}
+		$portions = [];
+		foreach ( $info as $msgKey => $parts ) {
+
+			$self = $this;
+			$msgParts = array_map( static function( $value ) use( $self ) {
+				return $self->message( 'edtf-' . $value );
+			}, $parts );
+
+			if ( count( $msgParts ) > 1 ) {
+				$last = array_pop( $msgParts );
+				$str = implode(', ', $msgParts) . $this->message( 'edtf-and' ) . $last;
+			} else {
+				$str = $msgParts[0];
+			}
+
+			$portions[] = $str . $this->message( 'edtf-' . $msgKey, (string)count( $parts ) );
 		}
 
-		return "";
+		return $this->message( $msg, $humanizedDate, implode( $this->message( 'edtf-and' ), $portions ) );
 	}
 
 	private function humanizeDate( ExtDate $date ): string {
 		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
-		$info = [];
-
-		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain( null, $info ) ) {
-			return $this->message( 'edtf-maybe-circa',
-				$humanizedDate,
-				$this->approximateMessage( $info ),
-				$this->message( 'edtf-approximate' )
-			);
-		}
-
-		if ( $date->getQualification()->isApproximate() ) {
-			return $this->message(
-				'edtf-circa',
-				!$this->languageStrategy->monthUppercaseFirst() ? strtolower( $humanizedDate ) : $humanizedDate
-			);
-		}
-
-		if ( $date->getQualification()->uncertain( null, $info ) ) {
-			return $this->message(
-				'edtf-maybe',
-				$humanizedDate,
-				$this->approximateMessage( $info ),
-				$this->message( 'edtf-uncertain' )
-			);
+		
+		if ( $date->getQualification()->isUncertain() ) {		
+			return $this->composeMessage( $humanizedDate, $date->getQualification()->getUncertainty() );
 		}
 
 		return $humanizedDate;
