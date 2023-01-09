@@ -44,34 +44,52 @@ class Qualification {
 		return self::UNDEFINED === $this->$part;
 	}
 
-	private function getApproximate( int $match, ?string $requested_part, ?array &$info = [] ): bool {
-		if ( !is_null( $requested_part ) ) {
-			$this->validatePartName( $requested_part );
-		}
-
-		$info = [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ];
-
-		foreach ( $info as $part => $value ) {
-			$info[$part] = (bool)( $match === $value || self::UNCERTAIN_AND_APPROXIMATE === $value );
-		}
-
-		$info = array_keys( array_filter( $info ) );
-
-		return !is_null( $requested_part ) ? in_array( $requested_part, $info ) : (bool)count( $info );
-	}
-
-	public function approximate( ?string $requested_part = null, ?array &$info = [] ): bool {
-		return $this->getApproximate( self::APPROXIMATE, $requested_part, $info );
-	}
-
-	public function uncertain( ?string $requested_part = null, ?array &$info = [] ): bool {
-		return $this->getApproximate( self::UNCERTAIN, $requested_part, $info );
-	}
-
 	public function isApproximate(): bool {
 		return in_array( $this->year, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] )
 			|| in_array( $this->month, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] )
 			|| in_array( $this->day, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] );
+	}
+
+	public function isUncertain(): bool {
+		$approximate = [ self::UNCERTAIN, self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ];
+		return in_array( $this->year,  $approximate)
+			|| in_array( $this->month, $approximate )
+			|| in_array( $this->day, $approximate );
+	}
+
+	public function getUncertainty(): array {
+		$ret = [];
+		foreach ( [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ] as $part => $value ) {
+			switch ( $value ) {
+				case self::UNCERTAIN:
+					$ret['uncertain'][] = $part;
+					break;
+				case self::APPROXIMATE:
+					$ret['approximate'][] = $part;
+					break;
+				case self::UNCERTAIN_AND_APPROXIMATE:
+					$ret['approximate-and-uncertain'][] = $part;
+					break;
+			}
+		}
+		return $ret;
+	}
+
+	public function uncertain( ?string $part = null ): bool {
+		if ( !is_null( $part ) ) {
+			$this->validatePartName( $part );
+			return self::UNCERTAIN === $this->$part || self::UNCERTAIN_AND_APPROXIMATE === $this->$part;
+		}
+
+		return $this->uncertain( 'year' ) || $this->uncertain( 'month' ) || $this->uncertain( 'day' );
+	}
+
+	public function approximate( ?string $part = null ): bool {
+		if ( !is_null( $part ) ) {
+			$this->validatePartName( $part );
+			return self::APPROXIMATE === $this->$part || self::UNCERTAIN_AND_APPROXIMATE === $this->$part;
+		}
+		return $this->approximate( 'year' ) || $this->approximate( 'month' ) || $this->approximate( 'day' );
 	}
 
 	private function validatePartName( string $part ): void {
