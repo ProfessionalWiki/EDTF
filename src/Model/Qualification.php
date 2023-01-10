@@ -61,22 +61,11 @@ class Qualification {
 	 * @return array<string, array<string> >
 	 */
 	public function getUncertainty(): array {
-		// must match the i18n messages key edtf-uncertain, edtf-approximate
-		// approximate-and-uncertain
-		$ret = [ 'uncertain' => [], 'approximate' => [], 'approximate-and-uncertain' => [] ];
-
-		foreach ( [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ] as $part => $value ) {
-			switch ( $value ) {
-				case self::UNCERTAIN:
-					$ret['uncertain'][] = $part;
-					break;
-				case self::APPROXIMATE:
-					$ret['approximate'][] = $part;
-					break;
-				case self::UNCERTAIN_AND_APPROXIMATE:
-					$ret['approximate-and-uncertain'][] = $part;
-					break;
-			}
+		// self::UNDEFINED is always set
+		$ret = [ self::UNDEFINED => [] ];
+		foreach ( [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ]
+			as $part => $value ) {
+			$ret [ $value ][] = $part;
 		}
 		return $ret;
 	}
