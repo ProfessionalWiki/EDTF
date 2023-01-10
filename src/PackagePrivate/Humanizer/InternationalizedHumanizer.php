@@ -9,6 +9,7 @@ use EDTF\Humanizer;
 use EDTF\Model\ExtDate;
 use EDTF\Model\ExtDateTime;
 use EDTF\Model\Interval;
+use EDTF\Model\Qualification;
 use EDTF\Model\Season;
 use EDTF\Model\UnspecifiedDigit;
 use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
@@ -104,42 +105,63 @@ class InternationalizedHumanizer implements Humanizer {
 		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
 	}
 
-	private function composeMessage( string $humanizedDate, array $info ) : string {
+	private function uncertaintyToMessageKey( int $qualification ) : string {
+		switch( $qualification ) {
+			case Qualification::UNCERTAIN : return 'uncertain';
+			case Qualification::APPROXIMATE : return 'approximate';
+			case Qualification::UNCERTAIN_AND_APPROXIMATE : return 'approximate-and-uncertain';
+		}
+	}
+
+	private function composeMessage( ExtDate $date, string $humanizedDate ) : string {
+		$info = $date->getQualification()->getUncertainty();
+		$undefined = reset( $info );
+		unset( $info[0] );
+
+		// used for the overall date
+		$firstKey = key( $info );
+
+		switch( $this->uncertaintyToMessageKey( $firstKey ) ) {
+			case 'uncertain': $msg = 'edtf-maybe'; break;
+			case 'approximate': $msg = 'edtf-circa'; break;
+			case 'approximate-and-uncertain': $msg = 'edtf-maybe-circa';
+		}
+
+		// overall date is uncertain
+		if ( count( $undefined ) + count( $info[$firstKey] ) === 3 ) {
+			return $this->message( $msg, $humanizedDate )
+				. $this->message( 'edtf-date-' . $this->uncertaintyToMessageKey( $firstKey ), $humanizedDate );
+		}
+
 		if ( count ( $info ) > 1 ) {
 			$msg = 'edtf-maybe-circa';
-
-		} elseif ( key( $info ) === 'uncertain' ) {
-			$msg = 'edtf-maybe';
-
-		} elseif ( key( $info ) === 'approximate' ) {
-			$msg = 'edtf-approximate';
-
-		} else {
-			$msg = 'edtf-maybe-circa';
 		}
+
 		$portions = [];
-		foreach ( $info as $msgKey => $parts ) {
+		foreach ( $info as $uncertainty => $parts ) {
 			if ( !count( $parts ) ) {
 				continue;
 			}
 
 			$self = $this;
 			$msgParts = array_map( static function( string $value ) use( $self ) {
+				// 'edtf-day', 'edtf-month','edtf-year'
 				return $self->message( 'edtf-' . $value );
 			}, $parts );
 
 			$portions[] = $this->humanSeparator( $msgParts )
-				. $this->message( 'edtf-' . $msgKey, (string)count( $parts ) );
+				. $this->message( 'edtf-parts-' . $this->uncertaintyToMessageKey( $uncertainty ), (string)count( $parts ) );
 		}
 
-		return $this->message( $msg, $humanizedDate, $this->humanSeparator( $portions ) );
+		return $this->message( $msg, $humanizedDate )
+			. ' (' . $this->humanSeparator( $portions ) . ')';
 	}
 
 	private function humanizeDate( ExtDate $date ): string {
 		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
 		
 		if ( $date->getQualification()->isUncertain() ) {		
-			return $this->composeMessage( $humanizedDate, $date->getQualification()->getUncertainty() );
+			return $this->composeMessage( $date, $humanizedDate );
 		}
 
 		return $humanizedDate;
