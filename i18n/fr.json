@@ -7,9 +7,22 @@
 		]
 	},
 	"edtf-description": "Bibliothèque PHP pour analyser, représenter et travailler avec les dates qui suivent la spécification du Format de date / heure étendu.",
-	"edtf-maybe-circa": "Autour du $1 (incertain)",
+	"edtf-maybe-circa": "Autour du $1",
 	"edtf-circa": "Autour du $1",
-	"edtf-maybe": "$1 (incertain)",
+	"edtf-maybe": "$1",
+
+	"edtf-date-approximate-and-uncertain": " (la date est approximative et incertaine)",
+	"edtf-date-approximate": " (la date est approximative)",
+	"edtf-date-uncertain": " (la date est incertaine)",
+
+	"edtf-parts-uncertain": " {{PLURAL:$1|est|sont}} incertain{{PLURAL:$1||s}}",
+	"edtf-parts-approximate": " {{PLURAL:$1|est|sont}} approximatif{{PLURAL:$1||s}}",
+	"edtf-parts-approximate-and-uncertain": " {{PLURAL:$1|est|sont}} approximatif{{PLURAL:$1||s}} et incertain{{PLURAL:$1||s}}",
+	"edtf-and": " et ",
+	"edtf-day": "jour",
+	"edtf-month": "mois",
+	"edtf-year": "année",
+
 	"edtf-spring": "Printemps",
 	"edtf-summer": "Été",
 	"edtf-autumn": "Automne",
