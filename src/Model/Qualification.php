@@ -57,6 +57,9 @@ class Qualification {
 			|| in_array( $this->day, $approximate );
 	}
 
+	/**
+	 * @return array<string, array<string> >
+	 */
 	public function getUncertainty(): array {
 		// must match the i18n messages key edtf-uncertain, edtf-approximate
 		// approximate-and-uncertain
