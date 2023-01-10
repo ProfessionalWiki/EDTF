@@ -91,6 +91,19 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
+	private function humanSeparator( array $parts ) : string {
+		if ( !count( $parts ) ) {
+			return "";
+		}
+
+		if ( count( $parts ) === 1 ) {
+			return current( $parts );
+		}
+
+		$last = array_pop( $parts );
+		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
+	}
+
 	private function composeMessage( string $humanizedDate, array $info ) : string {
 		if ( count ( $info ) > 1 ) {
 			$msg = 'edtf-maybe-circa';
@@ -106,23 +119,19 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 		$portions = [];
 		foreach ( $info as $msgKey => $parts ) {
-
+			$msgKey = (string)$msgKey;
+			$parts = (array)$parts;
 			$self = $this;
-			$msgParts = array_map( static function( $value ) use( $self ) {
+
+			$msgParts = array_map( static function( string $value ) use( $self ) {
 				return $self->message( 'edtf-' . $value );
 			}, $parts );
 
-			if ( count( $msgParts ) > 1 ) {
-				$last = array_pop( $msgParts );
-				$str = implode(', ', $msgParts) . $this->message( 'edtf-and' ) . $last;
-			} else {
-				$str = $msgParts[0];
-			}
-
-			$portions[] = $str . $this->message( 'edtf-' . $msgKey, (string)count( $parts ) );
+			$portions[] = $this->humanSeparator( $msgParts )
+				. $this->message( 'edtf-' . $msgKey, (string)count( $parts ) );
 		}
 
-		return $this->message( $msg, $humanizedDate, implode( $this->message( 'edtf-and' ), $portions ) );
+		return $this->message( $msg, $humanizedDate, $this->humanSeparator( $portions ) );
 	}
 
 	private function humanizeDate( ExtDate $date ): string {
