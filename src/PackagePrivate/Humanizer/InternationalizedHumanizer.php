@@ -97,11 +97,11 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		if ( count( $parts ) === 1 ) {
-			return current( $parts );
+			return (string)current( $parts );
 		}
 
 		$last = array_pop( $parts );
-		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
+		return (string)( implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last );
 	}
 
 	private function composeMessage( string $humanizedDate, array $info ) : string {
@@ -119,10 +119,11 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 		$portions = [];
 		foreach ( $info as $msgKey => $parts ) {
-			$msgKey = (string)$msgKey;
-			$parts = (array)$parts;
-			$self = $this;
+			if ( !count( $parts ) ) {
+				continue;
+			}
 
+			$self = $this;
 			$msgParts = array_map( static function( string $value ) use( $self ) {
 				return $self->message( 'edtf-' . $value );
 			}, $parts );
