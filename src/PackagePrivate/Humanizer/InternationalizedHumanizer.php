@@ -100,8 +100,8 @@ class InternationalizedHumanizer implements Humanizer {
 			return (string)current( $parts );
 		}
 
-		$last = array_pop( $parts );
-		return (string)( implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last );
+		$last = (string)array_pop( $parts );
+		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
 	}
 
 	private function composeMessage( string $humanizedDate, array $info ) : string {
