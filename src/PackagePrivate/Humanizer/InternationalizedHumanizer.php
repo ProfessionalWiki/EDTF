@@ -101,10 +101,10 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		if ( count( $parts ) === 1 ) {
-			return (string)current( $parts );
+			return current( $parts );
 		}
 
-		$last = (string)array_pop( $parts );
+		$last = array_pop( $parts );
 		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
 	}
 
