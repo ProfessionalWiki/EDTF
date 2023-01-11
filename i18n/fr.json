@@ -7,9 +7,9 @@
 		]
 	},
 	"edtf-description": "Bibliothèque PHP pour analyser, représenter et travailler avec les dates qui suivent la spécification du Format de date / heure étendu.",
-	"edtf-maybe-circa": "Autour du $1",
+	"edtf-maybe-circa": "Autour du $1 (incertain)",
 	"edtf-circa": "Autour du $1",
-	"edtf-maybe": "$1",
+	"edtf-maybe": "$1 (incertain)",
 
 	"edtf-uncertain-and-approximate": "Autour du $1",
 	"edtf-approximate": "Autour du $1",
