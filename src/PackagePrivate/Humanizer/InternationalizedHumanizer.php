@@ -92,6 +92,9 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
+	/**
+	 * @param string[] $parts
+	 */
 	private function humanSeparator( array $parts ) : string {
 		if ( !count( $parts ) ) {
 			return "";
