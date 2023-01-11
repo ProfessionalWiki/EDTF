@@ -109,51 +109,52 @@ class InternationalizedHumanizer implements Humanizer {
 		switch( $qualification ) {
 			case Qualification::UNCERTAIN : return 'uncertain';
 			case Qualification::APPROXIMATE : return 'approximate';
-			case Qualification::UNCERTAIN_AND_APPROXIMATE : return 'approximate-and-uncertain';
+			case Qualification::UNCERTAIN_AND_APPROXIMATE : return 'uncertain-and-approximate';
 		}
 	}
 
+	private function humanizedDateByMessage( string $humanizedDate, string $msgKey ) : string {
+		if ( $this->languageStrategy->monthUppercaseFirst()
+			|| strpos( $this->message( $msgKey ), '$' ) === 0 ) {
+			return $humanizedDate;
+		}
+		
+		return strtolower( $humanizedDate );
+	}
+
 	private function composeMessage( ExtDate $date, string $humanizedDate ) : string {
-		$info = $date->getQualification()->getUncertainty();
-		$undefined = reset( $info );
-		unset( $info[0] );
+		$qualification = $date->getQualification();
 
-		// used for the overall date
-		$firstKey = key( $info );
+		$int = $qualification->getWholeDateUncertainty();
+		if ( $int !== -1 ) {
+			$msgKey = $this->uncertaintyToMessageKey( $int );
 
-		switch( $this->uncertaintyToMessageKey( $firstKey ) ) {
-			case 'uncertain': $msg = 'edtf-maybe'; break;
-			case 'approximate': $msg = 'edtf-circa'; break;
-			case 'approximate-and-uncertain': $msg = 'edtf-maybe-circa';
+			return $this->message( 'edtf-' . $msgKey, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $msgKey ) )
+				. $this->message( 'edtf-date-' . $msgKey, $humanizedDate );
 		}
 
-		// overall date is uncertain
-		if ( count( $undefined ) + count( $info[$firstKey] ) === 3 ) {
-			return $this->message( $msg, $humanizedDate )
-				. $this->message( 'edtf-date-' . $this->uncertaintyToMessageKey( $firstKey ), $humanizedDate );
-		}
+		$parts = [
+			'uncertain' => $qualification->getUncertainParts(),
+			'approximate' => $qualification->getApproximateParts(),
+			'uncertain-and-approximate' => $qualification->getUncertainAndApproximateParts(),
+		];
 
-		if ( count ( $info ) > 1 ) {
-			$msg = 'edtf-maybe-circa';
-		}
+		// 'edtf-day', 'edtf-month','edtf-year'
+		$partToMsg = function( string $value ) {
+			return $this->message( 'edtf-' . $value );
+		};
 
+		$outerMsg = '';
 		$portions = [];
-		foreach ( $info as $uncertainty => $parts ) {
-			if ( !count( $parts ) ) {
-				continue;
+		foreach ( $parts as $msgKey => $parts ) {
+			if ( count( $parts ) ) {
+				$portions[] = $this->humanSeparator( array_map( $partToMsg, $parts ) )
+					. $this->message( 'edtf-parts-' . $msgKey, (string)count( $parts ) );
+				$outerMsg = $msgKey;
 			}
-
-			$self = $this;
-			$msgParts = array_map( static function( string $value ) use( $self ) {
-				// 'edtf-day', 'edtf-month','edtf-year'
-				return $self->message( 'edtf-' . $value );
-			}, $parts );
-
-			$portions[] = $this->humanSeparator( $msgParts )
-				. $this->message( 'edtf-parts-' . $this->uncertaintyToMessageKey( $uncertainty ), (string)count( $parts ) );
 		}
 
-		return $this->message( $msg, $humanizedDate )
+		return $this->message( 'edtf-' . $outerMsg, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $outerMsg ) )
 			. ' (' . $this->humanSeparator( $portions ) . ')';
 	}
 
