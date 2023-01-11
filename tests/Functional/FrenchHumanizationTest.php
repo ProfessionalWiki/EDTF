@@ -32,7 +32,7 @@ class FrenchHumanizationTest extends TestCase {
 
 		yield 'Year approximate' => [ '2019~', 'Autour du 2019 (la date est approximative)' ];
 		yield 'Year uncertain' => [ '2019?', '2019 (la date est incertaine)' ];
-		yield 'Year uncertain approximation' => [ '2019%', 'Autour du 2019 (la date est approximative et incertaine)' ];
+		yield 'Year uncertain approximation' => [ '2019%', 'Autour du 2019 (la date est incertaine et approximative)' ];
 
 		yield 'Month approximate' => [ '2019-04~', 'Autour du avril 2019 (la date est approximative)' ];
 		yield 'Month uncertain' => [ '2019-04?', 'Avril 2019 (la date est incertaine)' ];
