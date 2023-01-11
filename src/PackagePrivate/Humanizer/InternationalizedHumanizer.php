@@ -111,6 +111,7 @@ class InternationalizedHumanizer implements Humanizer {
 			case Qualification::APPROXIMATE : return 'approximate';
 			case Qualification::UNCERTAIN_AND_APPROXIMATE : return 'uncertain-and-approximate';
 		}
+		return 'uncertain-and-approximate';
 	}
 
 	private function humanizedDateByMessage( string $humanizedDate, string $msgKey ) : string {
@@ -140,7 +141,7 @@ class InternationalizedHumanizer implements Humanizer {
 		];
 
 		// 'edtf-day', 'edtf-month','edtf-year'
-		$partToMsg = function( string $value ) {
+		$partToMsg = function( string $value ) : string {
 			return $this->message( 'edtf-' . $value );
 		};
 
