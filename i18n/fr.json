@@ -11,13 +11,17 @@
 	"edtf-circa": "Autour du $1",
 	"edtf-maybe": "$1",
 
-	"edtf-date-approximate-and-uncertain": " (la date est approximative et incertaine)",
+	"edtf-uncertain-and-approximate": "Autour du $1",
+	"edtf-approximate": "Autour du $1",
+	"edtf-uncertain": "$1",
+
+	"edtf-date-uncertain-and-approximate": " (la date est incertaine et approximative)",
 	"edtf-date-approximate": " (la date est approximative)",
 	"edtf-date-uncertain": " (la date est incertaine)",
 
 	"edtf-parts-uncertain": " {{PLURAL:$1|est|sont}} incertain{{PLURAL:$1||s}}",
 	"edtf-parts-approximate": " {{PLURAL:$1|est|sont}} approximatif{{PLURAL:$1||s}}",
-	"edtf-parts-approximate-and-uncertain": " {{PLURAL:$1|est|sont}} approximatif{{PLURAL:$1||s}} et incertain{{PLURAL:$1||s}}",
+	"edtf-parts-uncertain-and-approximate": " {{PLURAL:$1|est|sont}} incertain{{PLURAL:$1||s}} et approximatif{{PLURAL:$1||s}}",
 	"edtf-and": " et ",
 	"edtf-day": "jour",
 	"edtf-month": "mois",
