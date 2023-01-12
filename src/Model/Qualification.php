@@ -67,22 +67,6 @@ class Qualification {
 		}
 	}
 
-	public function getWholeDateUncertainty(): int {
-		if ( count( $this->uncertainParts ) + count( $this->undefinedParts ) === 3 ) {
-			return self::UNCERTAIN;
-		}
-
-		if ( count( $this->approximateParts ) + count( $this->undefinedParts ) === 3 ) {
-			return self::APPROXIMATE;
-		}
-
-		if ( count( $this->uncertainAndApproximateParts ) + count( $this->undefinedParts ) === 3 ) {
-			return self::UNCERTAIN_AND_APPROXIMATE;
-		}
-
-		return -1;
-	}
-
 	/**
 	 * @return string[]
 	 */
