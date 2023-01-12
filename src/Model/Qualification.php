@@ -32,16 +32,79 @@ class Qualification {
 	private int $month;
 	private int $day;
 
+	private array $undefinedParts = [];
+	private array $uncertainParts = [];
+	private array $approximateParts = [];
+	private array $uncertainAndApproximateParts = [];
+
 	public function __construct( int $year = 0, int $month = 0, int $day = 0 ) {
 		// TODO: Does it make sense these constructor params are optional?
 		$this->year = $year;
 		$this->month = $month;
 		$this->day = $day;
+
+		$this->setUncertainty();
+	}
+
+	private function setUncertainty(): void {
+		foreach ( [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ]
+			as $part => $value ) {
+
+			switch( $value ) {
+				case self::UNDEFINED:
+					$this->undefinedParts[] = $part;
+					break;
+				case self::UNCERTAIN :
+					$this->uncertainParts[] = $part;
+					break;
+				case self::APPROXIMATE :
+					$this->approximateParts[] = $part;
+					break;
+				case self::UNCERTAIN_AND_APPROXIMATE :
+					$this->uncertainAndApproximateParts[] = $part;
+					break;
+			}
+		}
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getUndefinedParts(): array {
+		return $this->undefinedParts;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getUncertainParts(): array {
+		return $this->uncertainParts;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getApproximateParts(): array {
+		return $this->approximateParts;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getUncertainAndApproximateParts(): array {
+		return $this->uncertainAndApproximateParts;
 	}
 
 	public function undefined( string $part ): bool {
 		$this->validatePartName( $part );
 		return self::UNDEFINED === $this->$part;
+	}
+
+	public function isUncertain(): bool {
+		$approximate = [ self::UNCERTAIN, self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ];
+		return in_array( $this->year,  $approximate)
+			|| in_array( $this->month, $approximate )
+			|| in_array( $this->day, $approximate );
 	}
 
 	public function uncertain( ?string $part = null ): bool {
@@ -61,18 +124,12 @@ class Qualification {
 		return $this->approximate( 'year' ) || $this->approximate( 'month' ) || $this->approximate( 'day' );
 	}
 
-	public function isApproximate(): bool {
-		return in_array( $this->year, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] )
-			|| in_array( $this->month, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] )
-			|| in_array( $this->day, [ self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] );
-	}
-
 	private function validatePartName( string $part ): void {
 		$validParts = [ 'year', 'month', 'day' ];
 
 		if ( !in_array( $part, $validParts ) ) {
 			throw new InvalidArgumentException(
-				sprintf( 'Invalid date part value: "%s". Accepted value is year,month, or day', $part )
+				sprintf( 'Invalid date part value: "%s". Accepted value is year, month, or day', $part )
 			);
 		}
 	}
