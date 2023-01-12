@@ -52,6 +52,11 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Year uncertain' => [ '2019?', 'Maybe 2019 (date is uncertain)' ];
 		yield 'Year uncertain approximation' => [ '2019%', 'Maybe circa 2019 (date is uncertain and approximate)' ];
 
+		yield 'mixed approximation' => [ '1985-%12-?01', 'Maybe circa December 1st, 1985 (day is uncertain and month is uncertain and approximate)' ];
+		yield 'approximation all parts' => [ '%1985-%12-%01', 'Maybe circa December 1st, 1985 (date is uncertain and approximate)' ];
+		yield 'approximation whole date' => [ '1985-12-01%', 'Maybe circa December 1st, 1985 (date is uncertain and approximate)' ];
+		yield 'mixed approximation all' => [ '~1985-%12-?01', 'Maybe circa December 1st, 1985 (day is uncertain, year is approximate and month is uncertain and approximate)' ];
+		
 		yield 'Month approximate' => [ '2019-04~', 'Circa April 2019 (date is approximate)' ];
 		yield 'Month uncertain' => [ '2019-04?', 'Maybe April 2019 (date is uncertain)' ];
 		yield 'Day approximate' => [ '2019-04-01~', 'Circa April 1st, 2019 (date is approximate)' ];
