@@ -197,7 +197,8 @@ class InternationalizedHumanizerTest extends TestCase {
 			1700, 4, 29, new Qualification( 0, 0, Qualification::UNCERTAIN_AND_APPROXIMATE )
 		);
 		$this->humanizer->humanize( $uncertainDate );
-		$this->assertBuilderWasCalledWith( 'edtf-date-uncertain-and-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-uncertain-and-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-parts-uncertain-and-approximate' );
 		$this->assertBuilderWasCalledWith( 'edtf-april' );
 		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
 	}
