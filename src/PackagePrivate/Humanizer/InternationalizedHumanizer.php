@@ -108,15 +108,6 @@ class InternationalizedHumanizer implements Humanizer {
 		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
 	}
 
-	private function uncertaintyToMessageKey( int $qualification ) : string {
-		switch( $qualification ) {
-			case Qualification::UNCERTAIN : return 'uncertain';
-			case Qualification::APPROXIMATE : return 'approximate';
-			case Qualification::UNCERTAIN_AND_APPROXIMATE : return 'uncertain-and-approximate';
-		}
-		return 'uncertain-and-approximate';
-	}
-
 	private function humanizedDateByMessage( string $humanizedDate, string $msgKey ) : string {
 		if ( $this->languageStrategy->monthUppercaseFirst()
 			|| strpos( $this->message( $msgKey ), '$' ) === 0 ) {
@@ -129,19 +120,33 @@ class InternationalizedHumanizer implements Humanizer {
 	private function composeMessage( ExtDate $date, string $humanizedDate ) : string {
 		$qualification = $date->getQualification();
 
-		$int = $qualification->getWholeDateUncertainty();
-		if ( $int !== -1 ) {
-			$msgKey = $this->uncertaintyToMessageKey( $int );
-
-			return $this->message( 'edtf-' . $msgKey, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $msgKey ) )
-				. $this->message( 'edtf-date-' . $msgKey, $humanizedDate );
-		}
-
 		$parts = [
 			'uncertain' => $qualification->getUncertainParts(),
 			'approximate' => $qualification->getApproximateParts(),
 			'uncertain-and-approximate' => $qualification->getUncertainAndApproximateParts(),
 		];
+
+		// this data-structure, together with the loop below
+		// could be moved to the Qualification class
+		// only provided that Qualification::UNDEFINED returns
+		// the parts of the date that are NULL (currently
+		// this is not true) otherwise ExtDate $date could be passed
+		// to a dedicated method of Qualification class
+		// but this might not fit the purpose of that class
+			
+		$undefinedParts = array_filter( [
+			$date->getDay() === NULL,
+			$date->getMonth() === NULL,
+			$date->getYear() === NULL
+		] );
+
+		// check if whole date is uncertain, approximate, or uncertain and approximate
+		foreach ( $parts as $msgKey => $uncertainty ) {
+			if ( count( $undefinedParts ) + count( $uncertainty ) === 3 ) {
+				return $this->message( 'edtf-' . $msgKey, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $msgKey ) )
+					. $this->message( 'edtf-date-' . $msgKey, $humanizedDate );
+			}
+		}
 
 		// 'edtf-day', 'edtf-month','edtf-year'
 		$partToMsg = function( string $value ) : string {
