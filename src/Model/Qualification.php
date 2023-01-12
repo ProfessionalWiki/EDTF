@@ -83,18 +83,30 @@ class Qualification {
 		return -1;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getUndefinedParts(): array {
 		return $this->undefinedParts;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getUncertainParts(): array {
 		return $this->uncertainParts;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getApproximateParts(): array {
 		return $this->approximateParts;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getUncertainAndApproximateParts(): array {
 		return $this->uncertainAndApproximateParts;
 	}
