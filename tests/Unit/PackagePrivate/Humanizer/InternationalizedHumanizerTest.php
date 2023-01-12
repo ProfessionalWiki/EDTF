@@ -172,7 +172,8 @@ class InternationalizedHumanizerTest extends TestCase {
 	public function testYearCirca(): void {
 		$yearCirca = new ExtDate( 1987, null, null, new Qualification( Qualification::APPROXIMATE ) );
 		$this->humanizer->humanize( $yearCirca );
-		$this->assertBuilderCalledOnceWith( 'edtf-circa', [ '1987' ] );
+		$this->assertBuilderWasCalledWith( 'edtf-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-date-approximate' );
 	}
 
 	public function testFullDateCirca(): void {
