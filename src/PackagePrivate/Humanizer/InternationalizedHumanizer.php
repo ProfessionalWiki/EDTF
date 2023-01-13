@@ -127,12 +127,12 @@ class InternationalizedHumanizer implements Humanizer {
 		];
 
 		// this data-structure, together with the loop below
-		// could be moved to the Qualification class
-		// only provided that Qualification::UNDEFINED returns
-		// the parts of the date that are NULL (currently
-		// this is not true) otherwise ExtDate $date could be passed
-		// to a dedicated method of Qualification class
-		// but this might not fit the purpose of that class
+		// cannot be moved to the Qualification class since
+		// Qualification::UNDEFINED does NOT return the parts
+		// of the date that are NULL. So where this is not
+		// suitable to the Qualification class (i.e. it does
+		// not fit the purpose of that class) some of the logic
+		// in this method could be moved to the ExtDate class itself
 			
 		$undefinedParts = array_filter( [
 			$date->getDay() === NULL,
