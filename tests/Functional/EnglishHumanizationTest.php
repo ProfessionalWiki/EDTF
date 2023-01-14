@@ -48,17 +48,17 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Interval with unknown end' => [ '2019/', 'From 2019 to unknown' ];
 		yield 'Interval with unknown start' => [ '/2021', 'From unknown to 2021' ];
 
-		yield 'Year approximate' => [ '2019~', '2019 (year is approximate)' ];
-		yield 'Year uncertain' => [ '2019?', '2019 (year is uncertain)' ];
-		yield 'Year uncertain approximation' => [ '2019%', '2019 (year is uncertain and approximate)' ];
+		yield 'Year approximate' => [ '2019~', 'Circa 2019 (date is approximate)' ];
+		yield 'Year uncertain' => [ '2019?', 'Maybe 2019 (date is uncertain)' ];
+		yield 'Year uncertain approximation' => [ '2019%', 'Maybe circa 2019 (date is uncertain and approximate)' ];
 
 		yield 'mixed approximation' => [ '1985-%12-?01', 'December 1st, 1985 (month is uncertain and approximate, and day is uncertain)' ];
 		yield 'approximation all parts' => [ '%1985-%12-%01', 'Maybe circa December 1st, 1985 (date is uncertain and approximate)' ];
 		yield 'approximation whole date' => [ '1985-12-01%', 'Maybe circa December 1st, 1985 (date is uncertain and approximate)' ];
 		yield 'mixed approximation all' => [ '~1985-%12-?01', 'December 1st, 1985 (year is approximate, month is uncertain and approximate, and day is uncertain)' ];
 		
-		yield 'Month approximate' => [ '2019-04~', 'April 2019 (year is approximate, and month is approximate)' ]; // TODO: Circa April 2019 (date is approximate)
-		yield 'Month uncertain' => [ '2019-04?', 'April 2019 (year is uncertain, and month is uncertain)' ]; // TODO: Maybe April 2019 (date is uncertain)
+		yield 'Month approximate' => [ '2019-04~', 'Circa April 2019 (date is approximate)' ];
+		yield 'Month uncertain' => [ '2019-04?', 'Maybe April 2019 (date is uncertain)' ];
 		yield 'Day approximate' => [ '2019-04-01~', 'Circa April 1st, 2019 (date is approximate)' ];
 		yield 'Day uncertain' => [ '2019-04-01?', 'Maybe April 1st, 2019 (date is uncertain)' ];
 

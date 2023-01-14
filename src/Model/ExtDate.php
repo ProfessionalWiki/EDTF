@@ -281,6 +281,12 @@ class ExtDate implements EdtfValue, HasPrecision {
 		return $this->qualification;
 	}
 
+	public function isUniformlyQualified(): bool {
+		return $this->qualification->isUniform() // 2004-06-11? and ?2004-?06-?11
+			|| ( $this->qualification->monthAndYearHaveTheSameQualification() && $this->day === null ) // 2004-06? and ?2004-?06
+			|| ( $this->month === null && $this->day === null ); // 1984?
+	}
+
 	public function getUnspecifiedDigit(): UnspecifiedDigit {
 		return $this->unspecifiedDigit;
 	}

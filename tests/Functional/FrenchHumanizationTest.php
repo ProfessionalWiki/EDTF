@@ -30,12 +30,12 @@ class FrenchHumanizationTest extends TestCase {
 		yield 'Interval with unknown end' => [ '2019/', 'Depuis 2019 jusqu’à une fin inconnue' ];
 		yield 'Interval with unknown start' => [ '/2021', 'Depuis un début inconnu jusqu’à 2021' ];
 
-		yield 'Year approximate' => [ '2019~', '2019 (année approximatif)' ];
-		yield 'Year uncertain' => [ '2019?', '2019 (année incertain)' ];
-		yield 'Year uncertain approximation' => [ '2019%', '2019 (année incertain et approximatif)' ];
+		yield 'Year approximate' => [ '2019~', 'Autour du 2019' ];
+		yield 'Year uncertain' => [ '2019?', '2019 (incertain)' ];
+		yield 'Year uncertain approximation' => [ '2019%', 'Autour du 2019 (incertain)' ];
 
-		yield 'Month approximate' => [ '2019-04~', 'Avril 2019 (année approximatif, et mois approximatif)' ]; // TODO: Autour du avril 2019 (la date est approximative)
-		yield 'Month uncertain' => [ '2019-04?', 'Avril 2019 (année incertain, et mois incertain)' ]; // TODO: Avril 2019 (la date est incertaine)
+		yield 'Month approximate' => [ '2019-04~', 'Autour du Avril 2019' ];
+		yield 'Month uncertain' => [ '2019-04?', 'Avril 2019 (incertain)' ];
 		yield 'Day approximate' => [ '2019-04-01~', 'Autour du 1er avril 2019' ];
 		yield 'Day uncertain' => [ '2019-04-01?', '1er avril 2019 (incertain)' ];
 

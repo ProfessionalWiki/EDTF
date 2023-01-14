@@ -77,6 +77,10 @@ class Qualification {
 			&& $this->year === $this->day;
 	}
 
+	public function monthAndYearHaveTheSameQualification(): bool {
+		return $this->year === $this->month;
+	}
+
 	/**
 	 * Returns if ANY part is uncertain
 	 */

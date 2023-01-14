@@ -96,16 +96,16 @@ class InternationalizedHumanizer implements Humanizer {
 		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
 
 		if ( !$date->getQualification()->isFullyKnown() ) {
-			return $this->humanizeQualifiedDate( $date->getQualification(), $humanizedDate );
+			return $this->humanizeQualifiedDate( $date, $humanizedDate );
 		}
 
 		return $humanizedDate;
 	}
 
-	private function humanizeQualifiedDate( Qualification $qualification, string $humanizedDate ): string {
-		if ( $qualification->isUniform() ) {
+	private function humanizeQualifiedDate( ExtDate $date, string $humanizedDate ): string {
+		if ( $date->isUniformlyQualified() ) {
 			return $this->message(
-				$this->getUniformQualificationMessageKey( $qualification ),
+				$this->getUniformQualificationMessageKey( $date->getQualification() ),
 				$humanizedDate
 			);
 		}
@@ -113,7 +113,7 @@ class InternationalizedHumanizer implements Humanizer {
 		return $this->message(
 			'edtf-qualified-date',
 			$humanizedDate,
-			$this->buildQualificationMessage( $qualification )
+			$this->buildQualificationMessage( $date->getQualification() )
 		);
 	}
 

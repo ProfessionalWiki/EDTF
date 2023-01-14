@@ -236,4 +236,111 @@ class ExtDateTest extends TestCase {
 			],
 		];
 	}
+
+	/**
+	 * @dataProvider uniformQualificationProvider
+	 */
+	public function testIsUniformlyQualified( ExtDate $date ): void {
+		$this->assertTrue( $date->isUniformlyQualified() );
+	}
+
+	public function uniformQualificationProvider(): iterable {
+		yield [
+			new ExtDate( 1987, 10, 1 )
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, null, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, null, null,
+				new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::KNOWN )
+			)
+		];
+	}
+
+	/**
+	 * @dataProvider mixedQualificationProvider
+	 */
+	public function testIsNotUniformlyQualified( ExtDate $date ): void {
+		$this->assertFalse( $date->isUniformlyQualified() );
+	}
+
+	public function mixedQualificationProvider(): iterable {
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::APPROXIMATE, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::APPROXIMATE, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::APPROXIMATE )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::KNOWN, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::KNOWN )
+			)
+		];
+	}
+
 }
