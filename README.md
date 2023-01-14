@@ -114,6 +114,14 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 3.0.0 - 2023-01-xx
+
+* Removed parameter of `ExtDate::uncertain`
+* Removed parameter of `ExtDate::approximate`
+* Deprecated `ExtDate::uncertain` in favour of `ExtDate::isUncertain`
+* Deprecated `ExtDate::approximate` in favour of `ExtDate::isApproximate`
+* Changed various public methods of `Qualification`
+
 ### Version 2.0.2 - 2022-04-29
 
 * Improved translations

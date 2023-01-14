@@ -11,8 +11,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Model\Interval
  * @covers \EDTF\Model\ExtDateTime
- *
- * @package EDTF\Tests\Unit
+ * @covers \EDTF\Model\Qualification
  */
 class QualificationTest extends TestCase {
 
@@ -20,14 +19,15 @@ class QualificationTest extends TestCase {
 
 	public function testUncertainYear() {
 		$date = $this->createExtDate( '1984?' );
-		$this->assertTrue( $date->uncertain( 'year' ) );
+		$this->assertTrue( $date->getQualification()->yearIsUncertain() );
 	}
 
 	public function testApproximateYearAndMonth() {
 		$date = $this->createExtDate( "2004-06~" );
 
-		$this->assertTrue( $date->approximate( 'year' ) );
-		$this->assertTrue( $date->approximate( 'month' ) );
+		$this->assertTrue( $date->getQualification()->yearIsApproximate() );
+		$this->assertTrue( $date->getQualification()->monthIsApproximate() );
+		$this->assertFalse( $date->getQualification()->dayIsApproximate() );
 		$this->assertSame( 2004, $date->getYear() );
 		$this->assertSame( 6, $date->getMonth() );
 	}
@@ -35,10 +35,14 @@ class QualificationTest extends TestCase {
 	public function testApproximateAndUncertainYearMonthDay() {
 		$date = $this->createExtDate( "2004-06-11%" );
 
-		$this->assertTrue( $date->uncertain() && $date->approximate() );
-		$this->assertTrue( $date->uncertain( 'day' ) && $date->approximate( 'day' ) );
-		$this->assertTrue( $date->uncertain( 'month' ) && $date->approximate( 'month' ) );
-		$this->assertTrue( $date->uncertain( 'year' ) && $date->approximate( 'year' ) );
+		$this->assertTrue( $date->isUncertain() );
+		$this->assertTrue( $date->isApproximate() );
+		$this->assertTrue( $date->getQualification()->dayIsUncertain() );
+		$this->assertTrue( $date->getQualification()->monthIsUncertain() );
+		$this->assertTrue( $date->getQualification()->yearIsUncertain() );
+		$this->assertTrue( $date->getQualification()->dayIsApproximate() );
+		$this->assertTrue( $date->getQualification()->monthIsApproximate() );
+		$this->assertTrue( $date->getQualification()->yearIsApproximate() );
 
 		$this->assertSame( 2004, $date->getYear() );
 		$this->assertSame( 6, $date->getMonth() );

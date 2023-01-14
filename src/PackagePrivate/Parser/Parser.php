@@ -274,11 +274,11 @@ class Parser {
 		$date = ( new Parser() )->createEdtf( $setValue);
 
 		if ( $date instanceof ExtDate ) {
-			if ( $date->uncertain() ) {
+			if ( $date->isUncertain() ) {
 				throw new InvalidArgumentException( 'Dates in set ranges cannot be uncertain' );
 			}
 
-			if ( $date->approximate() ) {
+			if ( $date->isApproximate() ) {
 				throw new InvalidArgumentException( 'Dates in set ranges cannot be approximate' );
 			}
 

@@ -5,7 +5,6 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Unit\Model;
 
 use EDTF\Model\Qualification;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,48 +13,31 @@ use PHPUnit\Framework\TestCase;
  */
 class QualificationTest extends TestCase {
 
-	public function testUncertainThrowsExceptionOnInvalidPart(): void {
-		$this->expectException( InvalidArgumentException::class );
-		$q = new Qualification( Qualification::UNCERTAIN );
-		$q->uncertain( 'foo' );
-	}
-
 	public function testUncertain(): void {
 		$q = new Qualification( Qualification::UNCERTAIN );
-		$this->assertTrue( $q->uncertain( 'year' ) );
+		$this->assertTrue( $q->yearIsUncertain() );
 	}
 
 	public function testUncertainWithNullPart(): void {
 		$q = new Qualification();
-		$this->assertFalse( $q->uncertain() );
+		$this->assertFalse( $q->isUncertain() );
 
 		$q = new Qualification( Qualification::UNCERTAIN );
-		$this->assertTrue( $q->uncertain() );
-	}
-
-	public function testApproximate(): void {
-		$q = new Qualification( Qualification::APPROXIMATE );
-		$this->assertTrue( $q->approximate( 'year' ) );
+		$this->assertTrue( $q->isUncertain() );
 	}
 
 	public function testApproximateWithNullPart(): void {
 		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE );
-		$this->assertTrue( $q->approximate() );
-		$this->assertFalse( $q->approximate( 'year' ) );
-		$this->assertTrue( $q->approximate( 'month' ) );
-		$this->assertFalse( $q->approximate( 'day' ) );
-	}
-
-	public function testApproximateThrowExceptionOnInvalidPart(): void {
-		$this->expectException( InvalidArgumentException::class );
-		$q = new Qualification( Qualification::APPROXIMATE );
-		$q->uncertain( 'foo' );
+		$this->assertTrue( $q->isApproximate() );
+		$this->assertFalse( $q->yearIsApproximate() );
+		$this->assertTrue( $q->monthIsApproximate() );
+		$this->assertFalse( $q->dayIsApproximate() );
 	}
 
 	public function testUncertainAndApproximate(): void {
 		$q = new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE );
-		$this->assertTrue( $q->uncertain( 'year' ) );
-		$this->assertTrue( $q->approximate( 'year' ) );
+		$this->assertTrue( $q->yearIsUncertain() );
+		$this->assertTrue( $q->yearIsApproximate() );
 	}
 
 	public function testIsFullyKnown(): void {

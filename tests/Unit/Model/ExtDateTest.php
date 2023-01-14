@@ -97,20 +97,24 @@ class ExtDateTest extends TestCase {
 		$q = new Qualification( Qualification::UNCERTAIN );
 		$d = new ExtDate( null, null, null, $q );
 
+		$this->assertTrue( $d->isUncertain() );
 		$this->assertTrue( $d->uncertain() );
-		$this->assertTrue( $d->uncertain( 'year' ) );
-		$this->assertFalse( $d->uncertain( 'month' ) );
-		$this->assertFalse( $d->uncertain( 'day' ) );
+
+		$this->assertTrue( $d->getQualification()->yearIsUncertain() );
+		$this->assertFalse( $d->getQualification()->monthIsUncertain() );
+		$this->assertFalse( $d->getQualification()->dayIsUncertain() );
 	}
 
 	public function testShouldProvideApproximateInfo(): void {
 		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE );
 		$d = new ExtDate( null, null, null, $q );
 
+		$this->assertTrue( $d->isApproximate() );
 		$this->assertTrue( $d->approximate() );
-		$this->assertFalse( $d->approximate( 'year' ) );
-		$this->assertTrue( $d->approximate( 'month' ) );
-		$this->assertFalse( $d->approximate( 'day' ) );
+
+		$this->assertFalse( $d->getQualification()->yearIsApproximate() );
+		$this->assertTrue( $d->getQualification()->monthIsApproximate() );
+		$this->assertFalse( $d->getQualification()->dayIsApproximate() );
 	}
 
 	public function testShouldProvideUncertainAndApproximateInfo(): void {
@@ -121,10 +125,12 @@ class ExtDateTest extends TestCase {
 		);
 		$d = new ExtDate( null, null, null, $q );
 
-		$this->assertTrue( $d->uncertain() && $d->approximate() );
-		$this->assertFalse( $d->uncertain( 'year' ) );
-		$this->assertFalse( $d->uncertain( 'month' ) );
-		$this->assertTrue( $d->uncertain( 'day' ) && $d->approximate( 'day' ) );
+		$this->assertTrue( $d->isUncertain() );
+		$this->assertTrue( $d->isApproximate() );
+		$this->assertFalse( $d->getQualification()->yearIsUncertain() );
+		$this->assertFalse( $d->getQualification()->monthIsUncertain() );
+		$this->assertTrue( $d->getQualification()->dayIsUncertain() );
+		$this->assertTrue( $d->getQualification()->dayIsApproximate() );
 	}
 
 	public function testNegativeYear(): void {

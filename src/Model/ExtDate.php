@@ -251,12 +251,26 @@ class ExtDate implements EdtfValue, HasPrecision {
 		return $c->lastOfMonth()->day;
 	}
 
-	public function uncertain( ?string $part = null ): bool {
-		return $this->qualification->uncertain( $part );
+	/**
+	 * @deprecated
+	 */
+	public function uncertain(): bool {
+		return $this->isUncertain();
 	}
 
-	public function approximate( ?string $part = null ): bool {
-		return $this->qualification->approximate( $part );
+	public function isUncertain(): bool {
+		return $this->qualification->isUncertain();
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public function approximate(): bool {
+		return $this->isApproximate();
+	}
+
+	public function isApproximate(): bool {
+		return $this->qualification->isApproximate();
 	}
 
 	public function unspecified( ?string $part = null ): bool {

@@ -46,6 +46,9 @@ class Qualification {
 		$this->setUncertainty();
 	}
 
+	/**
+	 * TODO: remove
+	 */
 	private function setUncertainty(): void {
 		foreach ( [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ]
 			as $part => $value ) {
@@ -68,6 +71,7 @@ class Qualification {
 	}
 
 	/**
+	 * TODO: remove
 	 * @return string[]
 	 */
 	public function getUncertainParts(): array {
@@ -75,6 +79,7 @@ class Qualification {
 	}
 
 	/**
+	 * TODO: remove
 	 * @return string[]
 	 */
 	public function getApproximateParts(): array {
@@ -82,6 +87,7 @@ class Qualification {
 	}
 
 	/**
+	 * TODO: remove
 	 * @return string[]
 	 */
 	public function getUncertainAndApproximateParts(): array {
@@ -94,31 +100,52 @@ class Qualification {
 			&& $this->day === self::KNOWN;
 	}
 
-	public function uncertain( ?string $part = null ): bool {
-		if ( !is_null( $part ) ) {
-			$this->validatePartName( $part );
-			return self::UNCERTAIN === $this->$part || self::UNCERTAIN_AND_APPROXIMATE === $this->$part;
-		}
-
-		return $this->uncertain( 'year' ) || $this->uncertain( 'month' ) || $this->uncertain( 'day' );
+	/**
+	 * Returns if ANY part is uncertain
+	 */
+	public function isUncertain(): bool {
+		return $this->dayIsUncertain()
+			|| $this->monthIsUncertain()
+			|| $this->yearIsUncertain();
 	}
 
-	public function approximate( ?string $part = null ): bool {
-		if ( !is_null( $part ) ) {
-			$this->validatePartName( $part );
-			return self::APPROXIMATE === $this->$part || self::UNCERTAIN_AND_APPROXIMATE === $this->$part;
-		}
-		return $this->approximate( 'year' ) || $this->approximate( 'month' ) || $this->approximate( 'day' );
+	public function dayIsUncertain(): bool {
+		return $this->day === self::UNCERTAIN
+			|| $this->day === self::UNCERTAIN_AND_APPROXIMATE;
 	}
 
-	private function validatePartName( string $part ): void {
-		$validParts = [ 'year', 'month', 'day' ];
+	public function monthIsUncertain(): bool {
+		return $this->month === self::UNCERTAIN
+			|| $this->month === self::UNCERTAIN_AND_APPROXIMATE;
+	}
 
-		if ( !in_array( $part, $validParts ) ) {
-			throw new InvalidArgumentException(
-				sprintf( 'Invalid date part value: "%s". Accepted value is year, month, or day', $part )
-			);
-		}
+	public function yearIsUncertain(): bool {
+		return $this->year === self::UNCERTAIN
+			|| $this->year === self::UNCERTAIN_AND_APPROXIMATE;
+	}
+
+	/**
+	 * Returns if ANY part is approximate
+	 */
+	public function isApproximate(): bool {
+		return $this->dayIsApproximate()
+			|| $this->monthIsApproximate()
+			|| $this->yearIsApproximate();
+	}
+
+	public function dayIsApproximate(): bool {
+		return $this->day === self::APPROXIMATE
+			|| $this->day === self::UNCERTAIN_AND_APPROXIMATE;
+	}
+
+	public function monthIsApproximate(): bool {
+		return $this->month === self::APPROXIMATE
+			|| $this->month === self::UNCERTAIN_AND_APPROXIMATE;
+	}
+
+	public function yearIsApproximate(): bool {
+		return $this->year === self::APPROXIMATE
+			|| $this->year === self::UNCERTAIN_AND_APPROXIMATE;
 	}
 
 }
