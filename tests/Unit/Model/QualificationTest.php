@@ -14,13 +14,6 @@ use PHPUnit\Framework\TestCase;
  */
 class QualificationTest extends TestCase {
 
-	public function testDefaultPartValueShouldBeUndefined() {
-		$q = new Qualification();
-		$this->assertTrue( $q->undefined( 'year' ) );
-		$this->assertTrue( $q->undefined( 'month' ) );
-		$this->assertTrue( $q->undefined( 'day' ) );
-	}
-
 	public function testUncertainThrowsExceptionOnInvalidPart() {
 		$this->expectException( InvalidArgumentException::class );
 		$q = new Qualification( Qualification::UNCERTAIN );

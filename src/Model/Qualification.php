@@ -95,11 +95,6 @@ class Qualification {
 		return $this->uncertainAndApproximateParts;
 	}
 
-	public function undefined( string $part ): bool {
-		$this->validatePartName( $part );
-		return self::UNDEFINED === $this->$part;
-	}
-
 	public function isUncertain(): bool {
 		$approximate = [ self::UNCERTAIN, self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ];
 		return in_array( $this->year,  $approximate)
