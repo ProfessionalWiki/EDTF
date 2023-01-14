@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 class Qualification {
 
-	public const UNDEFINED = 0;
+	public const KNOWN = 0;
 
 	/**
 	 * Determines if a date part qualification is uncertain,
@@ -51,7 +51,7 @@ class Qualification {
 			as $part => $value ) {
 
 			switch( $value ) {
-				case self::UNDEFINED:
+				case self::KNOWN:
 					$this->undefinedParts[] = $part;
 					break;
 				case self::UNCERTAIN :
@@ -86,6 +86,12 @@ class Qualification {
 	 */
 	public function getUncertainAndApproximateParts(): array {
 		return $this->uncertainAndApproximateParts;
+	}
+
+	public function isFullyKnown(): bool {
+		return $this->year === self::KNOWN
+			&& $this->month === self::KNOWN
+			&& $this->day === self::KNOWN;
 	}
 
 	public function isUncertain(): bool {

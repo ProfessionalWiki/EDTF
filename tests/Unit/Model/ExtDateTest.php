@@ -104,7 +104,7 @@ class ExtDateTest extends TestCase {
 	}
 
 	public function testShouldProvideApproximateInfo(): void {
-		$q = new Qualification( Qualification::UNDEFINED, Qualification::APPROXIMATE );
+		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE );
 		$d = new ExtDate( null, null, null, $q );
 
 		$this->assertTrue( $d->approximate() );
@@ -115,8 +115,8 @@ class ExtDateTest extends TestCase {
 
 	public function testShouldProvideUncertainAndApproximateInfo(): void {
 		$q = new Qualification(
-			Qualification::UNDEFINED,
-			Qualification::UNDEFINED,
+			Qualification::KNOWN,
+			Qualification::KNOWN,
 			Qualification::UNCERTAIN_AND_APPROXIMATE
 		);
 		$d = new ExtDate( null, null, null, $q );
@@ -221,7 +221,7 @@ class ExtDateTest extends TestCase {
 				new ExtDate(
 					1987, 10, 1,
 					new Qualification(
-						Qualification::UNDEFINED,
+						Qualification::KNOWN,
 						Qualification::APPROXIMATE
 					)
 				),
