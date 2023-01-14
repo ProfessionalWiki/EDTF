@@ -30,10 +30,6 @@ class Qualification {
 	private int $month;
 	private int $day;
 
-	private array $uncertainParts = [];
-	private array $approximateParts = [];
-	private array $uncertainAndApproximateParts = [];
-
 	public static function newFullyKnown(): self {
 		return new self(
 			self::KNOWN,
@@ -43,64 +39,42 @@ class Qualification {
 	}
 
 	public function __construct( int $year, int $month, int $day ) {
+		$this->assertIsQualification( $year );
+		$this->assertIsQualification( $month );
+		$this->assertIsQualification( $day );
+
 		$this->year = $year;
 		$this->month = $month;
 		$this->day = $day;
-
-		$this->setUncertainty();
 	}
 
-	/**
-	 * TODO: remove
-	 */
-	private function setUncertainty(): void {
-		foreach ( [ 'year' => $this->year, 'month' => $this->month, 'day' => $this->day ]
-			as $part => $value ) {
-
-			switch( $value ) {
-				case self::KNOWN:
-					break;
-				case self::UNCERTAIN :
-					$this->uncertainParts[] = $part;
-					break;
-				case self::APPROXIMATE :
-					$this->approximateParts[] = $part;
-					break;
-				case self::UNCERTAIN_AND_APPROXIMATE :
-					$this->uncertainAndApproximateParts[] = $part;
-					break;
-			}
+	private function assertIsQualification( int $i ): void {
+		if ( !in_array( $i, [ self::KNOWN, self::UNCERTAIN, self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] ) ) {
+			throw new \InvalidArgumentException( 'Invalid qualification' );
 		}
-	}
-
-	/**
-	 * TODO: remove
-	 * @return string[]
-	 */
-	public function getUncertainParts(): array {
-		return $this->uncertainParts;
-	}
-
-	/**
-	 * TODO: remove
-	 * @return string[]
-	 */
-	public function getApproximateParts(): array {
-		return $this->approximateParts;
-	}
-
-	/**
-	 * TODO: remove
-	 * @return string[]
-	 */
-	public function getUncertainAndApproximateParts(): array {
-		return $this->uncertainAndApproximateParts;
 	}
 
 	public function isFullyKnown(): bool {
 		return $this->year === self::KNOWN
 			&& $this->month === self::KNOWN
 			&& $this->day === self::KNOWN;
+	}
+
+	public function yearIsKnown(): bool {
+		return $this->year === self::KNOWN;
+	}
+
+	public function monthIsKnown(): bool {
+		return $this->month === self::KNOWN;
+	}
+
+	public function dayIsKnown(): bool {
+		return $this->day === self::KNOWN;
+	}
+
+	public function isUniform(): bool {
+		return $this->year === $this->month
+			&& $this->year === $this->day;
 	}
 
 	/**

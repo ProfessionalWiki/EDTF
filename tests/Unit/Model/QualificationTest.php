@@ -83,4 +83,14 @@ class QualificationTest extends TestCase {
 		];
 	}
 
+	public function testConstructorThrowsOnInvalidQualification(): void {
+		$this->expectException( \InvalidArgumentException::class );
+
+		new Qualification(
+			Qualification::KNOWN,
+			500,
+			Qualification::KNOWN
+		);
+	}
+
 }

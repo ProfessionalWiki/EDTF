@@ -1,22 +1,18 @@
 {
 	"edtf-description": "PHP library to parse, represent and work with dates that follow the Extended Date/Time Format specification.",
 
-	"edtf-maybe-circa": "Maybe circa $1",
-	"edtf-circa": "Circa $1",
-	"edtf-maybe": "Maybe $1",
+	"edtf-maybe-circa": "Maybe circa $1 (date is uncertain and approximate)",
+	"edtf-circa": "Circa $1 (date is approximate)",
+	"edtf-maybe": "Maybe $1 (date is uncertain)",
 
-	"edtf-uncertain-and-approximate": "Maybe circa $1",
-	"edtf-approximate": "Circa $1",
-	"edtf-uncertain": "Maybe $1",
+	"edtf-qualified-date": "$1 ($2)",
 
-	"edtf-date-uncertain-and-approximate": " (date is uncertain and approximate)",
-	"edtf-date-approximate": " (date is approximate)",
-	"edtf-date-uncertain": " (date is uncertain)",
+	"edtf-parts-uncertain": "$1 is uncertain",
+	"edtf-parts-approximate": "$1 is approximate",
+	"edtf-parts-uncertain-and-approximate": "$1 is uncertain and approximate",
 
-	"edtf-parts-uncertain": " {{PLURAL:$1|is|are}} uncertain",
-	"edtf-parts-approximate": " {{PLURAL:$1|is|are}} approximate",
-	"edtf-parts-uncertain-and-approximate": " {{PLURAL:$1|is|are}} uncertain and approximate",
-	"edtf-and": " and ",
+	"edtf-and-prefix": "and $1",
+
 	"edtf-day": "day",
 	"edtf-month": "month",
 	"edtf-year": "year",

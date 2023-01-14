@@ -123,6 +123,9 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 * Deprecated `ExtDate::approximate` in favour of `ExtDate::isApproximate`
 * Added `Qualification::newFullyKnown`
 * Added `Qualification::isFullyKnown`
+* Added `Qualification::dayIsKnown`
+* Added `Qualification::monthIsKnown`
+* Added `Qualification::yearIsKnown`
 * Added `Qualification::isUncertain`, replacing `Qualification::uncertain`
 * Added `Qualification::dayIsUncertain`
 * Added `Qualification::monthIsUncertain`
