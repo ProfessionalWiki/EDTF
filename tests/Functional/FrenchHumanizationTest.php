@@ -30,14 +30,14 @@ class FrenchHumanizationTest extends TestCase {
 		yield 'Interval with unknown end' => [ '2019/', 'Depuis 2019 jusqu’à une fin inconnue' ];
 		yield 'Interval with unknown start' => [ '/2021', 'Depuis un début inconnu jusqu’à 2021' ];
 
-		yield 'Year approximate' => [ '2019~', 'Autour du 2019' ];
-		yield 'Year uncertain' => [ '2019?', '2019 (incertain)' ];
-		yield 'Year uncertain approximation' => [ '2019%', 'Autour du 2019 (incertain)' ];
+		yield 'Year approximate' => [ '2019~', 'Autour du 2019 (la date est approximative)' ];
+		yield 'Year uncertain' => [ '2019?', '2019 (la date est incertaine)' ];
+		yield 'Year uncertain approximation' => [ '2019%', 'Autour du 2019 (la date est incertaine et approximative)' ];
 
-		yield 'Month approximate' => [ '2019-04~', 'Autour du avril 2019' ];
-		yield 'Month uncertain' => [ '2019-04?', 'Avril 2019 (incertain)' ];
-		yield 'Day approximate' => [ '2019-04-01~', 'Autour du 1er avril 2019' ];
-		yield 'Day uncertain' => [ '2019-04-01?', '1er avril 2019 (incertain)' ];
+		yield 'Month approximate' => [ '2019-04~', 'Autour du avril 2019 (la date est approximative)' ];
+		yield 'Month uncertain' => [ '2019-04?', 'Avril 2019 (la date est incertaine)' ];
+		yield 'Day approximate' => [ '2019-04-01~', 'Autour du 1er avril 2019 (la date est approximative)' ];
+		yield 'Day uncertain' => [ '2019-04-01?', '1er avril 2019 (la date est incertaine)' ];
 
 		yield 'Time with UTC' => [ '1985-04-12T23:20:30Z', '23:20:30 UTC 12 avril 1985' ];
 		yield 'Time with local time' => [ '1985-04-12T23:20:30', '23:20:30 (heure locale) 12 avril 1985' ];

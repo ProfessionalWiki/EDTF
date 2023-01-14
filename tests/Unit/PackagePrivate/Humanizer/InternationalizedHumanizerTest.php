@@ -172,21 +172,22 @@ class InternationalizedHumanizerTest extends TestCase {
 	public function testYearCirca(): void {
 		$yearCirca = new ExtDate( 1987, null, null, new Qualification( Qualification::APPROXIMATE ) );
 		$this->humanizer->humanize( $yearCirca );
-		$this->assertBuilderCalledOnceWith( 'edtf-circa', [ '1987' ] );
+		$this->assertBuilderWasCalledWith( 'edtf-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-date-approximate' );
 	}
 
 	public function testFullDateCirca(): void {
 		$dateCirca = new ExtDate( 1654, 12, 12, new Qualification( 0, 0, Qualification::APPROXIMATE ) );
 		$this->humanizer->humanize( $dateCirca );
 		$this->assertBuilderWasCalledWith( 'edtf-december' );
-		$this->assertBuilderWasCalledWith( 'edtf-circa' );
+		$this->assertBuilderWasCalledWith( 'edtf-approximate' );
 		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
 	}
 
 	public function testUncertain(): void {
 		$uncertainDate = new ExtDate( 1800, 5, 29, new Qualification( 0, 0, Qualification::UNCERTAIN ) );
 		$this->humanizer->humanize( $uncertainDate );
-		$this->assertBuilderWasCalledWith( 'edtf-maybe' );
+		$this->assertBuilderWasCalledWith( 'edtf-uncertain' );
 		$this->assertBuilderWasCalledWith( 'edtf-may' );
 		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
 	}
@@ -196,7 +197,8 @@ class InternationalizedHumanizerTest extends TestCase {
 			1700, 4, 29, new Qualification( 0, 0, Qualification::UNCERTAIN_AND_APPROXIMATE )
 		);
 		$this->humanizer->humanize( $uncertainDate );
-		$this->assertBuilderWasCalledWith( 'edtf-maybe-circa' );
+		$this->assertBuilderWasCalledWith( 'edtf-uncertain-and-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-parts-uncertain-and-approximate' );
 		$this->assertBuilderWasCalledWith( 'edtf-april' );
 		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
 	}

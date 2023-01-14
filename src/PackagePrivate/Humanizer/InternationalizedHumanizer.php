@@ -9,6 +9,7 @@ use EDTF\Humanizer;
 use EDTF\Model\ExtDate;
 use EDTF\Model\ExtDateTime;
 use EDTF\Model\Interval;
+use EDTF\Model\Qualification;
 use EDTF\Model\Season;
 use EDTF\Model\UnspecifiedDigit;
 use EDTF\PackagePrivate\Humanizer\Internationalization\MessageBuilder;
@@ -91,22 +92,86 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
+	/**
+	 * @param string[] $parts
+	 */
+	private function humanSeparator( array $parts ) : string {
+		if ( !count( $parts ) ) {
+			return "";
+		}
+
+		if ( count( $parts ) === 1 ) {
+			return current( $parts );
+		}
+
+		$last = array_pop( $parts );
+		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
+	}
+
+	private function humanizedDateByMessage( string $humanizedDate, string $msgKey ) : string {
+		if ( $this->languageStrategy->monthUppercaseFirst()
+			|| strpos( $this->message( $msgKey ), '$' ) === 0 ) {
+			return $humanizedDate;
+		}
+		
+		return strtolower( $humanizedDate );
+	}
+
+	private function composeMessage( ExtDate $date, string $humanizedDate ) : string {
+		$qualification = $date->getQualification();
+
+		$parts = [
+			'uncertain' => $qualification->getUncertainParts(),
+			'approximate' => $qualification->getApproximateParts(),
+			'uncertain-and-approximate' => $qualification->getUncertainAndApproximateParts(),
+		];
+
+		// this data-structure, together with the loop below
+		// cannot be moved to the Qualification class since
+		// Qualification::UNDEFINED does NOT return the parts
+		// of the date that are NULL. So where this is not
+		// suitable to the Qualification class (i.e. it does
+		// not fit the purpose of that class) some of the logic
+		// in this method could be moved to the ExtDate class itself
+			
+		$undefinedParts = array_filter( [
+			$date->getDay() === NULL,
+			$date->getMonth() === NULL,
+			$date->getYear() === NULL
+		] );
+
+		// check if whole date is uncertain, approximate, or uncertain and approximate
+		foreach ( $parts as $msgKey => $uncertainty ) {
+			if ( count( $undefinedParts ) + count( $uncertainty ) === 3 ) {
+				return $this->message( 'edtf-' . $msgKey, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $msgKey ) )
+					. $this->message( 'edtf-date-' . $msgKey, $humanizedDate );
+			}
+		}
+
+		// 'edtf-day', 'edtf-month','edtf-year'
+		$partToMsg = function( string $value ) : string {
+			return $this->message( 'edtf-' . $value );
+		};
+
+		$outerMsg = '';
+		$portions = [];
+		foreach ( $parts as $msgKey => $parts ) {
+			if ( count( $parts ) ) {
+				$portions[] = $this->humanSeparator( array_map( $partToMsg, $parts ) )
+					. $this->message( 'edtf-parts-' . $msgKey, (string)count( $parts ) );
+				$outerMsg = $msgKey;
+			}
+		}
+
+		return $this->message( 'edtf-' . $outerMsg, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $outerMsg ) )
+			. ' (' . $this->humanSeparator( $portions ) . ')';
+	}
+
 	private function humanizeDate( ExtDate $date ): string {
 		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
-
-		if ( $date->getQualification()->isApproximate() && $date->getQualification()->uncertain() ) {
-			return $this->message( 'edtf-maybe-circa', $humanizedDate );
-		}
-
-		if ( $date->getQualification()->isApproximate() ) {
-			return $this->message(
-				'edtf-circa',
-				!$this->languageStrategy->monthUppercaseFirst() ? strtolower( $humanizedDate ) : $humanizedDate
-			);
-		}
-
-		if ( $date->getQualification()->uncertain() ) {
-			return $this->message( 'edtf-maybe', $humanizedDate );
+		
+		if ( $date->getQualification()->isUncertain() ) {		
+			return $this->composeMessage( $date, $humanizedDate );
 		}
 
 		return $humanizedDate;
