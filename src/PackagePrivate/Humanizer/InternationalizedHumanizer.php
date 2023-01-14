@@ -170,7 +170,7 @@ class InternationalizedHumanizer implements Humanizer {
 	private function humanizeDate( ExtDate $date ): string {
 		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
 		
-		if ( $date->getQualification()->isUncertain() ) {		
+		if ( !$date->getQualification()->isFullyKnown() ) {
 			return $this->composeMessage( $date, $humanizedDate );
 		}
 

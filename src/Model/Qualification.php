@@ -94,13 +94,6 @@ class Qualification {
 			&& $this->day === self::KNOWN;
 	}
 
-	public function isUncertain(): bool {
-		$approximate = [ self::UNCERTAIN, self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ];
-		return in_array( $this->year,  $approximate)
-			|| in_array( $this->month, $approximate )
-			|| in_array( $this->day, $approximate );
-	}
-
 	public function uncertain( ?string $part = null ): bool {
 		if ( !is_null( $part ) ) {
 			$this->validatePartName( $part );
