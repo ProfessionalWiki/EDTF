@@ -4,8 +4,6 @@ declare( strict_types = 1 );
 
 namespace EDTF\Model;
 
-use InvalidArgumentException;
-
 class Qualification {
 
 	public const KNOWN = 0;
@@ -32,7 +30,6 @@ class Qualification {
 	private int $month;
 	private int $day;
 
-	private array $undefinedParts = [];
 	private array $uncertainParts = [];
 	private array $approximateParts = [];
 	private array $uncertainAndApproximateParts = [];
@@ -55,7 +52,6 @@ class Qualification {
 
 			switch( $value ) {
 				case self::KNOWN:
-					$this->undefinedParts[] = $part;
 					break;
 				case self::UNCERTAIN :
 					$this->uncertainParts[] = $part;
