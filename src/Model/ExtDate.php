@@ -38,7 +38,7 @@ class ExtDate implements EdtfValue, HasPrecision {
 		$this->month = $month;
 		$this->day = $day;
 		$this->year = $this->fixedYear( $year );
-		$this->qualification = $qualification ?? new Qualification();
+		$this->qualification = $qualification ?? Qualification::newFullyKnown();
 		$this->unspecifiedDigit = $unspecified ?? $this->newUnspecifiedDigit( $year, $month, $day );
 
 		$this->datetimeFactory = new CarbonFactory();

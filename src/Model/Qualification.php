@@ -34,8 +34,15 @@ class Qualification {
 	private array $approximateParts = [];
 	private array $uncertainAndApproximateParts = [];
 
-	public function __construct( int $year = 0, int $month = 0, int $day = 0 ) {
-		// TODO: Does it make sense these constructor params are optional?
+	public static function newFullyKnown(): self {
+		return new self(
+			self::KNOWN,
+			self::KNOWN,
+			self::KNOWN
+		);
+	}
+
+	public function __construct( int $year, int $month, int $day ) {
 		$this->year = $year;
 		$this->month = $month;
 		$this->day = $day;

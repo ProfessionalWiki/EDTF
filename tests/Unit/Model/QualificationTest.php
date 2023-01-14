@@ -14,20 +14,20 @@ use PHPUnit\Framework\TestCase;
 class QualificationTest extends TestCase {
 
 	public function testUncertain(): void {
-		$q = new Qualification( Qualification::UNCERTAIN );
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
 		$this->assertTrue( $q->yearIsUncertain() );
 	}
 
 	public function testUncertainWithNullPart(): void {
-		$q = new Qualification();
+		$q = Qualification::newFullyKnown();
 		$this->assertFalse( $q->isUncertain() );
 
-		$q = new Qualification( Qualification::UNCERTAIN );
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
 		$this->assertTrue( $q->isUncertain() );
 	}
 
 	public function testApproximateWithNullPart(): void {
-		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE );
+		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE, Qualification::KNOWN );
 		$this->assertTrue( $q->isApproximate() );
 		$this->assertFalse( $q->yearIsApproximate() );
 		$this->assertTrue( $q->monthIsApproximate() );
@@ -35,7 +35,7 @@ class QualificationTest extends TestCase {
 	}
 
 	public function testUncertainAndApproximate(): void {
-		$q = new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE );
+		$q = new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::KNOWN, Qualification::KNOWN );
 		$this->assertTrue( $q->yearIsUncertain() );
 		$this->assertTrue( $q->yearIsApproximate() );
 	}
