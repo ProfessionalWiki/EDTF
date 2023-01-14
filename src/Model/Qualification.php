@@ -70,13 +70,6 @@ class Qualification {
 	/**
 	 * @return string[]
 	 */
-	public function getUndefinedParts(): array {
-		return $this->undefinedParts;
-	}
-
-	/**
-	 * @return string[]
-	 */
 	public function getUncertainParts(): array {
 		return $this->uncertainParts;
 	}
