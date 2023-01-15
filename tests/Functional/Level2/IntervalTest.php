@@ -21,10 +21,10 @@ class IntervalTest extends TestCase {
 		$start = $i->getStartDate();
 		$end = $i->getEndDate();
 
-		$this->assertTrue( $start->approximate() );
-		$this->assertTrue( $end->approximate() );
-		$this->assertTrue( $start->approximate( 'day' ) );
-		$this->assertTrue( $end->approximate( 'day' ) );
+		$this->assertTrue( $start->isApproximate() );
+		$this->assertTrue( $end->isApproximate() );
+		$this->assertTrue( $start->getQualification()->dayIsApproximate() );
+		$this->assertTrue( $end->getQualification()->dayIsApproximate() );
 	}
 
 	public function testUsingUnspecifiedPart() {

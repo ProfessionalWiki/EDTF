@@ -152,9 +152,9 @@ class Parser {
 
 		$qualification = $this->parsedData->getQualification();
 
-		$year = Qualification::UNDEFINED;
-		$month = Qualification::UNDEFINED;
-		$day = Qualification::UNDEFINED;
+		$year = Qualification::KNOWN;
+		$month = Qualification::KNOWN;
+		$day = Qualification::KNOWN;
 
 		if ( !is_null( $qualification->getYearCloseFlag() )
 			|| !is_null( $qualification->getMonthCloseFlag() )
@@ -163,7 +163,7 @@ class Parser {
 			$includeYear = false;
 			$includeMonth = false;
 			$includeDay = false;
-			$q = Qualification::UNDEFINED;
+			$q = Qualification::KNOWN;
 
 			if ( !is_null( $qualification->getYearCloseFlag() ) ) {
 				// applied only to year
@@ -274,11 +274,11 @@ class Parser {
 		$date = ( new Parser() )->createEdtf( $setValue);
 
 		if ( $date instanceof ExtDate ) {
-			if ( $date->uncertain() ) {
+			if ( $date->isUncertain() ) {
 				throw new InvalidArgumentException( 'Dates in set ranges cannot be uncertain' );
 			}
 
-			if ( $date->approximate() ) {
+			if ( $date->isApproximate() ) {
 				throw new InvalidArgumentException( 'Dates in set ranges cannot be approximate' );
 			}
 

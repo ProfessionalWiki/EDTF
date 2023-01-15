@@ -38,7 +38,7 @@ class ExtDate implements EdtfValue, HasPrecision {
 		$this->month = $month;
 		$this->day = $day;
 		$this->year = $this->fixedYear( $year );
-		$this->qualification = $qualification ?? new Qualification();
+		$this->qualification = $qualification ?? Qualification::newFullyKnown();
 		$this->unspecifiedDigit = $unspecified ?? $this->newUnspecifiedDigit( $year, $month, $day );
 
 		$this->datetimeFactory = new CarbonFactory();
@@ -251,12 +251,26 @@ class ExtDate implements EdtfValue, HasPrecision {
 		return $c->lastOfMonth()->day;
 	}
 
-	public function uncertain( ?string $part = null ): bool {
-		return $this->qualification->uncertain( $part );
+	/**
+	 * @deprecated
+	 */
+	public function uncertain(): bool {
+		return $this->isUncertain();
 	}
 
-	public function approximate( ?string $part = null ): bool {
-		return $this->qualification->approximate( $part );
+	public function isUncertain(): bool {
+		return $this->qualification->isUncertain();
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public function approximate(): bool {
+		return $this->isApproximate();
+	}
+
+	public function isApproximate(): bool {
+		return $this->qualification->isApproximate();
 	}
 
 	public function unspecified( ?string $part = null ): bool {
@@ -265,6 +279,12 @@ class ExtDate implements EdtfValue, HasPrecision {
 
 	public function getQualification(): Qualification {
 		return $this->qualification;
+	}
+
+	public function isUniformlyQualified(): bool {
+		return $this->qualification->isUniform() // 2004-06-11? and ?2004-?06-?11
+			|| ( $this->qualification->monthAndYearHaveTheSameQualification() && $this->day === null ) // 2004-06? and ?2004-?06
+			|| ( $this->month === null && $this->day === null ); // 1984?
 	}
 
 	public function getUnspecifiedDigit(): UnspecifiedDigit {

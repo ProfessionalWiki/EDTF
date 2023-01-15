@@ -7,22 +7,19 @@
 		]
 	},
 	"edtf-description": "Bibliothèque PHP pour analyser, représenter et travailler avec les dates qui suivent la spécification du Format de date / heure étendu.",
+
 	"edtf-maybe-circa": "Autour du $1 (incertain)",
 	"edtf-circa": "Autour du $1",
 	"edtf-maybe": "$1 (incertain)",
 
-	"edtf-uncertain-and-approximate": "Autour du $1",
-	"edtf-approximate": "Autour du $1",
-	"edtf-uncertain": "$1",
+	"edtf-qualified-date": "$1 ($2)",
 
-	"edtf-date-uncertain-and-approximate": " (la date est incertaine et approximative)",
-	"edtf-date-approximate": " (la date est approximative)",
-	"edtf-date-uncertain": " (la date est incertaine)",
+	"edtf-parts-uncertain": "$1 incertain",
+	"edtf-parts-approximate": "$1 approximatif",
+	"edtf-parts-uncertain-and-approximate": "$1 incertain et approximatif",
 
-	"edtf-parts-uncertain": " {{PLURAL:$1|est|sont}} incertain{{PLURAL:$1||s}}",
-	"edtf-parts-approximate": " {{PLURAL:$1|est|sont}} approximatif{{PLURAL:$1||s}}",
-	"edtf-parts-uncertain-and-approximate": " {{PLURAL:$1|est|sont}} incertain{{PLURAL:$1||s}} et approximatif{{PLURAL:$1||s}}",
-	"edtf-and": " et ",
+	"edtf-and-prefix": "et $1",
+
 	"edtf-day": "jour",
 	"edtf-month": "mois",
 	"edtf-year": "année",

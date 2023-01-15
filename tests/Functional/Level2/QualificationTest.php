@@ -10,56 +10,67 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \EDTF\PackagePrivate\Parser\Parser
  * @covers \EDTF\Model\ExtDate
+ * @covers \EDTF\Model\Qualification
  * @package EDTF\Tests\Functional
  */
 class QualificationTest extends TestCase {
 
 	use FactoryTrait;
 
-	public function testYearMonthDayUncertainAndApproximate() {
+	public function testYearMonthDayUncertainAndApproximate(): void {
 		$d = $this->createExtDate( '2004-06-11%' );
 
-		$this->assertTrue( $d->uncertain() );
-		$this->assertTrue( $d->approximate() );
+		$this->assertTrue( $d->isUncertain() );
+		$this->assertTrue( $d->isApproximate() );
 
-		$this->assertTrue( $d->uncertain( 'year' ) );
-		$this->assertTrue( $d->uncertain( 'month' ) );
-		$this->assertTrue( $d->uncertain( 'day' ) );
+		$this->assertTrue( $d->getQualification()->yearIsUncertain() );
+		$this->assertTrue( $d->getQualification()->monthIsUncertain() );
+		$this->assertTrue( $d->getQualification()->dayIsUncertain() );
 	}
 
-	public function testYearAndMonthApproximate() {
+	public function testYearAndMonthApproximate(): void {
 		$d = $this->createExtDate( '2004-06~-11' );
 
-		$this->assertTrue( $d->approximate() );
-		$this->assertTrue( $d->approximate( 'year' ) );
-		$this->assertTrue( $d->approximate( 'month' ) );
-		$this->assertFalse( $d->approximate( 'day' ) );
+		$this->assertTrue( $d->isApproximate() );
+		$this->assertTrue( $d->getQualification()->yearIsApproximate() );
+		$this->assertTrue( $d->getQualification()->monthIsApproximate() );
+		$this->assertFalse( $d->getQualification()->dayIsApproximate() );
 	}
 
-	public function testYearUncertain() {
+	public function testYearUncertain(): void {
 		$d = $this->createExtDate( '2004?-06-11' );
 
-		$this->assertTrue( $d->uncertain() );
-		$this->assertTrue( $d->uncertain( 'year' ) );
-		$this->assertFalse( $d->uncertain( 'month' ) );
-		$this->assertFalse( $d->uncertain( 'day' ) );
+		$this->assertTrue( $d->isUncertain() );
+		$this->assertTrue( $d->getQualification()->yearIsUncertain() );
+		$this->assertFalse( $d->getQualification()->monthIsUncertain() );
+		$this->assertFalse( $d->getQualification()->dayIsUncertain() );
 	}
 
-	public function testIndividualComponentWithYearAndDay() {
+	public function testIndividualComponentWithYearAndDay(): void {
 		$d = $this->createExtDate( '?2004-06-~11' );
 
-		$this->assertTrue( $d->uncertain() && $d->approximate() );
-		$this->assertTrue( $d->uncertain( 'year' ) );
-		$this->assertFalse( $d->uncertain( 'month' ) );
-		$this->assertTrue( $d->approximate( 'day' ) );
+		$this->assertTrue( $d->isUncertain() );
+		$this->assertTrue( $d->isApproximate() );
+
+		$this->assertFalse( $d->getQualification()->yearIsApproximate() );
+		$this->assertTrue( $d->getQualification()->yearIsUncertain() );
+		$this->assertFalse( $d->getQualification()->monthIsApproximate() );
+		$this->assertFalse( $d->getQualification()->monthIsUncertain() );
+		$this->assertTrue( $d->getQualification()->dayIsApproximate() );
+		$this->assertFalse( $d->getQualification()->dayIsUncertain() );
 	}
 
-	public function testIndividualComponentWithMonth() {
+	public function testIndividualComponentWithMonth(): void {
 		$d = $this->createExtDate( '2004-%06-11' );
 
-		$this->assertTrue( $d->uncertain() && $d->approximate() );
-		$this->assertFalse( $d->uncertain( 'year' ) );
-		$this->assertTrue( $d->uncertain( 'month' ) && $d->approximate( 'month' ) );
-		$this->assertFalse( $d->uncertain( 'day' ) );
+		$this->assertTrue( $d->isUncertain() );
+		$this->assertTrue( $d->isApproximate() );
+
+		$this->assertFalse( $d->getQualification()->yearIsApproximate() );
+		$this->assertFalse( $d->getQualification()->yearIsUncertain() );
+		$this->assertTrue( $d->getQualification()->monthIsApproximate() );
+		$this->assertTrue( $d->getQualification()->monthIsUncertain() );
+		$this->assertFalse( $d->getQualification()->dayIsApproximate() );
+		$this->assertFalse( $d->getQualification()->dayIsUncertain() );
 	}
 }

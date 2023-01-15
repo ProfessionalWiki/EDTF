@@ -48,19 +48,26 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Interval with unknown end' => [ '2019/', 'From 2019 to unknown' ];
 		yield 'Interval with unknown start' => [ '/2021', 'From unknown to 2021' ];
 
+		yield 'Entire full date approximate' => [ '2019-04-01~', 'Circa April 1st, 2019 (date is approximate)' ];
+		yield 'Entire full date uncertain' => [ '2019-04-01?', 'Maybe April 1st, 2019 (date is uncertain)' ];
+		yield 'Entire full date uncertain, verbose notation' => [ '?2019-?04-?01', 'Maybe April 1st, 2019 (date is uncertain)' ];
+		yield 'Entire date uncertain, without day' => [ '2023-01?', 'Maybe January 2023 (date is uncertain)' ];
+		yield 'Entire date uncertain, only day and month' => [ '?2023-?01', 'Maybe January 2023 (date is uncertain)' ];
+
+		yield 'Only day uncertain' => [ '2023-01-?14', 'January 14th, 2023 (day is uncertain)' ];
+		yield 'Only month uncertain' => [ '2023-?01-14', 'January 14th, 2023 (month is uncertain)' ];
+		yield 'Only year uncertain' => [ '?2023-01-14', 'January 14th, 2023 (year is uncertain)' ];
+		yield 'Only month approximate' => [ '2023-~01-14', 'January 14th, 2023 (month is approximate)' ];
+		yield 'Only month uncertain and approximate' => [ '2023-?01-14', 'January 14th, 2023 (month is uncertain)' ];
+
 		yield 'Year approximate' => [ '2019~', 'Circa 2019 (date is approximate)' ];
 		yield 'Year uncertain' => [ '2019?', 'Maybe 2019 (date is uncertain)' ];
 		yield 'Year uncertain approximation' => [ '2019%', 'Maybe circa 2019 (date is uncertain and approximate)' ];
 
-		yield 'mixed approximation' => [ '1985-%12-?01', 'Maybe circa December 1st, 1985 (day is uncertain and month is uncertain and approximate)' ];
+		yield 'mixed approximation' => [ '1985-%12-?01', 'December 1st, 1985 (month is uncertain and approximate, and day is uncertain)' ];
 		yield 'approximation all parts' => [ '%1985-%12-%01', 'Maybe circa December 1st, 1985 (date is uncertain and approximate)' ];
 		yield 'approximation whole date' => [ '1985-12-01%', 'Maybe circa December 1st, 1985 (date is uncertain and approximate)' ];
-		yield 'mixed approximation all' => [ '~1985-%12-?01', 'Maybe circa December 1st, 1985 (day is uncertain, year is approximate and month is uncertain and approximate)' ];
-		
-		yield 'Month approximate' => [ '2019-04~', 'Circa April 2019 (date is approximate)' ];
-		yield 'Month uncertain' => [ '2019-04?', 'Maybe April 2019 (date is uncertain)' ];
-		yield 'Day approximate' => [ '2019-04-01~', 'Circa April 1st, 2019 (date is approximate)' ];
-		yield 'Day uncertain' => [ '2019-04-01?', 'Maybe April 1st, 2019 (date is uncertain)' ];
+		yield 'mixed approximation all' => [ '~1985-%12-?01', 'December 1st, 1985 (year is approximate, month is uncertain and approximate, and day is uncertain)' ];
 
 		yield 'Time with UTC' => [ '1985-04-12T23:20:30Z', '23:20:30 UTC April 12th, 1985' ];
 		yield 'Time with local time' => [ '1985-04-12T23:20:30', '23:20:30 (local time) April 12th, 1985' ];

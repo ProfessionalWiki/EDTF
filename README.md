@@ -114,6 +114,28 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 3.0.0 - 2023-01-xx
+
+* Removed parameter of `ExtDate::uncertain`
+* Removed parameter of `ExtDate::approximate`
+* Made `Qualification` constructor arguments required
+* Deprecated `ExtDate::uncertain` in favour of `ExtDate::isUncertain`
+* Deprecated `ExtDate::approximate` in favour of `ExtDate::isApproximate`
+* Added `Qualification::newFullyKnown`
+* Added `Qualification::isFullyKnown`
+* Added `Qualification::dayIsKnown`
+* Added `Qualification::monthIsKnown`
+* Added `Qualification::yearIsKnown`
+* Added `Qualification::isUncertain`, replacing `Qualification::uncertain`
+* Added `Qualification::dayIsUncertain`
+* Added `Qualification::monthIsUncertain`
+* Added `Qualification::yearIsUncertain`
+* Added `Qualification::isApproximate`, replacing `Qualification::approximate`
+* Added `Qualification::dayIsApproximate`
+* Added `Qualification::monthIsApproximate`
+* Added `Qualification::yearIsApproximate`
+
+
 ### Version 2.0.2 - 2022-04-29
 
 * Improved translations

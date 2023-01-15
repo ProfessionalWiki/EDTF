@@ -5,7 +5,6 @@ declare( strict_types = 1 );
 namespace EDTF\Tests\Unit\Model;
 
 use EDTF\Model\Qualification;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,54 +13,84 @@ use PHPUnit\Framework\TestCase;
  */
 class QualificationTest extends TestCase {
 
-	public function testDefaultPartValueShouldBeUndefined() {
-		$q = new Qualification();
-		$this->assertTrue( $q->undefined( 'year' ) );
-		$this->assertTrue( $q->undefined( 'month' ) );
-		$this->assertTrue( $q->undefined( 'day' ) );
+	public function testUncertain(): void {
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
+		$this->assertTrue( $q->yearIsUncertain() );
 	}
 
-	public function testUncertainThrowsExceptionOnInvalidPart() {
-		$this->expectException( InvalidArgumentException::class );
-		$q = new Qualification( Qualification::UNCERTAIN );
-		$q->uncertain( 'foo' );
+	public function testUncertainWithNullPart(): void {
+		$q = Qualification::newFullyKnown();
+		$this->assertFalse( $q->isUncertain() );
+
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
+		$this->assertTrue( $q->isUncertain() );
 	}
 
-	public function testUncertain() {
-		$q = new Qualification( Qualification::UNCERTAIN );
-		$this->assertTrue( $q->uncertain( 'year' ) );
+	public function testApproximateWithNullPart(): void {
+		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE, Qualification::KNOWN );
+		$this->assertTrue( $q->isApproximate() );
+		$this->assertFalse( $q->yearIsApproximate() );
+		$this->assertTrue( $q->monthIsApproximate() );
+		$this->assertFalse( $q->dayIsApproximate() );
 	}
 
-	public function testUncertainWithNullPart() {
-		$q = new Qualification();
-		$this->assertFalse( $q->uncertain() );
-
-		$q = new Qualification( Qualification::UNCERTAIN );
-		$this->assertTrue( $q->uncertain() );
+	public function testUncertainAndApproximate(): void {
+		$q = new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::KNOWN, Qualification::KNOWN );
+		$this->assertTrue( $q->yearIsUncertain() );
+		$this->assertTrue( $q->yearIsApproximate() );
 	}
 
-	public function testApproximate() {
-		$q = new Qualification( Qualification::APPROXIMATE );
-		$this->assertTrue( $q->approximate( 'year' ) );
+	public function testIsFullyKnown(): void {
+		$qualification = new Qualification(
+			Qualification::KNOWN,
+			Qualification::KNOWN,
+			Qualification::KNOWN
+		);
+
+		$this->assertTrue( $qualification->isFullyKnown() );
 	}
 
-	public function testApproximateWithNullPart() {
-		$q = new Qualification( Qualification::UNDEFINED, Qualification::APPROXIMATE );
-		$this->assertTrue( $q->approximate() );
-		$this->assertFalse( $q->approximate( 'year' ) );
-		$this->assertTrue( $q->approximate( 'month' ) );
-		$this->assertFalse( $q->approximate( 'day' ) );
+	/**
+	 * @dataProvider notFullyKnownProvider
+	 */
+	public function testIsNotFullyKnown( Qualification $qualification ): void {
+		$this->assertFalse( $qualification->isFullyKnown() );
 	}
 
-	public function testApproximateThrowExceptionOnInvalidPart() {
-		$this->expectException( InvalidArgumentException::class );
-		$q = new Qualification( Qualification::APPROXIMATE );
-		$q->uncertain( 'foo' );
+	public function notFullyKnownProvider(): iterable {
+		yield [
+			new Qualification(
+				Qualification::UNCERTAIN,
+				Qualification::KNOWN,
+				Qualification::KNOWN
+			)
+		];
+
+		yield [
+			new Qualification(
+				Qualification::KNOWN,
+				Qualification::APPROXIMATE,
+				Qualification::KNOWN
+			)
+		];
+
+		yield [
+			new Qualification(
+				Qualification::KNOWN,
+				Qualification::KNOWN,
+				Qualification::UNCERTAIN_AND_APPROXIMATE
+			)
+		];
 	}
 
-	public function testUncertainAndApproximate() {
-		$q = new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE );
-		$this->assertTrue( $q->uncertain( 'year' ) );
-		$this->assertTrue( $q->approximate( 'year' ) );
+	public function testConstructorThrowsOnInvalidQualification(): void {
+		$this->expectException( \InvalidArgumentException::class );
+
+		new Qualification(
+			Qualification::KNOWN,
+			500,
+			Qualification::KNOWN
+		);
 	}
+
 }

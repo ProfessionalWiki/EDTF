@@ -92,89 +92,117 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
+	private function humanizeDate( ExtDate $date ): string {
+		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
+
+		if ( !$date->getQualification()->isFullyKnown() ) {
+			return $this->humanizeQualifiedDate( $date, $humanizedDate );
+		}
+
+		return $humanizedDate;
+	}
+
+	private function humanizeQualifiedDate( ExtDate $date, string $humanizedDate ): string {
+		if ( $date->isUniformlyQualified() ) {
+			return $this->message(
+				$this->getUniformQualificationMessageKey( $date->getQualification() ),
+				$humanizedDate
+			);
+		}
+
+		return $this->message(
+			'edtf-qualified-date',
+			$humanizedDate,
+			$this->buildQualificationMessage( $date->getQualification() )
+		);
+	}
+
+	private function getUniformQualificationMessageKey( Qualification $qualification ): string {
+		if ( $qualification->isApproximate() && $qualification->isUncertain() ) {
+			return 'edtf-maybe-circa';
+		}
+
+		if ( $qualification->isUncertain() ) {
+			return 'edtf-maybe';
+		}
+
+		return 'edtf-circa';
+	}
+
+	private function buildQualificationMessage( Qualification $qualification ): string {
+		$qualificationMessages = [];
+
+		if ( !$qualification->yearIsKnown() ) {
+			$qualificationMessages[] = $this->message(
+				$this->getYearQualificationMessageKey( $qualification ),
+				$this->message( 'edtf-year' )
+			);
+		}
+
+		if ( !$qualification->monthIsKnown() ) {
+			$qualificationMessages[] = $this->message(
+				$this->getMonthQualificationMessageKey( $qualification ),
+				$this->message( 'edtf-month' )
+			);
+		}
+
+		if ( !$qualification->dayIsKnown() ) {
+			$qualificationMessages[] = $this->message(
+				$this->getDayQualificationMessageKey( $qualification ),
+				$this->message( 'edtf-day' )
+			);
+		}
+
+		return $this->humanSeparator( $qualificationMessages );
+	}
+
+	private function getYearQualificationMessageKey( Qualification $qualification ): string {
+		if ( $qualification->yearIsApproximate() && $qualification->yearIsUncertain() ) {
+			return 'edtf-parts-uncertain-and-approximate';
+		}
+
+		if ( $qualification->yearIsApproximate() ) {
+			return 'edtf-parts-approximate';
+		}
+
+		return 'edtf-parts-uncertain';
+	}
+
+	private function getMonthQualificationMessageKey( Qualification $qualification ): string {
+		if ( $qualification->monthIsApproximate() && $qualification->monthIsUncertain() ) {
+			return 'edtf-parts-uncertain-and-approximate';
+		}
+
+		if ( $qualification->monthIsApproximate() ) {
+			return 'edtf-parts-approximate';
+		}
+
+		return 'edtf-parts-uncertain';
+	}
+
+	private function getDayQualificationMessageKey( Qualification $qualification ): string {
+		if ( $qualification->dayIsApproximate() && $qualification->dayIsUncertain() ) {
+			return 'edtf-parts-uncertain-and-approximate';
+		}
+
+		if ( $qualification->dayIsApproximate() ) {
+			return 'edtf-parts-approximate';
+		}
+
+		return 'edtf-parts-uncertain';
+	}
+
 	/**
 	 * @param string[] $parts
 	 */
 	private function humanSeparator( array $parts ) : string {
-		if ( !count( $parts ) ) {
-			return "";
-		}
-
 		if ( count( $parts ) === 1 ) {
 			return current( $parts );
 		}
 
-		$last = array_pop( $parts );
-		return implode( ', ', $parts ) . $this->message( 'edtf-and' ) . $last;
-	}
+		$parts[] = $this->message( 'edtf-and-prefix',  array_pop( $parts ) );
 
-	private function humanizedDateByMessage( string $humanizedDate, string $msgKey ) : string {
-		if ( $this->languageStrategy->monthUppercaseFirst()
-			|| strpos( $this->message( $msgKey ), '$' ) === 0 ) {
-			return $humanizedDate;
-		}
-		
-		return strtolower( $humanizedDate );
-	}
-
-	private function composeMessage( ExtDate $date, string $humanizedDate ) : string {
-		$qualification = $date->getQualification();
-
-		$parts = [
-			'uncertain' => $qualification->getUncertainParts(),
-			'approximate' => $qualification->getApproximateParts(),
-			'uncertain-and-approximate' => $qualification->getUncertainAndApproximateParts(),
-		];
-
-		// this data-structure, together with the loop below
-		// cannot be moved to the Qualification class since
-		// Qualification::UNDEFINED does NOT return the parts
-		// of the date that are NULL. So where this is not
-		// suitable to the Qualification class (i.e. it does
-		// not fit the purpose of that class) some of the logic
-		// in this method could be moved to the ExtDate class itself
-			
-		$undefinedParts = array_filter( [
-			$date->getDay() === NULL,
-			$date->getMonth() === NULL,
-			$date->getYear() === NULL
-		] );
-
-		// check if whole date is uncertain, approximate, or uncertain and approximate
-		foreach ( $parts as $msgKey => $uncertainty ) {
-			if ( count( $undefinedParts ) + count( $uncertainty ) === 3 ) {
-				return $this->message( 'edtf-' . $msgKey, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $msgKey ) )
-					. $this->message( 'edtf-date-' . $msgKey, $humanizedDate );
-			}
-		}
-
-		// 'edtf-day', 'edtf-month','edtf-year'
-		$partToMsg = function( string $value ) : string {
-			return $this->message( 'edtf-' . $value );
-		};
-
-		$outerMsg = '';
-		$portions = [];
-		foreach ( $parts as $msgKey => $parts ) {
-			if ( count( $parts ) ) {
-				$portions[] = $this->humanSeparator( array_map( $partToMsg, $parts ) )
-					. $this->message( 'edtf-parts-' . $msgKey, (string)count( $parts ) );
-				$outerMsg = $msgKey;
-			}
-		}
-
-		return $this->message( 'edtf-' . $outerMsg, $this->humanizedDateByMessage( $humanizedDate, 'edtf-' . $outerMsg ) )
-			. ' (' . $this->humanSeparator( $portions ) . ')';
-	}
-
-	private function humanizeDate( ExtDate $date ): string {
-		$humanizedDate = $this->humanizeDateWithoutUncertainty( $date );
-		
-		if ( $date->getQualification()->isUncertain() ) {		
-			return $this->composeMessage( $date, $humanizedDate );
-		}
-
-		return $humanizedDate;
+		return implode( ', ', $parts );
 	}
 
 	private function message( string $key, string ...$parameters ): string {
@@ -315,4 +343,5 @@ class InternationalizedHumanizer implements Humanizer {
 			. (string)floor( abs( $offsetInMinutes ) / 60 )
 			. ( $offsetInMinutes % 60 === 0 ? '' : sprintf( ":%02d", abs( $offsetInMinutes ) % 60 ) );
 	}
+
 }

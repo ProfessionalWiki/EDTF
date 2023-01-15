@@ -170,34 +170,35 @@ class InternationalizedHumanizerTest extends TestCase {
 	}
 
 	public function testYearCirca(): void {
-		$yearCirca = new ExtDate( 1987, null, null, new Qualification( Qualification::APPROXIMATE ) );
+		$yearCirca = new ExtDate( 1987, null, null, new Qualification( Qualification::APPROXIMATE, Qualification::KNOWN, Qualification::KNOWN ) );
 		$this->humanizer->humanize( $yearCirca );
-		$this->assertBuilderWasCalledWith( 'edtf-approximate' );
-		$this->assertBuilderWasCalledWith( 'edtf-date-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-circa' );
 	}
 
 	public function testFullDateCirca(): void {
-		$dateCirca = new ExtDate( 1654, 12, 12, new Qualification( 0, 0, Qualification::APPROXIMATE ) );
+		$dateCirca = new ExtDate( 1654, 12, 12, new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::APPROXIMATE ) );
 		$this->humanizer->humanize( $dateCirca );
 		$this->assertBuilderWasCalledWith( 'edtf-december' );
-		$this->assertBuilderWasCalledWith( 'edtf-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-day' );
+		$this->assertBuilderWasCalledWith( 'edtf-parts-approximate' );
 		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
 	}
 
 	public function testUncertain(): void {
-		$uncertainDate = new ExtDate( 1800, 5, 29, new Qualification( 0, 0, Qualification::UNCERTAIN ) );
+		$uncertainDate = new ExtDate( 1800, 5, 29, new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::UNCERTAIN ) );
 		$this->humanizer->humanize( $uncertainDate );
-		$this->assertBuilderWasCalledWith( 'edtf-uncertain' );
+		$this->assertBuilderWasCalledWith( 'edtf-parts-uncertain' );
+		$this->assertBuilderWasCalledWith( 'edtf-day' );
 		$this->assertBuilderWasCalledWith( 'edtf-may' );
 		$this->assertBuilderWasCalledWith( 'edtf-full-date' );
 	}
 
 	public function testUncertainAndApproximate(): void {
 		$uncertainDate = new ExtDate(
-			1700, 4, 29, new Qualification( 0, 0, Qualification::UNCERTAIN_AND_APPROXIMATE )
+			1700, 4, 29, new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::UNCERTAIN_AND_APPROXIMATE )
 		);
 		$this->humanizer->humanize( $uncertainDate );
-		$this->assertBuilderWasCalledWith( 'edtf-uncertain-and-approximate' );
+		$this->assertBuilderWasCalledWith( 'edtf-day' );
 		$this->assertBuilderWasCalledWith( 'edtf-parts-uncertain-and-approximate' );
 		$this->assertBuilderWasCalledWith( 'edtf-april' );
 		$this->assertBuilderWasCalledWith( 'edtf-full-date' );

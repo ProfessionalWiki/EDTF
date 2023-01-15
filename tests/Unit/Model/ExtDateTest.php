@@ -94,37 +94,43 @@ class ExtDateTest extends TestCase {
 	}
 
 	public function testShouldProvideUncertainInfo(): void {
-		$q = new Qualification( Qualification::UNCERTAIN );
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
 		$d = new ExtDate( null, null, null, $q );
 
+		$this->assertTrue( $d->isUncertain() );
 		$this->assertTrue( $d->uncertain() );
-		$this->assertTrue( $d->uncertain( 'year' ) );
-		$this->assertFalse( $d->uncertain( 'month' ) );
-		$this->assertFalse( $d->uncertain( 'day' ) );
+
+		$this->assertTrue( $d->getQualification()->yearIsUncertain() );
+		$this->assertFalse( $d->getQualification()->monthIsUncertain() );
+		$this->assertFalse( $d->getQualification()->dayIsUncertain() );
 	}
 
 	public function testShouldProvideApproximateInfo(): void {
-		$q = new Qualification( Qualification::UNDEFINED, Qualification::APPROXIMATE );
+		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE, Qualification::KNOWN );
 		$d = new ExtDate( null, null, null, $q );
 
+		$this->assertTrue( $d->isApproximate() );
 		$this->assertTrue( $d->approximate() );
-		$this->assertFalse( $d->approximate( 'year' ) );
-		$this->assertTrue( $d->approximate( 'month' ) );
-		$this->assertFalse( $d->approximate( 'day' ) );
+
+		$this->assertFalse( $d->getQualification()->yearIsApproximate() );
+		$this->assertTrue( $d->getQualification()->monthIsApproximate() );
+		$this->assertFalse( $d->getQualification()->dayIsApproximate() );
 	}
 
 	public function testShouldProvideUncertainAndApproximateInfo(): void {
 		$q = new Qualification(
-			Qualification::UNDEFINED,
-			Qualification::UNDEFINED,
+			Qualification::KNOWN,
+			Qualification::KNOWN,
 			Qualification::UNCERTAIN_AND_APPROXIMATE
 		);
 		$d = new ExtDate( null, null, null, $q );
 
-		$this->assertTrue( $d->uncertain() && $d->approximate() );
-		$this->assertFalse( $d->uncertain( 'year' ) );
-		$this->assertFalse( $d->uncertain( 'month' ) );
-		$this->assertTrue( $d->uncertain( 'day' ) && $d->approximate( 'day' ) );
+		$this->assertTrue( $d->isUncertain() );
+		$this->assertTrue( $d->isApproximate() );
+		$this->assertFalse( $d->getQualification()->yearIsUncertain() );
+		$this->assertFalse( $d->getQualification()->monthIsUncertain() );
+		$this->assertTrue( $d->getQualification()->dayIsUncertain() );
+		$this->assertTrue( $d->getQualification()->dayIsApproximate() );
 	}
 
 	public function testNegativeYear(): void {
@@ -221,12 +227,120 @@ class ExtDateTest extends TestCase {
 				new ExtDate(
 					1987, 10, 1,
 					new Qualification(
-						Qualification::UNDEFINED,
-						Qualification::APPROXIMATE
+						Qualification::KNOWN,
+						Qualification::APPROXIMATE,
+						Qualification::KNOWN
 					)
 				),
 				'1987-10-01'
 			],
 		];
 	}
+
+	/**
+	 * @dataProvider uniformQualificationProvider
+	 */
+	public function testIsUniformlyQualified( ExtDate $date ): void {
+		$this->assertTrue( $date->isUniformlyQualified() );
+	}
+
+	public function uniformQualificationProvider(): iterable {
+		yield [
+			new ExtDate( 1987, 10, 1 )
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, null, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, null, null,
+				new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::KNOWN )
+			)
+		];
+	}
+
+	/**
+	 * @dataProvider mixedQualificationProvider
+	 */
+	public function testIsNotUniformlyQualified( ExtDate $date ): void {
+		$this->assertFalse( $date->isUniformlyQualified() );
+	}
+
+	public function mixedQualificationProvider(): iterable {
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::APPROXIMATE, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::APPROXIMATE, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::APPROXIMATE )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::KNOWN, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, 1,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN )
+			)
+		];
+
+		yield [
+			new ExtDate(
+				1987, 10, null,
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::KNOWN )
+			)
+		];
+	}
+
 }
