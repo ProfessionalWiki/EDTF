@@ -217,7 +217,7 @@ class InternationalizedHumanizer implements Humanizer {
 		if ( $year !== null ) {
 			$year = $this->humanizeYear(
 				$year,
-				$date->getUnspecifiedDigit()
+				$date
 			);
 		}
 
@@ -247,7 +247,17 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
-	private function humanizeYear( int $year, UnspecifiedDigit $unspecifiedDigit ): string {
+	private function humanizeYear( int $year, ExtDate $date ): string {
+		$unspecifiedDigit = $date->getUnspecifiedDigit();
+
+		// *** if the expression $date->getDay() === null && $date->getMonth() === null
+		// is superfluous as it seems the function can be restored to its
+		// original declaration ( int $year, UnspecifiedDigit $unspecifiedDigit )
+
+		if ( $unspecifiedDigit->getYear() === 4 && $date->getDay() === null && $date->getMonth() === null ) {
+			return $this->message( 'edtf-year-unspecified' );
+		}
+
 		$yearStr = (string)abs( $year );
 
 		if ( $year <= -1000 ) {
