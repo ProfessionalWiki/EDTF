@@ -3,13 +3,20 @@
 		"authors": [
 			"Danieldegroot2",
 			"DigitaalWerktuig",
-			"Martsniez"
+			"Martsniez",
+			"McDutchie"
 		]
 	},
 	"edtf-description": "PHP bibliotheek om data te interpreteren, presenteren en te verwerken dat de Extended Date/Time formaat specificatie volgt.",
 	"edtf-maybe-circa": "mogelijk circa $1",
 	"edtf-circa": "circa $1",
 	"edtf-maybe": "mogelijk $1",
+	"edtf-parts-uncertain": " {{PLURAL:$1|is|zijn}} onzeker",
+	"edtf-parts-approximate": " {{PLURAL:$1|is|zijn}} bij benadering",
+	"edtf-parts-uncertain-and-approximate": " {{PLURAL:$1|is|zijn}} onzeker en bij benadering",
+	"edtf-day": "dag",
+	"edtf-month": "maand",
+	"edtf-year": "jaar",
 	"edtf-spring": "lente",
 	"edtf-summer": "zomer",
 	"edtf-autumn": "herfst",

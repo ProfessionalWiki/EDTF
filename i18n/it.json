@@ -5,6 +5,11 @@
 			"Toa"
 		]
 	},
+	"edtf-maybe": "Forse $1 (la data è incerta)",
+	"edtf-and-prefix": "e $1",
+	"edtf-day": "giorno",
+	"edtf-month": "mese",
+	"edtf-year": "anno",
 	"edtf-spring": "Primavera",
 	"edtf-summer": "Estate",
 	"edtf-autumn": "Autunno",

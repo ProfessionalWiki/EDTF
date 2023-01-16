@@ -1,10 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"MathXplore",
 			"Tamaki Wakita"
 		]
 	},
 	"edtf-maybe": "もしかして$1",
+	"edtf-day": "日",
+	"edtf-month": "月",
+	"edtf-year": "年",
 	"edtf-spring": "春",
 	"edtf-summer": "夏",
 	"edtf-autumn": "秋",

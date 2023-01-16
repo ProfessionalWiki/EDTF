@@ -6,6 +6,11 @@
 			"Rivka Silinsky"
 		]
 	},
+	"edtf-maybe": "Может быть, $1 (дата неизвестна)",
+	"edtf-and-prefix": "и $1",
+	"edtf-day": "день",
+	"edtf-month": "месяц",
+	"edtf-year": "год",
 	"edtf-spring": "Весна",
 	"edtf-summer": "Лето",
 	"edtf-autumn": "Осень",

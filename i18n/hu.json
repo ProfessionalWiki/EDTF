@@ -1,11 +1,21 @@
 {
 	"@metadata": {
 		"authors": [
+			"Eukarióta",
 			"Hanna Tardos",
 			"Luckylukee81"
 		]
 	},
-	"edtf-maybe": "Talán $1",
+	"edtf-circa": "$1 körül (a dátum hozzávetőleges)",
+	"edtf-maybe": "Talán $1 (a dátum ismeretlen)",
+	"edtf-qualified-date": "$1 ($2)",
+	"edtf-parts-uncertain": "$1 bizonytalan",
+	"edtf-parts-approximate": "$1 hozzávetőleges",
+	"edtf-parts-uncertain-and-approximate": "$1 bizonytalan, hozzávetőleges",
+	"edtf-and-prefix": "és $1",
+	"edtf-day": "nap",
+	"edtf-month": "hónap",
+	"edtf-year": "év",
 	"edtf-spring": "Tavasz",
 	"edtf-summer": "Nyár",
 	"edtf-autumn": "Ősz",

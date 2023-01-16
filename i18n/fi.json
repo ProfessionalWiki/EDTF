@@ -2,10 +2,17 @@
 	"@metadata": {
 		"authors": [
 			"Joquliina",
-			"Mediawikitranslator"
+			"Mediawikitranslator",
+			"Nike"
 		]
 	},
 	"edtf-maybe": "Ehkä $1",
+	"edtf-parts-uncertain": "{{PLURAL:$1|on epävarma|ovat epävarmoja}}",
+	"edtf-parts-approximate": "{{PLURAL:$1|on likimääräinen|ovat likimääräisiä}}",
+	"edtf-parts-uncertain-and-approximate": "{{PLURAL:$1|on epävarma ja likimääräinen|ovat epävarmoja ja likimääräisiä}}",
+	"edtf-day": "päivä",
+	"edtf-month": "kuukausi",
+	"edtf-year": "vuosi",
 	"edtf-spring": "Kevät",
 	"edtf-summer": "Kesä",
 	"edtf-autumn": "Syksy",
