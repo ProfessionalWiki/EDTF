@@ -17,6 +17,8 @@
 	"edtf-month": "month",
 	"edtf-year": "year",
 
+	"edtf-year-unspecified": "some year",
+
 	"edtf-spring": "Spring",
 	"edtf-summer": "Summer",
 	"edtf-autumn": "Autumn",
