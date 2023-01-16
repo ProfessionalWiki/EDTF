@@ -33,6 +33,10 @@ class EnglishHumanizationTest extends TestCase {
 
 		yield 'Month only' => [ 'XXXX-12-XX', 'December' ];
 		yield 'Day only' => [ 'XXXX-XX-12', '12th' ];
+		
+		// https://github.com/ProfessionalWiki/EDTF/issues/80
+		yield 'Some year' => [ 'XXXX', 'some year' ];
+
 		yield 'Month and day' => [ 'XXXX-12-11', 'December 11th' ];
 		yield 'Year and day' => [ '2020-XX-11', '11th of unknown month, 2020' ];
 		yield 'Unspecified year decade' => [ '197X', '1970s' ];
