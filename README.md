@@ -116,9 +116,22 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ### Version 3.0.0 - 2023-01-xx
 
+Functional changes:
+
+* Improved humanization of uncertain and approximate dates
+* Improved capitalization in humanization, especially for French
+* Various translation updates from TranslateWiki, improving humanization for many languages
+* Added support for pluralization in humanization, for use by TranslateWiki
+
+Breaking API changes:
+
 * Removed parameter of `ExtDate::uncertain`
 * Removed parameter of `ExtDate::approximate`
+* Renamed `FrenchStrategy` to `DefaultStrategy`
 * Made `Qualification` constructor arguments required
+
+Further API changes:
+
 * Deprecated `ExtDate::uncertain` in favour of `ExtDate::isUncertain`
 * Deprecated `ExtDate::approximate` in favour of `ExtDate::isApproximate`
 * Added `Qualification::newFullyKnown`
