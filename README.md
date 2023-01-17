@@ -147,6 +147,9 @@ Further API changes:
 * Added `Qualification::dayIsApproximate`
 * Added `Qualification::monthIsApproximate`
 * Added `Qualification::yearIsApproximate`
+* Added `Qualification::isUniform`
+* Added `Qualification::monthAndYearHaveTheSameQualification`
+* Added `ExtDate::isUniformlyQualified`
 
 
 ### Version 2.0.2 - 2022-04-29

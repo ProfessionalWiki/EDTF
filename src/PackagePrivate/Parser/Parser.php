@@ -152,9 +152,9 @@ class Parser {
 
 		$qualification = $this->parsedData->getQualification();
 
-		$year = Qualification::KNOWN;
-		$month = Qualification::KNOWN;
-		$day = Qualification::KNOWN;
+		$year = Qualification::UNDEFINED;
+		$month = Qualification::UNDEFINED;
+		$day = Qualification::UNDEFINED;
 
 		if ( !is_null( $qualification->getYearCloseFlag() )
 			|| !is_null( $qualification->getMonthCloseFlag() )
@@ -163,7 +163,7 @@ class Parser {
 			$includeYear = false;
 			$includeMonth = false;
 			$includeDay = false;
-			$q = Qualification::KNOWN;
+			$q = Qualification::UNDEFINED;
 
 			if ( !is_null( $qualification->getYearCloseFlag() ) ) {
 				// applied only to year

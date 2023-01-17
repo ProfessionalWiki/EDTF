@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 class QualificationTest extends TestCase {
 
 	public function testUncertain(): void {
-		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::UNDEFINED, Qualification::UNDEFINED );
 		$this->assertTrue( $q->yearIsUncertain() );
 	}
 
@@ -22,12 +22,12 @@ class QualificationTest extends TestCase {
 		$q = Qualification::newFullyKnown();
 		$this->assertFalse( $q->isUncertain() );
 
-		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::UNDEFINED, Qualification::UNDEFINED );
 		$this->assertTrue( $q->isUncertain() );
 	}
 
 	public function testApproximateWithNullPart(): void {
-		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE, Qualification::KNOWN );
+		$q = new Qualification( Qualification::UNDEFINED, Qualification::APPROXIMATE, Qualification::UNDEFINED );
 		$this->assertTrue( $q->isApproximate() );
 		$this->assertFalse( $q->yearIsApproximate() );
 		$this->assertTrue( $q->monthIsApproximate() );
@@ -35,16 +35,16 @@ class QualificationTest extends TestCase {
 	}
 
 	public function testUncertainAndApproximate(): void {
-		$q = new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::KNOWN, Qualification::KNOWN );
+		$q = new Qualification( Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::UNDEFINED, Qualification::UNDEFINED );
 		$this->assertTrue( $q->yearIsUncertain() );
 		$this->assertTrue( $q->yearIsApproximate() );
 	}
 
 	public function testIsFullyKnown(): void {
 		$qualification = new Qualification(
-			Qualification::KNOWN,
-			Qualification::KNOWN,
-			Qualification::KNOWN
+			Qualification::UNDEFINED,
+			Qualification::UNDEFINED,
+			Qualification::UNDEFINED
 		);
 
 		$this->assertTrue( $qualification->isFullyKnown() );
@@ -61,23 +61,23 @@ class QualificationTest extends TestCase {
 		yield [
 			new Qualification(
 				Qualification::UNCERTAIN,
-				Qualification::KNOWN,
-				Qualification::KNOWN
+				Qualification::UNDEFINED,
+				Qualification::UNDEFINED
 			)
 		];
 
 		yield [
 			new Qualification(
-				Qualification::KNOWN,
+				Qualification::UNDEFINED,
 				Qualification::APPROXIMATE,
-				Qualification::KNOWN
+				Qualification::UNDEFINED
 			)
 		];
 
 		yield [
 			new Qualification(
-				Qualification::KNOWN,
-				Qualification::KNOWN,
+				Qualification::UNDEFINED,
+				Qualification::UNDEFINED,
 				Qualification::UNCERTAIN_AND_APPROXIMATE
 			)
 		];
@@ -87,9 +87,9 @@ class QualificationTest extends TestCase {
 		$this->expectException( \InvalidArgumentException::class );
 
 		new Qualification(
-			Qualification::KNOWN,
+			Qualification::UNDEFINED,
 			500,
-			Qualification::KNOWN
+			Qualification::UNDEFINED
 		);
 	}
 

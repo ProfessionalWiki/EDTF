@@ -6,7 +6,11 @@ namespace EDTF\Model;
 
 class Qualification {
 
-	public const KNOWN = 0;
+	/**
+	 * Means there is no qualification. So either the part
+	 * of the date is provided and KNOWN, or it is not provided.
+	 */
+	public const UNDEFINED = 0;
 
 	/**
 	 * Determines if a date part qualification is uncertain,
@@ -32,9 +36,9 @@ class Qualification {
 
 	public static function newFullyKnown(): self {
 		return new self(
-			self::KNOWN,
-			self::KNOWN,
-			self::KNOWN
+			self::UNDEFINED,
+			self::UNDEFINED,
+			self::UNDEFINED
 		);
 	}
 
@@ -49,27 +53,27 @@ class Qualification {
 	}
 
 	private function assertIsQualification( int $i ): void {
-		if ( !in_array( $i, [ self::KNOWN, self::UNCERTAIN, self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] ) ) {
+		if ( !in_array( $i, [ self::UNDEFINED, self::UNCERTAIN, self::APPROXIMATE, self::UNCERTAIN_AND_APPROXIMATE ] ) ) {
 			throw new \InvalidArgumentException( 'Invalid qualification' );
 		}
 	}
 
 	public function isFullyKnown(): bool {
-		return $this->year === self::KNOWN
-			&& $this->month === self::KNOWN
-			&& $this->day === self::KNOWN;
+		return $this->year === self::UNDEFINED
+			&& $this->month === self::UNDEFINED
+			&& $this->day === self::UNDEFINED;
 	}
 
 	public function yearIsKnown(): bool {
-		return $this->year === self::KNOWN;
+		return $this->year === self::UNDEFINED;
 	}
 
 	public function monthIsKnown(): bool {
-		return $this->month === self::KNOWN;
+		return $this->month === self::UNDEFINED;
 	}
 
 	public function dayIsKnown(): bool {
-		return $this->day === self::KNOWN;
+		return $this->day === self::UNDEFINED;
 	}
 
 	public function isUniform(): bool {

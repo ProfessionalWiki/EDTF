@@ -94,7 +94,7 @@ class ExtDateTest extends TestCase {
 	}
 
 	public function testShouldProvideUncertainInfo(): void {
-		$q = new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN );
+		$q = new Qualification( Qualification::UNCERTAIN, Qualification::UNDEFINED, Qualification::UNDEFINED );
 		$d = new ExtDate( null, null, null, $q );
 
 		$this->assertTrue( $d->isUncertain() );
@@ -106,7 +106,7 @@ class ExtDateTest extends TestCase {
 	}
 
 	public function testShouldProvideApproximateInfo(): void {
-		$q = new Qualification( Qualification::KNOWN, Qualification::APPROXIMATE, Qualification::KNOWN );
+		$q = new Qualification( Qualification::UNDEFINED, Qualification::APPROXIMATE, Qualification::UNDEFINED );
 		$d = new ExtDate( null, null, null, $q );
 
 		$this->assertTrue( $d->isApproximate() );
@@ -119,8 +119,8 @@ class ExtDateTest extends TestCase {
 
 	public function testShouldProvideUncertainAndApproximateInfo(): void {
 		$q = new Qualification(
-			Qualification::KNOWN,
-			Qualification::KNOWN,
+			Qualification::UNDEFINED,
+			Qualification::UNDEFINED,
 			Qualification::UNCERTAIN_AND_APPROXIMATE
 		);
 		$d = new ExtDate( null, null, null, $q );
@@ -227,9 +227,9 @@ class ExtDateTest extends TestCase {
 				new ExtDate(
 					1987, 10, 1,
 					new Qualification(
-						Qualification::KNOWN,
+						Qualification::UNDEFINED,
 						Qualification::APPROXIMATE,
-						Qualification::KNOWN
+						Qualification::UNDEFINED
 					)
 				),
 				'1987-10-01'
@@ -259,21 +259,21 @@ class ExtDateTest extends TestCase {
 		yield [
 			new ExtDate(
 				1987, 10, null,
-				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::KNOWN )
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::UNDEFINED )
 			)
 		];
 
 		yield [
 			new ExtDate(
 				1987, null, null,
-				new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN )
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNDEFINED, Qualification::UNDEFINED )
 			)
 		];
 
 		yield [
 			new ExtDate(
 				1987, null, null,
-				new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::KNOWN )
+				new Qualification( Qualification::UNDEFINED, Qualification::UNDEFINED, Qualification::UNDEFINED )
 			)
 		];
 	}
@@ -317,28 +317,28 @@ class ExtDateTest extends TestCase {
 		yield [
 			new ExtDate(
 				1987, 10, 1,
-				new Qualification( Qualification::KNOWN, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
+				new Qualification( Qualification::UNDEFINED, Qualification::UNCERTAIN, Qualification::UNCERTAIN )
 			)
 		];
 
 		yield [
 			new ExtDate(
 				1987, 10, 1,
-				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::KNOWN )
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN, Qualification::UNDEFINED )
 			)
 		];
 
 		yield [
 			new ExtDate(
 				1987, 10, null,
-				new Qualification( Qualification::UNCERTAIN, Qualification::KNOWN, Qualification::KNOWN )
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNDEFINED, Qualification::UNDEFINED )
 			)
 		];
 
 		yield [
 			new ExtDate(
 				1987, 10, null,
-				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::KNOWN )
+				new Qualification( Qualification::UNCERTAIN, Qualification::UNCERTAIN_AND_APPROXIMATE, Qualification::UNDEFINED )
 			)
 		];
 	}

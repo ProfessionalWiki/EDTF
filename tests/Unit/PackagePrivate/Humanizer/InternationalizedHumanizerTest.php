@@ -170,13 +170,13 @@ class InternationalizedHumanizerTest extends TestCase {
 	}
 
 	public function testYearCirca(): void {
-		$yearCirca = new ExtDate( 1987, null, null, new Qualification( Qualification::APPROXIMATE, Qualification::KNOWN, Qualification::KNOWN ) );
+		$yearCirca = new ExtDate( 1987, null, null, new Qualification( Qualification::APPROXIMATE, Qualification::UNDEFINED, Qualification::UNDEFINED ) );
 		$this->humanizer->humanize( $yearCirca );
 		$this->assertBuilderWasCalledWith( 'edtf-circa' );
 	}
 
 	public function testFullDateCirca(): void {
-		$dateCirca = new ExtDate( 1654, 12, 12, new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::APPROXIMATE ) );
+		$dateCirca = new ExtDate( 1654, 12, 12, new Qualification( Qualification::UNDEFINED, Qualification::UNDEFINED, Qualification::APPROXIMATE ) );
 		$this->humanizer->humanize( $dateCirca );
 		$this->assertBuilderWasCalledWith( 'edtf-december' );
 		$this->assertBuilderWasCalledWith( 'edtf-day' );
@@ -185,7 +185,7 @@ class InternationalizedHumanizerTest extends TestCase {
 	}
 
 	public function testUncertain(): void {
-		$uncertainDate = new ExtDate( 1800, 5, 29, new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::UNCERTAIN ) );
+		$uncertainDate = new ExtDate( 1800, 5, 29, new Qualification( Qualification::UNDEFINED, Qualification::UNDEFINED, Qualification::UNCERTAIN ) );
 		$this->humanizer->humanize( $uncertainDate );
 		$this->assertBuilderWasCalledWith( 'edtf-parts-uncertain' );
 		$this->assertBuilderWasCalledWith( 'edtf-day' );
@@ -195,7 +195,7 @@ class InternationalizedHumanizerTest extends TestCase {
 
 	public function testUncertainAndApproximate(): void {
 		$uncertainDate = new ExtDate(
-			1700, 4, 29, new Qualification( Qualification::KNOWN, Qualification::KNOWN, Qualification::UNCERTAIN_AND_APPROXIMATE )
+			1700, 4, 29, new Qualification( Qualification::UNDEFINED, Qualification::UNDEFINED, Qualification::UNCERTAIN_AND_APPROXIMATE )
 		);
 		$this->humanizer->humanize( $uncertainDate );
 		$this->assertBuilderWasCalledWith( 'edtf-day' );
