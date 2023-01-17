@@ -215,7 +215,7 @@ class InternationalizedHumanizer implements Humanizer {
 		$day = $date->getDay();
 
 		if ( $year !== null ) {
-			$year = $this->humanizeYear( $date );
+			$year = $this->humanizeYear( $year, $date );
 		}
 
 		if ( $month !== null ) {
@@ -266,14 +266,14 @@ class InternationalizedHumanizer implements Humanizer {
 		return 'edtf-tens-of-trillions';
 	}
 
-	private function humanizeYear( ExtDate $date ): string {		
+	private function humanizeYear( int $year, ExtDate $date ): string {		
 		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
 		$unspecifiedDigit = $date->getUnspecifiedDigit();
 		$specifiedYears = $date->getSpecifiedYears();
 
 		if ( $unspecifiedYearScale === 0 ||
 			(  $this->needsYearEndingChar( $unspecifiedDigit ) && $specifiedYears !== 0 ) ) {
-			return $this->humanizeYearSpecified( $date->getYear(), $unspecifiedDigit );
+			return $this->humanizeYearSpecified( $year, $unspecifiedDigit );
 		}
 
 		$specifiedYearsStr = (string)abs( $specifiedYears );
