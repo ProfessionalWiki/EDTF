@@ -247,34 +247,51 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
-	private function humanizeYear( int $year, ExtDate $date ): string {
-		$unspecifiedDigit = $date->getUnspecifiedDigit();
-
-		// *** if the expression $date->getDay() === null && $date->getMonth() === null
-		// is superfluous as it seems the function can be restored to its
-		// original declaration ( int $year, UnspecifiedDigit $unspecifiedDigit )
-
-		if ( $unspecifiedDigit->getYear() === 4 && $date->getDay() === null && $date->getMonth() === null ) {
-			return $this->message( 'edtf-year-unspecified' );
+	private function scaleToMessageKey( int $scale ): string {
+		switch( $scale ) {
+			case 1 : return 'edtf-year';					// X
+			case 2 : return 'edtf-decade';					// XX
+			case 3 : return 'edtf-century';					// XXX
+			case 4 : return 'edtf-millennium';				// XXXX
+			case 5 : return 'edtf-decem-millennium';		// XXXXX
+			case 6 : return 'edtf-hundreds-of-thousands';	// XXX XXX
+			case 7 : return 'edtf-millions';				// XXX XXX
+			case 8 : return 'edtf-tens-of-millions';		// XXXXXXX
+			case 9 : return 'edtf-hundreds-of-millions';	// XXXXXXXX
+			case 10 : return 'edtf-billions';				// XXXXXXXXXX
+			case 11 : return 'edtf-tens-of-billions';		// XXXXXXXXXXX
+			case 12 : return 'edtf-hundreds-of-billions';	// XXXXXXXXXXXX
+			case 13 : return 'edtf-trillions';				// XXXXXXXXXXXXX
 		}
+
+		// FIXME: reuse recursively the scale with trillions
+		// e.g. tens-of-trillions etc., 
+		return 'edtf-tens-of-trillions';
+	}
+
+	private function humanizeYear( int $year, ExtDate $date ): string {
+		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
+		$specifiedYears = $date->getSpecifiedYears();
 
 		$yearStr = (string)abs( $year );
 
-		if ( $year <= -1000 ) {
-			return $this->message( 'edtf-bc-year', $yearStr );
+		$specifiedYearsStr = (string)abs( $specifiedYears );
+
+		$ret = '';
+
+		$ret .= ( $specifiedYears === 0 ? $this->message( "edtf-date-unspecified" )
+				: $specifiedYearsStr );
+
+
+		if ( $unspecifiedYearScale > 0 ) {
+			$ret .= " " . $this->message( $this->scaleToMessageKey( $unspecifiedYearScale ) );
 		}
 
-		if ( $year < 0 ) {
-			return $this->message( 'edtf-bc-year-short', $yearStr );
+		if ( $specifiedYears < 0 ) {
+			$ret .= " " . $this->message( "edtf-date-BC" );
 		}
 
-		$endingChar = $this->needsYearEndingChar( $unspecifiedDigit ) ? 's' : '';
-
-		if ( $year < 1000 ) {
-			return $this->message( 'edtf-year-short', $yearStr . $endingChar );
-		}
-
-		return $yearStr . $endingChar;
+		return $ret;
 	}
 
 	/**
