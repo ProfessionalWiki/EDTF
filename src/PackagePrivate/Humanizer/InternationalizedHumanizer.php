@@ -270,11 +270,7 @@ class InternationalizedHumanizer implements Humanizer {
 	}
 
 	private function humanizeYear( int $year, ExtDate $date ): string {
-		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
 		$specifiedYears = $date->getSpecifiedYears();
-
-		$yearStr = (string)abs( $year );
-
 		$specifiedYearsStr = (string)abs( $specifiedYears );
 
 		$ret = '';
@@ -282,11 +278,14 @@ class InternationalizedHumanizer implements Humanizer {
 		$ret .= ( $specifiedYears === 0 ? $this->message( "edtf-date-unspecified" )
 				: $specifiedYearsStr );
 
+		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
 
 		if ( $unspecifiedYearScale > 0 ) {
 			$ret .= " " . $this->message( $this->scaleToMessageKey( $unspecifiedYearScale ) );
 		}
 
+		// TODO: retrieve negative values also for $specifiedYears === 0
+		// so that -XXX is "some century BC"
 		if ( $specifiedYears < 0 ) {
 			$ret .= " " . $this->message( "edtf-date-BC" );
 		}
