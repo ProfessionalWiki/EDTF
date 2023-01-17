@@ -35,12 +35,12 @@ class EnglishHumanizationTest extends TestCase {
 		yield 'Day only' => [ 'XXXX-XX-12', '12th' ];
 		
 		// https://github.com/ProfessionalWiki/EDTF/issues/80
-		yield 'Some year' => [ 'XXXX', 'some year' ];
 		yield 'Some year (4 digits)' => [ 'XXXX', 'some millennium' ];
 
 		yield 'Some year (1 digit)' => [ 'X', 'some year' ];
+		yield 'Some year (2 digit)' => [ 'XX', 'some decade' ];
 		yield 'Some year (3 digits)' => [ 'XXX', 'some century' ];
-		yield 'Scales (4 digits minus)' => [ '-5XXXX', '5 decem millenniums BC' ];
+		yield 'Scales (4 digits minus)' => [ '-5XXXX', '5 decem millennia BC' ];
 		yield 'Scales (5 digits)' => [ '5XXXXX', '5 hundreds of thousands' ];
 		yield 'Scales (6 digits)' => [ '5XXXXXX', '5 millions' ];
 		yield 'Scales (7 digits)' => [ '5XXXXXXX', '5 tens of millions' ];
