@@ -175,6 +175,23 @@ class ExtDate implements EdtfValue, HasPrecision {
 		return null === $this->day ? $lastDayOfMonth : $this->day;
 	}
 
+	public function getUnspecifiedYearScale() : int {
+		if ( $this->unspecifiedDigit->unspecified( 'year' ) ) {
+			$ret = $this->unspecifiedDigit->getYear();
+
+			if ( $this->getYear() === 0 ) {
+				return $ret;
+			}
+
+			return $ret + 1;
+		}
+		return 0;
+	}
+
+	public function getSpecifiedYears() : int {
+		return $this->getYear() / ( pow( 10, $this->unspecifiedDigit->getYear() ) );
+	}
+
 	/**
 	 * This function is applicable for 2-digits placeholders (month, day).
 	 * Means that decimal: 0 < n < 10
