@@ -279,9 +279,7 @@ class InternationalizedHumanizer implements Humanizer {
 			$ret .= " " . $this->message( $this->scaleToMessageKey( $unspecifiedYearScale ), $specifiedYearsStr );
 		}
 
-		// TODO: retrieve negative values also for $specifiedYears === 0
-		// so that -XXX is "some century BC"
-		if ( $specifiedYears < 0 ) {
+		if ( $date->isBC() ) {
 			$ret .= " " . $this->message( "edtf-date-BC" );
 		}
 
