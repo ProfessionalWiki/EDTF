@@ -266,14 +266,20 @@ class InternationalizedHumanizer implements Humanizer {
 		return 'edtf-tens-of-trillions';
 	}
 
-	private function humanizeYear( ExtDate $date ): string {
+	private function humanizeYear( ExtDate $date ): string {		
+		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
+		$unspecifiedDigit = $date->getUnspecifiedDigit();
 		$specifiedYears = $date->getSpecifiedYears();
+
+		if ( $unspecifiedYearScale === 0 ||
+			(  $this->needsYearEndingChar( $unspecifiedDigit ) && $specifiedYears !== 0 ) ) {
+			return $this->humanizeYearSpecified( $date->getYear(), $unspecifiedDigit );
+		}
+
 		$specifiedYearsStr = (string)abs( $specifiedYears );
 
-		$ret = ( $specifiedYears === 0 ? $this->message( "edtf-date-unspecified" )
+		$ret = ( $specifiedYears === 0 && $unspecifiedYearScale != 0 ? $this->message( "edtf-date-unspecified" )
 				: $specifiedYearsStr );
-
-		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
 
 		if ( $unspecifiedYearScale > 0 ) {
 			$ret .= " " . $this->message( $this->scaleToMessageKey( $unspecifiedYearScale ), $specifiedYearsStr );
@@ -284,6 +290,26 @@ class InternationalizedHumanizer implements Humanizer {
 		}
 
 		return $ret;
+	}
+
+	private function humanizeYearSpecified( int $year, UnspecifiedDigit $unspecifiedDigit ): string {
+		$yearStr = (string)abs( $year );
+
+		if ( $year <= -1000 ) {
+			return $this->message( 'edtf-bc-year', $yearStr );
+		}
+
+		if ( $year < 0 ) {
+			return $this->message( 'edtf-bc-year-short', $yearStr );
+		}
+
+		$endingChar = $this->needsYearEndingChar( $unspecifiedDigit ) ? 's' : '';
+
+		if ( $year < 1000 ) {
+			return $this->message( 'edtf-year-short', $yearStr . $endingChar );
+		}
+
+		return $yearStr . $endingChar;
 	}
 
 	/**
