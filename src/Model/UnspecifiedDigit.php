@@ -76,6 +76,10 @@ class UnspecifiedDigit {
 		return $this->day;
 	}
 
+	public function isBC(): bool {
+		return ( (int)str_replace( "X", 1, $this->rawYear ) < 0 );
+	}
+
 	public function century(): bool {
 		if ( $this->year == 2 && substr( $this->rawYear, -2 ) == "XX" ) {
 			return true;
