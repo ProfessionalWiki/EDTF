@@ -252,13 +252,13 @@ class InternationalizedHumanizer implements Humanizer {
 			case 4 : return 'edtf-millennium';				// XXXX
 			case 5 : return 'edtf-decem-millennium';		// XXXXX
 			case 6 : return 'edtf-hundreds-of-thousands';	// XXXXXX
-			case 7 : return 'edtf-millions';				// XXXXXXX
+			case 7 : return 'edtf-million';					// XXXXXXX
 			case 8 : return 'edtf-tens-of-millions';		// XXXXXXXX
 			case 9 : return 'edtf-hundreds-of-millions';	// XXXXXXXXX
-			case 10 : return 'edtf-billions';				// XXXXXXXXXX
+			case 10 : return 'edtf-billion';				// XXXXXXXXXX
 			case 11 : return 'edtf-tens-of-billions';		// XXXXXXXXXXX
 			case 12 : return 'edtf-hundreds-of-billions';	// XXXXXXXXXXXX
-			case 13 : return 'edtf-trillions';				// XXXXXXXXXXXXX
+			case 13 : return 'edtf-trillion';				// XXXXXXXXXXXXX
 		}
 
 		// FIXME: reuse recursively the scale with trillions
@@ -276,7 +276,7 @@ class InternationalizedHumanizer implements Humanizer {
 		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
 
 		if ( $unspecifiedYearScale > 0 ) {
-			$ret .= " " . $this->message( $this->scaleToMessageKey( $unspecifiedYearScale ) );
+			$ret .= " " . $this->message( $this->scaleToMessageKey( $unspecifiedYearScale ), $specifiedYearsStr );
 		}
 
 		// TODO: retrieve negative values also for $specifiedYears === 0
