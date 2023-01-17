@@ -215,10 +215,7 @@ class InternationalizedHumanizer implements Humanizer {
 		$day = $date->getDay();
 
 		if ( $year !== null ) {
-			$year = $this->humanizeYear(
-				$year,
-				$date
-			);
+			$year = $this->humanizeYear( $date );
 		}
 
 		if ( $month !== null ) {
@@ -254,10 +251,10 @@ class InternationalizedHumanizer implements Humanizer {
 			case 3 : return 'edtf-century';					// XXX
 			case 4 : return 'edtf-millennium';				// XXXX
 			case 5 : return 'edtf-decem-millennium';		// XXXXX
-			case 6 : return 'edtf-hundreds-of-thousands';	// XXX XXX
-			case 7 : return 'edtf-millions';				// XXX XXX
-			case 8 : return 'edtf-tens-of-millions';		// XXXXXXX
-			case 9 : return 'edtf-hundreds-of-millions';	// XXXXXXXX
+			case 6 : return 'edtf-hundreds-of-thousands';	// XXXXXX
+			case 7 : return 'edtf-millions';				// XXXXXXX
+			case 8 : return 'edtf-tens-of-millions';		// XXXXXXXX
+			case 9 : return 'edtf-hundreds-of-millions';	// XXXXXXXXX
 			case 10 : return 'edtf-billions';				// XXXXXXXXXX
 			case 11 : return 'edtf-tens-of-billions';		// XXXXXXXXXXX
 			case 12 : return 'edtf-hundreds-of-billions';	// XXXXXXXXXXXX
@@ -269,13 +266,11 @@ class InternationalizedHumanizer implements Humanizer {
 		return 'edtf-tens-of-trillions';
 	}
 
-	private function humanizeYear( int $year, ExtDate $date ): string {
+	private function humanizeYear( ExtDate $date ): string {
 		$specifiedYears = $date->getSpecifiedYears();
 		$specifiedYearsStr = (string)abs( $specifiedYears );
 
-		$ret = '';
-
-		$ret .= ( $specifiedYears === 0 ? $this->message( "edtf-date-unspecified" )
+		$ret = ( $specifiedYears === 0 ? $this->message( "edtf-date-unspecified" )
 				: $specifiedYearsStr );
 
 		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
