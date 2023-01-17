@@ -24,6 +24,23 @@
 	"edtf-autumn": "Autumn",
 	"edtf-winter": "Winter",
 
+	"edtf-date-unspecified": "some",
+	"edtf-date-BC": "BC",
+
+	"edtf-decade": "decade",
+	"edtf-century": "century",
+	"edtf-millennium": "millennium",
+	"edtf-decem-millennium": "decem millennium",
+	"edtf-hundreds-of-thousands": "hundreds of thousands",
+	"edtf-millions": "millions",
+	"edtf-tens-of-millions": "tens of million",
+	"edtf-hundreds-of-millions": "hundreds of million",
+	"edtf-billions": "billions",
+	"edtf-tens-of-billions": "tens of billions",
+	"edtf-hundreds-of-billions": "hundreds of billions",
+	"edtf-thousands-of-billions": "thousands of billions",
+	"edtf-trillions": "trillions",
+
 	"edtf-spring-north": "Spring (Northern Hemisphere)",
 	"edtf-summer-north": "Summer (Northern Hemisphere)",
 	"edtf-autumn-north": "Autumn (Northern Hemisphere)",
