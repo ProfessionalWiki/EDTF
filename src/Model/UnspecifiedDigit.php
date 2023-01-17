@@ -77,7 +77,7 @@ class UnspecifiedDigit {
 	}
 
 	public function isBC(): bool {
-		return ( (int)str_replace( "X", 1, $this->rawYear ) < 0 );
+		return ( (int)str_replace( "X", "1", $this->rawYear ) < 0 );
 	}
 
 	public function century(): bool {
