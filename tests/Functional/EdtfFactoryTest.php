@@ -24,7 +24,7 @@ class EdtfFactoryTest extends TestCase {
 
 	public function testHumanizationFrench(): void {
 		$this->assertSame(
-			'Printemps 2021',
+			'printemps 2021',
 			EdtfFactory::newHumanizerForLanguage( 'fr' )->humanize( new Season( 2021, 21 ) )
 		);
 	}
