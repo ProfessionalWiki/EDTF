@@ -38,7 +38,7 @@ class ExtDate implements EdtfValue, HasPrecision {
 		$this->month = $month;
 		$this->day = $day;
 		$this->year = $this->fixedYear( $year );
-		$this->qualification = $qualification ?? Qualification::newFullyKnown();
+		$this->qualification = $qualification ?? new Qualification();
 		$this->unspecifiedDigit = $unspecified ?? $this->newUnspecifiedDigit( $year, $month, $day );
 
 		$this->datetimeFactory = new CarbonFactory();
@@ -175,23 +175,6 @@ class ExtDate implements EdtfValue, HasPrecision {
 		return null === $this->day ? $lastDayOfMonth : $this->day;
 	}
 
-	public function getUnspecifiedYearScale() : int {
-		if ( $this->unspecifiedDigit->unspecified( 'year' ) ) {
-			$ret = $this->unspecifiedDigit->getYear();
-
-			if ( $this->getYear() === 0 ) {
-				return $ret;
-			}
-
-			return $ret + 1;
-		}
-		return 0;
-	}
-
-	public function getSpecifiedYears() : int {
-		return $this->getYear() / ( pow( 10, $this->unspecifiedDigit->getYear() ) );
-	}
-
 	/**
 	 * This function is applicable for 2-digits placeholders (month, day).
 	 * Means that decimal: 0 < n < 10
@@ -268,26 +251,12 @@ class ExtDate implements EdtfValue, HasPrecision {
 		return $c->lastOfMonth()->day;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public function uncertain(): bool {
-		return $this->isUncertain();
+	public function uncertain( ?string $part = null ): bool {
+		return $this->qualification->uncertain( $part );
 	}
 
-	public function isUncertain(): bool {
-		return $this->qualification->isUncertain();
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public function approximate(): bool {
-		return $this->isApproximate();
-	}
-
-	public function isApproximate(): bool {
-		return $this->qualification->isApproximate();
+	public function approximate( ?string $part = null ): bool {
+		return $this->qualification->approximate( $part );
 	}
 
 	public function unspecified( ?string $part = null ): bool {
@@ -296,12 +265,6 @@ class ExtDate implements EdtfValue, HasPrecision {
 
 	public function getQualification(): Qualification {
 		return $this->qualification;
-	}
-
-	public function isUniformlyQualified(): bool {
-		return $this->qualification->isUniform() // 2004-06-11? and ?2004-?06-?11
-			|| ( $this->qualification->monthAndYearHaveTheSameQualification() && $this->day === null ) // 2004-06? and ?2004-?06
-			|| ( $this->month === null && $this->day === null ); // 1984?
 	}
 
 	public function getUnspecifiedDigit(): UnspecifiedDigit {
