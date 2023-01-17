@@ -223,9 +223,6 @@ class InternationalizedHumanizer implements Humanizer {
 
 		if ( $month !== null ) {
 			$month = $this->message( self::MONTH_MAP[$month] );
-			if ( $day === null ) {
-				$month = ucfirst( $month );
-			}
 		}
 
 		if ( $day !== null ) {

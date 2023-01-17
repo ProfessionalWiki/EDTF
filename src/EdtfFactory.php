@@ -12,7 +12,7 @@ use EDTF\PackagePrivate\Humanizer\Internationalization\TranslationsLoader\Loader
 use EDTF\PackagePrivate\Humanizer\InternationalizedHumanizer;
 use EDTF\PackagePrivate\Humanizer\PrivateStructuredHumanizer;
 use EDTF\PackagePrivate\Humanizer\Strategy\EnglishStrategy;
-use EDTF\PackagePrivate\Humanizer\Strategy\FrenchStrategy;
+use EDTF\PackagePrivate\Humanizer\Strategy\DefaultStrategy;
 use EDTF\PackagePrivate\Humanizer\Strategy\LanguageStrategy;
 use EDTF\PackagePrivate\SaneParser;
 use EDTF\PackagePrivate\Validator;
@@ -73,10 +73,10 @@ class EdtfFactory {
 
 	private static function getLanguageStrategy( string $languageCode ): LanguageStrategy {
 		switch ( $languageCode ) {
-			case "fr":
-				return new FrenchStrategy();
+			case 'en':
+				return new EnglishStrategy();
+			default:
+				return new DefaultStrategy();
 		}
-
-		return new EnglishStrategy();
 	}
 }
