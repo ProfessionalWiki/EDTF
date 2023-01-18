@@ -114,7 +114,7 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
-### Version 3.0.0 - 2023-01-xx
+### Version 3.0.0 - 2023-01-18
 
 Functional changes:
 
@@ -150,7 +150,6 @@ Further API changes:
 * Added `Qualification::isUniform`
 * Added `Qualification::monthAndYearHaveTheSameQualification`
 * Added `ExtDate::isUniformlyQualified`
-
 
 ### Version 2.0.2 - 2022-04-29
 
