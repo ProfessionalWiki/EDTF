@@ -2,13 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"Grace03",
+			"GuoPC",
 			"Hmgrmb",
 			"LittlePaw365"
 		]
 	},
-	"edtf-maybe-circa": "也许大约$1",
-	"edtf-circa": "大概$1",
-	"edtf-maybe": "也许$1",
+	"edtf-maybe-circa": "可能在$1前后（日期不确定且为估计）",
+	"edtf-circa": "在$1前后（日期为估计）",
+	"edtf-maybe": "可能是$1（日期不确定）",
+	"edtf-qualified-date": "$1（$2）",
+	"edtf-parts-uncertain": "$1不确定",
+	"edtf-parts-approximate": "$1为估计",
+	"edtf-parts-uncertain-and-approximate": "$1不确定且为估计",
+	"edtf-and-prefix": "和$1",
 	"edtf-spring": "春",
 	"edtf-summer": "夏",
 	"edtf-autumn": "秋",

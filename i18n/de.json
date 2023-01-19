@@ -4,13 +4,14 @@
 			"CNRALux",
 			"FF-11",
 			"FF11",
+			"Justman10000",
 			"Kghbln"
 		]
 	},
 	"edtf-description": "PHP-Bibliothek, die das Verarbeiten, Darstellen und Arbeiten mit erweiterten Angaben zum Datums- und Uhrzeitformat, entsprechend der Spezifikation „Extended Date/Time Format“ (EDTF), ermöglicht",
-	"edtf-maybe-circa": "Vielleicht ca. $1",
-	"edtf-circa": "Ungefähr $1",
-	"edtf-maybe": "Vielleicht $1",
+	"edtf-maybe-circa": "Vielleicht um $1 (das Datum ist unsicher und ungefähre Angabe)",
+	"edtf-circa": "Circa 1 $ (Datum ist ungefähr)",
+	"edtf-maybe": "Vielleicht $1 (Datum ist ungewiss)",
 	"edtf-spring": "Frühling",
 	"edtf-summer": "Sommer",
 	"edtf-autumn": "Herbst",
