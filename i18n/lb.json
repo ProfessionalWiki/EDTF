@@ -7,7 +7,7 @@
 	},
 	"edtf-description": "PHP Bibliothéik fir d'Verschaffen, d'Duerstellen an d'Schaffe mat Datumen no de Spezifikatioune vum „Extended Date/Time Format“ (EDTF)",
 	"edtf-maybe-circa": "Villäicht zirka $1",
-	"edtf-circa": "Zirka $1",
+	"edtf-circa": "Zirka $1 (Datum ass ongeféier)",
 	"edtf-maybe": "Villäicht $1",
 	"edtf-spring": "Fréijoer",
 	"edtf-summer": "Summer",
