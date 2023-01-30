@@ -6,9 +6,9 @@
 		]
 	},
 	"edtf-description": "확장된 시간/날짜 포맷 사양을 준수하는, 날짜의 구문 분석, 표현, 동작을 위한 PHP 라이브러리입니다.",
-	"edtf-maybe-circa": "$1 경 추정",
-	"edtf-circa": "$1 경",
-	"edtf-maybe": "$1 추정",
+	"edtf-maybe-circa": "$1 경 추정 (날짜는 불확실하고 대략적임)",
+	"edtf-circa": "$1 경 (날짜는 대략적임)",
+	"edtf-maybe": "$1 추정 (날짜는 불확실)",
 	"edtf-qualified-date": "$1 ($2)",
 	"edtf-spring": "봄",
 	"edtf-summer": "여름",
