@@ -260,7 +260,7 @@ class InternationalizedHumanizer implements Humanizer {
 
 		$endingChar = $this->needsYearEndingChar( $unspecifiedDigit ) ? 's' : '';
 
-		if ( $year < 1000 ) {
+		if ( $year <= 1000 || $year >= 3000 ) {
 			return $this->message( 'edtf-year-short', $yearStr . $endingChar );
 		}
 
