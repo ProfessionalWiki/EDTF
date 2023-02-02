@@ -6,6 +6,7 @@
 			"Luckylukee81"
 		]
 	},
+	"edtf-maybe-circa": "Valószínűleg $1 körül (a dátum hozzávetőleges)",
 	"edtf-circa": "$1 körül (a dátum hozzávetőleges)",
 	"edtf-maybe": "Talán $1 (a dátum ismeretlen)",
 	"edtf-qualified-date": "$1 ($2)",
