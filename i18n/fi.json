@@ -3,13 +3,14 @@
 		"authors": [
 			"Joquliina",
 			"Mediawikitranslator",
-			"Nike"
+			"Nike",
+			"Pyscowicz"
 		]
 	},
-	"edtf-maybe": "Ehkä $1",
-	"edtf-parts-uncertain": "{{PLURAL:$1|on epävarma|ovat epävarmoja}}",
-	"edtf-parts-approximate": "{{PLURAL:$1|on likimääräinen|ovat likimääräisiä}}",
-	"edtf-parts-uncertain-and-approximate": "{{PLURAL:$1|on epävarma ja likimääräinen|ovat epävarmoja ja likimääräisiä}}",
+	"edtf-maybe": "Ehkä $1 (päiväys on epävarma)",
+	"edtf-parts-uncertain": "$1 on epävarma",
+	"edtf-parts-approximate": "$1 on likimääräinen",
+	"edtf-parts-uncertain-and-approximate": "$1 on epävarma ja likimääräinen",
 	"edtf-day": "päivä",
 	"edtf-month": "kuukausi",
 	"edtf-year": "vuosi",
