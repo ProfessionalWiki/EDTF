@@ -12,7 +12,6 @@
 	"edtf-maybe-circa": "Vielleicht um $1 (Datum ist unsichere und ungefähre Angabe)",
 	"edtf-circa": "Ca. $1 (Datum ist ungefähr)",
 	"edtf-maybe": "Vielleicht $1 (Datum ist ungewiss)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 (Datum ist ungewiss)",
 	"edtf-parts-approximate": "$1 (Datum ist ungefähr)",
 	"edtf-parts-uncertain-and-approximate": "$1 (Datum ist unsichere und ungefähre Angabe)",

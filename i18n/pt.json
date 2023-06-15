@@ -8,7 +8,6 @@
 	"edtf-maybe-circa": "Talvez por volta de $1 (a data é incerta e aproximada)",
 	"edtf-circa": "Por volta de $1 (a data é aproximada)",
 	"edtf-maybe": "Talvez a $1 (a data é incerta)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 é incerta",
 	"edtf-parts-approximate": "$1 é aproximada",
 	"edtf-parts-uncertain-and-approximate": "$1 é incerta e aproximada",

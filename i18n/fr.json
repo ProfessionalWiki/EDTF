@@ -10,7 +10,6 @@
 	"edtf-maybe-circa": "autour du $1 (date incertaine et approximative)",
 	"edtf-circa": "autour du $1 (date approximative)",
 	"edtf-maybe": "$1 (date incertaine)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 est incertain",
 	"edtf-parts-approximate": "$1 est approximatif",
 	"edtf-parts-uncertain-and-approximate": "$1 est incertain et approximatif",

@@ -9,7 +9,6 @@
 	"edtf-maybe-circa": "Villäicht zirka $1",
 	"edtf-circa": "Zirka $1 (Datum ass ongeféier)",
 	"edtf-maybe": "Villäicht $1 (Datum ass net sécher)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 ass net sécher",
 	"edtf-day": "Dag",
 	"edtf-month": "Mount",

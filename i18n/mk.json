@@ -8,7 +8,6 @@
 	"edtf-maybe-circa": "Можеби околу $1 (датумот е неизвесен или приближен)",
 	"edtf-circa": "Околу $1 (датумот е приближен)",
 	"edtf-maybe": "Можеби $1 (датумот е неизвесен)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 е неизвесно",
 	"edtf-parts-approximate": "$1 е приближно",
 	"edtf-parts-uncertain-and-approximate": "$1 е неизвесно и приближно",

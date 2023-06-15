@@ -8,7 +8,6 @@
 	"edtf-maybe-circa": "Forsan circa $1 (data es incerte e approximative)",
 	"edtf-circa": "Circa $1 (data es approximative)",
 	"edtf-maybe": "Forsan $1 (data es incerte)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 es incerte",
 	"edtf-parts-approximate": "$1 es approximative",
 	"edtf-parts-uncertain-and-approximate": "$1 es incerte e approximative",

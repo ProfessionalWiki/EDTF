@@ -9,7 +9,6 @@
 	"edtf-maybe-circa": "Valószínűleg $1 körül (a dátum hozzávetőleges)",
 	"edtf-circa": "$1 körül (a dátum hozzávetőleges)",
 	"edtf-maybe": "Talán $1 (a dátum ismeretlen)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 bizonytalan",
 	"edtf-parts-approximate": "$1 hozzávetőleges",
 	"edtf-parts-uncertain-and-approximate": "$1 bizonytalan, hozzávetőleges",

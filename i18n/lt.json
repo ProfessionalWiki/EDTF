@@ -6,7 +6,6 @@
 	},
 	"edtf-circa": "Maždaug $1 (data yra apytikslė)",
 	"edtf-maybe": "Galbūt $1 (data neaiški)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 neaiškus",
 	"edtf-parts-approximate": "$1 apytikslis",
 	"edtf-parts-uncertain-and-approximate": "$1 neaiškus ir apytikslis",

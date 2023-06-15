@@ -11,7 +11,6 @@
 	"edtf-maybe-circa": "Mogelijk ongeveer $1 (datum is onzeker en bij benadering)",
 	"edtf-circa": "Ongeveer $1 (datum is bij benadering)",
 	"edtf-maybe": "Mogelijk $1 (datum is onzeker)",
-	"edtf-qualified-date": "$1 ($2)",
 	"edtf-parts-uncertain": "$1 is onzeker",
 	"edtf-parts-approximate": "$1 is bij benadering",
 	"edtf-parts-uncertain-and-approximate": "$1 is onzeker en bij benadering",
