@@ -50,6 +50,7 @@ class ExtDateTimeTest extends TestCase {
 		$this->assertSame( 10, $date->getMinute() );
 		$this->assertSame( 10, $date->getSecond() );
 		$this->assertSame( 0, $date->getTimezoneOffset() );
+		$this->assertSame( '2004-01-01T10:10:10+00:00', $date->iso8601() );
 	}
 
 	public function testWithSpesificTimezone(): void {

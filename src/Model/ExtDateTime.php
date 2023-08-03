@@ -131,11 +131,15 @@ class ExtDateTime implements EdtfValue {
 			} else {
 				$date->add( new DateInterval( 'PT' . abs( $this->timezoneOffset ) . 'M' ) );
 			}
-			$date->setTimezone(
-				new DateTimeZone(
-					$this->getTzSign() . sprintf( "%02s:%02s", $this->getTzHour(), $this->getTzMinute() )
-				)
-			);
+			if ( $this->getTzSign() == 'Z') {
+				$date->setTimezone(new DateTimeZone('Z'));
+			} else {
+				$date->setTimezone(
+					new DateTimeZone(
+						$this->getTzSign() . sprintf( "%02s:%02s", $this->getTzHour(), $this->getTzMinute() )
+					)
+				);
+			}
 			return $date->format( 'c' );
 		}
 
