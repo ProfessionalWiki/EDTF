@@ -1,0 +1,38 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"edtf-spring": "אביב",
+	"edtf-summer": "קיץ",
+	"edtf-autumn": "סתיו",
+	"edtf-winter": "חורף",
+	"edtf-quarter-1": "הרבעון הראשון",
+	"edtf-quarter-2": "הרבעון השני",
+	"edtf-quarter-3": "הרבעון השלישי",
+	"edtf-quarter-4": "הרבעון הרביעי",
+	"edtf-quadrimester-1": "שליש השנה הראשון",
+	"edtf-quadrimester-2": "שליש השנה השני",
+	"edtf-quadrimester-3": "שליש השנה השלישי",
+	"edtf-semester-1": "המחצית הראשונה",
+	"edtf-semester-2": "המחצית השנייה",
+	"edtf-full-date": "$3 ב$2 $1",
+	"edtf-season-and-year": "$1 $2",
+	"edtf-day-and-year": "$1 של חודש לא ידוע, $2",
+	"edtf-bc-year": "$1 לפני הספירה",
+	"edtf-bc-year-short": "שנה $1 לפני הספירה",
+	"edtf-year-short": "שנת $1",
+	"edtf-january": "ינואר",
+	"edtf-february": "פברואר",
+	"edtf-march": "מרץ",
+	"edtf-april": "אפריל",
+	"edtf-may": "מאי",
+	"edtf-june": "יוני",
+	"edtf-july": "יולי",
+	"edtf-august": "אוגוסט",
+	"edtf-september": "ספטמבר",
+	"edtf-october": "אוקטובר",
+	"edtf-november": "נובמבר",
+	"edtf-december": "דצמבר"
+}
