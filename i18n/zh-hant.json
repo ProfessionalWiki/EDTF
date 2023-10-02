@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kly"
+			"Kly",
+			"沈澄心"
 		]
 	},
 	"edtf-description": "用於解析、表現，與按照採用擴充日期/時間格式規範之日期來運作的 PHP 函式庫。",
@@ -64,7 +65,7 @@
 	"edtf-all-of-these": "這些全部：",
 	"edtf-one-of-these": "這些其一：",
 	"edtf-year-and-all-earlier": "$1當年與所有更早的年份",
-	"edtf-year-or-earlier": "$1當年與一個更早的年份",
+	"edtf-year-or-earlier": "$1當年或一個更早的年份",
 	"edtf-year-and-all-later": "$1當年與所有以後的年份",
 	"edtf-year-or-later": "$1當年或一個以後的年份",
 	"edtf-month-and-all-earlier": "$1與所有更早的月份",
