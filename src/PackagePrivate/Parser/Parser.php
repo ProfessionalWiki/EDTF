@@ -210,7 +210,7 @@ class Parser {
 	// TODO
 	private static function genQualificationValue( ?string $flag = null ): int {
 		assert( is_string( $flag ) );
-		return (int)self::$map[$flag];
+		return (int)( self::$map[$flag] ?? 0 );
 	}
 
 	private function buildSet( string $input ): Set {
