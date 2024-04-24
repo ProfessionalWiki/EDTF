@@ -205,6 +205,8 @@ class Parser {
 		'%' => Qualification::UNCERTAIN_AND_APPROXIMATE,
 		'?' => Qualification::UNCERTAIN,
 		'~' => Qualification::APPROXIMATE,
+		'?~' => Qualification::UNCERTAIN_AND_APPROXIMATE,
+		'~?' => Qualification::UNCERTAIN_AND_APPROXIMATE,
 	];
 
 	// TODO
