@@ -2,7 +2,7 @@
 
 # Year start
 ^(?<year>
-    (?<yearOpenFlag>[~?%]{0,2})
+    (?<yearOpenFlag>[~?%]{0,1})
     Y?
     (?<yearNum>
         [+-]?               # optional sign
@@ -14,7 +14,7 @@
     (?>S                    # Literal S letter. It is for the significant digit indicator
         (?<yearSignificantDigit>\d+)
 	)?
-    (?<yearCloseFlag>\)?[~%?]{0,2})
+    (?<yearCloseFlag>\)?[~%?]{0,1})
 )
 # Year end
 
@@ -22,24 +22,24 @@
 
     # Month start
     (?<month>
-        (?<monthOpenFlag>[~?%]{0,2})
+        (?<monthOpenFlag>[~?%]{0,1})
         (?<monthOpenParents>\(+)?
         (?<monthNum>(?>1[0-9UX]|[0UX][0-9UX]|[0-9][0-9]))
         (?>\^(?<seasonQualifier>[\P{L}\P{N}\P{M}:.-]+))?
-        (?<monthCloseFlag>[~?%]{0,2})
+        (?<monthCloseFlag>[~?%]{0,1})
     )
     # Month end
 
     (?>- # Begin Day Literal - (hyphen)
         # Day start
         (?<day>
-            (?<dayOpenFlag>[~?%]{0,2})
+            (?<dayOpenFlag>[~?%]{0,1})
             (?<dayOpenParents>\(+)?
                 (?<dayNum>
                     (?>[012UX][0-9UX]|3[01UX])
                 )
             )
-            (?<dayCloseFlag>[~?%]{0,2})
+            (?<dayCloseFlag>[~?%]{0,1})
             (?<dayEnd>[)~%?]*)
         # Day end
 
