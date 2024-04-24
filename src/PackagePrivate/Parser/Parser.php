@@ -209,8 +209,11 @@ class Parser {
 
 	// TODO
 	private static function genQualificationValue( ?string $flag = null ): int {
-		assert( is_string( $flag ) );
-		return (int)( self::$map[$flag] ?? 0 );
+		if ( !is_string( $flag ) || !isset(self::$map[$flag]) ) {
+			throw new InvalidArgumentException( 'Qualifier is incorrect' );
+		}
+
+		return (int)self::$map[$flag];
 	}
 
 	private function buildSet( string $input ): Set {
