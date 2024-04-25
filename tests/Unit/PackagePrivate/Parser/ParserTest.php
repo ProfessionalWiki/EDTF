@@ -294,7 +294,7 @@ class ParserTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider setCombinedUncertainAndApproximateQualifiers
+	 * @dataProvider provideCombinedUncertainAndApproximateQualifiers
 	 */
 	public function testThrowExceptionWhenUsedCombinedUncertainAndApproximateQualifiers( string $combinedUncertainAndApproximate ): void {
 		$parser = new Parser();
@@ -303,7 +303,7 @@ class ParserTest extends TestCase {
 		$parser->createEdtf( $combinedUncertainAndApproximate );
 	}
 
-	public function setCombinedUncertainAndApproximateQualifiers(): array {
+	public function provideCombinedUncertainAndApproximateQualifiers(): array {
 		return [
 			[ '1990?~' ],
 			[ '1990~?' ],
