@@ -292,4 +292,27 @@ class ParserTest extends TestCase {
 			[ "{2000%..2000-02}", "Dates in set ranges cannot be uncertain" ],
 		];
 	}
+
+	/**
+	 * @dataProvider provideCombinedUncertainAndApproximateQualifiers
+	 */
+	public function testThrowExceptionWhenUsedCombinedUncertainAndApproximateQualifiers( string $combinedUncertainAndApproximate ): void {
+		$parser = new Parser();
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Invalid edtf format ' . $combinedUncertainAndApproximate );
+		$parser->createEdtf( $combinedUncertainAndApproximate );
+	}
+
+	public function provideCombinedUncertainAndApproximateQualifiers(): array {
+		return [
+			[ '1990?~' ],
+			[ '1990~?' ],
+			[ '?~1990}' ],
+			[ '~?1990' ],
+			[ '1990-02~?' ],
+			[ '1990-?~02' ],
+			[ '1990-?~02~?-03' ],
+			[ '1990-02-~?03' ],
+		];
+	}
 }
