@@ -114,6 +114,11 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 3.0.1 - 2024-05-03
+
+* Fixed "Undefined array key" warning when combining approximation qualifiers
+* Improved translations
+
 ### Version 3.0.0 - 2023-01-18
 
 Functional changes:
