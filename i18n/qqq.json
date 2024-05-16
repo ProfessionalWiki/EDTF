@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Amire80",
 			"Kghbln",
 			"Martsniez",
 			"Robby",
@@ -76,6 +77,6 @@
 	"edtf-day-or-later": "Date specified as $1 or any later date",
 	"edtf-both-dates": "A date that is a combination of two dates. $1 and $2 are both an {{EdtfDate}}",
 	"edtf-one-of-two-dates": "A date that is either the first or the second date. $1 and $2 are both an {{EdtfDate}}",
-	"edtf-inline-all-of-these": "$1 is a list of comma separated dates. Indicates the value is all of these dates.",
-	"edtf-inline-one-of-these": "$1 is a list of comma separated dates. Indicates the value is one of these dates."
+	"edtf-inline-all-of-these": "$1 is a list of comma-separated dates. Indicates the value is all of these dates.",
+	"edtf-inline-one-of-these": "$1 is a list of comma-separated dates. Indicates the value is one of these dates."
 }
