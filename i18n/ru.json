@@ -3,7 +3,8 @@
 		"authors": [
 			"Kareyac",
 			"Lopusanski",
-			"Rivka Silinsky"
+			"Rivka Silinsky",
+			"Yurina Tatiana"
 		]
 	},
 	"edtf-maybe": "Может быть, $1 (дата неизвестна)",
@@ -18,6 +19,7 @@
 	"edtf-autumn-north": "Осень (Северное полушарие)",
 	"edtf-quarter-1": "Первый квартал",
 	"edtf-quarter-2": "Второй квартал",
+	"edtf-season-and-year": "$1 $2",
 	"edtf-january": "Январь",
 	"edtf-february": "Февраль",
 	"edtf-march": "Март",
