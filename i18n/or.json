@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Psubhashish"
+		]
+	},
+	"edtf-and-prefix": "ଆଉ $1",
+	"edtf-day": "ଦିନ",
+	"edtf-month": "ମାସ",
+	"edtf-year": "ବର୍ଷ",
+	"edtf-spring": "ବସନ୍ତ",
+	"edtf-summer": "ଗ୍ରୀଷ୍ମ",
+	"edtf-autumn": "ଶରତ",
+	"edtf-winter": "ଶୀତ",
+	"edtf-january": "ଜାନୁଆରୀ",
+	"edtf-february": "ଫେବୃଆରୀ",
+	"edtf-march": "ମାର୍ଚ୍ଚ",
+	"edtf-april": "ଅପ୍ରେଲ",
+	"edtf-may": "ମଇ",
+	"edtf-june": "ଜୁନ",
+	"edtf-july": "ଜୁଲାଇ",
+	"edtf-august": "ଅଗଷ୍ଟ",
+	"edtf-september": "ସେପ୍ଟେମ୍ବର",
+	"edtf-october": "ଅକ୍ଟୋବର",
+	"edtf-november": "ନଭେମ୍ବର",
+	"edtf-december": "ଡିସେମ୍ବର",
+	"edtf-interval-normal": "$1ରୁ $2",
+	"edtf-interval-open-end": "$1 ବା ପରେ"
+}
