@@ -33,6 +33,26 @@ class EnglishHumanizationTest extends TestCase {
 
 		yield 'Month only' => [ 'XXXX-12-XX', 'December' ];
 		yield 'Day only' => [ 'XXXX-XX-12', '12th' ];
+		
+		// https://github.com/ProfessionalWiki/EDTF/issues/80
+		yield 'Some year (4 digits)' => [ 'XXXX', 'some millennium' ];
+
+		yield 'Some year (1 digit)' => [ 'X', 'some year' ];
+		yield 'Some year (2 digit)' => [ 'XX', 'some decade' ];
+		yield 'Some year (3 digits)' => [ 'XXX', 'some century' ];
+		yield 'Scales (4 digits minus)' => [ '-5XXXX', '5 decem millennia BC' ];
+		yield 'Scales (5 digits)' => [ '5XXXXX', '5 hundreds of thousands' ];
+		yield 'Scales (6 digits)' => [ '5XXXXXX', '5 millions' ];
+		yield 'Scales (7 digits)' => [ '5XXXXXXX', '5 tens of millions' ];
+		yield 'Scales (8 digits)' => [ '5XXXXXXXX', '5 hundreds of millions' ];
+		yield 'Scales (9 digits)' => [ '5XXXXXXXXX', '5 billions' ];
+		yield 'Scales (10 digits)' => [ '5XXXXXXXXXX', '5 tens of billions' ];
+		yield 'Scales (11 digits)' => [ '5XXXXXXXXXXX', '5 hundreds of billions' ];
+
+		// TODO throw error
+		// yield 'Scales (throw error 1)' => [ 'XXXXXXXXXX4', '' ];
+		// yield 'Scales (throw error 1)' => [ 'XXXXXX4XXXX', '' ];
+
 		yield 'Month and day' => [ 'XXXX-12-11', 'December 11th' ];
 		yield 'Year and day' => [ '2020-XX-11', '11th of unknown month, 2020' ];
 		yield 'Unspecified year decade' => [ '197X', '1970s' ];
