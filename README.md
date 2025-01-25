@@ -11,7 +11,7 @@ EDTF PHP is a small library for parsing, representing, and working with the
 [Extended Date/Time Format] specification.
 
 [Professional Wiki] created and maintains EDTF. The Luxembourg Ministry of Culture funded the [initial development].
-This library is an open-source project, so contributions are welcome!
+This library is an open-source project, so contributions are welcome! You can also commission [software development] via Professional Wiki.
 
 - [Usage](#usage)
   * [Parsing](#parsing)
@@ -213,3 +213,4 @@ Further API changes:
 [Extended Date/Time Format]: https://www.loc.gov/standards/datetime/
 [initial development]: https://www.wikibase.consulting/wikibase-edtf/
 [initial release]: https://www.wikibase.consulting/wikibase-edtf/
+[software development]: https://professional.wiki/en/mediawiki-development
