@@ -7,11 +7,11 @@
 [![Download count](https://poser.pugx.org/professional-wiki/edtf/downloads)](https://packagist.org/packages/professional-wiki/edtf)
 [![License](https://poser.pugx.org/professional-wiki/edtf/license)](LICENSE)
 
-EDTF PHP is a small library for parsing, representing and working with the
+EDTF PHP is a small library for parsing, representing, and working with the
 [Extended Date/Time Format] specification.
 
-EDTF PHP was created by and is maintained by [Professional.Wiki]. Initial development was funded by the Luxembourg Ministry of Culture.
-It is an open source project, and contributions are welcome!
+[Professional Wiki] created and maintains EDTF. The Luxembourg Ministry of Culture funded the [initial development].
+This library is an open-source project, so contributions are welcome!
 
 - [Usage](#usage)
   * [Parsing](#parsing)
@@ -201,7 +201,7 @@ Further API changes:
 
 ### Version 1.0.0 - 2021-03-19
 
-* Initial release with
+* [Initial release] with
     * Support for EDTF levels 0, 1 and 2
     * Parsing
     * Object model
@@ -209,5 +209,7 @@ Further API changes:
     * Validation service
     * Example data
 
-[Professional.Wiki]: https://professional.wiki
+[Professional Wiki]: https://professional.wiki
 [Extended Date/Time Format]: https://www.loc.gov/standards/datetime/
+[initial development]: https://www.wikibase.consulting/wikibase-edtf/
+[initial release]: https://www.wikibase.consulting/wikibase-edtf/
