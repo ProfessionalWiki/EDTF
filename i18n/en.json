@@ -17,10 +17,29 @@
 	"edtf-month": "month",
 	"edtf-year": "year",
 
+	"edtf-year-unspecified": "some year",
+
 	"edtf-spring": "Spring",
 	"edtf-summer": "Summer",
 	"edtf-autumn": "Autumn",
 	"edtf-winter": "Winter",
+
+	"edtf-date-unspecified": "some",
+	"edtf-date-BC": "BC",
+
+	"edtf-decade": "{{PLURAL:$1|decade|decades}}",
+	"edtf-century": "{{PLURAL:$1|century|centuries}}",
+	"edtf-millennium": "{{PLURAL:$1|millennium|millennia}}",
+	"edtf-decem-millennium": "decem {{PLURAL:$1|millennium|millennia}}",
+	"edtf-hundreds-of-thousands": "{{PLURAL:$1|hundred|hundreds}} of thousands",
+	"edtf-million": "{{PLURAL:$1|million|millions}}",
+	"edtf-tens-of-millions": "{{PLURAL:$1|ten|tens}} of millions",
+	"edtf-hundreds-of-millions": "{{PLURAL:$1|hundred|hundreds}} of millions",
+	"edtf-billion": "{{PLURAL:$1|billion|billions}}",
+	"edtf-tens-of-billions": "{{PLURAL:$1|ten|tens}} of billions",
+	"edtf-hundreds-of-billions": "{{PLURAL:$1|hundred|hundreds}} of billions",
+	"edtf-thousands-of-billions": "{{PLURAL:$1|thousand|thousands}} of billions",
+	"edtf-trillion": "{{PLURAL:$1|trillion|trillions}}",
 
 	"edtf-spring-north": "Spring (Northern Hemisphere)",
 	"edtf-summer-north": "Summer (Northern Hemisphere)",
