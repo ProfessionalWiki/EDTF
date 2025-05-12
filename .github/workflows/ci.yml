@@ -26,7 +26,7 @@ jobs:
           tools: composer, cs2pr
           coverage: pcov
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Cache Composer cache
         uses: actions/cache@v4
@@ -72,10 +72,10 @@ jobs:
           extensions: mbstring
           tools: composer, cs2pr
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Cache Composer cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.composer/cache
           key: composer-cache-php7.4
