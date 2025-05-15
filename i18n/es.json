@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Diego Pino Navarro (Metro.org)"
+			"Diego Pino Navarro (Metro.org)",
+			"Fitoschido"
 		]
 	},
 	"edtf-description": "Biblioteca PHP para procesar, representar y trabajar con fechas que se ajustan a la especificación de formato EDTF.",
