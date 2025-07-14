@@ -40,6 +40,8 @@
 	"edtf-november": "Ноябрь",
 	"edtf-december": "Декабрь",
 	"edtf-interval-normal": "$1 - $2 кхаччалц",
+	"edtf-interval-open-end": "$1 йа цул тӀаьхьа",
+	"edtf-interval-open-start": "$1 йа цул хьалха",
 	"edtf-local-time": "иеттигера хан",
 	"edtf-empty-set": "Баьсса гулам",
 	"edtf-all-of-these": "И дерриге а:",
