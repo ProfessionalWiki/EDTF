@@ -114,6 +114,11 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
+### Version 3.1.0 - TBD
+
+* Added support for installation with a newer version of a used date time library (nesbot/carbon 3.x)
+* Improved translations
+
 ### Version 3.0.2 - 2025-05-12
 
 * Improved translations
