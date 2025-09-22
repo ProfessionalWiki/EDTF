@@ -80,12 +80,12 @@ Humanization has more limits:
 
 To use the EDTF library in your project, simply add a dependency on professional-wiki/edtf
 to your project's `composer.json` file. Here is a minimal example of a `composer.json`
-file that just defines a dependency on EDTF 1.x:
+file that just defines a dependency on EDTF 3.x:
 
 ```json
 {
     "require": {
-        "professional-wiki/edtf": "~1.0"
+        "professional-wiki/edtf": "~3.0"
     }
 }
 ```
@@ -114,9 +114,9 @@ You can also invoke PHPUnit directly to pass it arguments, as follows
 
 ## Release notes
 
-### Version 3.1.0 - TBD
+### Version 3.1.0 - 2025-09-23
 
-* Added support for installation with a newer version of a used date time library (nesbot/carbon 3.x)
+* Added support for installation with a newer version of a used date time library (`nesbot/carbon` 3.x)
 * Improved translations
 
 ### Version 3.0.2 - 2025-05-12
