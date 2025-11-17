@@ -1,13 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Joseph"
+			"Joseph",
+			"SaldırganSincap"
 		]
 	},
 	"edtf-description": "Genişletilmiş Tarih/Zaman Biçimi tanımlamasını izleyen tarihlerle işlemek, ifade etmek ve çalışmak için PHP kütüphanesi.",
-	"edtf-maybe-circa": "Yaklaşık olarak $1 olabilir",
-	"edtf-circa": "Yaklaşık olarak $1",
-	"edtf-maybe": "$1 olabilir",
+	"edtf-maybe-circa": "Yaklaşık olarak $1 olabilir (tarih belirsiz ve yaklaşıktır)",
+	"edtf-circa": "Yaklaşık olarak $1 (tarih yaklaşıktır)",
+	"edtf-maybe": "$1 olabilir (tarih belirsiz)",
 	"edtf-spring": "İlkbahar",
 	"edtf-summer": "Yaz",
 	"edtf-autumn": "Sonbahar",
