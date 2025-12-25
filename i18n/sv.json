@@ -2,13 +2,14 @@
 	"@metadata": {
 		"authors": [
 			"Sabelöga",
+			"Stefan2255",
 			"WikiPhoenix"
 		]
 	},
 	"edtf-description": "PHP-bibliotek för att parsa, representera och arbeta med datum som följer specifikationerna för det utökade datum/tidsformatet.",
-	"edtf-maybe-circa": "kanske ungefär $1",
-	"edtf-circa": "ungefär $1",
-	"edtf-maybe": "kanske $1",
+	"edtf-maybe-circa": "Kanske cirka $1 (datumet är osäkert och ungefärligt)",
+	"edtf-circa": "Cirka $1 (datumet är ungefärligt)",
+	"edtf-maybe": "Kanske $1 (datumet är osäkert)",
 	"edtf-spring": "våren",
 	"edtf-summer": "sommarn",
 	"edtf-autumn": "hösten",
