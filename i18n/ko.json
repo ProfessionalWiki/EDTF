@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Ellif",
+			"Tensama0415",
 			"Ykhwong"
 		]
 	},
@@ -9,6 +10,10 @@
 	"edtf-maybe-circa": "$1 경 추정 (날짜는 불확실하고 대략적임)",
 	"edtf-circa": "$1 경 (날짜는 대략적임)",
 	"edtf-maybe": "$1 추정 (날짜는 불확실)",
+	"edtf-and-prefix": "그리고 $1",
+	"edtf-day": "일",
+	"edtf-month": "월",
+	"edtf-year": "년",
 	"edtf-spring": "봄",
 	"edtf-summer": "여름",
 	"edtf-autumn": "가을",
