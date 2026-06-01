@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"HakanIST",
 			"Joseph",
 			"SaldırganSincap"
 		]
@@ -9,6 +10,13 @@
 	"edtf-maybe-circa": "Yaklaşık olarak $1 olabilir (tarih belirsiz ve yaklaşıktır)",
 	"edtf-circa": "Yaklaşık olarak $1 (tarih yaklaşıktır)",
 	"edtf-maybe": "$1 olabilir (tarih belirsiz)",
+	"edtf-parts-uncertain": "$1 belirsiz",
+	"edtf-parts-approximate": "$1 yaklaşık",
+	"edtf-parts-uncertain-and-approximate": "$1 belirsiz ve yaklaşık",
+	"edtf-and-prefix": "ve $1",
+	"edtf-day": "gün",
+	"edtf-month": "ay",
+	"edtf-year": "yıl",
 	"edtf-spring": "İlkbahar",
 	"edtf-summer": "Yaz",
 	"edtf-autumn": "Sonbahar",
