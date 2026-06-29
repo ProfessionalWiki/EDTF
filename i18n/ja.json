@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"MathXplore",
-			"Tamaki Wakita"
+			"Tamaki Wakita",
+			"Tensama0415"
 		]
 	},
-	"edtf-maybe": "もしかして$1",
+	"edtf-maybe": "多分$1 (日付は不明)",
 	"edtf-day": "日",
 	"edtf-month": "月",
 	"edtf-year": "年",
