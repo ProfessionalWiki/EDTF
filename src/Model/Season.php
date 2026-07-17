@@ -11,12 +11,13 @@ use EDTF\PackagePrivate\CoversTrait;
 class Season implements EdtfValue, HasPrecision {
 	use CoversTrait;
 
-  /**
+	/**
    * The initial year.
    * A Season could span into a next one.
    * @var int
-   */
-  private int $year;
+  */
+	private int $year;
+
 	private int $season;
 
 	private ExtDate $start;
