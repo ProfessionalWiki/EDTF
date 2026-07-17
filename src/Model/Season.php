@@ -11,7 +11,13 @@ use EDTF\PackagePrivate\CoversTrait;
 class Season implements EdtfValue, HasPrecision {
 	use CoversTrait;
 
+	/**
+	 * The initial year.
+	 * A Season could span into a next one.
+	 * @var int
+	 */
 	private int $year;
+
 	private int $season;
 
 	private ExtDate $start;
@@ -20,9 +26,11 @@ class Season implements EdtfValue, HasPrecision {
 	public function __construct( int $year, int $season ) {
 		$this->year = $year;
 		$this->season = $season;
-
-		$this->start = new ExtDate( $year, $this->generateStartMonth() );
-		$this->end = new ExtDate( $year, $this->generateEndMonth() );
+		$startMonth = $this->generateStartMonth();
+		$this->start = new ExtDate( $year, $startMonth );
+		$endMonth = $this->generateEndMonth();
+		$year = $endMonth < $startMonth ? ($year + 1) : $year;
+		$this->end = new ExtDate( $year, $endMonth );
 	}
 
 	private function generateStartMonth(): int {
@@ -99,6 +107,12 @@ class Season implements EdtfValue, HasPrecision {
 		return $this->start->getMin();
 	}
 
+	/**
+	 * Returns the Original Year present in the Season EDTF string definition.
+	 * Some seasons can expand to the next year.
+	 *
+	 * @return int
+	 */
 	public function getYear(): int {
 		return $this->year;
 	}
@@ -167,6 +181,14 @@ class Season implements EdtfValue, HasPrecision {
 
 	public function getEndMonth(): int {
 		return $this->end->getMonth();
+	}
+
+	public function getStartYear(): int {
+		return $this->start->getYear();
+	}
+
+	public function getEndYear(): int {
+		return $this->end->getYear();
 	}
 
 	public function precision(): int {

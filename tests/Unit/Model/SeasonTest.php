@@ -16,12 +16,25 @@ use PHPUnit\Framework\TestCase;
 class SeasonTest extends TestCase {
 
 	public function testCreate(): void {
+		// Quarter 1
 		$season = new Season( 2010, 33 );
 		$this->assertSame( 2010, $season->getYear() );
 		$this->assertSame( 33, $season->getSeason() );
 		$this->assertSame( [ 1, 2, 3 ], $season->getMonths() );
 		$this->assertSame( 1, $season->getStartMonth() );
 		$this->assertSame( 3, $season->getEndMonth() );
+		$this->assertSame( 2010, $season->getStartYear() );
+		$this->assertSame( 2010, $season->getEndYear() );
+
+		// Winter spanning into next year.
+		$season = new Season( 1937, 24 );
+		$this->assertSame( 1937, $season->getYear() );
+		$this->assertSame( 24, $season->getSeason() );
+		$this->assertSame( [ 12, 1, 2 ], $season->getMonths() );
+		$this->assertSame( 12, $season->getStartMonth() );
+		$this->assertSame( 2, $season->getEndMonth() );
+		$this->assertSame( 1937, $season->getStartYear() );
+		$this->assertSame( 1938, $season->getEndYear() );
 	}
 
 	public function testSpringValues(): void {
@@ -43,9 +56,9 @@ class SeasonTest extends TestCase {
 	}
 
 	public function testWinterValues(): void {
-		$this->assertSeasonValues( '2010-24', '2010-12-01', '2010-02-28' );
-		$this->assertSeasonValues( '2010-28', '2010-12-01', '2010-02-28' );
-		$this->assertSeasonValues( '2010-32', '2010-12-01', '2010-02-28' );
+		$this->assertSeasonValues( '2010-24', '2010-12-01', '2011-02-28' );
+		$this->assertSeasonValues( '2010-28', '2010-12-01', '2011-02-28' );
+		$this->assertSeasonValues( '2010-32', '2010-12-01', '2011-02-28' );
 	}
 
 	public function testQuarterValues(): void {
@@ -74,14 +87,22 @@ class SeasonTest extends TestCase {
 		$seasonStart = Carbon::createFromTimestamp( $season->getMin() );
 		$seasonEnd = Carbon::createFromTimestamp( $season->getMax() );
 
-		// start season validation
+		// Fetch max/min years from public methods.
+		if ($season instanceof Season) {
+			$seasonStartYearFromMethod = $season->getStartYear();
+			$seasonEndYearFromMethod = $season->getEndYear();
+			// start season validation
+			$this->assertSame( $expectedStart->year, $seasonStartYearFromMethod);
+			$this->assertSame( $expectedEnd->year, $seasonEndYearFromMethod);
+		}
+
 		$this->assertSame( $expectedStart->year, $seasonStart->year );
 		$this->assertSame( $expectedStart->month, $seasonStart->month );
 		$this->assertSame( $expectedStart->day, $seasonStart->day );
 
-		// end season validation
 		$this->assertSame( $expectedEnd->year, $seasonEnd->year );
 		$this->assertSame( $expectedEnd->month, $seasonEnd->month );
 		$this->assertSame( $expectedEnd->day, $seasonEnd->day );
+		// end season validation.
 	}
 }
