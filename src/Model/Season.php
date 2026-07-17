@@ -15,7 +15,7 @@ class Season implements EdtfValue, HasPrecision {
    * The initial year.
    * A Season could span into a next one.
    * @var int
-  */
+	*/
 	private int $year;
 
 	private int $season;
@@ -183,13 +183,13 @@ class Season implements EdtfValue, HasPrecision {
 		return $this->end->getMonth();
 	}
 
-  public function getStartYear(): int {
-    return $this->start->getYear();
-  }
+	public function getStartYear(): int {
+		return $this->start->getYear();
+	}
 
-  public function getEndYear(): int {
-    return $this->end->getYear();
-  }
+	public function getEndYear(): int {
+		return $this->end->getYear();
+	}
 
 	public function precision(): int {
 		return self::PRECISION_SEASON;
