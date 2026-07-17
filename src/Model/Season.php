@@ -12,10 +12,10 @@ class Season implements EdtfValue, HasPrecision {
 	use CoversTrait;
 
 	/**
-   * The initial year.
-   * A Season could span into a next one.
-   * @var int
-	*/
+	 * The initial year.
+	 * A Season could span into a next one.
+	 * @var int
+	 */
 	private int $year;
 
 	private int $season;
@@ -107,13 +107,13 @@ class Season implements EdtfValue, HasPrecision {
 		return $this->start->getMin();
 	}
 
-  /**
-   * Returns the Original Year present in the Season EDTF string definition.
-   * Some seasons can expand to the next year.
-   *
-   * @return int
-   */
-  public function getYear(): int {
+	/**
+	 * Returns the Original Year present in the Season EDTF string definition.
+	 * Some seasons can expand to the next year.
+	 *
+	 * @return int
+	 */
+	public function getYear(): int {
 		return $this->year;
 	}
 
