@@ -30,7 +30,7 @@ class Season implements EdtfValue, HasPrecision {
 		$this->start = new ExtDate( $year, $startMonth );
 		$endMonth = $this->generateEndMonth();
 		$year = $endMonth < $startMonth ? ($year + 1) : $year;
-		$this->end = new ExtDate( $year, $this->generateEndMonth() );
+		$this->end = new ExtDate( $year, $endMonth );
 	}
 
 	private function generateStartMonth(): int {
