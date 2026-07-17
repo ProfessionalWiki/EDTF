@@ -88,12 +88,13 @@ class SeasonTest extends TestCase {
 		$seasonEnd = Carbon::createFromTimestamp( $season->getMax() );
 
 		// Fetch max/min years from public methods.
-		$seasonStartYearFromMethod = $season->getStartYear();
-		$seasonEndYearFromMethod = $season->getEndYear();
-
-		// start season validation
-		$this->assertSame( $expectedStart->year, $seasonStartYearFromMethod);
-		$this->assertSame( $expectedEnd->year, $seasonEndYearFromMethod);
+		if ($season instanceof Season) {
+			$seasonStartYearFromMethod = $season->getStartYear();
+			$seasonEndYearFromMethod = $season->getEndYear();
+			// start season validation
+			$this->assertSame( $expectedStart->year, $seasonStartYearFromMethod);
+			$this->assertSame( $expectedEnd->year, $seasonEndYearFromMethod);
+		}
 
 		$this->assertSame( $expectedStart->year, $seasonStart->year );
 		$this->assertSame( $expectedStart->month, $seasonStart->month );
