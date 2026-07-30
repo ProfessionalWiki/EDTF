@@ -4,6 +4,8 @@
 			"شاه زمان پټان"
 		]
 	},
+	"edtf-parts-uncertain": "$1 نامالوم دی",
+	"edtf-parts-approximate": "$1 اټکل شوی دی",
 	"edtf-and-prefix": "او $1",
 	"edtf-day": "ورځ",
 	"edtf-month": "مياشت",
@@ -51,5 +53,28 @@
 	"edtf-one-of-these": "يو له دې څخه:",
 	"edtf-year-and-all-earlier": "$1 او له هغې مخکې ټول کلونه",
 	"edtf-year-or-earlier": "$1 کال يا له هغې څخه مخکې کال",
-	"edtf-year-and-all-later": "$1 او له هغې وروسته ټول کلونه"
+	"edtf-year-and-all-later": "$1 او له هغې وروسته ټول کلونه",
+	"edtf-year-or-later": "$1 کال يا له هغې وروسته يو کال",
+	"edtf-month-and-all-earlier": "$1 او ټولې دمخه مياشتې",
+	"edtf-month-and-all-later": "$1 او له هغې وروسته ټولې مياشتې",
+	"edtf-month-or-earlier": "$1 يا له هغې مخکې مياشت",
+	"edtf-month-or-later": "$1 يا له هغې وروسته مياشت",
+	"edtf-day-and-all-earlier": "$1؛ او ټولې مخکېنۍ نېټې",
+	"edtf-day-and-all-later": "$1؛ او ټولې وروستنۍ نېټې",
+	"edtf-day-or-earlier": "$1؛ يا له دې مخکې نېټه",
+	"edtf-day-or-later": "$1؛ يا له دې وروسته نېټه",
+	"edtf-season-or-earlier": "$1 يا له هغې مخکې څپرکی",
+	"edtf-season-or-later": "$1 يا له هغې وروستی څپرکی",
+	"edtf-season-and-all-earlier": "$1 او له هغې دمخه ټول څپرکي",
+	"edtf-season-and-all-later": "$1 او له هغې وروسته ټول څپرکي",
+	"edtf-both-dates": "$1 او $2",
+	"edtf-one-of-two-dates": "$1 يا $2",
+	"edtf-inline-all-of-these": "دا ټول: $1",
+	"edtf-inline-one-of-these": "يو له دې څخه: $1",
+	"edtf-set-range-all-year": "ټول کلونه له $1 څخه تر $2 پورې",
+	"edtf-set-range-all-month": "ټولې مياشتې له $1 څخه تر $2 پورې",
+	"edtf-set-range-all-day": "ټولې ورځې له $1 څخه تر $2 پورې",
+	"edtf-set-range-one-year": "$1، $2 يا د دوی منځ کې يو کال",
+	"edtf-set-range-one-month": "$1، $2 يا د دوی منځ کې يوه مياشت",
+	"edtf-set-range-one-day": "$1، $2 يا د دوی منځ کې يوه ورځ"
 }
