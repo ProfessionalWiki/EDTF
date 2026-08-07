@@ -215,10 +215,7 @@ class InternationalizedHumanizer implements Humanizer {
 		$day = $date->getDay();
 
 		if ( $year !== null ) {
-			$year = $this->humanizeYear(
-				$year,
-				$date->getUnspecifiedDigit()
-			);
+			$year = $this->humanizeYear( $year, $date );
 		}
 
 		if ( $month !== null ) {
@@ -247,7 +244,55 @@ class InternationalizedHumanizer implements Humanizer {
 		);
 	}
 
-	private function humanizeYear( int $year, UnspecifiedDigit $unspecifiedDigit ): string {
+	private function scaleToMessageKey( int $scale ): string {
+		switch( $scale ) {
+			case 1 : return 'edtf-year';					// X
+			case 2 : return 'edtf-decade';					// XX
+			case 3 : return 'edtf-century';					// XXX
+			case 4 : return 'edtf-millennium';				// XXXX
+			case 5 : return 'edtf-decem-millennium';		// XXXXX
+			case 6 : return 'edtf-hundreds-of-thousands';	// XXXXXX
+			case 7 : return 'edtf-million';					// XXXXXXX
+			case 8 : return 'edtf-tens-of-millions';		// XXXXXXXX
+			case 9 : return 'edtf-hundreds-of-millions';	// XXXXXXXXX
+			case 10 : return 'edtf-billion';				// XXXXXXXXXX
+			case 11 : return 'edtf-tens-of-billions';		// XXXXXXXXXXX
+			case 12 : return 'edtf-hundreds-of-billions';	// XXXXXXXXXXXX
+			case 13 : return 'edtf-trillion';				// XXXXXXXXXXXXX
+		}
+
+		// FIXME: reuse recursively the scale with trillions
+		// e.g. tens-of-trillions etc., 
+		return 'edtf-tens-of-trillions';
+	}
+
+	private function humanizeYear( int $year, ExtDate $date ): string {		
+		$unspecifiedYearScale = $date->getUnspecifiedYearScale();
+		$unspecifiedDigit = $date->getUnspecifiedDigit();
+		$specifiedYears = $date->getSpecifiedYears();
+
+		if ( $unspecifiedYearScale === 0 ||
+			(  $this->needsYearEndingChar( $unspecifiedDigit ) && $specifiedYears !== 0 ) ) {
+			return $this->humanizeYearSpecified( $year, $unspecifiedDigit );
+		}
+
+		$specifiedYearsStr = (string)abs( $specifiedYears );
+
+		$ret = ( $specifiedYears === 0 && $unspecifiedYearScale != 0 ? $this->message( "edtf-date-unspecified" )
+				: $specifiedYearsStr );
+
+		if ( $unspecifiedYearScale > 0 ) {
+			$ret .= " " . $this->message( $this->scaleToMessageKey( $unspecifiedYearScale ), $specifiedYearsStr );
+		}
+
+		if ( $date->isBC() ) {
+			$ret .= " " . $this->message( "edtf-date-BC" );
+		}
+
+		return $ret;
+	}
+
+	private function humanizeYearSpecified( int $year, UnspecifiedDigit $unspecifiedDigit ): string {
 		$yearStr = (string)abs( $year );
 
 		if ( $year <= -1000 ) {

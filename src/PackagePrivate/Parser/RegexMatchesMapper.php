@@ -42,6 +42,8 @@ class RegexMatchesMapper {
 		);
 	}
 
+	// FIXME: ensure that -XXXXXXX4 or -XXXXX4XX throws an error
+	// see https://github.com/ProfessionalWiki/EDTF/pull/88
 	private function prepareNumValue( string $str ): ?int {
 		$value = (int)str_replace( 'X', '0', $str );
 		return $value !== 0 ? $value : null;
