@@ -1,13 +1,17 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eduardoaddad"
+			"Eduardoaddad",
+			"Fúlvio"
 		]
 	},
 	"edtf-description": "Biblioteca PHP para analisar, representar e trabalhar com datas que seguem a especificação Extended Date/Time Format.",
-	"edtf-maybe-circa": "Talvez por volta $1",
-	"edtf-circa": "Cerca de $1",
-	"edtf-maybe": "Talvez $1",
+	"edtf-maybe-circa": "Talvez por volta de $1 (a data é incerta e aproximada)",
+	"edtf-circa": "Cerca de $1 (a data é aproximada)",
+	"edtf-maybe": "Talvez $1 (a data é incerta)",
+	"edtf-parts-uncertain": "$1 é incerta",
+	"edtf-parts-approximate": "$1 é aproximada",
+	"edtf-parts-uncertain-and-approximate": "$1 é incerta e aproximada",
 	"edtf-and-prefix": "e $1",
 	"edtf-day": "dia",
 	"edtf-month": "mês",
